@@ -57,7 +57,7 @@ public class DashBoardPanelPage extends BasePage {
     public boolean isFileDownloaded(String fileName) throws InterruptedException {
         Thread.sleep(10000);
         String home = System.getProperty("user.home");
-        String file_with_location = home + "/Downloads/" + fileName;
+        String file_with_location =home+ "/Downloads/" + fileName;
         File file = new File(file_with_location.trim());
         String fileTest = file.getName();
         if (file.exists() && file.length() != 0) {

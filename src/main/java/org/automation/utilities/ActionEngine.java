@@ -33,6 +33,12 @@ public class ActionEngine extends BaseTest {
 
     }
 
+    public void clickByJs(By ele){
+        WebElement element = getDriver().findElement(ele);
+        JavascriptExecutor executor = (JavascriptExecutor)driver;
+        executor.executeScript("arguments[0].click();", element);
+    }
+
     public void click_custom(WebElement element, String... label) {
         try {
             element.click();

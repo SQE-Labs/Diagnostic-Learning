@@ -9,6 +9,7 @@ import org.automation.utilities.Assertions;
 import org.automation.utilities.RandomStrings;
 import org.automation.utilities.WebdriverWaits;
 import org.testng.annotations.Test;
+import org.testng.Assert;
 
 import static org.automation.utilities.Assertions.validate_text;
 
@@ -172,6 +173,199 @@ public void login_Director() throws InterruptedException {
         Assertions.validate_text(director.getTextToDateField, "To Date");
         panelPage.click_LogOutLink();
     }
+
+    @Test(priority=7,enabled = true,description = "Verify that  relevant records appear after entering valid data in search textbox")
+    public void validRecordAppearForUpcomingAppointments() throws InterruptedException {
+        String  directorFirstName = "AU" + "Beau" + RandomStrings.requiredCharacters(2);
+        String directorLastName = "Ward" + RandomStrings.requiredCharacters(2);
+        String  directorEmailAddress = directorFirstName + "@yopmail.com";
+        String  directorUserName = "Riley" + RandomStrings.requiredCharacters(2);
+
+        LoginPage login=new LoginPage();
+        SuperAdminTest adminTest=new SuperAdminTest();
+        DashBoardPanelPage panelPage=new DashBoardPanelPage();
+        DirectorPage director=new DirectorPage();
+        login.directorLogin("Roman","123456");
+        WebdriverWaits.WaitUntilVisible(director.dashboardPage);
+        Assertions.validate_text(director.dashboardPage, "Dashboard");
+        panelPage.clickOn_AppointmentsTab();
+        director.valid_RecordsAppearForUpcoimnTab();
+//        Thread.sleep(3000);
+//        Assertions.validate_text(director.getTextFromDateField, director.expectedData);
+//        panelPage.click_LogOutLink();
+    }
+
+    @Test(priority=8,enabled = true,description = "Verify that 'Test Plan' popup should appear after clicking 'Test Plan' button")
+    public void editPopupAppear() throws InterruptedException {
+        String  directorFirstName = "AU" + "Beau" + RandomStrings.requiredCharacters(2);
+        String directorLastName = "Ward" + RandomStrings.requiredCharacters(2);
+        String  directorEmailAddress = directorFirstName + "@yopmail.com";
+        String  directorUserName = "Riley" + RandomStrings.requiredCharacters(2);
+
+        LoginPage login=new LoginPage();
+        SuperAdminTest adminTest=new SuperAdminTest();
+        DashBoardPanelPage panelPage=new DashBoardPanelPage();
+        DirectorPage director=new DirectorPage();
+        login.directorLogin("Roman","123456");
+        WebdriverWaits.WaitUntilVisible(director.dashboardPage);
+        Assertions.validate_text(director.dashboardPage, "Dashboard");
+        panelPage.clickOn_AppointmentsTab();
+        director.click_OnEditTestPlan();
+        Assertions.validate_text(director.getTextFromTestPlanEditPopup, "Please choose tests.");
+        panelPage.click_LogOutLink();
+    }
+    @Test(priority=8,enabled = true,description = "Verify that 'Test Plan' popup should appear after clicking 'Test Plan' button")
+    public void changeNotSaveOnClickCloseButton() throws InterruptedException {
+        String  directorFirstName = "AU" + "Beau" + RandomStrings.requiredCharacters(2);
+        String directorLastName = "Ward" + RandomStrings.requiredCharacters(2);
+        String  directorEmailAddress = directorFirstName + "@yopmail.com";
+        String  directorUserName = "Riley" + RandomStrings.requiredCharacters(2);
+
+        LoginPage login=new LoginPage();
+        SuperAdminTest adminTest=new SuperAdminTest();
+        DashBoardPanelPage panelPage=new DashBoardPanelPage();
+        DirectorPage director=new DirectorPage();
+        login.directorLogin("Roman","123456");
+        WebdriverWaits.WaitUntilVisible(director.dashboardPage);
+        Assertions.validate_text(director.dashboardPage, "Dashboard");
+        panelPage.clickOn_AppointmentsTab();
+        Boolean finalresult = director.changesNotSaved_ClickOnCloseButton();
+        Assert.assertTrue(finalresult);
+        panelPage.click_LogOutLink();
+    }
+    @Test(priority=9,enabled = true,description = "Verify that CSV file gets downloaded after clicking on 'Export to CSV' button")
+    public void csvFileGetsDownloaded() throws InterruptedException {
+        String  directorFirstName = "AU" + "Beau" + RandomStrings.requiredCharacters(2);
+        String directorLastName = "Ward" + RandomStrings.requiredCharacters(2);
+        String  directorEmailAddress = directorFirstName + "@yopmail.com";
+        String  directorUserName = "Riley" + RandomStrings.requiredCharacters(2);
+
+        LoginPage login=new LoginPage();
+        SuperAdminTest adminTest=new SuperAdminTest();
+        DashBoardPanelPage panelPage=new DashBoardPanelPage();
+        DirectorPage director=new DirectorPage();
+        login.directorLogin("Roman","123456");
+        WebdriverWaits.WaitUntilVisible(director.dashboardPage);
+        Assertions.validate_text(director.dashboardPage, "Dashboard");
+        panelPage.clickOn_AppointmentsTab();
+        director.clickON_ExportCSVButton();
+        String downloadFile =panelPage.getDownloadFileName();
+        Assert.assertTrue(panelPage.isFileDownloaded(downloadFile));
+        panelPage.click_LogOutLink();
+    }
+
+    @Test(priority=10,enabled = true,description = "Verify that CSV file gets downloaded after clicking on 'Export to CSV' button")
+    public void otherCommentsSaved() throws InterruptedException {
+        String  directorFirstName = "AU" + "Beau" + RandomStrings.requiredCharacters(2);
+        String directorLastName = "Ward" + RandomStrings.requiredCharacters(2);
+        String  directorEmailAddress = directorFirstName + "@yopmail.com";
+        String  directorUserName = "Riley" + RandomStrings.requiredCharacters(2);
+
+        LoginPage login=new LoginPage();
+        SuperAdminTest adminTest=new SuperAdminTest();
+        DashBoardPanelPage panelPage=new DashBoardPanelPage();
+        DirectorPage director=new DirectorPage();
+        login.directorLogin("Roman","123456");
+        WebdriverWaits.WaitUntilVisible(director.dashboardPage);
+        Assertions.validate_text(director.dashboardPage, "Dashboard");
+        panelPage.clickOn_AppointmentsTab();
+        director.clickON_ExportCSVButton();
+        Assertions.validate_text(director.dashboardPage, "Dashboard");
+        panelPage.click_LogOutLink();
+    }
+
+    @Test(priority=11,enabled = true,description = "Verify that  'Collect Payment' popup opens up after clicking 'Payment' button")
+    public void collectPaymentPopupOpen() throws InterruptedException {
+        String  directorFirstName = "AU" + "Beau" + RandomStrings.requiredCharacters(2);
+        String directorLastName = "Ward" + RandomStrings.requiredCharacters(2);
+        String  directorEmailAddress = directorFirstName + "@yopmail.com";
+        String  directorUserName = "Riley" + RandomStrings.requiredCharacters(2);
+
+        LoginPage login=new LoginPage();
+        SuperAdminTest adminTest=new SuperAdminTest();
+        DashBoardPanelPage panelPage=new DashBoardPanelPage();
+        DirectorPage director=new DirectorPage();
+        login.directorLogin("Roman","123456");
+        WebdriverWaits.WaitUntilVisible(director.dashboardPage);
+        Assertions.validate_text(director.dashboardPage, "Dashboard");
+        panelPage.clickOn_AppointmentsTab();
+        director.collectPayment();
+        Assertions.validate_text(director.titleForCollectPaymentPopup, "Collect Payment");
+        director.click_OnCancelBtn();
+        panelPage.click_LogOutLink();
+    }
+    @Test(priority=12,enabled = true,description = "Verify that 'Test Fee Adjustment' field accepts negative amount and that negative amount gets added to 'Assessment Amount' and 'Amount Due' values")
+    public void userEnter_NegativeValue_IntestAdjustmentFeeField() throws InterruptedException {
+        String  directorFirstName = "AU" + "Beau" + RandomStrings.requiredCharacters(2);
+        String directorLastName = "Ward" + RandomStrings.requiredCharacters(2);
+        String  directorEmailAddress = directorFirstName + "@yopmail.com";
+        String  directorUserName = "Riley" + RandomStrings.requiredCharacters(2);
+
+        LoginPage login=new LoginPage();
+        SuperAdminTest adminTest=new SuperAdminTest();
+        DashBoardPanelPage panelPage=new DashBoardPanelPage();
+        DirectorPage director=new DirectorPage();
+        login.directorLogin("Roman","123456");
+        WebdriverWaits.WaitUntilVisible(director.dashboardPage);
+        Assertions.validate_text(director.dashboardPage, "Dashboard");
+        panelPage.clickOn_AppointmentsTab();
+        Boolean finalresult = director.userEnter_NegativeValue_IntestAdjustmentField();
+        Assert.assertTrue(finalresult);
+        panelPage.click_LogOutLink();
+    }
+
+    @Test(priority=13,enabled = true,description = "Verify that 'Test Fee Adjustment' field accepts positive amount and that positive amount gets added to 'Assessment Amount' and 'Amount Due' values")
+    public void userEnters_PosititiveValue_IntestAdjustmentFeeField() throws InterruptedException {
+        LoginPage login=new LoginPage();
+        DashBoardPanelPage panelPage=new DashBoardPanelPage();
+        DirectorPage director=new DirectorPage();
+        login.directorLogin("Roman","123456");
+        WebdriverWaits.WaitUntilVisible(director.dashboardPage);
+        panelPage.clickOn_AppointmentsTab();
+        Boolean finalresult = director.userEnter_PositiveValue_IntestAdjustmentField();
+       Assert.assertTrue(finalresult);
+        panelPage.click_LogOutLink();
+    }
+
+    @Test(priority=14,enabled = true,description = "Verify that 'Collect Amount Adjustment' field accepts negative amount and that positive amount gets added to 'Assessment Amount' and 'Amount Due' values")
+    public void userEnter_NegativetivetiveValue_InCollectAdjustmentFeeField() throws InterruptedException {
+        String  directorFirstName = "AU" + "Beau" + RandomStrings.requiredCharacters(2);
+        String directorLastName = "Ward" + RandomStrings.requiredCharacters(2);
+        String  directorEmailAddress = directorFirstName + "@yopmail.com";
+        String  directorUserName = "Riley" + RandomStrings.requiredCharacters(2);
+
+        LoginPage login=new LoginPage();
+        SuperAdminTest adminTest=new SuperAdminTest();
+        DashBoardPanelPage panelPage=new DashBoardPanelPage();
+        DirectorPage director=new DirectorPage();
+        login.directorLogin("Roman","123456");
+        WebdriverWaits.WaitUntilVisible(director.dashboardPage);
+        Assertions.validate_text(director.dashboardPage, "Dashboard");
+        panelPage.clickOn_AppointmentsTab();
+        Boolean finalresult = director.userEnter_NegativeValue_InCollectAdjustmentField();
+        Assert.assertTrue(finalresult);
+        panelPage.click_LogOutLink();
+    }
+    @Test(priority=15,enabled = true,description = "Verify that 'Collect Amount Adjustment' field accepts positive amount and that positive amount gets added to 'Assessment Amount' and 'Amount Due' values")
+    public void userEnter_PositiveValue_InCollectAdjustmentFeeField() throws InterruptedException {
+        String  directorFirstName = "AU" + "Beau" + RandomStrings.requiredCharacters(2);
+        String directorLastName = "Ward" + RandomStrings.requiredCharacters(2);
+        String  directorEmailAddress = directorFirstName + "@yopmail.com";
+        String  directorUserName = "Riley" + RandomStrings.requiredCharacters(2);
+
+        LoginPage login=new LoginPage();
+        SuperAdminTest adminTest=new SuperAdminTest();
+        DashBoardPanelPage panelPage=new DashBoardPanelPage();
+        DirectorPage director=new DirectorPage();
+        login.directorLogin("Roman","123456");
+        WebdriverWaits.WaitUntilVisible(director.dashboardPage);
+        Assertions.validate_text(director.dashboardPage, "Dashboard");
+        panelPage.clickOn_AppointmentsTab();
+        Boolean finalresult = director.userEnter_PositiveValue_InCollectAdjustmentField();
+        Assert.assertTrue(finalresult);
+        panelPage.click_LogOutLink();
+    }
+
 
 
 }

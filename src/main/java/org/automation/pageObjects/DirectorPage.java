@@ -7,11 +7,17 @@ import org.automation.utilities.WebdriverWaits;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.automation.utilities.Assertions.validate_text;
 
 
 public class DirectorPage extends BasePage {
     WebdriverWaits wait = new WebdriverWaits();
+
+    public String expectedData;
+    public Boolean result;
     public By directorsTab = By.xpath("//li[@id='Directors']");
     public By createDirectorButton = By.xpath("//button[text()='Create Director']");
     public By directorsFirstName = By.xpath("//input[@placeholder='First Name']");
@@ -90,6 +96,333 @@ public class DirectorPage extends BasePage {
     public By getTextFromDateField = By.xpath("//input[@placeholder=\"From Date\"]");
     public By getTextToDateField = By.xpath("//input[@placeholder='To Date']");
 
+    public By getTextOfTopRecord = By.xpath("(//td[@class='tablewidth'])[1]");
+    public By exportCSVButton = By.xpath("//button[@onclick='exportCSV()']");
+
+    public By viewDetailsButton=By.xpath("(//a[text()='View Detail'])[1]");
+
+    public By editTestPlan=By.xpath("//button[@data-target='#selectSurveys']");
+
+   public By getTextFromTestPlanEditPopup=By.xpath("//h6[text()='Please choose tests.']");
+   public By closeButton=By.xpath("//div[@class='action']/a");
+    public By tocCheckbox=By.xpath("//label[text()='KABC']/..");
+    public By listOfWebelementsUnderTestPlan=By.xpath("//p[@class='badge badge-pill bg-purple-light mr-2 px-3 py-2 ng-star-inserted']");
+
+    public By otherCommentsTextField=By.xpath("//textarea[@class='custom-input ng-pristine ng-valid ng-touched']");
+
+    String expectedDataIncomments="This Data is enetered for testing purpose.";
+    public By titleOfTestingNotes=By.xpath("//h5[text()='Testing Notes']");
+    public By paymentButton=By.xpath("//button[@data-target='#paymentModal']");
+    public By titleForCollectPaymentPopup=By.xpath("//h4[text()='Collect Payment']");
+
+    public By click_0nCanelButton= By.xpath("//a[text()='Cancel']");
+
+    public By sendValueInTestFeeAdjustmentField= By.xpath("(//input[@type='text'])[1]");
+
+    public By sendValueInCollectAmountAdjustmentField= By.xpath("(//input[@type='text'])[2]");
+
+    public By sendValueInEnterAmountField= By.id("bookingDeposit");
+    public By collectAmountButton= By.xpath("//div[@class='action border-top pt-4 text-center']/a//following-sibling::button");
+
+    public By assessmentAmountInDisplay= By.xpath("//label[text()='Assessment Amount']//following-sibling::p");
+
+    public By amountDueInDisplay= By.xpath("//label[text()='Amount Due']//following-sibling::p");
+    public By receivedAmountInDisplay= By.xpath("//label[text()='Received Amount']//following-sibling::p");
+    public By clickOnCloseButton= By.xpath("(//a[text()='Close'])[2]");
+    String positiveTestFeeAdjustment="200";
+    String negativeTestFeeAdjustment="-200";
+    String positiveCollectAmountAdjustment="200";
+    String negativeCollectAmountAdjustment="-200";
+
+    String negativeEnterAmountValue="-200";
+
+    String greaterEnterAmountValue="9999";
+
+   public Boolean comparisionForPositiveTestFeeValue;
+    public Boolean comparisionForNegativeTestFeeValue;
+    public Boolean comparisionForPositiveCollectFeeValue;
+    public Boolean comparisionForNegativeCollectFeeValue;
+   public By clickCloseButton= By.xpath("(//a[text()='Close'])[2]");
+
+
+
+    public void click_OnEditTestPlan()
+    {
+        wait.WaitUntilVisible(viewAllSubtab);
+        click_custom(viewAllSubtab);
+        wait.WaitUntilVisible(viewDetailsButton);
+        click_custom(viewDetailsButton);
+        ScrollThePage(0, 1000);
+        wait.WaitUntilVisible(editTestPlan);
+        click_custom(editTestPlan);
+        wait.WaitUntilVisible(closeButton);
+        click_custom(closeButton);
+
+    }
+
+    public boolean changesNotSaved_ClickOnCloseButton()
+    {
+        wait.WaitUntilVisible(viewAllSubtab);
+        click_custom(viewAllSubtab);
+        wait.WaitUntilVisible(viewDetailsButton);
+        click_custom(viewDetailsButton);
+        wait.WaitUntilVisible(listOfWebelementsUnderTestPlan);
+        int beforeCount=getDriver().findElements(listOfWebelementsUnderTestPlan).size();
+        ScrollThePage(0, 1000);
+        wait.WaitUntilVisible(editTestPlan);
+        click_custom(editTestPlan);
+        wait.WaitUntilVisible(tocCheckbox);
+        selectCheckBox(tocCheckbox);
+        wait.WaitUntilVisible(closeButton);
+        click_custom(closeButton);
+        ScrollThePage(0, -1000);
+        int  afterCount=getDriver().findElements(listOfWebelementsUnderTestPlan).size();
+        return result=beforeCount==(afterCount);
+
+    }
+public void click_OnCancelBtn()
+{
+    wait.WaitUntilVisible(click_0nCanelButton);
+    click_custom(closeButton);
+}
+    public void dataEnteredINOtherCommentsTextField()
+    {
+        wait.WaitUntilVisible(viewAllSubtab);
+        click_custom(viewAllSubtab);
+        wait.WaitUntilVisible(viewDetailsButton);
+        click_custom(viewDetailsButton);
+        int beforeCount=getDriver().findElements(listOfWebelementsUnderTestPlan).size();
+        ScrollThePage(0, 1000);
+        wait.WaitUntilVisible(editTestPlan);
+        click_custom(editTestPlan);
+        sendKeys_withClear(otherCommentsTextField, expectedDataIncomments);
+
+    }
+    public String getTextOfTopRecord() throws InterruptedException
+    {
+        wait.WaitUntilVisible(upcomingSubtab);
+        click_custom(upcomingSubtab);
+        WebdriverWaits.WaitUntilVisible(clickOnFilterButton);
+        click_custom(clickOnFilterButton);
+        wait.WaitUntilVisible(getTextOfTopRecord);
+        expectedData=getText_custom(getTextOfTopRecord);
+        click_custom(clickOnFilterButton);
+        WebdriverWaits.WaitUntilVisible(getTextFromSearchField);
+        sendKeys_withClear(getTextFromSearchField, expectedData);
+        return expectedData;
+
+    }
+
+    public void collectPayment()
+    {
+        wait.WaitUntilVisible(viewAllSubtab);
+        click_custom(viewAllSubtab);
+        wait.WaitUntilVisible(viewDetailsButton);
+        click_custom(viewDetailsButton);
+        ScrollThePage(0, 1000);
+        wait.WaitUntilVisible(paymentButton);
+        click_custom(paymentButton);
+
+    }
+
+    public void fromDateCalendarIconAppear()
+    {
+        wait.WaitUntilVisible(upcomingSubtab);
+        click_custom(upcomingSubtab);
+        WebdriverWaits.WaitUntilVisible(clickOnFilterButton);
+        click_custom(clickOnFilterButton);
+        wait.WaitUntilVisible(getTextFromDateField);
+        click_custom(getTextFromDateField);
+        click_custom(getTextFromDateField);
+
+    }
+
+    public void toDateCalendarIconAppear()
+    {
+        wait.WaitUntilVisible(upcomingSubtab);
+        click_custom(upcomingSubtab);
+        WebdriverWaits.WaitUntilVisible(clickOnFilterButton);
+        click_custom(clickOnFilterButton);
+        wait.WaitUntilVisible(getTextToDateField);
+        click_custom(getTextToDateField);
+        click_custom(getTextToDateField);
+
+    }
+
+    public void clickON_ExportCSVButton() {
+        wait.WaitUntilVisible(viewAllSubtab);
+        click_custom(viewAllSubtab);
+        WebdriverWaits.WaitUntilVisible(exportCSVButton);
+        click_custom(exportCSVButton);
+
+    }
+
+
+public boolean userEnter_PositiveValue_IntestAdjustmentField()
+{
+    AppointmentsPage app = new AppointmentsPage();
+    app.click_ViewAllTab();
+    app.clickOn_ViewDetails();
+
+
+    wait.WaitUntilVisible(viewAllSubtab);
+    click_custom(viewAllSubtab);
+    wait.WaitUntilVisible(viewDetailsButton);
+    click_custom(viewDetailsButton);
+    ScrollThePage(0, 1000);
+    wait.WaitUntilVisible(assessmentAmountInDisplay);
+    String beforeReceivedamount=getDriver().findElement(assessmentAmountInDisplay).getText();
+    wait.WaitUntilVisible(amountDueInDisplay);
+    String BeforeAmountDueInDisplay=getDriver().findElement(amountDueInDisplay).getText();
+    wait.WaitUntilVisible(paymentButton);
+    click_custom(paymentButton);
+    sendKeys_custom(sendValueInTestFeeAdjustmentField,positiveTestFeeAdjustment);
+    wait.WaitUntilVisible(collectAmountButton);
+    click_custom(collectAmountButton);
+    wait.WaitUntilVisible(clickCloseButton);
+    click_custom(clickCloseButton);
+    ScrollThePage(0, 1000);
+    wait.WaitUntilVisible(assessmentAmountInDisplay);
+    String afterReceivedamount=getDriver().findElement(assessmentAmountInDisplay).getText();
+    wait.WaitUntilVisible(amountDueInDisplay);
+    String afterAmountDueInDisplay=getDriver().findElement(amountDueInDisplay).getText();
+
+    String[] numberOnlyOne=beforeReceivedamount.split( ".");
+    System.out.print(numberOnlyOne[0]);
+    String[] numberOnlyTwo=BeforeAmountDueInDisplay.split( ".");
+    String[] numberOnlyThree=afterReceivedamount.split( ".");
+    String[] numberOnlyFour=afterAmountDueInDisplay.split( ".");
+
+
+    String  FinalNumberOnlyOne=numberOnlyOne[0].replaceAll("[^0-9]", "");
+    String FinalNumberOnlyTwo=numberOnlyTwo[0].replaceAll("[^0-9]", "");
+    String FinalNumberOnlyThree=numberOnlyThree[0].replaceAll("[^0-9]", "");
+    String FinalNumberOnlyFour=numberOnlyFour[0].replaceAll("[^0-9]", "");
+
+    Integer valueOfBeforReceivedAmount=Integer.valueOf(FinalNumberOnlyOne);
+    Integer valueOfAfterReceivedAmount=Integer.valueOf(FinalNumberOnlyTwo);
+    Integer valueOfBeforeAmountDue=Integer.valueOf(FinalNumberOnlyThree);
+    Integer valueOfAfterAmountDue=Integer.valueOf(FinalNumberOnlyFour);
+
+    int calculationOne= valueOfAfterReceivedAmount-valueOfBeforReceivedAmount;
+    int calculationTwo= valueOfAfterAmountDue-valueOfBeforeAmountDue;
+
+    String finalCountForReceivedAmount = Integer.toString(calculationOne);
+    String finalCountForAmountDue = Integer.toString(calculationTwo);
+
+    wait.WaitUntilVisible(paymentButton);
+    comparisionForPositiveTestFeeValue= (finalCountForReceivedAmount.equals(positiveTestFeeAdjustment)) && (finalCountForAmountDue.equals(positiveTestFeeAdjustment));
+    return comparisionForPositiveTestFeeValue;
+
+
+}
+
+    public Boolean userEnter_NegativeValue_IntestAdjustmentField()
+    {
+        wait.WaitUntilVisible(viewAllSubtab);
+        click_custom(viewAllSubtab);
+        wait.WaitUntilVisible(viewDetailsButton);
+        click_custom(viewDetailsButton);
+        ScrollThePage(0, 1000);
+        wait.WaitUntilVisible(assessmentAmountInDisplay);
+        String beforeReceivedamount=getDriver().findElement(assessmentAmountInDisplay).getText();
+        wait.WaitUntilVisible(amountDueInDisplay);
+        String BeforeAmountDueInDisplay=getDriver().findElement(amountDueInDisplay).getText();
+        wait.WaitUntilVisible(paymentButton);
+        click_custom(paymentButton);
+        sendKeys_custom(sendValueInTestFeeAdjustmentField,negativeTestFeeAdjustment);
+        wait.WaitUntilVisible(collectAmountButton);
+        click_custom(collectAmountButton);
+        wait.WaitUntilVisible(clickCloseButton);
+        click_custom(clickCloseButton);
+        ScrollThePage(0, 1000);
+        wait.WaitUntilVisible(assessmentAmountInDisplay);
+        String afterReceivedamount=getDriver().findElement(assessmentAmountInDisplay).getText();
+        wait.WaitUntilVisible(amountDueInDisplay);
+        String afterAmountDueInDisplay=getDriver().findElement(amountDueInDisplay).getText();
+        wait.WaitUntilVisible(paymentButton);
+        comparisionForNegativeTestFeeValue= !(beforeReceivedamount.equals(afterReceivedamount)) && !(BeforeAmountDueInDisplay.equals(afterAmountDueInDisplay));
+        return comparisionForNegativeTestFeeValue;
+
+
+    }
+
+    public Boolean userEnter_PositiveValue_InCollectAdjustmentField()
+    {
+        wait.WaitUntilVisible(viewAllSubtab);
+        click_custom(viewAllSubtab);
+        wait.WaitUntilVisible(viewDetailsButton);
+        click_custom(viewDetailsButton);
+        ScrollThePage(0, 1000);
+        wait.WaitUntilVisible(assessmentAmountInDisplay);
+        String beforeReceivedamount=getDriver().findElement(receivedAmountInDisplay).getText();
+        wait.WaitUntilVisible(receivedAmountInDisplay);
+        String BeforeAmountDueInDisplay=getDriver().findElement(amountDueInDisplay).getText();
+        wait.WaitUntilVisible(paymentButton);
+        click_custom(paymentButton);
+        sendKeys_custom(sendValueInCollectAmountAdjustmentField,positiveCollectAmountAdjustment);
+        wait.WaitUntilVisible(collectAmountButton);
+        click_custom(collectAmountButton);
+        wait.WaitUntilVisible(clickCloseButton);
+        click_custom(clickCloseButton);
+        ScrollThePage(0, 1000);
+        wait.WaitUntilVisible(assessmentAmountInDisplay);
+        String afterReceivedamount=getDriver().findElement(receivedAmountInDisplay).getText();
+        wait.WaitUntilVisible(receivedAmountInDisplay);
+        String afterAmountDueInDisplay=getDriver().findElement(amountDueInDisplay).getText();
+        wait.WaitUntilVisible(paymentButton);
+        comparisionForPositiveCollectFeeValue= !(beforeReceivedamount.equals(afterReceivedamount)) && !(BeforeAmountDueInDisplay.equals(afterAmountDueInDisplay));
+        return comparisionForPositiveCollectFeeValue;
+
+
+    }
+
+
+
+    public Boolean userEnter_NegativeValue_InCollectAdjustmentField()
+    {
+        wait.WaitUntilVisible(viewAllSubtab);
+        click_custom(viewAllSubtab);
+        wait.WaitUntilVisible(viewDetailsButton);
+        click_custom(viewDetailsButton);
+        ScrollThePage(0, 1000);
+        wait.WaitUntilVisible(receivedAmountInDisplay);
+        String beforeReceivedamount=getDriver().findElement(receivedAmountInDisplay).getText();
+        wait.WaitUntilVisible(amountDueInDisplay);
+        String BeforeAmountDueInDisplay=getDriver().findElement(amountDueInDisplay).getText();
+        wait.WaitUntilVisible(paymentButton);
+        click_custom(paymentButton);
+        sendKeys_custom(sendValueInCollectAmountAdjustmentField,negativeCollectAmountAdjustment);
+        wait.WaitUntilVisible(collectAmountButton);
+        click_custom(collectAmountButton);
+        wait.WaitUntilVisible(clickCloseButton);
+        click_custom(clickCloseButton);
+        ScrollThePage(0, 1000);
+        wait.WaitUntilVisible(receivedAmountInDisplay);
+        String afterReceivedamount=getDriver().findElement(receivedAmountInDisplay).getText();
+        wait.WaitUntilVisible(amountDueInDisplay);
+        String afterAmountDueInDisplay=getDriver().findElement(amountDueInDisplay).getText();
+
+
+        wait.WaitUntilVisible(paymentButton);
+        comparisionForNegativeCollectFeeValue= !(beforeReceivedamount.equals(afterReceivedamount)) && !(BeforeAmountDueInDisplay.equals(afterAmountDueInDisplay));
+        return comparisionForNegativeCollectFeeValue;
+
+
+    }
+
+public void userEnter_NegativeValueInEnterAmount()
+{
+    wait.WaitUntilVisible(viewAllSubtab);
+    click_custom(viewAllSubtab);
+    wait.WaitUntilVisible(viewDetailsButton);
+    click_custom(viewDetailsButton);
+    ScrollThePage(0, 1000);
+    click_custom(paymentButton);
+    sendKeys_custom(sendValueInCollectAmountAdjustmentField,negativeCollectAmountAdjustment);
+    wait.WaitUntilVisible(collectAmountButton);
+    click_custom(collectAmountButton);
+}
 
     public void click_DirectorTab() throws InterruptedException {
         WebdriverWaits.SwitchToNewTab();
@@ -457,4 +790,11 @@ public class DirectorPage extends BasePage {
 //        validate_text(getTextToDateField, "From Date");
     }
     //new method getPlceholdrvalue
+
+
+    public void valid_RecordsAppearForUpcoimnTab() throws InterruptedException
+    {
+        getTextOfTopRecord();
+
+    }
 }

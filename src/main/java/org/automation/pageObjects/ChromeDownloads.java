@@ -17,6 +17,7 @@ public class ChromeDownloads extends ActionEngine {
 
 
     public String getFileName() {
+        getDriver().navigate().to("chrome://downloads/");
         WebdriverWaits.WaitUntilVisible(By.cssSelector("downloads-manager"));
         WebElement shadowHost1 = getDriver().findElement(By.cssSelector("downloads-manager"));
         SearchContext shadowRoot1 = shadowHost1.getShadowRoot();
