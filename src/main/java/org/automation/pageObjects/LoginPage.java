@@ -32,8 +32,8 @@ public class LoginPage extends BasePage {
         WebdriverWaits.waitForSpinner();
 
     }
-    public void diagnosticianLogin( String username,String PasswordFieldText ) throws InterruptedException {
-        enterUsername(username);
+    public void diagnosticianLogin( String getText_Dia,String PasswordFieldText )   {
+        sendKeys_withClear(userNameField,getText_Dia );
         enterPassword(PasswordFieldText);
         click_custom(login);
         WebdriverWaits.waitForSpinner();
@@ -49,7 +49,7 @@ public class LoginPage extends BasePage {
         enterUsername(userNameFieldText);
         enterPassword(PasswordFieldText);
         click_custom(login);
-        WebdriverWaits.waitForSpinner();
+
 
     }
 

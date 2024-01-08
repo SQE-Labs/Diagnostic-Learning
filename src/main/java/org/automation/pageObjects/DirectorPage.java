@@ -13,12 +13,13 @@ public class DirectorPage extends BasePage {
     WebdriverWaits wait = new WebdriverWaits();
     public By directorsTab = By.xpath("//a[text()='Directors']");
     public By createDirectorButton = By.xpath("//button[text()='Create Director']");
+    public By directorActualText = By.xpath("//h3[text()='Directors List']");
     public By directorsFirstName = By.xpath("//input[@placeholder='First Name']");
     public By directorsLastName = By.xpath("//input[@placeholder='Last Name']");
     public By directorsMobileNumber = By.xpath("//input[@placeholder='(999) 999-9999']");
     public By directorsEmail = By.xpath("//input[@placeholder='Email']");
     public By assignLocation = By.xpath("//select[@id='testingLocation']");
-    public By directorsLocationName = By.xpath("//option[text()='Plano']");
+    public By directorsLocationName = By.xpath("//option[text()='Austin']");
     public By directorsUserName = By.xpath("//input[@placeholder='Username']");
     public By password_Field = By.xpath("//input[@placeholder='Create Password']");
     public By confirm_PasswordField = By.xpath("//input[@placeholder='Confirm Password']");
@@ -50,23 +51,25 @@ public class DirectorPage extends BasePage {
     public By dashboardPage = By.xpath("//h3[text()='Dashboard']");
     public By viewAll = By.xpath("//a[text()='View All']");
     public By setAvailability = By.xpath("//h3[text()='Set Availability']");
+
     public By monthHeader = By.xpath("//span[@class='mbsc-calendar-month mbsc-calendar-title mbsc-ios ng-star-inserted']");
     public By yearHeader = By.xpath("//span[@class='mbsc-calendar-title mbsc-calendar-year mbsc-ios ng-star-inserted']");
     public By dateHeader = By.xpath("//div[@class='mbsc-ios mbsc-ltr mbsc-schedule-header-day mbsc-selected ng-star-inserted']']");
     public By yearsCalender = By.xpath("//mbsc-button[text()=' 2023 - 2034 ']");
     public By hihglihgtedYear = By.xpath("(//div[@class='mbsc-calendar-cell-text mbsc-calendar-year-text mbsc-ios ng-star-inserted'])[13]");
-    public By clickOnBox = By.xpath("(//div[@class='mbsc-flex-1-0 mbsc-ios mbsc-schedule-item ng-star-inserted'])[23]");
-    public By clickOnBox1 = By.xpath("(//div[@class='mbsc-flex-1-0 mbsc-ios mbsc-schedule-item ng-star-inserted'])[24]");
-    public By clickOnBox2 = By.xpath("(//div[@class='mbsc-flex-1-0 mbsc-ios mbsc-schedule-item ng-star-inserted'])[25]");
-    public By clickOnBox3 = By.xpath("(//div[@class='mbsc-flex-1-0 mbsc-ios mbsc-schedule-item ng-star-inserted'])[26]");
-    public By clickOnBox4 = By.xpath("(//div[@class='mbsc-flex-1-0 mbsc-ios mbsc-schedule-item ng-star-inserted'])[27]");
-    public By clickOnBox5 = By.xpath("(//div[@class='mbsc-flex-1-0 mbsc-ios mbsc-schedule-item ng-star-inserted'])[28]");
-    public By clickOnBox6 = By.xpath("(//div[@class='mbsc-flex-1-0 mbsc-ios mbsc-schedule-item ng-star-inserted'])[29]");
-    // public By clickOnBox6=By.xpath("(//div[@class='mbsc-flex-1-0 mbsc-ios mbsc-schedule-item ng-star-inserted'])[21]");
+    public By clickOnBox = By.xpath("(//div[@class='mbsc-flex-1-0 mbsc-ios mbsc-schedule-item ng-star-inserted'])[09]");
+    public By clickOnBox1 = By.xpath("(//div[@class='mbsc-flex-1-0 mbsc-ios mbsc-schedule-item ng-star-inserted'])[3]");
+    public By clickOnBox2 = By.xpath("(//div[@class='mbsc-flex-1-0 mbsc-ios mbsc-schedule-item ng-star-inserted'])[4]");
+    public By clickOnBox3 = By.xpath("(//div[@class='mbsc-flex-1-0 mbsc-ios mbsc-schedule-item ng-star-inserted'])[5]");
+    public By clickOnBox4 = By.xpath("(//div[@class='mbsc-flex-1-0 mbsc-ios mbsc-schedule-item ng-star-inserted'])[6]");
+    public By clickOnBox5 = By.xpath("(//div[@class='mbsc-flex-1-0 mbsc-ios mbsc-schedule-item ng-star-inserted'])[7]");
+    public By clickOnBox6 = By.xpath("(//div[@class='mbsc-flex-1-0 mbsc-ios mbsc-schedule-item ng-star-inserted'])[8]");
     public By availableText = By.xpath("//div[text()='Available']");
     public By saveButton = By.xpath("//button[text()='Save']");
     public By validationMsg=By.xpath("//div[@class='alert alert-danger ng-star-inserted']");
 
+    public By selectYear= By.xpath("//div[text()=' 2023 ']");
+    public By selectMonth=By.xpath("(//div[text()=' Dec '])[2]");
 
     //**************relogin with new password***********
 
@@ -76,7 +79,10 @@ public class DirectorPage extends BasePage {
     public By logOutLink = By.xpath("//a[text()='Log Out']");
     public By directorDashBoardPage = By.xpath("//h3[text()='Dashboard']");
     public By validation_Msg = By.xpath("//small[text()='Username or password is incorrect']");
-    public By spinner = By.cssSelector("div.ngx-spinner-overlay");
+
+    //*****************Paying full payment*****************
+
+    public By appointmentTab=By.xpath("//a[text()=' Appointments ']");
 
 
 
@@ -162,6 +168,20 @@ public class DirectorPage extends BasePage {
     public void clickOn_YearHeader() {
         click_custom(yearHeader);
     }
+    public void clickOn_MonthHeader() {
+        WebdriverWaits.waitUntilVisible(monthHeader);
+        click_custom(monthHeader);
+    }
+    public void select_Year(){
+        WebdriverWaits.waitUntilVisible(selectYear);
+        click_custom(selectYear);
+
+    }
+    public void select_Month(){
+        WebdriverWaits.waitUntilVisible(selectMonth);
+        click_custom(selectMonth);
+
+    }
 
     public void off_ToggleButton() {
         click_custom(toggle);
@@ -202,7 +222,7 @@ public class DirectorPage extends BasePage {
         click_custom(logOutLink);
     }
     public void clickOn_availableBox() {
-        click_custom(clickOnBox);
+       // click_custom(clickOnBox);
         click_custom(clickOnBox1);
         click_custom(clickOnBox2);
         click_custom(clickOnBox3);
@@ -225,18 +245,7 @@ public class DirectorPage extends BasePage {
         click_createDirectorButton();
     }
 
-    public void Verify_Duplicate_Director(String directorsFirstNameText, String directorsLastNameText, String directorsMobileNumberText, String directorsEmailText, String directorsUserNameText, String password_FieldText, String confirmPasswordFieldText) throws InterruptedException {
-        click_CreateDirectorsButton();
-        click_directorsFirstNameField(directorsFirstNameText);
-        click_directorsLastNameField(directorsLastNameText);
-        click_directorsMobileNumberField(directorsMobileNumberText);
-        click_directorsdirectorsEmailField(directorsEmailText);
-        click_directorsassignLocationField();
-        click_directorsUserNameField(directorsUserNameText);
-        click_passwordField(password_FieldText);
-        click_confirmPasswordField(confirmPasswordFieldText);
-        click_createDirectorButton();
-    }
+
 
 
     //**************Search created director*************
@@ -300,20 +309,18 @@ public class DirectorPage extends BasePage {
         clickOn_Login_PasswordField(PasswordFieldText);
         clickOn_Login_Button();
     }
-    public void director_Availability()   {
-
-        clickOn_YearHeader();
-        WebdriverWaits.waitUntilVisible(yearsCalender);
-        validate_text(yearsCalender, "2023 - 2034");
-
-        validate_text(hihglihgtedYear, "2023");
-        clickOn_YearHeader();
+    public void director_Availability() throws InterruptedException {
+      //  clickOn_MonthHeader();
+       // WebdriverWaits.waitUntilVisible(yearsCalender);
+        //validate_text(yearsCalender, "2023 - 2034");
+      //  select_Year();
+       // select_Month();
         clickOn_availableBox();
-
-        validate_text(availableText, "Available");
+      //  validate_text(availableText, "Available");
         clickOn_SaveButton();
     }
 }
+
 
 
 

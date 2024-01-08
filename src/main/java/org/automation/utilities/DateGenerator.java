@@ -11,7 +11,7 @@ import java.util.Date;
 public class DateGenerator {
 
     public static String getCurrentDate() {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         Date date = new Date();
         String date1 = dateFormat.format(date);
         return date1;
@@ -35,6 +35,17 @@ public class DateGenerator {
     }
     public static boolean isDateWithinRange(LocalDate startDate, LocalDate endDate, LocalDate dateToCheck) {
         return (dateToCheck.isAfter(startDate) || dateToCheck.isBefore(endDate));
+    }
+   public static String  getMonthAndYear(){
+       LocalDate currentDate = LocalDate.now();
+       DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM yyyy");
+       return currentDate.format(formatter);
+
+   }
+    public static String getCurrentMonthFormat() {
+        LocalDate currentDate = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM");
+        return currentDate.format(formatter);
     }
 
 

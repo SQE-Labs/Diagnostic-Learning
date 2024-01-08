@@ -35,32 +35,22 @@ public class PropertiesUtil {
 
         return value;
     }
-    public static void setPropertyValue(String key,String value) {
+
+    public static void setPropertyValue( String key,String value)   {
         //1. load data from properties file
         String propFilePath = System.getProperty("user.dir") + "/src/main/java/org/automation/config/config.properties";
-
+        Properties confprop = new Properties();
+        FileOutputStream fos;
         try {
-            Properties props = new Properties();
-            File f = new File(propFilePath);
-            InputStream input = new FileInputStream(f);
-
-            if (input != null) {
-                props.load(input);
-                props.setProperty("token2", "tokensnew");
-                OutputStream out = new FileOutputStream(f);
-                props.store(out, "save");
-            }
-
-        } catch (Exception e) {
+            fos = new FileOutputStream(propFilePath);
+            confprop.setProperty(key, value);
+            prop.store(fos, null);
+        }catch (Exception e){
             e.printStackTrace();
         }
-
-
-        //2. read data
-
-
     }
-    public static String getPropertyValue(String key, String configFile) {
+
+        public static String getPropertyValue(String key, String configFile) {
         //1. load data from properties file
         String propFilePath = System.getProperty("user.dir") + "/src/main/java/org/automation/config/" + configFile;
         FileInputStream fis;
@@ -84,4 +74,5 @@ public class PropertiesUtil {
 
         return value;
     }
-}
+        }
+
