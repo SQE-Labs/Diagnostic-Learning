@@ -17,6 +17,7 @@ public class SuperAdminTest extends BaseTest {
     public String diagnosticianFirstName;
     public String diagnosticianEmailAddress;
     public String directorFirstName;
+    public String diagnosticianLastName;
     public String directorLastName;
     public String directorEmailAddress;
     public String directorUserName;
@@ -28,7 +29,7 @@ public class SuperAdminTest extends BaseTest {
     public void create_Diagnostician() throws InterruptedException {
         Diagnostician diagnostician = new Diagnostician();
         diagnosticianFirstName = "Beau" + RandomStrings.requiredCharacters(2);
-        String diagnosticianLastName = "Ward" + RandomStrings.requiredCharacters(2);
+         diagnosticianLastName = "Ward" + RandomStrings.requiredCharacters(2);
         diagnosticianEmailAddress = diagnosticianFirstName + "@yopmail.com";
         diagnosticianUserName = "Riley" + RandomStrings.requiredCharacters(2);
 
@@ -55,7 +56,7 @@ public class SuperAdminTest extends BaseTest {
         Diagnostician diagnostician = new Diagnostician();
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
         //In Edit-Diagnostician password also changed
-        diagnostician.edit_Diagnostician("2456789548", diagnosticianEmailAddress1, "12345678", "12345678");
+        diagnostician.edit_Diagnostician( diagnosticianEmailAddress1, "12345678", "12345678");
         WebdriverWaits.WaitUntilVisible(diagnostician.edit_Succ_Msg);
         validate_text(diagnostician.edit_Succ_Msg, "Diagnostician details updated successfully.");
         Log.info("Successfully Edited the created diagnostician");
@@ -90,8 +91,8 @@ public class SuperAdminTest extends BaseTest {
         Diagnostician diagnostician = new Diagnostician();
         //checking user is disable or not
         diagnostician.cheking_DisableUser();
-        WebdriverWaits.WaitUntilVisible(diagnostician.disableUser);
-        validate_text(diagnostician.disableUser, "Enable User");
+        WebdriverWaits.WaitUntilVisible(diagnostician. enableUser);
+        validate_text(diagnostician.enableUser, "Enable User");
     }
 
     @Test(priority = 4, enabled = true, description = "Verify that Superadmin is able to diable the user or not")
@@ -133,7 +134,7 @@ public class SuperAdminTest extends BaseTest {
         String directorEmailAddress1 = directorFirstName + "12@yopmail.com";
         DirectorPage director = new DirectorPage();
         //director changing the password.
-        director.edit_Director("2456789548", directorEmailAddress1, "12345678", "12345678");
+        director.edit_Director( directorEmailAddress1, "12345678", "12345678");
         validate_text(director.edit_SuccMsg, "Director details updated successfully.");
         Log.info("Successfully Edited the created director");
     }
@@ -177,13 +178,6 @@ public class SuperAdminTest extends BaseTest {
     }
 
     //*********************Creating appointment page****************************
-    @Test(priority = 15, enabled = true, description = "Verify that SuperAdmin is able to created appointments or not")
-    public void Appointments_Page() throws InterruptedException {
-        AppointmentsPage appointment = new AppointmentsPage();
-        LoginPage login = new LoginPage();
-        login.superAdminLogin();
-        appointment.allAppointmentsPage("Hazel Rogers", "04-12-2023", "04-12-2023");
-    }
 
     @Test(priority = 16, enabled = true, description = "Verify that 'Appointment Details' page opens up on clicking 'View Detail' link")
     public void view_Details_Page() throws InterruptedException {
@@ -195,11 +189,12 @@ public class SuperAdminTest extends BaseTest {
 
     @Test(priority = 17, enabled = true, description = "Verify that CSV file gets downloaded after clicking 'Export to CSV' button, on 'All Appointments' page")
     public void download_CSV_File() throws InterruptedException {
-        AppointmentsPage appointment = new AppointmentsPage();
-        appointment.exportCSV_Button();
+        DashBoardPanelPage panelPage=new DashBoardPanelPage();
+        DirectorPage director=  new DirectorPage();
+        panelPage.clickOn_ExportCSVButton();
         //Download exportCSV File and Check file is downloaded or not
-        String downloadFile = appointment.validateDownloadedFile();
-        Assert.assertTrue(appointment.isFileDownloaded(downloadFile));
+        String downloadFile = panelPage.getDownloadFileName();
+        Assert.assertTrue(panelPage.isFileDownloaded(downloadFile));
     }
 
 }

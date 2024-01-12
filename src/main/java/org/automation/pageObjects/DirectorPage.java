@@ -138,7 +138,7 @@ public class DirectorPage extends BasePage {
 
     String greaterEnterAmountValue="9999";
 
-   public Boolean comparisionForPositiveTestFeeValue;
+   public String comparisionForPositiveTestFeeValue;
     public Boolean comparisionForNegativeTestFeeValue;
     public Boolean comparisionForPositiveCollectFeeValue;
     public Boolean comparisionForNegativeCollectFeeValue;
@@ -258,64 +258,57 @@ public void click_OnCancelBtn()
     }
 
 
-public boolean userEnter_PositiveValue_IntestAdjustmentField()
+/*
+public String userEnter_PositiveValue_IntestAdjustmentField()
 {
-    AppointmentsPage app = new AppointmentsPage();
-    app.click_ViewAllTab();
+*/
+
+
+
+    /*app.click_ViewAllTab();
     app.clickOn_ViewDetails();
-
-
-    wait.WaitUntilVisible(viewAllSubtab);
-    click_custom(viewAllSubtab);
-    wait.WaitUntilVisible(viewDetailsButton);
-    click_custom(viewDetailsButton);
     ScrollThePage(0, 1000);
-    wait.WaitUntilVisible(assessmentAmountInDisplay);
-    String beforeReceivedamount=getDriver().findElement(assessmentAmountInDisplay).getText();
-    wait.WaitUntilVisible(amountDueInDisplay);
-    String BeforeAmountDueInDisplay=getDriver().findElement(amountDueInDisplay).getText();
-    wait.WaitUntilVisible(paymentButton);
-    click_custom(paymentButton);
-    sendKeys_custom(sendValueInTestFeeAdjustmentField,positiveTestFeeAdjustment);
-    wait.WaitUntilVisible(collectAmountButton);
-    click_custom(collectAmountButton);
-    wait.WaitUntilVisible(clickCloseButton);
-    click_custom(clickCloseButton);
+    wait.WaitUntilVisible(payment.assessmentAmountInDisplay);
+    String beforeReceivedamount=getDriver().findElement(payment.assessmentAmountInDisplay).getText();
+    wait.WaitUntilVisible(payment.amountDueInDisplay);
+    String BeforeAmountDueInDisplay=getDriver().findElement(payment.amountDueInDisplay).getText();
+    wait.WaitUntilVisible(payment.paymentButton);
+    click_custom(payment.paymentButton);
+    sendKeys_custom(payment.sendValueInTestFeeAdjustmentField,positiveTestFeeAdjustment);
+    wait.WaitUntilVisible(payment.collectAmountButton);
+    click_custom(payment.collectAmountButton);
+    wait.WaitUntilVisible(payment.clickCloseButton);
+    click_custom(payment.clickCloseButton);
     ScrollThePage(0, 1000);
-    wait.WaitUntilVisible(assessmentAmountInDisplay);
+    wait.WaitUntilVisible(payment.assessmentAmountInDisplay);
     String afterReceivedamount=getDriver().findElement(assessmentAmountInDisplay).getText();
-    wait.WaitUntilVisible(amountDueInDisplay);
-    String afterAmountDueInDisplay=getDriver().findElement(amountDueInDisplay).getText();
+    wait.WaitUntilVisible(payment.amountDueInDisplay);
+    String afterAmountDueInDisplay=getDriver().findElement(payment.amountDueInDisplay).getText();
+    System.out.println(beforeReceivedamount);*/
+   /* String numberOnlyOne=beforeReceivedamount.replace( "$","");
+    String numberOnlyTwo=BeforeAmountDueInDisplay.replace( "$","");
+    String numberOnlyThree = afterReceivedamount.replace( "$","");
+    String numberOnlyFour=afterAmountDueInDisplay.replace( "$","");
+*/
 
-    String[] numberOnlyOne=beforeReceivedamount.split( ".");
-    System.out.print(numberOnlyOne[0]);
-    String[] numberOnlyTwo=BeforeAmountDueInDisplay.split( ".");
-    String[] numberOnlyThree=afterReceivedamount.split( ".");
-    String[] numberOnlyFour=afterAmountDueInDisplay.split( ".");
+    /*float valueOfBeforReceivedAmount=Float.parseFloat(numberOnlyOne);
+    float valueOfAfterReceivedAmount=Float.parseFloat(numberOnlyTwo);
+    float valueOfBeforeAmountDue=Float.parseFloat(numberOnlyThree);
+    float valueOfAfterAmountDue=Float.parseFloat(numberOnlyFour);
 
+    float calculationOne= valueOfBeforReceivedAmount-valueOfAfterReceivedAmount;
+    float calculationTwo= valueOfBeforeAmountDue-valueOfAfterAmountDue;
 
-    String  FinalNumberOnlyOne=numberOnlyOne[0].replaceAll("[^0-9]", "");
-    String FinalNumberOnlyTwo=numberOnlyTwo[0].replaceAll("[^0-9]", "");
-    String FinalNumberOnlyThree=numberOnlyThree[0].replaceAll("[^0-9]", "");
-    String FinalNumberOnlyFour=numberOnlyFour[0].replaceAll("[^0-9]", "");
+    String CountForReceivedAmount = Float.toString(calculationOne);
+    String CountForAmountDue = Float.toString(calculationTwo);
 
-    Integer valueOfBeforReceivedAmount=Integer.valueOf(FinalNumberOnlyOne);
-    Integer valueOfAfterReceivedAmount=Integer.valueOf(FinalNumberOnlyTwo);
-    Integer valueOfBeforeAmountDue=Integer.valueOf(FinalNumberOnlyThree);
-    Integer valueOfAfterAmountDue=Integer.valueOf(FinalNumberOnlyFour);
-
-    int calculationOne= valueOfAfterReceivedAmount-valueOfBeforReceivedAmount;
-    int calculationTwo= valueOfAfterAmountDue-valueOfBeforeAmountDue;
-
-    String finalCountForReceivedAmount = Integer.toString(calculationOne);
-    String finalCountForAmountDue = Integer.toString(calculationTwo);
-
-    wait.WaitUntilVisible(paymentButton);
-    comparisionForPositiveTestFeeValue= (finalCountForReceivedAmount.equals(positiveTestFeeAdjustment)) && (finalCountForAmountDue.equals(positiveTestFeeAdjustment));
-    return comparisionForPositiveTestFeeValue;
+    String finalCountForReceivedAmount=CountForReceivedAmount.replace( ".0","");
+    String finalCountForAmountDue=CountForReceivedAmount.replace( ".0","");
+*/
 
 
-}
+
+
 
     public Boolean userEnter_NegativeValue_IntestAdjustmentField()
     {

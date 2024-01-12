@@ -12,6 +12,27 @@ public class PaymentPage extends BasePage {
     public By loginLoading=By.cssSelector("div.ngx-spinner-overlay");
     public By cust_Name=By.cssSelector("tr:not([style='display: none;' ]) td:nth-child(1)");
     public String cust_Names ="//table[@id='paymentTable']//tbody//td[contains(text(),'%s')]";
+
+    public By paymentButton=By.xpath("//button[@data-target='#paymentModal']");
+    public By titleForCollectPaymentPopup=By.xpath("//h4[text()='Collect Payment']");
+
+    public By click_0nCanelButton= By.xpath("//a[text()='Cancel']");
+
+    public By testFeeAdjustmentField= By.xpath("(//input[@type='text'])[1]");
+
+    public By sendValueInCollectAmountAdjustmentField= By.xpath("(//input[@type='text'])[2]");
+
+    public By sendValueInEnterAmountField= By.id("bookingDeposit");
+    public By collectAmountButton= By.xpath("//div[@class='action border-top pt-4 text-center']/a//following-sibling::button");
+
+    public By assessmentAmountInDisplay= By.xpath("//label[text()='Assessment Amount']//following-sibling::p");
+
+    public By amountDueInDisplay= By.xpath("//label[text()='Amount Due']//following-sibling::p");
+    public By receivedAmountInDisplay= By.xpath("//label[text()='Received Amount']//following-sibling::p");
+    public By clickOnCloseButton= By.xpath("(//a[text()='Close'])[2]");
+    public By clickCloseButton= By.xpath("(//a[text()='Close'])[2]");
+
+
     public By fromToDateField=By.xpath("//input[@placeholder='%s']");
 //    public By toDateField=By.xpath("//input[@placeholder='To Date']");
   //  (//table[@id='appointmentTable']//td[contains(text(),'AU_Trent')]//following-sibling::td//a)[1]
@@ -34,6 +55,29 @@ public class PaymentPage extends BasePage {
         click_filterButton();
         enterInSearchField(UserName);
     }
+
+    public void enterFeeAdjustment(String value)
+    {
+        sendKeys_custom(testFeeAdjustmentField,value);
+
+    }
+
+    public void clickCollectAmountButton()
+    {
+        click_custom(collectAmountButton);
+    }
+
+    public void clickCloseButton()
+    {
+        click_custom(clickCloseButton);
+    }
+
+    public void clickPaymentButton()
+    {
+        scrollIntoView(paymentButton);
+        click_custom(paymentButton);
+    }
+
 
 
    // div:not([style='height: 99.5657%; top: 0%; width: 100%;']) [class='mbsc-ios mbsc-ltr mbsc-schedule-header-day mbsc-schedule-header-day-today mbsc-selected ng-star-inserted']

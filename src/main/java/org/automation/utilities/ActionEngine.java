@@ -62,6 +62,20 @@ public class ActionEngine extends BaseTest {
             //throw new RuntimeException(e);
         }
     }
+    public void sendKeys_custom(By path, int valueToBeSent, String... label) {
+        String var = "";
+        try {
+            var = label.length > 0 ? label[0] : path.toString();
+            Element element = new Element(var, path);
+            element.getWebElement().sendKeys(Integer.toString(valueToBeSent));
+            //log success message in extent report
+            extentTest.log(PASS, "Entered value  in field " + var + "as: " + valueToBeSent);
+        } catch (Exception e) {
+            //log failure in extent
+            extentTest.log(FAIL, "Sendkeys in field: " + var + " is failed due to exception:        " + e);
+            //throw new RuntimeException(e);
+        }
+    }
 
     public void sendKeys_withClear(By path, String valueToBeSent, String... label) {
 
@@ -328,6 +342,14 @@ public class ActionEngine extends BaseTest {
                 return null;
             }
         }
+    public  void Refresh_Page(){
+        getDriver().navigate().refresh();
+    }
+    public void Back_To_Page(){
+        getDriver().navigate().back();
+    }
 
-        }
+}
+
+
 

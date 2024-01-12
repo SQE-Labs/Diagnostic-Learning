@@ -2,19 +2,29 @@ package test;
 
 import org.automation.base.BasePage;
 import org.automation.base.BaseTest;
-import org.automation.pageObjects.DashBoardPanelPage;
-import org.automation.pageObjects.DirectorPage;
-import org.automation.pageObjects.LoginPage;
+import org.automation.pageObjects.*;
 import org.automation.utilities.Assertions;
 import org.automation.utilities.RandomStrings;
 import org.automation.utilities.WebdriverWaits;
 import org.testng.annotations.Test;
 import org.testng.Assert;
+import org.automation.utilities.WebdriverWaits;
 
 import static org.automation.utilities.Assertions.validate_text;
 
 
 public class DirectorTest extends BaseTest{
+
+    String beforeReceivedAmount;
+    String afterReceivedAmount;
+    String beforeAmountDue;
+    String afterAmountDue;
+
+    String positiveTestFeeAdjustment="200";
+    String negativeTestFeeAdjustment="-200";
+    String positiveCollectAmountAdjustment="200";
+    String negativeCollectAmountAdjustment="-200";
+
 
 @Test(priority=0,enabled = true,description = "Verify that Director is able to login with valid credentials or not")
 public void login_Director() throws InterruptedException {
@@ -294,23 +304,56 @@ public void login_Director() throws InterruptedException {
         director.click_OnCancelBtn();
         panelPage.click_LogOutLink();
     }
+
     @Test(priority=12,enabled = true,description = "Verify that 'Test Fee Adjustment' field accepts negative amount and that negative amount gets added to 'Assessment Amount' and 'Amount Due' values")
     public void userEnter_NegativeValue_IntestAdjustmentFeeField() throws InterruptedException {
-        String  directorFirstName = "AU" + "Beau" + RandomStrings.requiredCharacters(2);
-        String directorLastName = "Ward" + RandomStrings.requiredCharacters(2);
-        String  directorEmailAddress = directorFirstName + "@yopmail.com";
-        String  directorUserName = "Riley" + RandomStrings.requiredCharacters(2);
-
         LoginPage login=new LoginPage();
-        SuperAdminTest adminTest=new SuperAdminTest();
         DashBoardPanelPage panelPage=new DashBoardPanelPage();
         DirectorPage director=new DirectorPage();
+        AppointmentsPage app = new AppointmentsPage();
+        PaymentPage payment= new PaymentPage();
+        WebdriverWaits wait = new WebdriverWaits();
+        DetailsPage details= new DetailsPage();
+
+        //config username pwd
         login.directorLogin("Roman","123456");
         WebdriverWaits.WaitUntilVisible(director.dashboardPage);
-        Assertions.validate_text(director.dashboardPage, "Dashboard");
         panelPage.clickOn_AppointmentsTab();
-        Boolean finalresult = director.userEnter_NegativeValue_IntestAdjustmentField();
-        Assert.assertTrue(finalresult);
+        app.click_ViewAllTab();
+        app.clickOn_ViewDetails();
+        beforeReceivedAmount=details.getAssessmentAmount();
+        beforeAmountDue=details.getAmountDue();
+        payment.clickPaymentButton();
+        payment.enterFeeAdjustment(negativeTestFeeAdjustment);
+        payment.clickCollectAmountButton();
+        payment.clickCloseButton();
+
+        wait.WaitUntilVisible(payment.assessmentAmountInDisplay);
+        afterReceivedAmount=details.getAssessmentAmount();
+        afterAmountDue=details.getAmountDue();
+
+        String numberOnlyOne=beforeReceivedAmount.replace( "$","");
+        String numberOnlyTwo=beforeAmountDue.replace( "$","");
+        String numberOnlyThree = afterReceivedAmount.replace( "$","");
+        String numberOnlyFour=afterAmountDue.replace( "$","");
+
+
+        float valueOfBeforReceivedAmount=Float.parseFloat(numberOnlyOne);
+        float valueOfAfterReceivedAmount=Float.parseFloat(numberOnlyThree);
+        float valueOfBeforeAmountDue=Float.parseFloat(numberOnlyTwo);
+        float valueOfAfterAmountDue=Float.parseFloat(numberOnlyFour);
+
+        float calculationOne=valueOfAfterReceivedAmount-valueOfBeforReceivedAmount;
+        float calculationTwo= valueOfAfterAmountDue-valueOfBeforeAmountDue;
+
+        String CountForReceivedAmount = Float.toString(calculationOne);
+        String CountForAmountDue = Float.toString(calculationTwo);
+
+        String finalCountForReceivedAmount=CountForReceivedAmount.replace( ".0","");
+        String finalCountForAmountDue=CountForAmountDue.replace( ".0","");
+
+        Assert.assertEquals(finalCountForReceivedAmount,positiveTestFeeAdjustment);
+        Assert.assertEquals(finalCountForAmountDue,positiveTestFeeAdjustment);
         panelPage.click_LogOutLink();
     }
 
@@ -319,31 +362,104 @@ public void login_Director() throws InterruptedException {
         LoginPage login=new LoginPage();
         DashBoardPanelPage panelPage=new DashBoardPanelPage();
         DirectorPage director=new DirectorPage();
+        AppointmentsPage app = new AppointmentsPage();
+        PaymentPage payment= new PaymentPage();
+        WebdriverWaits wait = new WebdriverWaits();
+        DetailsPage details= new DetailsPage();
+
+
         login.directorLogin("Roman","123456");
         WebdriverWaits.WaitUntilVisible(director.dashboardPage);
         panelPage.clickOn_AppointmentsTab();
-        Boolean finalresult = director.userEnter_PositiveValue_IntestAdjustmentField();
-       Assert.assertTrue(finalresult);
+        app.click_ViewAllTab();
+        app.clickOn_ViewDetails();
+        beforeReceivedAmount=details.getAssessmentAmount();
+        beforeAmountDue=details.getAmountDue();
+        payment.clickPaymentButton();
+        payment.enterFeeAdjustment(positiveTestFeeAdjustment);
+        payment.clickCollectAmountButton();
+        payment.clickCloseButton();
+
+        wait.WaitUntilVisible(payment.assessmentAmountInDisplay);
+        afterReceivedAmount=details.getAssessmentAmount();
+        afterAmountDue=details.getAmountDue();
+
+        String numberOnlyOne=beforeReceivedAmount.replace( "$","");
+        String numberOnlyTwo=beforeAmountDue.replace( "$","");
+        String numberOnlyThree = afterReceivedAmount.replace( "$","");
+        String numberOnlyFour=afterAmountDue.replace( "$","");
+
+
+        float valueOfBeforReceivedAmount=Float.parseFloat(numberOnlyOne);
+        float valueOfAfterReceivedAmount=Float.parseFloat(numberOnlyThree);
+        float valueOfBeforeAmountDue=Float.parseFloat(numberOnlyTwo);
+        float valueOfAfterAmountDue=Float.parseFloat(numberOnlyFour);
+
+        float calculationOne=valueOfAfterReceivedAmount-valueOfBeforReceivedAmount;
+        float calculationTwo= valueOfBeforeAmountDue-valueOfAfterAmountDue;
+
+        String CountForReceivedAmount = Float.toString(calculationOne);
+        String CountForAmountDue = Float.toString(calculationTwo);
+
+        String finalCountForReceivedAmount=CountForReceivedAmount.replace( ".0","");
+        String finalCountForAmountDue=CountForAmountDue.replace( ".0","");
+
+        Assert.assertEquals(finalCountForReceivedAmount,positiveTestFeeAdjustment);
+        Assert.assertEquals(finalCountForAmountDue,positiveTestFeeAdjustment);
         panelPage.click_LogOutLink();
     }
 
     @Test(priority=14,enabled = true,description = "Verify that 'Collect Amount Adjustment' field accepts negative amount and that positive amount gets added to 'Assessment Amount' and 'Amount Due' values")
     public void userEnter_NegativetivetiveValue_InCollectAdjustmentFeeField() throws InterruptedException {
-        String  directorFirstName = "AU" + "Beau" + RandomStrings.requiredCharacters(2);
-        String directorLastName = "Ward" + RandomStrings.requiredCharacters(2);
-        String  directorEmailAddress = directorFirstName + "@yopmail.com";
-        String  directorUserName = "Riley" + RandomStrings.requiredCharacters(2);
+
 
         LoginPage login=new LoginPage();
-        SuperAdminTest adminTest=new SuperAdminTest();
         DashBoardPanelPage panelPage=new DashBoardPanelPage();
         DirectorPage director=new DirectorPage();
+        AppointmentsPage app = new AppointmentsPage();
+        PaymentPage payment= new PaymentPage();
+        WebdriverWaits wait = new WebdriverWaits();
+        DetailsPage details= new DetailsPage();
+
+        //config username pwd
         login.directorLogin("Roman","123456");
         WebdriverWaits.WaitUntilVisible(director.dashboardPage);
-        Assertions.validate_text(director.dashboardPage, "Dashboard");
         panelPage.clickOn_AppointmentsTab();
-        Boolean finalresult = director.userEnter_NegativeValue_InCollectAdjustmentField();
-        Assert.assertTrue(finalresult);
+        app.click_ViewAllTab();
+        app.clickOn_ViewDetails();
+        beforeReceivedAmount=details.getAssessmentAmount();
+        beforeAmountDue=details.getAmountDue();
+        payment.clickPaymentButton();
+        payment.enterFeeAdjustment(negativeTestFeeAdjustment);
+        payment.clickCollectAmountButton();
+        payment.clickCloseButton();
+
+        wait.WaitUntilVisible(payment.assessmentAmountInDisplay);
+        afterReceivedAmount=details.getAssessmentAmount();
+        afterAmountDue=details.getAmountDue();
+
+        String numberOnlyOne=beforeReceivedAmount.replace( "$","");
+        String numberOnlyTwo=beforeAmountDue.replace( "$","");
+        String numberOnlyThree = afterReceivedAmount.replace( "$","");
+        String numberOnlyFour=afterAmountDue.replace( "$","");
+
+
+        float valueOfBeforReceivedAmount=Float.parseFloat(numberOnlyOne);
+        float valueOfAfterReceivedAmount=Float.parseFloat(numberOnlyThree);
+        float valueOfBeforeAmountDue=Float.parseFloat(numberOnlyTwo);
+        float valueOfAfterAmountDue=Float.parseFloat(numberOnlyFour);
+
+        float calculationOne=valueOfAfterReceivedAmount-valueOfBeforReceivedAmount;
+        float calculationTwo= valueOfAfterAmountDue-valueOfBeforeAmountDue;
+
+        String CountForReceivedAmount = Float.toString(calculationOne);
+        String CountForAmountDue = Float.toString(calculationTwo);
+
+        String finalCountForReceivedAmount=CountForReceivedAmount.replace( ".0","");
+        String finalCountForAmountDue=CountForAmountDue.replace( ".0","");
+
+        Assert.assertEquals(finalCountForReceivedAmount,positiveTestFeeAdjustment);
+        Assert.assertEquals(finalCountForAmountDue,positiveTestFeeAdjustment);
         panelPage.click_LogOutLink();
     }
     @Test(priority=15,enabled = true,description = "Verify that 'Collect Amount Adjustment' field accepts positive amount and that positive amount gets added to 'Assessment Amount' and 'Amount Due' values")

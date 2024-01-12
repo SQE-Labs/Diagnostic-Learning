@@ -2,6 +2,7 @@ package test;
 
 import org.automation.base.BaseTest;
 import org.automation.pageObjects.*;
+import org.automation.utilities.ActionEngine;
 import org.automation.utilities.WebdriverWaits;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -54,7 +55,8 @@ public class SuperAdminAppointmentTest extends BaseTest {
     public void view_Payments_Page() throws InterruptedException {
         WebdriverWaits wait = new WebdriverWaits();
         PaymentPage payment = new PaymentPage();
-        wait.Back_To_Page();
+        ActionEngine action=new ActionEngine();
+        action.Back_To_Page();
         payment.clickOn_PaymentTab();
         WebdriverWaits.WaitUntilVisible(payment.paymentListPage);
         validate_text(payment.paymentListPage, "Payments List");
@@ -77,7 +79,8 @@ public class SuperAdminAppointmentTest extends BaseTest {
         //Download exportCSV File and Check file is downloaded or not
         String downloadFile = panelpage.getDownloadFileName();
         Assert.assertTrue(panelpage.isFileDownloaded(downloadFile));
-        wait.Back_To_Page();
+        ActionEngine action=new ActionEngine();
+        action.Back_To_Page();
         panelpage.click_LogOutLink();
     }
 

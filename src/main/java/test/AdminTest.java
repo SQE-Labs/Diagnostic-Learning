@@ -7,6 +7,7 @@ import org.testng.annotations.Test;
 
 public class AdminTest extends BaseTest {
 
+SuperAdminTest Superadmin=new SuperAdminTest();
 
     @Test(priority = 1,enabled = true,description = "diagnostician Scheduling availability")
     public void diagnostician_Availability() throws InterruptedException {
@@ -46,8 +47,9 @@ public class AdminTest extends BaseTest {
     @Test(priority = 4, enabled = true, description = "Filling client details")
     public void fillClientDetails() throws InterruptedException {
         ScheduleAppointmentPage schedule = new ScheduleAppointmentPage();
+
         SuperAdminTest Superadmin = new SuperAdminTest();
-        schedule.enteringClientDetails( Superadmin.diagnosticianFirstName, Superadmin.diagnosticianLastName, 2, "19-11-1997",2, "4567892658", Superadmin.diagnosticianEmailAddress, "Math", "NSW", " Tasmania", " Barkers Creek", "South Australia", "5422", "1200", "1000");
+        schedule.enteringClientDetails( Superadmin.diagnosticianFirstName, Superadmin .diagnosticianLastName, 2, "19-11-1997",2, "4567892658", Superadmin.diagnosticianEmailAddress, "Math", "NSW", " Tasmania", " Barkers Creek", "South Australia", "5422", "1200", "1000");
     }
 
     @Test(priority = 5, enabled = true, description = "filter and viewing created appointment in detail")

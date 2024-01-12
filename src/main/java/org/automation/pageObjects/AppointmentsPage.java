@@ -2,6 +2,7 @@ package org.automation.pageObjects;
 
 import org.automation.base.BasePage;
 import org.automation.logger.Log;
+import org.automation.utilities.ActionEngine;
 import org.automation.utilities.WebdriverWaits;
 import org.openqa.selenium.By;
 
@@ -37,6 +38,7 @@ public class AppointmentsPage extends BasePage {
     public By attachedDocument=By.xpath("//h5[text()='Attached Documents']");
     public By backButton=By.xpath("//a[text()='Back']");
     WebdriverWaits wait=new WebdriverWaits();
+    ActionEngine action =new ActionEngine();
 
     public void click_AppointmentTab(){
         WebdriverWaits.WaitUntilInvisible(By.cssSelector("ngx-spinner-overlay"));
@@ -74,6 +76,7 @@ public class AppointmentsPage extends BasePage {
     }
     public void clickOn_ViewDetails(){
         click_custom(viewDetails);
+
     }
     public void clickOn_viewStudentObservationButton(){
         click_custom(viewStudentObservationButton);
@@ -141,7 +144,6 @@ public class AppointmentsPage extends BasePage {
         clickOn_viewDocumentsButton();
         WebdriverWaits.WaitUntilVisible(attachedDocument);
         validate_text(attachedDocument,"Attached Documents");
-        WebdriverWaits.Refresh_Page();
         clickOn_BackButton();
     }
 }

@@ -16,7 +16,7 @@ public class LoginTest extends BaseTest {
         LoginPage login = new LoginPage();
 //        login.enterUsername(PropertiesUtil.getPropertyValue("userName"));
 //        login.enterPassword(PropertiesUtil.getPropertyValue("password"));
-//        login.clickLoginBtn();
+ //   login.clickLoginBtn();
     }
 
 

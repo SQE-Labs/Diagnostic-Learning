@@ -10,7 +10,6 @@ import java.util.*;
 
 import static com.relevantcodes.extentreports.LogStatus.FAIL;
 import static com.relevantcodes.extentreports.LogStatus.PASS;
-import static org.automation.utilities.WebdriverWaits.ClickByJsExecuter;
 import static org.automation.utilities.WebdriverWaits.WaitUntilInvisible;
 
 

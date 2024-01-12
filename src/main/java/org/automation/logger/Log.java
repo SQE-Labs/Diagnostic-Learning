@@ -23,8 +23,9 @@ public final class Log {
      * @param error   the exception to log, including its stack trace
      */
     public static void error(String message, Throwable error) {
-        LogConfig.getLogger().error(message, error);
+        LogConfig.getLogger().
         //Reporter.log(message + "<br />");
+        .error(message, error);
     }
 
     /**
