@@ -8,6 +8,8 @@
         </packages>
         <classes>
             <class name="test.SuperAdminTest"></class>
+<!--            <class name="test.AdminTest"></class>-->
+<!--            <class name="test.SuperAdminAppointmentTest"></class>-->
 <!--            <class name="test.DiagnosticianTest"></class>-->
 <!--            <class name="test.DirectorTest"></class>-->
 

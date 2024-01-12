@@ -2,6 +2,7 @@ package org.automation.base;
 
 
 
+import com.relevantcodes.extentreports.LogStatus;
 import org.automation.elements.Element;
 import org.automation.logger.Log;
 import org.automation.utilities.ActionEngine;
@@ -172,17 +173,17 @@ public class BasePage extends ActionEngine {
         JavascriptExecutor jse = (JavascriptExecutor) getDriver();
         WebElement ele = getDriver().findElement(element);
         jse.executeScript("arguments[0].scrollIntoView(true);", ele);
-
-    }
-    public void scrollIntoHorizontally(By element) {
-        JavascriptExecutor jse = (JavascriptExecutor) getDriver();
-        WebElement ele = getDriver().findElement(element);
-        jse.executeScript("document.documentElement.scrollLeft += 1000;", ele);
-
     }
 
+public static void scrolltoUp() {
 
-
+    JavascriptExecutor jse = (JavascriptExecutor) getDriver();
+    try {
+        jse.executeScript("window.scrollBy(0,-1500)");
+    } catch (Exception e) {
+        throw new RuntimeException (e);
+    }
+}
     public static  void waitForSpinner(){
         WebdriverWaits.waitForElementNotVisible(By.className("spinner"),10);
 

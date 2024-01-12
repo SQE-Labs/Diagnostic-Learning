@@ -20,11 +20,12 @@ public class DashBoardPanelPage extends BasePage {
     public By exportCSVButton=By.xpath("//button[text()='Export to CSV']");
     public By AppointmentsTab=By.xpath("//a[text()=' Appointments ']");
     public By availabilityTab=By.xpath("//a[text()='Availability']");
+    public By editButton=By.xpath("(//a[text()='Edit'])[1]");
 
 
 
     public void click_LogOutLink() {
-        //  WebdriverWaits.WaitUntilInvisible(logOutLink);
+        WebdriverWaits.WaitUntilInvisible(logOutLink);
         WebdriverWaits.WaitUntilVisible(logOutLink);
         click_custom(logOutLink);
     }
@@ -50,6 +51,9 @@ public class DashBoardPanelPage extends BasePage {
         WebdriverWaits.WaitUntilInvisible(By.cssSelector("div.ngx-spinner-overlay"));
         click_custom(paymentButton);
     }
+    public void edit_Director(){
+        click_custom(editButton);
+    }
     public void clickOn_BackButton(){
         WebdriverWaits.WaitUntilVisible(backButton);
         click_custom(backButton);
@@ -57,7 +61,7 @@ public class DashBoardPanelPage extends BasePage {
     public boolean isFileDownloaded(String fileName) throws InterruptedException {
         Thread.sleep(10000);
         String home = System.getProperty("user.home");
-        String file_with_location =home+ "/Downloads/" + fileName;
+        String file_with_location = home + "/Downloads/" + fileName;
         File file = new File(file_with_location.trim());
         String fileTest = file.getName();
         if (file.exists() && file.length() != 0) {
@@ -67,7 +71,6 @@ public class DashBoardPanelPage extends BasePage {
         } else {
             System.out.println(file_with_location + " is not present");
             extentTest.log(FAIL, file_with_location + " is not  present ");
-
             return false;
         }
     }

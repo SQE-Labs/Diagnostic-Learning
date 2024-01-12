@@ -4,13 +4,11 @@ import org.automation.base.BaseTest;
 import org.automation.elements.Element;
 import org.automation.logger.Log;
 import org.openqa.selenium.*;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
@@ -132,16 +130,8 @@ public class WebdriverWaits extends BaseTest {
       JavascriptExecutor js=(JavascriptExecutor)driver;
       WebElement ele=driver.get().findElement(element);
       js.executeScript(String.valueOf(ele));
-
-
   }
-    public void byActionClass(By element)
-    {
-        WebElement ele=driver.get().findElement(element);
-        Actions builder = new Actions(getDriver());
-        builder.moveToElement(ele).click(ele);
-        //builder.perform();
-    }
+
 
     public String getText_custom(By path) {
         String text = "";
@@ -203,11 +193,6 @@ public class WebdriverWaits extends BaseTest {
         } catch (WebDriverException e) {
             return false;
         }
-    }
-
-    public static ArrayList<String> storeTextOfElements(By element, ArrayList<String> listbox){
-        getDriver().findElements(element).stream().forEach(x -> listbox.add(x.getText()));
-        return listbox;
     }
 }
 

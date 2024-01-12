@@ -133,7 +133,7 @@ public class SuperAdminTest extends BaseTest {
         String directorEmailAddress1 = directorFirstName + "12@yopmail.com";
         DirectorPage director = new DirectorPage();
         //director changing the password.
-        director.edit_Director( directorEmailAddress1, "12345678", "12345678");
+        director.edit_Director("2456789548", directorEmailAddress1, "12345678", "12345678");
         validate_text(director.edit_SuccMsg, "Director details updated successfully.");
         Log.info("Successfully Edited the created director");
     }

@@ -38,12 +38,14 @@ public class Assertions {
     }
 
     public static void validate_text(By element, String expected) throws InterruptedException {
-
+        WebdriverWaits.WaitUntilVisible(element);
         SoftAssert softAssert = new SoftAssert();
         String actual = Assertions.getText_custom(element);
         softAssert.assertEquals(actual, expected);
         softAssert.assertAll();
     }
+
+
     public  void validate_SuccessTXTByString(By element, String expected) throws InterruptedException {
 //        SoftAssert softAssert = new SoftAssert();
 //        String actual = Assertions.getText_custom();

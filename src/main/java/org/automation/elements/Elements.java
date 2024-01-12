@@ -58,5 +58,4 @@ public final class Elements  {
         Log.info("Get the number of [" + description + "] web elements");
         return wait.until(visibilityOfAllElementsLocatedBy(locator)).size();
     }
-
 }
