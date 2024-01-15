@@ -1,14 +1,19 @@
 package org.automation.utilities;
 
+import com.relevantcodes.extentreports.LogStatus;
 import org.automation.base.BaseTest;
 import org.automation.elements.*;
+import org.automation.elements.Button;
 import org.automation.logger.Log;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+
+import java.time.Duration;
 import java.util.List;
-import org.automation.elements.Elements;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import static com.relevantcodes.extentreports.LogStatus.FAIL;
 import static com.relevantcodes.extentreports.LogStatus.PASS;
 
@@ -16,6 +21,8 @@ import static com.relevantcodes.extentreports.LogStatus.PASS;
 public class ActionEngine extends BaseTest {
 
     public void click_custom(By path, String... label) {
+        WebdriverWaits.waitForSpinner();
+        WebdriverWaits.waitUntilVisible(path);
         String var = "";
         try {
 
@@ -28,27 +35,28 @@ public class ActionEngine extends BaseTest {
             extentTest.log(PASS, "Clicked element Successfully! " + var);
         } catch (Exception e) {
             extentTest.log(FAIL, "==> Unable to click on => " + var + " due to exception " + e);
+            throw new RuntimeException(e);
+
 
         }
 
     }
 
-    public void clickByJs(By ele){
-        WebElement element = getDriver().findElement(ele);
-        JavascriptExecutor executor = (JavascriptExecutor)driver;
-        executor.executeScript("arguments[0].click();", element);
-    }
-
     public void click_custom(WebElement element, String... label) {
+
         try {
             element.click();
             extentTest.log(PASS, "Clicked element Successfully! " + label);
         } catch (Exception e) {
             extentTest.log(FAIL, "==> Unable to click  " + label + " due to exception " + e);
+            throw new RuntimeException(e);
+
         }
     }
 
     public void sendKeys_custom(By path, String valueToBeSent, String... label) {
+        WebdriverWaits.waitUntilVisible(path);
+
         String var = "";
         try {
             var = label.length > 0 ? label[0] : path.toString();
@@ -59,25 +67,12 @@ public class ActionEngine extends BaseTest {
         } catch (Exception e) {
             //log failure in extent
             extentTest.log(FAIL, "Sendkeys in field: " + var + " is failed due to exception:        " + e);
-            //throw new RuntimeException(e);
-        }
-    }
-    public void sendKeys_custom(By path, int valueToBeSent, String... label) {
-        String var = "";
-        try {
-            var = label.length > 0 ? label[0] : path.toString();
-            Element element = new Element(var, path);
-            element.getWebElement().sendKeys(Integer.toString(valueToBeSent));
-            //log success message in extent report
-            extentTest.log(PASS, "Entered value  in field " + var + "as: " + valueToBeSent);
-        } catch (Exception e) {
-            //log failure in extent
-            extentTest.log(FAIL, "Sendkeys in field: " + var + " is failed due to exception:        " + e);
-            //throw new RuntimeException(e);
+            throw new RuntimeException(e);
         }
     }
 
     public void sendKeys_withClear(By path, String valueToBeSent, String... label) {
+        WebdriverWaits.waitUntilVisible(path);
 
         String var = "";
         try {
@@ -98,6 +93,7 @@ public class ActionEngine extends BaseTest {
 
     //custom click method to log evey click action in to extent report
     public void clickBtn_custom(By path, String... label) {
+        WebdriverWaits.waitUntilVisible(path);
         String var = "";
         try {
             var = label.length > 0 ? label[0] : path.toString();
@@ -118,6 +114,7 @@ public class ActionEngine extends BaseTest {
 
     //clear data from field
     public void clear_custom(By element) {
+        WebdriverWaits.waitUntilVisible(element);
         try {
 
             ((WebElement) element).clear();
@@ -230,11 +227,11 @@ public class ActionEngine extends BaseTest {
 
             text = element.getText();
             //  Log.debug("Text for " + element + " is " + text);
-            extentTest.log(PASS, "Text retrieved is: "+ text);
+            extentTest.log(PASS, "Text retrieved is: " + text);
             return text;
         } catch (Exception e) {
-            extentTest.log(FAIL, "==> Text not retried due to exception: "+ e);
-            throw  new RuntimeException(e);
+            extentTest.log(FAIL, "==> Text not retried due to exception: " + e);
+            throw new RuntimeException(e);
 
         }
     }
@@ -250,6 +247,7 @@ public class ActionEngine extends BaseTest {
 
         } catch (Exception e) {
             extentTest.log(FAIL, "Unable to get text due to exception : \n" + e);
+            throw new RuntimeException(e);
 
         }
     }
@@ -331,25 +329,44 @@ public class ActionEngine extends BaseTest {
             fieldName = label.length > 0 ? label[0] : path.toString();
              List <WebElement> elements =getDriver().findElements(path);
 
-                //  log success message in exgent report
-                 extentTest.log(PASS,fieldName +"==>Locate webElements!");
-                  return elements;
+            //  log success message in exgent report
+            extentTest.log(PASS, fieldName + "==>Locate webElements!");
+            return elements;
 
 
-            } catch(Exception e){
-                //    log failure in extent
-                extentTest.log(FAIL, "Unable to find any elemenets " + fieldName + " due to exception: " + e);
-                return null;
-            }
+        } catch (Exception e) {
+            //    log failure in extent
+            extentTest.log(FAIL, "Unable to find any elemenets " + fieldName + " due to exception: " + e);
+            return null;
         }
-    public  void Refresh_Page(){
+    }
+
+    public void refresh_Page() {
         getDriver().navigate().refresh();
     }
-    public void Back_To_Page(){
+
+    public void navigate_Back() {
         getDriver().navigate().back();
+    }
+    public void navigate_to_baseUrl(){
+        getDriver().get(PropertiesUtil.getPropertyValue("url"));
+    }
+    public static String GetText(By element) {
+         WebDriverWait wait = new WebDriverWait(getDriver() , Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(element));
+        WebElement ele = getDriver() .findElement(element);
+        String text = ele.getText();
+        return text;
+    }
+
+    public static String GetValueAttribute(By element, String attributeName) {
+        try {
+            String text=getDriver().findElement(element).getAttribute(attributeName);
+            return text;
+        } catch (Exception e) {
+            return attributeName;
+        }
+
     }
 
 }
-
-
-

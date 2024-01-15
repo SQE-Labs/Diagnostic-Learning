@@ -3,14 +3,11 @@
 <suite name="Suite">
     <test thread-count="1" parallel="classes" name="Test">
 
-        <packages>
-<!--            <package name="test.*"></package>-->
-        </packages>
+
         <classes>
-            <class name="test.SuperAdminTest"></class>
-<!--            <class name="test.AdminTest"></class>-->
-<!--            <class name="test.SuperAdminAppointmentTest"></class>-->
-<!--            <class name="test.DiagnosticianTest"></class>-->
+<!--            <class name="test.SuperAdminTest"></class>-->
+               <class name="test.AdminTest"></class>
+            <!---<class name="test.DiagnosticianTest"></class>-->
 <!--            <class name="test.DirectorTest"></class>-->
 
         </classes>

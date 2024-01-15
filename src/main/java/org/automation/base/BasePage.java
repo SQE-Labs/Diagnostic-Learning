@@ -66,10 +66,10 @@ public class BasePage extends ActionEngine {
     /**
      * Switch to the newly opened window.
      *
-     * @param description description of the new window
+    // * @param description description of the new window
      */
-    public void switchToWindow(String description) {
-        Log.info("Switch to window [" + description + "]");
+    public void switchToWindow() {
+       // Log.info("Switch to window [" + description + "]");
         parentWindow = getDriver().getWindowHandle();
         for (String windowHandle : getDriver().getWindowHandles())
             if (!windowHandle.equals(parentWindow))
@@ -109,10 +109,10 @@ public class BasePage extends ActionEngine {
     /**
      * Switch to the Main window.
      *
-     * @param description description of the main window
+   //  * @param description description of the main window
      */
-    public void switchToParentWindow(String description) {
-        Log.info("Switch to parent window [" + description + "]");
+    public void switchToParentWindow() {
+        //Log.info("Switch to parent window [" + description + "]");
         getDriver().switchTo().window(parentWindow);
     }
 
@@ -175,7 +175,7 @@ public class BasePage extends ActionEngine {
         jse.executeScript("arguments[0].scrollIntoView(true);", ele);
     }
 
-public static void scrolltoUp() {
+public  void scrolltoUp() {
 
     JavascriptExecutor jse = (JavascriptExecutor) getDriver();
     try {
@@ -184,9 +184,5 @@ public static void scrolltoUp() {
         throw new RuntimeException (e);
     }
 }
-    public static  void waitForSpinner(){
-        WebdriverWaits.waitForElementNotVisible(By.className("spinner"),10);
 
-
-    }
 }

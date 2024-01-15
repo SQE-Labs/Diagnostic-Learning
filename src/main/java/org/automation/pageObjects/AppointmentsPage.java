@@ -1,149 +1,290 @@
 package org.automation.pageObjects;
 
 import org.automation.base.BasePage;
-import org.automation.logger.Log;
-import org.automation.utilities.ActionEngine;
 import org.automation.utilities.WebdriverWaits;
 import org.openqa.selenium.By;
-
-import java.io.File;
-
-import static com.relevantcodes.extentreports.LogStatus.FAIL;
-import static com.relevantcodes.extentreports.LogStatus.PASS;
+import org.openqa.selenium.WebElement;
+import java.util.List;
 import static org.automation.utilities.Assertions.validate_text;
+import static org.automation.utilities.WebdriverWaits.moveToElement;
 
 
 public class AppointmentsPage extends BasePage {
-    public By appointmentsTab= By.xpath("//a[text()=' Appointments ']");
+    public By appointmentsTab= By.xpath("//a[@data-toggle='collapse' and @href='#Appointments' and contains(@class, '')]");
     public By viewAllTab=By.xpath("//a[text()='View All']");
-    public By upcomingTab=By.xpath("//a[text()='Upcoming']");
-    public By completeTab=By.xpath("//a[text()='Completed ']");
     public By dashBoardPage=By.xpath("//h3[text()='Dashboard']");
-    public By allAppointmentsPage=By.xpath("//h3[text()='All Appointments']");
+    public By allAppointmentsPage=By.xpath("//h3");
     public By searchedText=By.cssSelector("tr:not([style='display: none;' ]) td:nth-child(1)");
-    public String searchedTexts ="//table[@id='appointmentTable']//tbody//td[contains(text(),'%s')]";
+    public By viewDetailsLink=By.cssSelector("tr:not([style='display: none;' ]) td:nth-child(7)");
+    public By clickSlotSaveBtn= By.xpath("//mbsc-button[text()=' Save ']");
+    public By clickSlot = By.xpath("(//div[@class='mbsc-flex-1-0 mbsc-ios mbsc-schedule-item ng-star-inserted'])[9]");
+    public By clickCalSaveBtn = By.xpath("//a[@class='theme-button green float-right mr-2']");
+    public By newSlotText =By.xpath("//div[@class='ng-star-inserted']");
+    public By slots=By.xpath("//div[@class='mbsc-flex-1-0 mbsc-ios mbsc-schedule-item ng-star-inserted']");
 
-    public By searchByDate=By.xpath("//td[text()='(//td)[1]']");
     public By filterButton = By.xpath("//a[text()='Filter']");
     public By searchField=By.xpath("//input[@id='filterSearch']");
     public By dateFrom=By.xpath("//input[@placeholder='From Date']");
     public By toDate=By.xpath("//input[@placeholder='To Date']");
-    public By searchButton=By.xpath("//button[text()='Search']");
-    public By exportCSVButton=By.xpath("//button[text()='Export to CSV']");
-    public By viewDetails=By.xpath("(//a[text()='View Detail'])[1]");
-    public By App_Text=By.xpath("//h3");
-    public By viewStudentObservationButton=By.xpath("//a[text()='View Student Observation']");
-    public By viewDocumentsButton=By.xpath("//a[text()='View Documents']");
-    public By clientObservation=By.xpath("//h4[text()='Client Observation']");
-    public By attachedDocument=By.xpath("//h5[text()='Attached Documents']");
-    public By backButton=By.xpath("//a[text()='Back']");
-    WebdriverWaits wait=new WebdriverWaits();
-    ActionEngine action =new ActionEngine();
 
+    public By exportCSVButton=By.xpath("//button[text()='Export to CSV']");
+    public By assessmentDate = By.id("assessmentDate");
+    public By viewDetails=By.xpath("//a[@class='theme-button grey']");
+    public By App_Text=By.xpath("//h3");
+    public By spinner= By.cssSelector("div.ngx-spinner-overlay");
+    public By viewAllActualText= By.xpath("//h3[@class='mb-4 mb-md-0']");
+    public By assestmentType = By.id("assestmentType");
+    public By newEventText= By.xpath("//div[text()='New Event']");
+    public By dateElements = By.xpath("//tr/td[4]");
+    public By chooseTestingLocation = By.id("testingLocation");
+    public By clientFirstName = By.xpath("//input[@placeholder='Client First Name']");
+    public By clientLastName = By.xpath("//input[@placeholder='Client Last Name']");
+    public By headerResource = By.xpath("//div[@class='header-resource-name']");
+    public By dateOfBirth = By.xpath("//input[@placeholder='Date of Birth']");
+    public By saveButton = By.xpath("//mbsc-button[text()=' Save ']");
+    public By appointmentSaveButtonButton = By.xpath("//a[text()='Save']");
+    public By grade = By.xpath("(//select[@id='schoolType'])[1]");
+    public By SchoolType=By.xpath("(//select[@id='schoolType'])[2]");
+    public By phoneNumber = By.xpath("(//input[@class='p-inputtext p-component p-element p-inputmask'])[2]");
+    public By emailAddress = By.xpath("//input[@placeholder='Email Address']");
+    public By reasonForCall = By.id("reasonForCall");
+
+    public By continueToDeposit = By.id("intakeFormSubmit");
+    public By testAmount=By.xpath("//input[@placeholder='Test Amount']");
+    public By cellNumber = By.xpath("//input[@placeholder='Cell Number']");
+    public By enterAmountField=By.xpath("//input[@placeholder='Enter Amount']");
+    public By collectDeposit=By.xpath("//button[text()='Collect Deposit']");
+    public By logOutLink = By.xpath("//a[text()='Log Out']");
+    public By actualText=By.xpath("//h4[text()='Appointment Scheduled!!']");
+    public By cancelButton=By.xpath("//button[@class='theme-button danger m-2 ng-star-inserted']");
+    public By radioBox=By.xpath("(//label[@class='custom-control-label'])[1]");
+    public By yesButton=By.xpath("//button[@class='theme-button danger mx-2 ng-star-inserted']");
+
+    public By searchTextBox = By.id("filterSearch");
+    public  By todayTab=By.xpath("//a[contains(text(),'Today')]");
+
+
+    public void enterFirstName(String cilentFirstNameText){
+        WebdriverWaits.waitUntilVisible(clientFirstName);
+        sendKeys_withClear(clientFirstName,cilentFirstNameText);
+    }
+    public void enterLastName(String cilentLastNameText){
+        WebdriverWaits.waitUntilVisible(clientLastName);
+        sendKeys_withClear(clientLastName,cilentLastNameText);
+    }
+
+
+    public void selectGradeType(int gradeType){
+        selectDropDownByIndex_custom(grade,gradeType);
+    }
+    public void selectSchoolType(int schoolTypeOption) throws InterruptedException {
+        // click_custom(SchoolType);
+        selectDropDownByIndex_custom(SchoolType,schoolTypeOption);
+    }
+    public void enterCellNumber(String cellNumberText) throws InterruptedException {
+        WebdriverWaits.waitUntilVisible(cellNumber);
+        Thread.sleep(4000);
+        sendKeys_withClear(cellNumber,cellNumberText);
+    }
+    public void enterPhoneNumber(String phoneNumberText){
+        sendKeys_withClear(phoneNumber,phoneNumberText);
+    }
+    public void enterEmialAddress(String emailAddressText){
+        sendKeys_withClear(emailAddress,emailAddressText);
+    }
+    public void reasonForCallDropDown(String reasonForCallText){
+        selectDropDownByVisibleText_custom(reasonForCall,reasonForCallText);
+    }
+    public void click_LogOutLink() {
+        refresh_Page();
+        WebdriverWaits.waitUntilVisible(logOutLink);
+        WebdriverWaits.waitForSpinner();
+        click_custom(logOutLink);
+
+    }
+
+
+    public void enterTestAmount(String testAmountText){
+        WebdriverWaits.waitUntilVisible(testAmount);
+        sendKeys_withClear(testAmount,testAmountText);
+    }
+    public void clickOnContinueToDepositButton(){
+        click_custom(continueToDeposit);
+    }
+    public void enterInDateField(String dateOfBirthText) throws InterruptedException {
+        click_custom(dateOfBirth);
+        WebdriverWaits.waitUntilVisible(dateOfBirth);
+        sendKeys_withClear(dateOfBirth,dateOfBirthText);
+    }
+    public void clickOnSaveButton() {
+        //  click_custom(afternoonToggleButton);
+        click_custom(saveButton);
+    }
+    public void clickOnAppSaveButton() {
+        WebdriverWaits.waitUntilVisible(appointmentSaveButtonButton);
+        click_custom(appointmentSaveButtonButton);
+    }
+    public void clickOnAssesmentType(int assestmentTypeTexts){
+        WebdriverWaits.waitUntilVisible(assestmentType);
+        click_custom(assestmentType);
+        selectDropDownByIndex_custom(assestmentType,assestmentTypeTexts);
+    }
+    public void selectTestinglocation(String chooseLocationText) {
+        WebdriverWaits.waitUntilVisible(chooseTestingLocation);
+        clickBtn_custom(chooseTestingLocation, "ChooseLocation");
+        selectDropDownByVisibleText_custom(chooseTestingLocation, chooseLocationText, "ChooseLocation");
+    }
+    public void selectAssessmentDate() {
+        WebdriverWaits.waitUntilVisible(assessmentDate);
+        WebdriverWaits.waitForSpinner();
+        clickBtn_custom(assessmentDate);
+    }
+    public void enterAmount(String enterAmountText) throws InterruptedException {
+        WebdriverWaits.waitUntilInvisible(enterAmountField);
+        WebdriverWaits.waitUntilVisible(enterAmountField);
+        click_custom(enterAmountField);
+        sendKeys_withClear(enterAmountField,enterAmountText);
+    }
+    public void clickOnCollectDepositButton(){
+        click_custom(collectDeposit);
+    }
+    public void clickOnViewDetailsButton(){
+        WebdriverWaits.waitUntilVisible(viewDetails);
+        click_custom(viewDetails);
+    }
+    public void selectTestinglocation(int chooseLocationText) {
+        WebdriverWaits.waitUntilVisible(chooseTestingLocation);
+        clickBtn_custom(chooseTestingLocation, "ChooseLocation");
+        selectDropDownByIndex_custom(chooseTestingLocation, chooseLocationText);
+    }
+    public int getColumnCount() {
+        List<WebElement> list = getWebElements(headerResource, "Heders");
+        return list.size();
+    }
+    public  void getTotalColumnCount() throws InterruptedException {
+        int colCount = getColumnCount();
+        int expLocatorPos = (colCount - 1) * 7 + 1;
+        System.out.println(expLocatorPos);
+
+        Thread.sleep(10000);
+        List<WebElement> list =getWebElements(slots,"AppointmentSlots");
+        for(WebElement slot : list){
+            click_custom(slot);
+            if(getDriver().findElements(By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-background ng-star-inserted']")).size()>0){
+                break;
+            }
+        }
+    }
+    public void clickOn_CancelButton(){
+        WebdriverWaits.waitUntilVisible(cancelButton);
+        scrollIntoView(cancelButton);
+        click_custom(cancelButton);
+        WebdriverWaits.waitUntilVisible(radioBox);
+        moveToElement(radioBox);
+        click_custom(yesButton);
+    }
+
+    public void clickSlotSaveButton(){
+        WebdriverWaits.waitUntilVisible(clickSlotSaveBtn);
+        click_custom(clickSlotSaveBtn);
+    }
+    public void clickCalSaveButton(){
+        click_custom(clickCalSaveBtn);
+    }
+    public void click_AssessmentDate(){
+        WebdriverWaits.waitUntilVisible(assessmentDate);
+        WebdriverWaits.waitForSpinner();
+        click_custom(assessmentDate);
+    }
+
+    public void selectAppointmentSlot() throws InterruptedException {
+        click_AssessmentDate();
+        getTotalColumnCount();
+        WebdriverWaits.waitUntilVisible(newEventText);
+        validate_text(newEventText,"New Event");
+        clickSlotSaveButton();
+        WebdriverWaits.waitUntilVisible(newSlotText);
+        validate_text(newSlotText,"New event");
+        clickCalSaveButton();
+    }
+
+
+
+
+    public void selectAssesmentType(int assestmentTypeTexts){
+        WebdriverWaits.waitUntilVisible(assestmentType);
+         WebdriverWaits.waitForSpinner();
+        click_custom(assestmentType);
+        selectDropDownByIndex_custom(assestmentType,assestmentTypeTexts);
+    }
+
+    public void fill_clientDetailsSection(String CustomerFirstName, String CustomerLastName, int gradeType, String dateOfBirthText,int schoolTypeOption, String cellNumber , String EmailAddress, String reasonForCallText, String cityText, String stateText, String zipCodeText, String testAmountText, String enterAmountText) throws InterruptedException {
+        enterFirstName(CustomerFirstName);
+        enterLastName(CustomerLastName);
+        enterInDateField( dateOfBirthText);
+        selectGradeType(gradeType);
+        selectSchoolType(schoolTypeOption);
+        enterCellNumber(cellNumber);
+        enterEmialAddress(EmailAddress);
+        reasonForCallDropDown(reasonForCallText);
+        enterTestAmount(testAmountText);
+        clickOnContinueToDepositButton();
+        WebdriverWaits.waitUntilInvisible(spinner);
+        enterAmount(enterAmountText);
+        WebdriverWaits.waitUntilInvisible(spinner);
+        clickOnCollectDepositButton();
+        WebdriverWaits.waitUntilVisible(actualText);
+        validate_text(actualText,"Appointment Scheduled!!");
+        clickOnViewDetailsButton();
+        WebdriverWaits.waitForSpinner();
+    }
     public void click_AppointmentTab(){
-        WebdriverWaits.WaitUntilInvisible(By.cssSelector("ngx-spinner-overlay"));
-        WebdriverWaits.WaitUntilVisible(appointmentsTab);
+        WebdriverWaits.waitUntilVisible(appointmentsTab);
+        WebdriverWaits.waitForSpinner();
         click_custom(appointmentsTab);
     }
+
     public void click_ViewAllTab(){
-        WebdriverWaits.WaitUntilVisible(viewAllTab);
+        WebdriverWaits.waitUntilVisible(viewAllTab);
         click_custom(viewAllTab);
-    }
-    public void click_CompleteTab(){
-        WebdriverWaits.WaitUntilVisible(completeTab);
-        click_custom(completeTab);
+        WebdriverWaits.waitForSpinner();;
+        WebdriverWaits.waitUntilVisible(By.xpath("//a[text()='View Detail'])[1]"));
+        click_custom(By.xpath("//a[text()='View Detail'])[1]"));
     }
     public void click_FilterButton(){
-        wait.WaitUntilVisible(filterButton);
          click_custom(filterButton);
     }
     public void clickOn_ExportCSVButton(){
-        WebdriverWaits.WaitUntilInvisible(By.cssSelector("ngx-spinner-overlay"));
-        WebdriverWaits.WaitUntilVisible(exportCSVButton);
+        WebdriverWaits.waitUntilVisible(exportCSVButton);
         click_custom(exportCSVButton);
     }
+
     public void click_SearchField(String searchFieldText){
+        WebdriverWaits.waitUntilVisible(searchField);
         sendKeys_withClear(searchField,searchFieldText);
     }
     public void enter_Dates(String dateFromText,String toDateText) throws InterruptedException {
+        WebdriverWaits.waitUntilVisible(dateFrom);
         click_custom(dateFrom);
         sendKeys_withClear(dateFrom,dateFromText);
-         wait. WaitUntilVisible(toDate);
+        WebdriverWaits.waitUntilVisible(toDate);
         click_custom(toDate);
         sendKeys_withClear(toDate,toDateText);
-        wait.WaitUntilVisible(searchButton);
-        click_custom(searchButton);
+//        WebdriverWaits.waitUntilVisible(searchButton);
+//        click_custom(searchButton);
     }
     public void clickOn_ViewDetails(){
-        click_custom(viewDetails);
-
-    }
-    public void clickOn_viewStudentObservationButton(){
-        click_custom(viewStudentObservationButton);
-    }
-    public void clickOn_viewDocumentsButton(){
-        click_custom(viewDocumentsButton);
-    }
-    public void clickOn_BackButton(){
-        WebdriverWaits.WaitUntilInvisible(By.cssSelector("div.ngx-spinner-overlay"));
-        WebdriverWaits.WaitUntilVisible(backButton);
-        click_custom(backButton);
+        WebdriverWaits.waitUntilVisible(viewDetailsLink);
+        click_custom(viewDetailsLink);
     }
 
-    public void viewAllAppointmentsPage(String diagnosticianFirstName,String diagnosticianLastName) throws InterruptedException {
-         WebdriverWaits.WaitUntilVisible(dashBoardPage);
-          validate_text(dashBoardPage,"Dashboard");
-        Log.info("DashBoard page appear after superAdmin logged in");
 
-        click_AppointmentTab();
-        validate_text(viewAllTab,"View All");
-        Log.info("View all details tab successfully displayed");
-
-
-
-        click_ViewAllTab();
-        WebdriverWaits.WaitUntilVisible(allAppointmentsPage);
-        validate_text(allAppointmentsPage,"All Appointments");
-        Log.info("Successfully All appointments page displayed");
-
-//        click_FilterButton();
-//        WebdriverWaits.WaitUntilVisible(searchByDate);
-//       // enter_Dates(dateFromText, toDateText);
-//        validate_text(searchByDate,diagnosticianFirstName);
-//        Log.info("Successfully searched created appointment By entering dates");
-
-       // getDriver().navigate().refresh();// To-DO
-
-        click_FilterButton();
-        click_SearchField(diagnosticianFirstName);
-        WebdriverWaits.WaitUntilVisible(searchedText);
-        validate_text(searchedText,diagnosticianFirstName+' '+diagnosticianLastName);
-        Log.info("Successfully searched created appointment");
-
-    }
     public void exportCSV_Button(){
         click_AppointmentTab();
         click_ViewAllTab();
         clickOn_ExportCSVButton();
     }
-
-    public void View_DetailsPage(){
-        click_AppointmentTab();
-        click_ViewAllTab();
-       // clickOn_ViewDetails();
-    }
-    public void View_CompleteTab(){
-        click_AppointmentTab();
-        click_CompleteTab();
-        clickOn_ViewDetails();
-    }
-    public void view_ClientObservation_Page() throws InterruptedException {
-        clickOn_viewStudentObservationButton();
-        WebdriverWaits.WaitUntilVisible(clientObservation);
-        validate_text(clientObservation,"Client Observation");
-        clickOn_viewDocumentsButton();
-        WebdriverWaits.WaitUntilVisible(attachedDocument);
-        validate_text(attachedDocument,"Attached Documents");
-        clickOn_BackButton();
-    }
+public void cancelAppointment(){
+    clickOn_CancelButton();
+}
 }
