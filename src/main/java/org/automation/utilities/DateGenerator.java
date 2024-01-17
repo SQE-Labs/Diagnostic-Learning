@@ -24,6 +24,14 @@ public class DateGenerator {
         return date1;
     }
 
+    public static  String getCurrentDateFromSystem()
+    {
+        LocalDate currentDate = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy");
+        String formattedDate = currentDate.format(formatter);
+        System.out.println("generated Date is ======   " + formattedDate);
+        return formattedDate;
+    }
     public static String getDateWithDays(String format, int dayToAdd) {
 
         LocalDate todayDate = LocalDate.now();

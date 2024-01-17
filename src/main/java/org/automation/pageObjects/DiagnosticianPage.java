@@ -27,7 +27,7 @@ public class DiagnosticianPage extends BasePage {
     public By avaActualText = By.xpath("//div[@class='ng-star-inserted']");
     public By diagnostician_FirstName = By.xpath("//input[@placeholder='First Name']");
     public By diagnostician_LastName = By.xpath("//input[@placeholder='Last Name']");
-    public By diagnostician_MobileNumber = By.xpath("//input[@placeholder='(999) 999-9999']");
+    public By diagnostician_MobileNumber = By.xpath("//input[@placeholder='Cell Number']");
     public By diagnostician_Email = By.xpath("//input[@placeholder='Email']");
     public By assignLocation = By.xpath("//select[@id='testingLocation']");
     public By locationName = By.xpath("//option[text()='Plano']");

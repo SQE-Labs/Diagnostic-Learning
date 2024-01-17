@@ -9,8 +9,7 @@ import org.openqa.selenium.WebElement;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.automation.utilities.Assertions.validate_AttText;
-import static org.automation.utilities.Assertions.validate_text;
+import static org.automation.utilities.Assertions.*;
 import static org.automation.utilities.WebdriverWaits.moveToElement;
 
 public class AdminPage extends BasePage {
@@ -157,7 +156,7 @@ public class AdminPage extends BasePage {
     public By amountField = By.xpath("//input[@id='bookingDeposit']");
     public By collectButton = By.xpath("//button[@class='theme-button mx-2']");
     public By cancelButton = By.xpath("(//a[@class='theme-button grey'])[4]");
-    public By clientNameDetail = By.xpath("//h3");
+    public By clientNameDetail = By.xpath("//label[text()='Full Name']/following-sibling::p");
 
     public By cancelTab = By.xpath("//a[text()='Canceled']");
     public By clientName=By.cssSelector("tr:not([style='display: none;' ]) td:nth-child(1)");
@@ -166,18 +165,28 @@ public class AdminPage extends BasePage {
 
 
     public By todayTab=By.xpath("//a[contains(text(),'Today')]");
+    public By testReadyTab=By.xpath("//a[text()='Test Ready']");
 
     public By card=By.xpath("(//td[@class='d-block ng-star-inserted'])[1]");
     public By nameOnCard=By.xpath("(//p[@class='text-purple mb-0'])[1]");
 
     public By nameOnClientDetails=By.xpath("//div[@class='page-header align-items-lg-center d-flex flex-column flex-md-row']/h3");
 
+   public By todayDateOnCard=By.xpath("//span[@class='text-grey']");
+
+   public By getTestReadyTitle=By.xpath("//div[@class='align-items-md-center d-flex flex-column flex-md-row page-header']/h3");
+
+   public By upcomingTab=By.xpath("//a[text()='Upcoming']");
+
+   public By titleOfUpcomingPage=By.xpath("//div[@class='page-header align-items-lg-center d-flex flex-column flex-md-row']/h3");
+
+   public By nameOfTestReadyCard=By.xpath("(//div[@class='client-diagno d-flex align-items-center justify-content-between']/p)[1]");
+
+   public By getStatus=By.xpath("(//tr[not(contains(@style,'display: none;'))])[2]//span");
 
 
-    //******************Verifying cancelled appointments*****************
 
-
-
+   //******************Verifying cancelled appointments*****************
 
 
     public void click_TodayTab()
@@ -188,12 +197,39 @@ public class AdminPage extends BasePage {
         click_custom(todayTab);
     }
 
+    public void click_TestReadyTab()
+    {
+        WebdriverWaits.waitUntilVisible(appointmentTab);
+        click_custom(appointmentTab);
+        WebdriverWaits.waitUntilVisible(testReadyTab);
+        click_custom(testReadyTab);
+    }
+
+    public void click_UpcomingTab()
+    {
+        WebdriverWaits.waitUntilVisible(appointmentTab);
+        click_custom(appointmentTab);
+        WebdriverWaits.waitUntilVisible(upcomingTab);
+        click_custom(upcomingTab);
+    }
+
     public void click_OnCard()
     {
         WebdriverWaits.waitUntilVisible(card);
         click_custom(card);
     }
 
+    public void testReadyCardDetails()
+    {
+        AppointmentsPage appointment=new AppointmentsPage();
+        String nameOfClient=getText_custom(nameOfTestReadyCard);
+        WebdriverWaits.waitUntilVisible(appointmentTab);
+        click_custom(appointmentTab);
+        click_custom(appointment.viewAllTab);
+        click_custom(filterButton);
+        sendKeys_withClear(searchTextBox,nameOfClient);
+
+    }
 
     public void clickOn_createAdminButton() {
         WebdriverWaits.waitUntilVisible(createAdminButton);
@@ -746,6 +782,26 @@ public class AdminPage extends BasePage {
         click_custom(appointmentTab);
         WebdriverWaits.waitForSpinner();
         click_custom(testCompleteTab);
+    }
+    public void clickOnAppointmentTab() {
+        WebdriverWaits.waitUntilVisible(appointmentTab);
+        WebdriverWaits.waitForSpinner();
+        click_custom(appointmentTab);
+    }
+
+    public void filter_ForUpcoming()
+    {
+        WebdriverWaits.waitUntilVisible(filterButton);
+        WebdriverWaits.waitForSpinner();
+        click_custom(filterButton);
+        String clientText="Upcoming";
+        sendKeys_withClear(searchField, clientText);
+    }
+
+    public void filter_ForTestReady()
+    {
+        String clientText="Test Ready";
+        sendKeys_withClear(searchField, clientText);
     }
 
     public void click_Re_AssigDropDown() {

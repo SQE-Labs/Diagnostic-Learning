@@ -377,19 +377,28 @@ SuperAdminTest Superadmin=new SuperAdminTest();
         validate_text(hold.validateHoldClient,holdAppointmentname);
     }
 
-    @Test(priority = 30, enabled = false, description = " admin is directed to 'Today's Appointment' page")
+    @Test(priority = 30, enabled = true, description = "Admin is directed to 'Today's Appointment' page")
     public void todayAppointment_Tab() throws InterruptedException
 
     {
          AdminPage admin= new AdminPage();
+         DateGenerator datePage=new DateGenerator();
+         LoginPage login = new LoginPage();
+         login.adminLogin( "allen","123456");
+         admin.clickOn_AppointmentTab();
          admin.click_TodayTab();
          validate_text(admin.todayAppointmentTitle,expectedTextforToayTitle);
+         String expectedDate=datePage.getCurrentDateFromSystem();
+         validate_text(admin.todayDateOnCard,expectedDate);
 
     }
 
-    @Test(priority = 30, enabled = true, description = "Admin is directed to 'Client Details' page")
+    @Test(priority = 30, enabled = true, description = "Admin is directed to 'Client Details' page of Today's appointment card")
     public void clientDetails_Page() throws InterruptedException {
         AdminPage admin = new AdminPage();
+        LoginPage login = new LoginPage();
+        login.adminLogin( "allen","123456");
+        admin.clickOn_AppointmentTab();
         admin.click_TodayTab();
         String actualText = getText_custom(admin.nameOnCard);
         admin.click_OnCard();
@@ -413,6 +422,73 @@ SuperAdminTest Superadmin=new SuperAdminTest();
 
         validate_AttText(actualText, expectedTitleText);
     }
+
+    @Test(priority = 30, enabled = true, description = "Admin is directed to 'Test Ready Appointment' page")
+    public void testReady_Tab() throws InterruptedException
+    {
+        AdminPage admin = new AdminPage();
+        LoginPage login = new LoginPage();
+        login.adminLogin("allen", "123456");
+        String expectedTitle="Test Ready Appointments";
+        admin.clickOn_AppointmentTab();
+        admin.click_TestReadyTab();
+        validate_text(admin.getTestReadyTitle,expectedTitle);
+        admin.testReadyCardDetails();
+        String expectedStatus="Test Ready";
+        validate_text(admin.getStatus,expectedStatus);
+
+    }
+
+    @Test(priority = 30, enabled = true, description = "Admin is directed to 'Client Details' page of Test ready card")
+    public void clientDetailsPage_OfTestReady() throws InterruptedException {
+        AdminPage admin = new AdminPage();
+        LoginPage login = new LoginPage();
+        login.adminLogin( "allen","123456");
+        admin.clickOnAppointmentTab();
+        admin.click_TestReadyTab();
+        String actualText = getText_custom(admin.nameOnCard);
+        admin.click_OnCard();
+        String clientName = getText_custom(admin.clientNameDetail);
+
+        String[] words = clientName.split(" ");
+        String expectedTitleText=null;
+        if (words.length >= 2) {
+            // Fetch the first two words
+            String firstWord = words[0];
+            String secondWord = words[1];
+            expectedTitleText = firstWord + " " + secondWord;
+
+            // Print the result
+            System.out.println(expectedTitleText);
+            System.out.println("First word: " + firstWord);
+            System.out.println("Second word: " + secondWord);
+        } else {
+            // Handle the case where there are not enough words
+            System.out.println("The input string does not contain at least two words.");
+        }
+
+        validate_AttText(actualText, expectedTitleText);
+    }
+
+    @Test(priority = 30, enabled = true, description = "Admin is directed to 'Upcoming Appointment' page")
+    public void upcoming_Tab() throws InterruptedException
+    {
+        AdminPage admin = new AdminPage();
+        LoginPage login = new LoginPage();
+        login.adminLogin("allen", "123456");
+        String expectedTitle="Upcoming Appointments";
+        admin.clickOnAppointmentTab();
+        admin.click_UpcomingTab();
+        validate_text(admin.titleOfUpcomingPage,expectedTitle);
+        admin.filter_ForUpcoming();
+        String statusTestReady="Test Ready";
+        String statusUpcoming="Upcoming";
+        validate_text(admin.getStatus,statusUpcoming);
+        admin.filter_ForTestReady();
+        validate_text(admin.getStatus,statusTestReady);
+    }
+
+
     //************************ Edit Diagnostician *********************//
     @Test(priority = 23,enabled = false, description = "Search created diagnostician by admin")
     public void search_Diagnostician()  {
