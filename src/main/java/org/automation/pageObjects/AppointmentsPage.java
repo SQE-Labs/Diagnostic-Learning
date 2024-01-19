@@ -14,6 +14,9 @@ public class AppointmentsPage extends BasePage {
     public By viewAllTab=By.xpath("//a[text()='View All']");
     public By dashBoardPage=By.xpath("//h3[text()='Dashboard']");
     public By allAppointmentsPage=By.xpath("//h3");
+    public By testReadyTab=By.xpath("//a[text()='Test Ready']");
+
+    public By upcomingTab=By.xpath("//a[text()='Upcoming']");
     public By searchedText=By.cssSelector("tr:not([style='display: none;' ]) td:nth-child(1)");
     public By viewDetailsLink=By.cssSelector("tr:not([style='display: none;' ]) td:nth-child(7)");
     public By clickSlotSaveBtn= By.xpath("//mbsc-button[text()=' Save ']");
@@ -62,6 +65,9 @@ public class AppointmentsPage extends BasePage {
 
     public By searchTextBox = By.id("filterSearch");
     public  By todayTab=By.xpath("//a[contains(text(),'Today')]");
+    public By testCompleteTab=By.xpath("//a[text()='Test complete']");
+
+
 
 
     public void enterFirstName(String cilentFirstNameText){

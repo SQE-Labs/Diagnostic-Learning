@@ -15,6 +15,7 @@ import org.testng.Assert;
 
 import org.testng.annotations.*;
 
+import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
@@ -28,9 +29,11 @@ public class AdminTest extends BaseTest {
 
 
 SuperAdminTest Superadmin=new SuperAdminTest();
+SuperAdminPage superAdmin=new SuperAdminPage();
 
       public static String clientLastName;
       public static String diagnosticianUserName;
+    DashBoardPanelPage dashboard=new DashBoardPanelPage();
     String directorFirstName;
     String directorUserName;
     String dirCellNumber;
@@ -488,6 +491,156 @@ SuperAdminTest Superadmin=new SuperAdminTest();
         validate_text(admin.getStatus,statusTestReady);
     }
 
+    @Test(priority = 30, enabled = true, description = "Admin is able to click on filter button")
+    public void click_OnFilterBtn() throws InterruptedException
+    {
+        AdminPage admin = new AdminPage();
+        LoginPage login = new LoginPage();
+        login.adminLogin("allen", "123456");
+        admin.verify_UserClick_OnFilterBtn();
+
+       //Search field
+        String actualSearchText = getDriver().findElement(By.xpath("//input[@id='filterSearch']")).getAttribute("placeholder");
+        System.out.println(actualSearchText);
+        String expectedSearchText="Type here to search";
+        validate_AttText(actualSearchText, expectedSearchText);
+
+        //From Date
+        String actualFromDateText = getDriver().findElement(By.xpath("//input[@placeholder='From Date']")).getAttribute("placeholder");
+        System.out.println(actualFromDateText);
+        String expectedFromDateText="From Date";
+        validate_AttText(actualFromDateText, expectedFromDateText);
+
+        //To Date
+        String actualToDateText = getDriver().findElement(By.xpath("//input[@placeholder='To Date']")).getAttribute("placeholder");
+        System.out.println(actualToDateText);
+        String expectedToDateText="To Date";
+        validate_AttText(actualToDateText, expectedToDateText);
+
+
+    }
+
+    @Test(priority = 30, enabled = true, description = "Admin is able to click on Export CSV button")
+    public void click_OnExportCSVButton() throws InterruptedException, FileNotFoundException {
+        AdminPage admin = new AdminPage();
+        LoginPage login = new LoginPage();
+        login.adminLogin("allen", "123456");
+        admin.click_OnExportCSVButton();
+        String downloadFile = dashboard.getDownloadFileName();
+        Assert.assertTrue(dashboard.isFileDownloaded(downloadFile));
+
+    }
+    @Test(priority = 30, enabled = true, description = "Admin is able to click client detail page after clicking on 'View Details' button")
+    public void click_OnViewDetailsButton()  {
+        AdminPage admin = new AdminPage();
+        LoginPage login = new LoginPage();
+        login.adminLogin("allen", "123456");
+        admin.click_OnAppointmentsTab();
+        String actualText = getText_custom(admin.getNameOfClient);
+        admin.click_OnViewDetailsBtn();
+        String clientName = getText_custom(admin.clientNameDetail);
+
+        String[] words = clientName.split(" ");
+        String expectedTitleText=null;
+        if (words.length >= 2) {
+            // Fetch the first two words
+            String firstWord = words[0];
+            String secondWord = words[1];
+            expectedTitleText = firstWord + " " + secondWord;
+
+            // Print the result
+            System.out.println(expectedTitleText);
+            System.out.println("First word: " + firstWord);
+            System.out.println("Second word: " + secondWord);
+        } else {
+            // Handle the case where there are not enough words
+            System.out.println("The input string does not contain at least two words.");
+        }
+
+        validate_AttText(actualText, expectedTitleText);
+
+
+    }
+
+    @Test(priority = 30, enabled = true, description = "Admin is able to click on 'Test Ready' subtab")
+    public void click_OnTestCompleteSubtab()
+    {
+        AdminPage admin = new AdminPage();
+        LoginPage login = new LoginPage();
+        login.adminLogin("allen", "123456");
+        admin.click_OnTestCompleteTab();
+        String expectedText="Test Complete Appointments";
+        String actualText = getText_custom(admin.getTitleOfTestComplete);
+        validate_AttText(actualText, expectedText);
+
+    }
+
+    @Test(priority = 30, enabled = true, description = "Admin is able to click on 'View Details button of 'Test Complete' subtab")
+    public void click_OnTestCompleteViewBtn()
+    {
+        AdminPage admin = new AdminPage();
+        LoginPage login = new LoginPage();
+        login.adminLogin("allen", "123456");
+        String expectedTitle="View Student Observation";
+        admin.click_OnTestCompleteTab();
+        String actualText = getText_custom(admin.getNameOfClient);
+        admin.click_OnViewDetailsBtn();
+        String clientName = getText_custom(admin.clientNameDetail);
+
+        String[] words = clientName.split(" ");
+        String expectedTitleText=null;
+        if (words.length >= 2) {
+            // Fetch the first two words
+            String firstWord = words[0];
+            String secondWord = words[1];
+            expectedTitleText = firstWord + " " + secondWord;
+
+            // Print the result
+            System.out.println(expectedTitleText);
+            System.out.println("First word: " + firstWord);
+            System.out.println("Second word: " + secondWord);
+        } else {
+            // Handle the case where there are not enough words
+            System.out.println("The input string does not contain at least two words.");
+        }
+
+        validate_AttText(actualText, expectedTitleText);
+        validate_text(superAdmin.viewStudentObservationButton,expectedTitle );
+
+
+    }
+
+    @Test(priority = 30, enabled = true, description = "Admin is able to click on 'View Observation' button")
+    public void click_OnViewObservationBtn()
+    {
+        AdminPage admin = new AdminPage();
+        LoginPage login = new LoginPage();
+        login.adminLogin("allen", "123456");
+        admin.click_OnTestCompleteTab();
+        admin.click_OnViewDetailsBtn();
+        admin.click_OnViewObservationBtn();
+        String expectedText="Client Observation";
+        String actualText = getText_custom(superAdmin.clientObservation);
+        validate_AttText(actualText, expectedText);
+
+    }
+
+    @Test(priority = 30, enabled = true, description = "Admin is able to click on 'View Observation' button")
+    public void click_OnViewDocumentBtn()
+    {
+        AdminPage admin = new AdminPage();
+        LoginPage login = new LoginPage();
+        login.adminLogin("allen", "123456");
+        admin.click_OnTestCompleteTab();
+        admin.click_OnViewDetailsBtn();
+        admin.click_OnViewObservationBtn();
+        admin.click_OnViewDocumentBtn();
+        String expectedText="Attached Documents";
+        validate_text(admin.getTitleOfAttachedDocument, expectedText);
+
+
+
+    }
 
     //************************ Edit Diagnostician *********************//
     @Test(priority = 23,enabled = false, description = "Search created diagnostician by admin")
