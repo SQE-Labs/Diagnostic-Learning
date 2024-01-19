@@ -28,7 +28,7 @@ import static test.AdminTest.*;
 public class DiagnosticianTest extends BaseTest {
 
 
-    public static String todays_Appointments;
+
 
     @Test(priority = 0, enabled = true, description = "Login as a diagnostician and verify it is diagnostician dashboard page or not")
     public void diagnostician_Login() {
@@ -40,13 +40,13 @@ public class DiagnosticianTest extends BaseTest {
         validate_text(diagnostician.dashboard, "Dashboard");
     }
 
-    @Test(priority = 1, enabled = false, description = "diagnostician Scheduling availability")
-    public void diagnostician_Availability() {
-        DiagnosticianPage diagnostician = new DiagnosticianPage();
-        diagnostician.set_Availability();
-        diagnostician.cancel_Availability();
-        diagnostician.deleting_Availability();
-    }
+//    @Test(priority = 1, enabled = true, description = "diagnostician Scheduling availability")
+//    public void diagnostician_Availability() throws InterruptedException {
+//        DiagnosticianPage diagnostician = new DiagnosticianPage();
+//        diagnostician.set_Availability();
+//        diagnostician.cancel_Availability();
+//        diagnostician.deleting_Availability();
+//    }
 
     @Test(priority = 2, enabled = true, description = "Diagnostician is Verifying upcoming appointments")
     public void verify_UpcomingAppointments() {
@@ -63,7 +63,7 @@ public class DiagnosticianTest extends BaseTest {
 
         diagnostician.view_ClientDetail(clientLastName);
         WebdriverWaits.waitUntilVisible(diagnostician.clientDetailText);
-        validate_text(diagnostician.clientDetailText, clientFirstName + ' ' + clientLastName + ' ' + "Details");
+        validate_text(diagnostician.clientDetailText, clientFirstName +' '+ clientLastName +' '+"Details");
     }
 
     @Test(priority = 4, enabled = true, description = "Diagnostician is verifying  that relevant records appear after selecting valid range of date, on 'Upcoming Appointments' page.")
@@ -134,7 +134,7 @@ public class DiagnosticianTest extends BaseTest {
     @Test(priority = 7,enabled = true,description = "diagnostician is verifying completed assessments")
     public void verify_CompleteAssessment(){
         DiagnosticianPage diagnostician = new DiagnosticianPage();
-        DashBoardPanelPage panelPage=new DashBoardPanelPage();
+
         diagnostician.verify_CompleteAss();
         diagnostician.click_filterButton();
         diagnostician.enter_ClientDetail(clientLastName);
@@ -159,7 +159,5 @@ public class DiagnosticianTest extends BaseTest {
         action.navigate_Back();
         panelpage.click_LogOutLink();
     }
-
-
 }
 

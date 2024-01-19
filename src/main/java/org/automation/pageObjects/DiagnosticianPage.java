@@ -35,9 +35,10 @@ public class DiagnosticianPage extends BasePage {
     public By password_Field = By.xpath("//input[@placeholder='Create Password']");
     public By confirm_PasswordField = By.xpath("//input[@placeholder='Confirm Password']");
     public By createDiagnosticianButton = By.xpath("//button[text()='Create Diagnostician']");
-    public By validationMsg = By.xpath("//div[@class='alert alert-danger ng-star-inserted']");
+    public By validationMsg = By.cssSelector(".alert.alert-danger.ng-star-inserted");
 
-    public By actualText = By.xpath("(//td)[2]");
+
+    public By actualText=By.cssSelector("tr:not([style='display: none;' ]) td:nth-child(2)");
     public By backButton = By.xpath("//button[text()='Back']");
     public By diagnosticianDashBoardPage = By.xpath("(//h3)[1]");
     public By back_Button = By.xpath("//button[@class='theme-button grey float-md-right mr-md-4']");
@@ -47,7 +48,7 @@ public class DiagnosticianPage extends BasePage {
 
     public By filterButton = By.xpath("//a[@class='theme-button grey ml-auto mr-3']");
     public By searchField = By.xpath("//input[@placeholder='Type here to search']");
-    public By searchFieldText = By.xpath("//input[@id='filterSearch']");
+
     public By viewClientDetailLink = By.xpath("(//td)[6]");
     public By clientDetailText = By.xpath("//div[contains(@class,'page-header align-items-lg-center')]");
     public  By clientNameText=By.xpath("//h3");
@@ -98,6 +99,7 @@ public class DiagnosticianPage extends BasePage {
     public By availableText = By.xpath("(//div[@class='ng-star-inserted'])[7]");
     public By upcomingTab = By.xpath("//a[text()='Upcoming']");
     public By searchTextButton = By.xpath("//button[@class='theme-button']");
+    public By dia_AvailSlots=By.xpath("//div[@class='mbsc-flex-1-1 mbsc-ios mbsc-ltr mbsc-timeline-column ng-star-inserted']");
 
 
 //*****************Set Availability for diagnostician ****************
@@ -150,8 +152,7 @@ public class DiagnosticianPage extends BasePage {
     public By slot9 = By.xpath("(//div[@class='mbsc-flex-1-1 mbsc-ios mbsc-ltr mbsc-timeline-column ng-star-inserted'])[10]");
     public By slot10 = By.xpath("(//div[@class='mbsc-flex-1-1 mbsc-ios mbsc-ltr mbsc-timeline-column ng-star-inserted'])[11]");
     public By slot11 = By.xpath("(//div[@class='mbsc-flex-1-1 mbsc-ios mbsc-ltr mbsc-timeline-column ng-star-inserted'])[12]");
-    public By slot12 = By.xpath("(//div[@class='mbsc-flex-1-1 mbsc-ios mbsc-ltr mbsc-timeline-column ng-star-inserted'])[13]");
-    public By slot13 = By.xpath("(//div[@class='mbsc-flex-1-1 mbsc-ios mbsc-ltr mbsc-timeline-column ng-star-inserted'])[14]");
+
     public By diagnosticianSaveButton = By.xpath("//button[text()='Save']");
     public By todayLink = By.xpath("//mbsc-button[text()=' Today ']");
     public By delete = By.xpath("//mbsc-button[text()=' Delete ']");
@@ -213,6 +214,7 @@ public class DiagnosticianPage extends BasePage {
     }
 
     public void enter_Diagnostician_MobileNumber(String diagnostician_MobileNumberText) {
+        WebdriverWaits.waitUntilVisible(diagnostician_MobileNumber);
         sendKeys_withClear(diagnostician_MobileNumber, diagnostician_MobileNumberText);
     }
 
@@ -239,6 +241,11 @@ public class DiagnosticianPage extends BasePage {
 
     public void clickOn_createDiagnosticianButton() {
         click_custom(createDiagnosticianButton);
+    }
+    public void clickOn_FilterButton(){
+        WebdriverWaits.waitUntilVisible(filterButton);
+        WebdriverWaits.waitForSpinner();
+        click_custom(filterButton);
     }
 
 
@@ -345,6 +352,12 @@ public class DiagnosticianPage extends BasePage {
         click_filterButton();
         enterInSearchField(UserName);
     }
+    public void serach_Dia(String diaName){
+        WebdriverWaits.waitUntilVisible(filterButton);
+        WebdriverWaits.waitForSpinner();
+        click_custom(filterButton);
+        enterInSearchField(diaName);
+    }
 
     public void edit_Diagnostician(String EmailAddress1, String passwordTextFieldText, String confirmPasswordFieldText) throws InterruptedException {
         click_On_EditButton();
@@ -364,7 +377,7 @@ public class DiagnosticianPage extends BasePage {
     }
 
     public void disable_Diagnostician(String userNameText) throws InterruptedException {
-        click_filterButton();
+        clickOn_FilterButton();
         enterInSearchField(userNameText);
         Thread.sleep(2000);
         click_On_EditButton();
@@ -386,6 +399,8 @@ public class DiagnosticianPage extends BasePage {
         clickOn_confirmPasswordFieldField(confirmPasswordFieldText);
         clickOn_DontSave();
     }
+
+
     //****************Diagnostician is checking todays appointments**************
 
 
@@ -473,23 +488,30 @@ public class DiagnosticianPage extends BasePage {
         validate_text(disableButton, "Save");
     }
 
-    public void click_On_Slot() {
-
+    public void click_On_Slot() throws InterruptedException {
         // use logic??
-
-        WebdriverWaits.waitUntilVisible(slot10);
-        //click_custom(slot3);
-       // click_custom(slot4);
-        //  click_custom(slot5);
-        //click_custom(slot6);
-        //click_custom(slot7);
-       // click_custom(slot8);
-        //click_custom(slot9);
-        click_custom(slot10);
-        click_custom(slot11);
-        click_custom(slot12);
-        click_custom(slot13);
-
+//        WebdriverWaits.waitUntilVisible(slot10);
+//        click_custom(slot3);
+////       click_custom(slot4);
+//          click_custom(slot5);
+//        click_custom(slot6);
+//        click_custom(slot7);
+//        click_custom(slot8);
+//        click_custom(slot9);
+//        click_custom(slot10);
+//        click_custom(slot11);
+//        click_custom(slot12);
+//        click_custom(slot13);
+        Thread.sleep(5000);
+        List<WebElement> slots=getWebElements(dia_AvailSlots,"Diagnostician Available slots");
+        System.out.println(slots.size());
+        for(WebElement slot : slots){
+            Thread.sleep(2000);
+            moveToEleByWE(slot);
+            if(getDriver().findElements(By.xpath("//div[@class='ng-star-inserted']")).size()>6){
+                break;
+            }
+        }
 
         WebdriverWaits.waitUntilVisible(enableSaveButton);
         validate_text(enableSaveButton, "Save");
@@ -502,7 +524,7 @@ public class DiagnosticianPage extends BasePage {
         click_custom(delete);
     }
 
-    public void set_Availability() {
+    public void set_Availability() throws InterruptedException {
         click_On_Availablity();
         click_On_Slot();
     }

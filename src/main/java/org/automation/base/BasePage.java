@@ -1,7 +1,6 @@
 package org.automation.base;
 
 
-
 import com.relevantcodes.extentreports.LogStatus;
 import org.automation.elements.Element;
 import org.automation.logger.Log;
@@ -65,11 +64,11 @@ public class BasePage extends ActionEngine {
 
     /**
      * Switch to the newly opened window.
-     *
-    // * @param description description of the new window
+     * <p>
+     * // * @param description description of the new window
      */
     public void switchToWindow() {
-       // Log.info("Switch to window [" + description + "]");
+        // Log.info("Switch to window [" + description + "]");
         parentWindow = getDriver().getWindowHandle();
         for (String windowHandle : getDriver().getWindowHandles())
             if (!windowHandle.equals(parentWindow))
@@ -108,8 +107,8 @@ public class BasePage extends ActionEngine {
 
     /**
      * Switch to the Main window.
-     *
-   //  * @param description description of the main window
+     * <p>
+     * //  * @param description description of the main window
      */
     public void switchToParentWindow() {
         //Log.info("Switch to parent window [" + description + "]");
@@ -119,7 +118,7 @@ public class BasePage extends ActionEngine {
     /**
      * Switch to the frame containing the specified element.
      *
-     * @param element     element of the frame
+     * @param element element of the frame
      */
     public void switchToFrame(Element element) {
         Log.info("Switch to frame [" + element.getDescription() + "]");
@@ -160,7 +159,7 @@ public class BasePage extends ActionEngine {
 
     public void ScrollThePage(int x, int y) {
         JavascriptExecutor js = (JavascriptExecutor) getDriver();
-        js.executeScript("window.scrollBy("+x+", "+y+")", "");
+        js.executeScript("window.scrollBy(" + x + ", " + y + ")", "");
     }
 
     public void ScrollDownThePageMax() {
@@ -175,14 +174,22 @@ public class BasePage extends ActionEngine {
         jse.executeScript("arguments[0].scrollIntoView(true);", ele);
     }
 
-public  void scrolltoUp() {
 
-    JavascriptExecutor jse = (JavascriptExecutor) getDriver();
-    try {
-        jse.executeScript("window.scrollBy(0,-1500)");
-    } catch (Exception e) {
-        throw new RuntimeException (e);
+    public void scrolltoUp() {
+        JavascriptExecutor jse = (JavascriptExecutor) getDriver();
+        try {
+            jse.executeScript("window.scrollBy(0,-1500)");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
-}
+    public void scrolltoHorizontal() {
+        JavascriptExecutor jse = (JavascriptExecutor) getDriver();
+        try {
+            jse.executeScript("window.scrollBy(10000,0)");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }

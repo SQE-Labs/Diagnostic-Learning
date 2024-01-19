@@ -31,12 +31,16 @@ public class DashBoardPanelPage extends BasePage {
     public By searchField = By.xpath("//input[@id='filterSearch']");
 
 
+
     public void click_LogOutLink() {
         WebdriverWaits.waitUntilVisible(logOutLink);
         click_custom(logOutLink);
     }
 
+
     public void click_ViewAllTab() {
+        WebdriverWaits.waitUntilVisible(viewAllTab);
+        WebdriverWaits.waitForSpinner();
         click_custom(viewAllTab);
     }
 

@@ -17,7 +17,7 @@ public class DirectorPage extends BasePage {
     public By directorActualText = By.xpath("//h3[text()='Directors List']");
     public By directorsFirstName = By.xpath("//input[@placeholder='First Name']");
     public By directorsLastName = By.xpath("//input[@placeholder='Last Name']");
-    public By directorsMobileNumber = By.xpath("//input[@placeholder='(999) 999-9999']");
+    public By directorsMobileNumber = By.xpath("//input[@placeholder='Cell Number']");
     public By directorsEmail = By.xpath("//input[@placeholder='Email']");
     public By assignLocation = By.xpath("//select[@id='testingLocation']");
     public By directorsLocationName = By.xpath("//option[text()='Austin']");
@@ -67,7 +67,7 @@ public class DirectorPage extends BasePage {
     public By clickOnBox6 = By.xpath("(//div[@class='mbsc-flex-1-0 mbsc-ios mbsc-schedule-item ng-star-inserted'])[16]");
     public By availableText = By.xpath("//div[text()='Available']");
     public By saveButton = By.xpath("//button[text()='Save']");
-    public By validationMsg = By.xpath("//div[@class='alert alert-danger ng-star-inserted']");
+    public By validationMsg = By.cssSelector(".alert.alert-danger.ng-star-inserted");
 
     public By selectYear = By.xpath("//div[text()=' 2023 ']");
     public By selectMonth = By.xpath("(//div[text()=' Dec '])[2]");
@@ -192,6 +192,7 @@ public class DirectorPage extends BasePage {
     }
 
     public void off_ToggleButton() {
+        WebdriverWaits.waitUntilVisible(toggle);
         click_custom(toggle);
     }
 
@@ -318,11 +319,6 @@ public class DirectorPage extends BasePage {
     }
 
     public void director_Availability() throws InterruptedException {
-        //  clickOn_MonthHeader();
-        // WebdriverWaits.waitUntilVisible(yearsCalender);
-        //validate_text(yearsCalender, "2023 - 2034");
-        //  select_Year();
-        // select_Month();
         WebdriverWaits.waitForSpinner();
         Thread.sleep(10000);
         List<WebElement> list = getDriver().findElements(By.xpath("//div[@class='mbsc-flex-1-0 mbsc-ios mbsc-schedule-item ng-star-inserted']"));
