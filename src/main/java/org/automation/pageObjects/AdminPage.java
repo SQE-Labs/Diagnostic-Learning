@@ -197,7 +197,24 @@ public class AdminPage extends BasePage {
 
   public By getTitleOfAttachedDocument=By.xpath("//h5[@class='text-center mb-4']");
 
-   //******************Verifying cancelled appointments*****************
+    public By uploadDocumentButton = By.xpath("//button[@class='theme-button m-2 ng-star-inserted']");
+
+    public By chooseField = By.xpath("//input[@placeholder='select document to be uploaded']");
+
+    public By uploadButton = By.xpath("//button[@class='theme-button mx-2']");
+    public By getTextFromViewDoc = By.xpath("//a[@class='d-flex px-3 py-2 small text-dark text-left text-wrap']");
+
+    public By getTextFromViewDocTwo=By.xpath("//a[@class='d-block px-3 py-2 small text-dark']");
+
+    public By closeIcon=By.xpath("//button[@aria-label='Close']/span");
+
+    public By backButton=By.xpath("//a[@class='grey ml-3 theme-button']");
+
+    public By title=By.xpath("//h3");
+
+    public By clientNameCompleted=By.xpath("((//tr[not(contains(@style,'display: none;'))])[2]/td)[1]");
+
+    //******************Verifying cancelled appointments*****************
 
 
 
@@ -829,7 +846,7 @@ public class AdminPage extends BasePage {
         enterInSearchField(clientName);
     }
 
-    public void click_TodayTab()
+    public void clickOn_TodayTab()
     {
         WebdriverWaits.waitUntilVisible(appointment.appointmentsTab);
         click_custom(appointment.appointmentsTab);
@@ -837,7 +854,7 @@ public class AdminPage extends BasePage {
         click_custom(appointment.todayTab);
     }
 
-    public void click_TestReadyTab()
+    public void clickOn_TestReadyTab()
     {
         WebdriverWaits.waitUntilVisible(appointment.appointmentsTab);
         click_custom(appointment.appointmentsTab);
@@ -845,7 +862,7 @@ public class AdminPage extends BasePage {
         click_custom(appointment.testReadyTab);
     }
 
-    public void click_UpcomingTab()
+    public void clickOn_UpcomingTab()
     {
         WebdriverWaits.waitUntilVisible(appointment.appointmentsTab);
         click_custom(appointment.appointmentsTab);
@@ -853,13 +870,13 @@ public class AdminPage extends BasePage {
         click_custom(appointment.upcomingTab);
     }
 
-    public void click_OnCard()
+    public void clickOn_Card()
     {
         WebdriverWaits.waitUntilVisible(card);
         click_custom(card);
     }
 
-    public void testReadyCardDetails()
+    public void enterClientNameInSearchField()
     {
 
         String nameOfClient=getText_custom(nameOfTestReadyCard);
@@ -871,7 +888,7 @@ public class AdminPage extends BasePage {
 
     }
 
-    public void verify_UserClick_OnFilterBtn()
+    public void ClickOn_FilterBtn()
     {
         WebdriverWaits.waitUntilVisible(appointment.appointmentsTab);
         click_custom(appointment.appointmentsTab);
@@ -880,7 +897,7 @@ public class AdminPage extends BasePage {
 
     }
 
-    public void click_OnExportCSVButton()
+    public void clickOn_ExportCSVButton()
     {
         WebdriverWaits.waitUntilVisible(appointment.appointmentsTab);
         click_custom(appointment.appointmentsTab);
@@ -889,13 +906,24 @@ public class AdminPage extends BasePage {
 
     }
 
-    public void click_OnViewDetailsBtn()
+    public void clickOn_ExportCSVButtonOfTestComplete()
+    {
+        click_custom(dashboardPanelPage.exportCSVButton);
+
+    }
+    public void clickOn_ViewDetailsBtn()
     {
         WebdriverWaits.waitUntilVisible(getViewDetails);
         click_custom(getViewDetails);
     }
 
-    public void click_OnAppointmentsTab()
+    public void clickOn_BackBtn()
+    {
+        WebdriverWaits.waitUntilVisible(backButton);
+        click_custom(backButton);
+    }
+
+    public void clickOn_AppointmentsTab()
     {
         WebdriverWaits.waitUntilVisible(appointment.appointmentsTab);
         click_custom(appointment.appointmentsTab);
@@ -904,7 +932,7 @@ public class AdminPage extends BasePage {
 
     }
 
-    public void click_OnTestCompleteTab()
+    public void clickOn_TestCompleteTab()
     {
         WebdriverWaits.waitUntilVisible(appointment.appointmentsTab);
         click_custom(appointment.appointmentsTab);
@@ -913,17 +941,53 @@ public class AdminPage extends BasePage {
 
     }
 
-    public void click_OnViewObservationBtn()
+    public void clickOn_FilterBtn()
+    {
+        click_custom(filterButton);
+    }
+
+    public void clickOn_ViewObservationBtn()
     {
         WebdriverWaits.waitUntilVisible(superAdmin.viewStudentObservationButton);
         click_custom(superAdmin.viewStudentObservationButton);
 
     }
 
-    public void click_OnViewDocumentBtn()
+    public void clickOn_ViewDocumentBtn()
     {
         WebdriverWaits.waitUntilVisible(superAdmin.viewDocumentButton);
         click_custom(superAdmin.viewDocumentButton);
+    }
+
+    public void clickOn_UploadButton() {
+        WebdriverWaits.waitUntilVisible(uploadDocumentButton);
+        WebdriverWaits.waitForSpinner();
+        scrollIntoView(uploadDocumentButton);
+        click_custom(uploadDocumentButton);
+    }
+
+    public void clickOn_ChooseFile() {
+        WebdriverWaits.waitUntilVisible(chooseField);
+        WebdriverWaits.waitForSpinner();
+        moveToElement(chooseField);
+    }
+
+    public void clickOn_UploadButtons() {
+        click_custom(uploadButton);
+    }
+
+    public void clickOn_CloseIcon()
+    {
+        WebdriverWaits.waitUntilVisible(closeIcon);
+        WebdriverWaits.waitForSpinner();
+        click_custom(closeIcon);
+    }
+
+    public void clickOn_CompletedTab()
+    {
+        WebdriverWaits.waitUntilVisible(appointment.completedTab);
+        WebdriverWaits.waitForSpinner();
+        click_custom(appointment.completedTab);
     }
 
 }

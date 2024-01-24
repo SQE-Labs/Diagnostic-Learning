@@ -16,6 +16,7 @@ import org.testng.Assert;
 
 import org.testng.annotations.*;
 
+import java.awt.*;
 import java.io.FileNotFoundException;
 import org.testng.annotations.Test;
 import java.time.LocalDate;
@@ -56,17 +57,21 @@ SuperAdminPage superAdmin=new SuperAdminPage();
     public By fullNameOfClient=By.xpath("//label[text()='Full Name']/following-sibling::p");
 
     @Test(priority = 0, enabled = true, description = "Verify admin is able to login with valid credentials")
-     public void admin_login(){
+     public void verify_Adminlogin()
+    {
+
     LoginPage login = new LoginPage();
-    login.adminLogin(adminUserName,"12345678");
+    login.adminLogin("allen","123456");
     AdminPage dasboard = new AdminPage();
     WebdriverWaits.waitForSpinner();
     validate_text(dasboard.adminDashboardText,"Dashboard");
+
     }
 
    //********* Create Daignostician by admin
     @Test(priority = 1, enabled = true, description = "Create diagnostician by admin")
-    public void create_Diagnostician() throws InterruptedException {
+    public void verify_CreateDiagnostician() throws InterruptedException
+    {
         DiagnosticianPage diagnostician = new DiagnosticianPage();
         DashBoardPanelPage logout = new DashBoardPanelPage();
         DashBoardPanelPage tab = new DashBoardPanelPage();
@@ -89,7 +94,7 @@ SuperAdminPage superAdmin=new SuperAdminPage();
 
     }
     @Test(priority = 2,enabled = true,description = "Set availability for diagnostician by admin")
-    public void diagnostician_Availability() throws InterruptedException {
+    public void verify_DiagnosticianAvailability() throws InterruptedException {
         DiagnosticianPage diagnostician = new DiagnosticianPage();
         DashBoardPanelPage logout = new DashBoardPanelPage();
         logout.click_LogOutLink();
@@ -101,7 +106,8 @@ SuperAdminPage superAdmin=new SuperAdminPage();
     }
 
     @Test(priority = 3, enabled = false, description = "Creating Director from admin" )
-    public void create_Director() throws InterruptedException {
+    public void verify_CreateDirector() throws InterruptedException
+    {
         DashBoardPanelPage panelpage=new DashBoardPanelPage();
         DirectorPage director = new DirectorPage();
         LoginPage login = new LoginPage();
@@ -120,7 +126,8 @@ SuperAdminPage superAdmin=new SuperAdminPage();
 
 
     @Test(priority= 4,enabled = false,description = "Set availability for director by admin.")
-    public void director_Availability() throws InterruptedException {
+    public void verify_DirectorAvailability() throws InterruptedException
+    {
         LoginPage login=new LoginPage();
         DashBoardPanelPage panelPage=new DashBoardPanelPage();
         login.directorLogin(directorUserName,"123456");
@@ -132,22 +139,23 @@ SuperAdminPage superAdmin=new SuperAdminPage();
     }
 
     @Test(priority = 5, enabled = true, description = "Appointment scheduled by admin for a client")
-    public void schedule_Appointment() throws InterruptedException {
+    public void verify_ScheduleAppointment() throws InterruptedException
+    {
         LoginPage login = new LoginPage();
         DashboardPage dashboard = new DashboardPage();
         AppointmentsPage appPage = new AppointmentsPage();
-        login.adminLogin( adminUserName,"12345678");
+        login.adminLogin( "allen","123456");
         dashboard.clickScheduleAppointment();
-        appPage.selectTestinglocation(1);
-        validate_SelectedOption(appPage.chooseTestingLocation,"Plano");
-        appPage.selectTestinglocation("Austin");
+        appPage.selectTestinglocation("Plano");
         appPage.selectAppointmentSlot();
-        appPage.selectAssesmentType(1);
+        appPage.selectAssesmentType("Adult ADHD Only");
         validate_SelectedOption(appPage.assestmentType,"Adult ADHD Only");
     }
 
     @Test(priority = 6, enabled = true, description = "Filling client details by admin.")
-     public void fill_clientDetailsSection() throws InterruptedException {
+     public void verify_FillClientDetailsSection() throws InterruptedException
+    {
+
         AppointmentsPage fillClientDetails = new AppointmentsPage();
         clientFirstName="Au_Theo"+RandomStrings.requiredCharacters(2);
         clientLastName="Au_Finn"+RandomStrings.requiredCharacters(2);
@@ -160,12 +168,14 @@ SuperAdminPage superAdmin=new SuperAdminPage();
 
 
     @Test(priority = 7, enabled = false, description = "Verify that admin is able to cancel the appointment or not")
-    public void cancel_Appointment() {
+    public void verify_ClickOnCancelAppointmentBtn()
+    {
         AppointmentsPage appPage=new AppointmentsPage();
         appPage.cancelAppointment();
     }
+
     @Test(priority = 8,enabled = false,description = "Diagnostician is verifying cancelled appointments")
-    public void verify_CancelledAppointment(){
+    public void verify_CancelledAppointmentAppear(){
         AdminPage admin=new AdminPage();
         admin.verify_CancelledApp(clientFirstName);
         WebdriverWaits.waitUntilVisible(admin.clientName);
@@ -174,7 +184,7 @@ SuperAdminPage superAdmin=new SuperAdminPage();
     }
 
     @Test(priority = 9, enabled = false, description = "Appointment scheduled by admin for a client")
-    public void reSchedule_Appointment() throws InterruptedException {
+    public void verify_ReScheduleAppointment() throws InterruptedException {
         DashboardPage dashboard = new DashboardPage();
         AppointmentsPage appPage = new AppointmentsPage();
         AppointmentsPage fillClientDetails = new AppointmentsPage();
@@ -182,23 +192,25 @@ SuperAdminPage superAdmin=new SuperAdminPage();
         dashboard.clickScheduleAppointment();
         appPage.selectTestinglocation("Austin");
         appPage.selectAppointmentSlot();
-        appPage.selectAssesmentType(1);
-        validate_SelectedOption(appPage.assestmentType,"Adult ADHD Only");
+        appPage.selectAssesmentType("Adult ADHD Only");
         fillClientDetails.fill_clientDetailsSection( clientFirstName, clientLastName, 1,"19-11-2000",1, "7654436788", clientEmail, "Other","New York","Texas","30052" ,"1000","900");
     }
 
     //********************** Create Follow Up For Client ***********************//
 
 
-    @Test(priority = 10, enabled = true, description = "Creat follow up for client by admin")
-    public void create_FollowUp()  {
-      AdminPage followUp= new AdminPage();
+    @Test(priority = 10, enabled = false, description = "Create follow up for client by admin")
+    public void verify_CreateFollowUp()
+    {
+
+        AdminPage followUp= new AdminPage();
         followUp.Create_FollowUp();
         validate_text(followUp.validateScheduledFollowUp,"Follow Up Scheduled!!");
         followUp.click_BackBtn();
     }
+    
     @Test(priority = 11, enabled = false, description = "Re-Assign Appointment for client by admin")
-    public void re_AssignAppointment() throws InterruptedException {
+    public void verify_ReAssignAppointment() throws InterruptedException {
         AdminPage reAssign = new AdminPage();
         reAssign.click_ReAssignBn();
         WebdriverWaits.waitUntilVisible(reAssign.reAssignDiagList);
@@ -207,15 +219,15 @@ SuperAdminPage superAdmin=new SuperAdminPage();
         Assert.assertTrue(result);
 
     }
-    @Test(priority = 11, enabled = false, description = "Re-Assign Appointment for client by admin")
-    public void edit_AssessmentTypePopUp()throws InterruptedException{
+    @Test(priority = 12, enabled = false, description = "Re-Assign Appointment for client by admin")
+    public void verify_EditAssessmentTypePopUp()throws InterruptedException{
         AdminPage editType = new AdminPage();
         editType.click_EditAssessment();
         validate_text(editType.assType,"Change Assement Type");
 
     }
-    @Test(priority = 12, enabled = false, description = "Verify Edit Assessment type button .")
-    public void edit_AssessmentType() throws InterruptedException{
+    @Test(priority = 13, enabled = false, description = "Verify Edit Assessment type button .")
+    public void verify_EditAssessmentType() throws InterruptedException{
         AdminPage editType = new AdminPage();
         editType.edit_AssessmentType("IQ");
         editType.click_UpdateBtn();
@@ -223,30 +235,30 @@ SuperAdminPage superAdmin=new SuperAdminPage();
         validate_text(editType.clientAsses,"IQ");
 
     }
-    @Test(priority = 13, enabled = true, description = "Verify Test plan button on <Client> details page.")
+    @Test(priority = 14, enabled = true, description = "Verify Test plan button on <Client> details page.")
     public void verify_TestPlanBtn()  throws InterruptedException{
         AdminPage testPlan = new AdminPage();
         WebdriverWaits.waitForSpinner();
         testPlan.click_TestPlan();
         validate_text(testPlan.testPlanText,"Please choose tests.");
     }
-    @Test(priority = 14, enabled = true, description = "Verify save Test plan button on <Client> details page.")
-    public  void plan_Test() throws InterruptedException{
+    @Test(priority = 15, enabled = true, description = "Verify save Test plan button on <Client> details page.")
+    public  void verify_PlanTest() throws InterruptedException{
         AdminPage testPlan = new AdminPage();
         testPlan.select_TestPlan();
         testPlan.click_TestPlanSaveButton();
         WebdriverWaits.waitUntilVisible(testPlan.validateCheckBox);
         validate_text(testPlan.validateCheckBox,"WJ Achievement");
     }
-    @Test(priority = 15, enabled = false, description = "Verify save Test plan button on <Client> details page.")
-    public void dont_SaveAssessmentType() throws InterruptedException{
+    @Test(priority = 16, enabled = false, description = "Verify save Test plan button on <Client> details page.")
+    public void verify_DontSaveAssessmentType() throws InterruptedException{
         AdminPage editType = new AdminPage();
         editType.edit_AssessmentType("GT");
         editType.click_DontSave();
         validate_text(editType.clientAsses,"IQ");
     }
-    @Test(priority = 16, enabled = false, description = "Verify save Test plan button on <Client> details page.")
-    public void edit_Testplan() throws InterruptedException{
+    @Test(priority = 17, enabled = false, description = "Verify save Test plan button on <Client> details page.")
+    public void verify_EditTestPlan() throws InterruptedException{
         AdminPage testPlan = new AdminPage();
         testPlan.edit_TestPlan();
         validate_text(testPlan.actualEditTest,"WRAML");
@@ -259,7 +271,7 @@ SuperAdminPage superAdmin=new SuperAdminPage();
     public float afterAssessmentAmount;
     public float afterAmountDue;
     public float afterRececiedAmount;
-    @Test(priority = 17, enabled = false, description = "Verify payment button on <Client> details page.")
+    @Test(priority = 18, enabled = false, description = "Verify payment button on <Client> details page.")
     public void verify_PaymentBtn() {
         AdminPage payment = new AdminPage();
         beforeAssessmentAmount= Float.parseFloat(payment.get_AssessmentAmount());
@@ -270,7 +282,7 @@ SuperAdminPage superAdmin=new SuperAdminPage();
         validate_text(payment.collectPayActualText,"Collect Payment");
     }
 
-    @Test(priority = 18, enabled = false, description = "Verify payment button on <Client> details page.")
+    @Test(priority = 19, enabled = false, description = "Verify payment button on <Client> details page.")
     public void verify_CollectTestFeeAdjustment()  {
         AdminPage payment = new AdminPage();
         payment.validate_FeeAdjustmentAmount("100");
@@ -287,14 +299,14 @@ SuperAdminPage superAdmin=new SuperAdminPage();
     }
 
 
-    @Test(priority = 18, enabled = false, description = "Verify Edit client Details button client page.")
+    @Test(priority = 20, enabled = false, description = "Verify Edit client Details button client page.")
     public void verify_EditClientBtn()  {
         AdminPage EditClient = new AdminPage();
         EditClient.click_EditClientBtn();
         WebdriverWaits.waitUntilVisible(EditClient.editCllientActualText);
         validate_text(EditClient.editCllientActualText,"Edit Client Info");
     }
-    @Test(priority = 19, enabled = false, description = "Verify Edit client details popup client page.")
+    @Test(priority = 21, enabled = false, description = "Verify Edit client details popup client page.")
     public void verify_UpdateBtn()  {
         AdminPage editClient= new AdminPage();
         editClient.edit_ClientInfo("Zoi","Smith","401 Broadway E eastate g","College");
@@ -303,15 +315,17 @@ SuperAdminPage superAdmin=new SuperAdminPage();
         validate_text(editClient.actualTextClient,"College");
     }
 
-    @Test(priority = 20, enabled = false, description = "Verify All Appointment page.")
-    public void verify_AllAppointmentsPage()   {
+    @Test(priority = 22, enabled = false, description = "Verify All Appointment page.")
+    public void verify_AllAppointmentsPage()
+    {
         AppointmentsPage appPage= new AppointmentsPage();
         appPage.click_AppointmentTab();
         appPage.click_ViewAllTab();
         validate_text(appPage.viewAllActualText,"All Appointments");
     }
-    @Test(priority = 21, enabled = false, description = "Verify filter button and serarchtextbox textbox")
-    public void search_CreatedAppointment()  {
+    @Test(priority = 23, enabled = false, description = "Verify filter button and serarchtextbox textbox")
+    public void verify_SearchCreatedAppointment()
+    {
         AppointmentsPage appPage= new AppointmentsPage();
         AdminPage placeHolder = new AdminPage();
         appPage.click_FilterButton();
@@ -320,7 +334,7 @@ SuperAdminPage superAdmin=new SuperAdminPage();
         Assert.assertEquals(fromDateplaceholder,"From Date");
         Assert.assertEquals(text,"Type here to search");
     }
-    @Test(priority = 22, enabled = false, description = "Verify search fromDate and toDate")
+    @Test(priority = 24, enabled = false, description = "Verify search fromDate and toDate")
     public void verify_FromAndToDate() throws InterruptedException{
         AppointmentsPage appPage= new AppointmentsPage();
         ActionEngine engine;
@@ -345,7 +359,7 @@ SuperAdminPage superAdmin=new SuperAdminPage();
         }
         Assert.assertTrue(result);
     }
-    @Test(priority = 23,enabled = false,description="verify hold appointment button.")
+    @Test(priority = 25,enabled = false,description="verify hold appointment button.")
     public void verify_HoldAppointmentBtn()   {
         AdminPage hold = new AdminPage();
         hold.click_HoldAppointmentBtn();
@@ -353,21 +367,21 @@ SuperAdminPage superAdmin=new SuperAdminPage();
         holdAppointmentname= hold.getText_custom(hold.fullName);
         Log.info(holdAppointmentname);
     }
-    @Test(priority = 24,enabled = false,description="verify yes hold button on hold appointment button.")
-    public void verify_yesHoldBtn()  {
+    @Test(priority = 26,enabled = false,description="verify yes hold button on hold appointment button.")
+    public void verify_YesHoldBtn()  {
         AdminPage hold = new AdminPage();
         hold.click_yesHoldBtn();
         WebdriverWaits.waitUntilVisible(hold.allAppointmentsPage);
         validate_text(hold.allAppointmentsPage,"All Appointments");
     }
-    @Test(priority = 25,enabled = false,description="verify yes hold button on hold appointment popup.")
+    @Test(priority = 27,enabled = false,description="verify yes hold button on hold appointment popup.")
     public void verify_HoldAppointment()  {
         AdminPage hold = new AdminPage();
         hold.click_HoldTab();
         validate_text(hold.holdAppointmentText,"Hold Appointments");
     }
-    @Test(priority = 26,enabled = false,description="verify filter button on hold appointment page.")
-    public void verify_holdfilterButton()  {
+    @Test(priority = 28,enabled = false,description="verify filter button on hold appointment page.")
+    public void verify_HoldFilterButton()  {
         AdminPage hold = new AdminPage();
         hold.click_HoldFilterBtn();
         String searchPlaceHolder = hold.GetValueAttribute(hold.searchTextBox,"placeholder");
@@ -377,8 +391,8 @@ SuperAdminPage superAdmin=new SuperAdminPage();
         Assert.assertEquals(toDatePlaceholder,"To Date");
         Assert.assertEquals(searchPlaceHolder,"Type here to search");
     }
-    @Test(priority = 27,enabled = false,description="verify holded appointment .")
-    public void verify_holdedAppointment() {
+    @Test(priority = 29,enabled = false,description="verify holded appointment .")
+    public void verify_HoldedAppointment() {
         AdminPage hold = new AdminPage();
         hold.send_textHoldSearchBox(holdAppointmentname);
         String name = getText_custom(hold.validateHoldClient);
@@ -387,30 +401,25 @@ SuperAdminPage superAdmin=new SuperAdminPage();
     }
 
     @Test(priority = 30, enabled = true, description = "Admin is directed to 'Today's Appointment' page")
-    public void todayAppointment_Tab() throws InterruptedException
+    public void verify_TodayAppointmentTab() throws InterruptedException
 
     {
          AdminPage admin= new AdminPage();
          DateGenerator datePage=new DateGenerator();
-         LoginPage login = new LoginPage();
-         login.adminLogin( "allen","123456");
-         admin.clickOn_AppointmentTab();
-         admin.click_TodayTab();
+         admin.clickOn_TodayTab();
          validate_text(admin.todayAppointmentTitle,expectedTextforToayTitle);
          String expectedDate=datePage.getCurrentDateFromSystem();
          validate_text(admin.todayDateOnCard,expectedDate);
 
     }
 
-    @Test(priority = 30, enabled = true, description = "Admin is directed to 'Client Details' page of Today's appointment card")
-    public void clientDetails_Page() throws InterruptedException {
+    @Test(priority = 31, enabled = true, description = "Admin is directed to 'Client Details' page of Today's appointment card")
+    public void verify_ClientDetailsPage() throws InterruptedException {
         AdminPage admin = new AdminPage();
-        LoginPage login = new LoginPage();
-        login.adminLogin( "allen","123456");
         admin.clickOn_AppointmentTab();
-        admin.click_TodayTab();
+        admin.clickOn_TodayTab();
         String actualText = getText_custom(admin.nameOnCard);
-        admin.click_OnCard();
+        admin.clickOn_Card();
         String clientName = getText_custom(admin.clientNameDetail);
 
         String[] words = clientName.split(" ");
@@ -432,31 +441,31 @@ SuperAdminPage superAdmin=new SuperAdminPage();
         validate_AttText(actualText, expectedTitleText);
     }
 
-    @Test(priority = 30, enabled = true, description = "Admin is directed to 'Test Ready Appointment' page")
-    public void testReady_Tab() throws InterruptedException
+    @Test(priority = 32, enabled = false, description = "Admin is directed to 'Test Ready Appointment' page")
+    public void verify_TestReadyTab() throws InterruptedException
     {
         AdminPage admin = new AdminPage();
         LoginPage login = new LoginPage();
         login.adminLogin("allen", "123456");
         String expectedTitle="Test Ready Appointments";
         admin.clickOn_AppointmentTab();
-        admin.click_TestReadyTab();
+        admin.clickOn_TestReadyTab();
         validate_text(admin.getTestReadyTitle,expectedTitle);
-        admin.testReadyCardDetails();
+        admin.enterClientNameInSearchField();
         String expectedStatus="Test Ready";
         validate_text(admin.getStatus,expectedStatus);
 
     }
 
-    @Test(priority = 30, enabled = true, description = "Admin is directed to 'Client Details' page of Test ready card")
-    public void clientDetailsPage_OfTestReady() throws InterruptedException {
+    @Test(priority = 33, enabled = false, description = "Admin is directed to 'Client Details' page of Test ready card")
+    public void verify_ClientPageTestReady() throws InterruptedException {
         AdminPage admin = new AdminPage();
         LoginPage login = new LoginPage();
         login.adminLogin( "allen","123456");
         admin.clickOnAppointmentTab();
-        admin.click_TestReadyTab();
+        admin.clickOn_TestReadyTab();
         String actualText = getText_custom(admin.nameOnCard);
-        admin.click_OnCard();
+        admin.clickOn_Card();
         String clientName = getText_custom(admin.clientNameDetail);
 
         String[] words = clientName.split(" ");
@@ -479,15 +488,15 @@ SuperAdminPage superAdmin=new SuperAdminPage();
         validate_AttText(actualText, expectedTitleText);
     }
 
-    @Test(priority = 30, enabled = true, description = "Admin is directed to 'Upcoming Appointment' page")
-    public void upcoming_Tab() throws InterruptedException
+    @Test(priority = 34, enabled = false, description = "Admin is directed to 'Upcoming Appointment' page")
+    public void verify_UpcomingTab() throws InterruptedException
     {
         AdminPage admin = new AdminPage();
         LoginPage login = new LoginPage();
         login.adminLogin("allen", "123456");
         String expectedTitle="Upcoming Appointments";
         admin.clickOnAppointmentTab();
-        admin.click_UpcomingTab();
+        admin.clickOn_UpcomingTab();
         validate_text(admin.titleOfUpcomingPage,expectedTitle);
         admin.filter_ForUpcoming();
         String statusTestReady="Test Ready";
@@ -497,13 +506,13 @@ SuperAdminPage superAdmin=new SuperAdminPage();
         validate_text(admin.getStatus,statusTestReady);
     }
 
-    @Test(priority = 30, enabled = true, description = "Admin is able to click on filter button")
+    @Test(priority = 35, enabled = false, description = "Admin is able to click on filter button")
     public void click_OnFilterBtn() throws InterruptedException
     {
         AdminPage admin = new AdminPage();
         LoginPage login = new LoginPage();
         login.adminLogin("allen", "123456");
-        admin.verify_UserClick_OnFilterBtn();
+        admin.ClickOn_FilterBtn();
 
        //Search field
         String actualSearchText = getDriver().findElement(By.xpath("//input[@id='filterSearch']")).getAttribute("placeholder");
@@ -526,24 +535,24 @@ SuperAdminPage superAdmin=new SuperAdminPage();
 
     }
 
-    @Test(priority = 30, enabled = true, description = "Admin is able to click on Export CSV button")
+    @Test(priority = 36, enabled = false, description = "Admin is able to click on Export CSV button")
     public void click_OnExportCSVButton() throws InterruptedException, FileNotFoundException {
         AdminPage admin = new AdminPage();
         LoginPage login = new LoginPage();
         login.adminLogin("allen", "123456");
-        admin.click_OnExportCSVButton();
+        admin.clickOn_ExportCSVButton();
         String downloadFile = dashboard.getDownloadFileName();
         Assert.assertTrue(dashboard.isFileDownloaded(downloadFile));
 
     }
-    @Test(priority = 30, enabled = true, description = "Admin is able to click client detail page after clicking on 'View Details' button")
+    @Test(priority = 37, enabled = false, description = "Admin is able to click client detail page after clicking on 'View Details' button")
     public void click_OnViewDetailsButton()  {
         AdminPage admin = new AdminPage();
         LoginPage login = new LoginPage();
         login.adminLogin("allen", "123456");
-        admin.click_OnAppointmentsTab();
+        admin.clickOn_AppointmentsTab();
         String actualText = getText_custom(admin.getNameOfClient);
-        admin.click_OnViewDetailsBtn();
+        admin.clickOn_ViewDetailsBtn();
         String clientName = getText_custom(admin.clientNameDetail);
 
         String[] words = clientName.split(" ");
@@ -568,29 +577,29 @@ SuperAdminPage superAdmin=new SuperAdminPage();
 
     }
 
-    @Test(priority = 30, enabled = true, description = "Admin is able to click on 'Test Ready' subtab")
+    @Test(priority = 38, enabled = false, description = "Admin is able to click on 'Test Ready' subtab")
     public void click_OnTestCompleteSubtab()
     {
         AdminPage admin = new AdminPage();
         LoginPage login = new LoginPage();
         login.adminLogin("allen", "123456");
-        admin.click_OnTestCompleteTab();
+        admin.clickOn_TestCompleteTab();
         String expectedText="Test Complete Appointments";
         String actualText = getText_custom(admin.getTitleOfTestComplete);
         validate_AttText(actualText, expectedText);
 
     }
 
-    @Test(priority = 30, enabled = true, description = "Admin is able to click on 'View Details button of 'Test Complete' subtab")
+    @Test(priority = 39, enabled = false, description = "Admin is able to click on 'View Details button of 'Test Complete' subtab")
     public void click_OnTestCompleteViewBtn()
     {
         AdminPage admin = new AdminPage();
         LoginPage login = new LoginPage();
         login.adminLogin("allen", "123456");
         String expectedTitle="View Student Observation";
-        admin.click_OnTestCompleteTab();
+        admin.clickOn_TestCompleteTab();
         String actualText = getText_custom(admin.getNameOfClient);
-        admin.click_OnViewDetailsBtn();
+        admin.clickOn_ViewDetailsBtn();
         String clientName = getText_custom(admin.clientNameDetail);
 
         String[] words = clientName.split(" ");
@@ -616,49 +625,187 @@ SuperAdminPage superAdmin=new SuperAdminPage();
 
     }
 
-    @Test(priority = 30, enabled = true, description = "Admin is able to click on 'View Observation' button")
+    @Test(priority = 40, enabled = false, description = "Admin is able to click on 'View Observation' button")
     public void click_OnViewObservationBtn()
     {
         AdminPage admin = new AdminPage();
         LoginPage login = new LoginPage();
         login.adminLogin("allen", "123456");
-        admin.click_OnTestCompleteTab();
-        admin.click_OnViewDetailsBtn();
-        admin.click_OnViewObservationBtn();
+        admin.clickOn_TestCompleteTab();
+        admin.clickOn_ViewDetailsBtn();
+        admin.clickOn_ViewObservationBtn();
         String expectedText="Client Observation";
         String actualText = getText_custom(superAdmin.clientObservation);
         validate_AttText(actualText, expectedText);
 
     }
 
-    @Test(priority = 30, enabled = true, description = "Admin is able to click on 'View Observation' button")
-    public void click_OnViewDocumentBtn()
+    @Test(priority = 41, enabled = true, description = "20.4 Admin is able to click on 'View Observation' button")
+    public void click_OnViewDocumentBtn() throws AWTException {
+        AdminPage admin = new AdminPage();
+        LoginPage login = new LoginPage();
+        login.adminLogin("allen", "123456");
+        admin.clickOn_TestCompleteTab();
+        admin.clickOn_ViewDetailsBtn();
+        admin.clickOn_UploadButton();
+        admin.clickOn_ChooseFile();
+        String filepath = "Downloads\\file-sample_1MB.doc";
+        ChromeDownloads.uploadFileUsingRobot(filepath);
+        admin.clickOn_UploadButtons();
+        admin.clickOn_ViewDocumentBtn();
+        String expectedFileName=getText_custom(admin.getTextFromViewDoc);
+        System.out.println("expectedFileName= "+expectedFileName);
+        admin.clickOn_CloseIcon();
+        admin.clickOn_ViewObservationBtn();
+        admin.clickOn_ViewDocumentBtn();
+        String expectedText="Attached Documents";
+        validate_text(admin.getTitleOfAttachedDocument, expectedText);
+        String FileName=getText_custom(admin.getTextFromViewDocTwo);
+        // Split the input string into an array of words
+        String[] words = FileName.split("\\s+");
+        String actualFileName=null;
+        // Check if there are at least two words in the array
+        if (words.length >= 3) {
+            // Remove the first and second words
+            StringBuilder result = new StringBuilder();
+            for (int i = 2; i < words.length; i++) {
+
+               result.append(words[i]).append(" ");
+            }
+
+
+             actualFileName=result.toString().trim();
+
+            // Print the result
+            System.out.println("Result: " + result.toString().trim());
+        }
+        else
+        {
+            System.out.println("Input string does not have enough words.");
+        }
+
+        validate_AttText(actualFileName, expectedFileName);
+    }
+
+    @Test(priority = 42, enabled = true, description = "Admin is able to click on 'View Observation' button")
+    public void click_OnBackBtn()
     {
         AdminPage admin = new AdminPage();
         LoginPage login = new LoginPage();
         login.adminLogin("allen", "123456");
-        admin.click_OnTestCompleteTab();
-        admin.click_OnViewDetailsBtn();
-        admin.click_OnViewObservationBtn();
-        admin.click_OnViewDocumentBtn();
-        String expectedText="Attached Documents";
-        validate_text(admin.getTitleOfAttachedDocument, expectedText);
+        admin.clickOn_TestCompleteTab();
+        admin.clickOn_ViewDetailsBtn();
+        String expectedResult=getText_custom(admin.title);
+        admin.clickOn_ViewObservationBtn();
+        admin.clickOn_BackBtn();
+        String actualResult=getText_custom(admin.title);
+        validate_AttText(actualResult, expectedResult);
 
+    }
+    @Test(priority = 43, enabled = true, description = "Admin is able to click on 'View Observation' button")
+    public void click_OnFilterBtnOfTestComplete()
+    {
+        AdminPage admin = new AdminPage();
+        LoginPage login = new LoginPage();
+        login.adminLogin("allen", "123456");
+        admin.clickOn_TestCompleteTab();
+        admin.clickOn_FilterBtn();
 
+        //Search field
+        String actualSearchText = getDriver().findElement(By.xpath("//input[@id='filterSearch']")).getAttribute("placeholder");
+        System.out.println(actualSearchText);
+        String expectedSearchText="Type here to search";
+        validate_AttText(actualSearchText, expectedSearchText);
+
+        //From Date
+        String actualFromDateText = getDriver().findElement(By.xpath("//input[@placeholder='From Date']")).getAttribute("placeholder");
+        System.out.println(actualFromDateText);
+        String expectedFromDateText="From Date";
+        validate_AttText(actualFromDateText, expectedFromDateText);
+
+        //To Date
+        String actualToDateText = getDriver().findElement(By.xpath("//input[@placeholder='To Date']")).getAttribute("placeholder");
+        System.out.println(actualToDateText);
+        String expectedToDateText="To Date";
+        validate_AttText(actualToDateText, expectedToDateText);
 
     }
 
+    @Test(priority = 44, enabled = true, description = "Admin is able to click on 'Export CSV' button")
+    public void click_OnExportCSVBtnOfTestComplete() throws FileNotFoundException, InterruptedException {
+        AdminPage admin = new AdminPage();
+        LoginPage login = new LoginPage();
+        login.adminLogin("allen", "123456");
+        admin.clickOn_TestCompleteTab();
+        admin.clickOn_ExportCSVButtonOfTestComplete();
+        String downloadFile = dashboard.getDownloadFileName();
+        Assert.assertTrue(dashboard.isFileDownloaded(downloadFile));
+
+    }
+    @Test(priority = 45, enabled = true, description = "Admin is able to click on 'Completed' tab")
+    public void Verify_ClickOnCompletedTab()  {
+        AdminPage admin = new AdminPage();
+        LoginPage login = new LoginPage();
+        login.adminLogin("allen", "123456");
+        admin.clickOn_CompletedTab();
+        String expectedTitle="Completed Appointments";
+        validate_text(admin.title,expectedTitle);
+
+    }
+
+    @Test(priority = 46, enabled = true, description = "Admin is able to click on 'Filter' button")
+    public void verify_ClickOnFilterBtnOfCompletedTab()  {
+        AdminPage admin = new AdminPage();
+        LoginPage login = new LoginPage();
+        login.adminLogin("allen", "123456");
+        admin.clickOn_CompletedTab();
+        admin.clickOn_FilterBtn();
+
+        //Search field
+        String actualSearchText = getDriver().findElement(By.xpath("//input[@id='filterSearch']")).getAttribute("placeholder");
+        System.out.println(actualSearchText);
+        String expectedSearchText="Type here to search";
+        validate_AttText(actualSearchText, expectedSearchText);
+
+        //From Date
+        String actualFromDateText = getDriver().findElement(By.xpath("//input[@placeholder='From Date']")).getAttribute("placeholder");
+        System.out.println(actualFromDateText);
+        String expectedFromDateText="From Date";
+        validate_AttText(actualFromDateText, expectedFromDateText);
+
+        //To Date
+        String actualToDateText = getDriver().findElement(By.xpath("//input[@placeholder='To Date']")).getAttribute("placeholder");
+        System.out.println(actualToDateText);
+        String expectedToDateText="To Date";
+        validate_AttText(actualToDateText, expectedToDateText);
+
+    }
+    @Test(priority = 47, enabled = true, description = "Admin is able to search valid data")
+    public void verify_SearchFiled()  {
+        AdminPage admin = new AdminPage();
+        LoginPage login = new LoginPage();
+        login.adminLogin("allen", "123456");
+        admin.clickOn_CompletedTab();
+        String expectedTitle="Completed Appointments";
+        validate_text(admin.title,expectedTitle);
+
+    }
+
+
+
+
     //************************ Edit Diagnostician *********************//
-    @Test(priority = 23,enabled = false, description = "Search created diagnostician by admin")
-    public void search_Diagnostician()  {
+    @Test(priority = 42
+            ,enabled = false, description = "Search created diagnostician by admin")
+    public void verify_SearchDiagnostician()  {
         DiagnosticianPage diagnostician = new DiagnosticianPage();
         DashBoardPanelPage clickDiagnosticianTab = new DashBoardPanelPage();
         clickDiagnosticianTab.click_DiagnosticianTab();
         diagnostician.search_CreatedDiagnostician(diagnosticianUserName);
         validate_text(diagnostician.actualText, diagnosticianUserName);
     }
-    @Test(priority = 24,enabled = false, description = "Edit created diagnostician by admin")
-    public void Edit_Diagnostician() throws InterruptedException{
+    @Test(priority = 43,enabled = false, description = "Edit created diagnostician by admin")
+    public void verify_EditDiagnostician() throws InterruptedException{
         DiagnosticianPage diagnostician = new DiagnosticianPage();
         // Edit Diagnostician
         String diagnosticianUpdatedEmail= diagnosticianFirstName + "10@yopmail.com";
@@ -666,8 +813,8 @@ SuperAdminPage superAdmin=new SuperAdminPage();
         WebdriverWaits.waitUntilVisible(diagnostician.edit_Succ_Msg);
         validate_text(diagnostician.edit_Succ_Msg, "Diagnostician details updated successfully.");
     }
-    @Test(priority = 24,enabled = false, description = "Enable created diagnostician by admin")
-    public void Enable_CreateDiagnostician()throws InterruptedException {
+    @Test(priority = 44,enabled = false, description = "Enable created diagnostician by admin")
+    public void verify_EnableCreateDiagnostician()throws InterruptedException {
         DiagnosticianPage diagnostician = new DiagnosticianPage();
         //Enable disabled Diagnostician
         diagnostician.enable_DiagnosticianUser();
@@ -675,8 +822,8 @@ SuperAdminPage superAdmin=new SuperAdminPage();
     }
 
 
-    @Test(priority = 25,enabled = false, description = "Verify Don't save button diagnostician by admin")
-    public void verify_Dnt_SaveButton() throws InterruptedException {
+    @Test(priority = 45,enabled = false, description = "Verify Don't save button diagnostician by admin")
+    public void verify_DntSaveButton() throws InterruptedException {
         DiagnosticianPage diagnostician = new DiagnosticianPage();
         String diagnosticianPhoneNumber= RandomStrings.requiredDigits(10);
         String diagnosticianUpdatedEmail= diagnosticianFirstName + "10@yopmail.com";
@@ -686,8 +833,8 @@ SuperAdminPage superAdmin=new SuperAdminPage();
     //******************* Edit Director ***************//
 
 
-    @Test(priority = 26, enabled = false, description = "Creating Director from admin" )
-    public void edit_Director() throws InterruptedException {
+    @Test(priority = 46, enabled = false, description = "Creating Director from admin" )
+    public void verify_EditDirector() throws InterruptedException {
         DirectorPage director = new DirectorPage();
         DashBoardPanelPage clickDirectorTab = new DashBoardPanelPage();
         clickDirectorTab.click_DirectorTab();
@@ -696,16 +843,17 @@ SuperAdminPage superAdmin=new SuperAdminPage();
         validate_text(director.edit_SuccMsg,"Director details updated successfully.");
     }
 
-    @Test(priority = 27, enabled = false, description = "Enable toggle button Director from admin" )
-    public void director_Enable_User() throws InterruptedException {
+    @Test(priority = 47, enabled = false, description = "Enable toggle button Director from admin" )
+    public void verify_DirectorEnableUser() throws InterruptedException
+    {
         DirectorPage director = new DirectorPage();
         director.enable_Director();
         validate_text(director.edit_SuccMsg,"Director details updated successfully.");
         System.out.println("Successfully Edited the created director");
     }
 
-    @Test(priority = 28,enabled = false,description="verify that director is able to edit or not after clicking dont save button")
-    public void Verify_DntSave_Button() throws InterruptedException {
+    @Test(priority = 48,enabled = false,description="verify that director is able to edit or not after clicking dont save button")
+    public void Verify_DntSaveButton() throws InterruptedException {
         DirectorPage director = new DirectorPage();
         String  directorEmailAddressUpdated = directorFirstName + "101@yopmail.com";
         director.not_Edit_Director(directorEmailAddressUpdated,"123456","123456");
@@ -714,14 +862,17 @@ SuperAdminPage superAdmin=new SuperAdminPage();
     }
 
     //******************** Logout button **************//
-    @Test(priority = 29, enabled = true, description = "Verify login button for admin.")
-    public void admin_LogOut()  {
+    @Test(priority = 49, enabled = false, description = "Verify login button for admin.")
+    public void verify_AdminLogOut()
+    {
+
         DashBoardPanelPage panelpage = new DashBoardPanelPage();
         panelpage.click_LogOutLink();
     }
 
-    @Test( dependsOnMethods={ "download_CSV_File_For_completeAss"})
-    public void full_Payment() throws InterruptedException {
+   /* @Test( dependsOnMethods={ "download_CSV_File_For_completeAss"})
+    public void verify_FullPayment() throws InterruptedException
+    {
         LoginPage login=new LoginPage();
         AdminPage admin=new AdminPage();
         DashBoardPanelPage panelpage = new DashBoardPanelPage();
@@ -730,7 +881,7 @@ SuperAdminPage superAdmin=new SuperAdminPage();
         WebdriverWaits.waitUntilVisible(admin.clientNameDetail);
         validate_text(admin.clientNameDetail,clientFirstName +' '+ clientLastName +' '+ "Details");
         panelpage.click_LogOutLink();
-    }
+    }*/
 }
 
 

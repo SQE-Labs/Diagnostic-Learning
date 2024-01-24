@@ -66,7 +66,7 @@ public class AppointmentsPage extends BasePage {
     public  By todayTab=By.xpath("//a[contains(text(),'Today')]");
     public By testCompleteTab=By.xpath("//a[text()='Test complete']");
 
-
+    public By completedTab=By.xpath("//a[text()='Completed ']");
 
 
 
@@ -240,11 +240,11 @@ public class AppointmentsPage extends BasePage {
     }
 
 
-    public void selectAssesmentType(int assestmentTypeTexts) {
+    public void selectAssesmentType(String assestmentTypeTexts) {
         WebdriverWaits.waitUntilVisible(assestmentType);
         WebdriverWaits.waitForSpinner();
         click_custom(assestmentType);
-        selectDropDownByIndex_custom(assestmentType, assestmentTypeTexts);
+        selectDropDownByVisibleText_custom(assestmentType, assestmentTypeTexts);
     }
 
     public void fill_clientDetailsSection(String CustomerFirstName, String CustomerLastName, int gradeType, String dateOfBirthText, int schoolTypeOption, String cellNumber, String EmailAddress, String reasonForCallText, String cityText, String stateText, String zipCodeText, String testAmountText, String enterAmountText) throws InterruptedException {
