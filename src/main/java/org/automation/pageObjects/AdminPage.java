@@ -18,6 +18,8 @@ public class AdminPage extends BasePage {
     SuperAdminPage superAdmin=new SuperAdminPage();
     DashBoardPanelPage dashboardPanelPage=new DashBoardPanelPage();
 
+    PaymentPage payment=new PaymentPage();
+
     public By adminTab = By.xpath("//a[text()='Admins']");
     public By adminDashboardText = By.xpath("//h3[text()='Dashboard']");
     public By createAdminButton = By.xpath("//button[@class='theme-button']");
@@ -213,6 +215,9 @@ public class AdminPage extends BasePage {
     public By title=By.xpath("//h3");
 
     public By clientNameCompleted=By.xpath("((//tr[not(contains(@style,'display: none;'))])[2]/td)[1]");
+    public By unoldBackBtn=By.xpath("//a[@class='theme-button grey mx-2']");
+
+    public By titleOfViewReceipt=By.xpath("//h4[@class='text-center ng-star-inserted']");
 
     //******************Verifying cancelled appointments*****************
 
@@ -888,6 +893,13 @@ public class AdminPage extends BasePage {
 
     }
 
+    public void enterClientNameInSearchFieldCompleted()
+    {
+        String nameOfClient=getText_custom(clientNameCompleted);
+        sendKeys_withClear(searchTextBox,nameOfClient);
+
+    }
+
     public void ClickOn_FilterBtn()
     {
         WebdriverWaits.waitUntilVisible(appointment.appointmentsTab);
@@ -927,8 +939,6 @@ public class AdminPage extends BasePage {
     {
         WebdriverWaits.waitUntilVisible(appointment.appointmentsTab);
         click_custom(appointment.appointmentsTab);
-        WebdriverWaits.waitUntilVisible(appointment.upcomingTab);
-        click_custom(appointment.upcomingTab);
 
     }
 
@@ -985,10 +995,126 @@ public class AdminPage extends BasePage {
 
     public void clickOn_CompletedTab()
     {
+        WebdriverWaits.waitUntilVisible(appointment.appointmentsTab);
+        WebdriverWaits.waitForSpinner();
+        click_custom(appointment.appointmentsTab);
         WebdriverWaits.waitUntilVisible(appointment.completedTab);
         WebdriverWaits.waitForSpinner();
         click_custom(appointment.completedTab);
     }
 
+    public void clickOn_CanceledTab()
+    {
+        WebdriverWaits.waitUntilVisible(appointment.appointmentsTab);
+        WebdriverWaits.waitForSpinner();
+        click_custom(appointment.appointmentsTab);
+        WebdriverWaits.waitUntilVisible(appointment.canceledTab);
+        WebdriverWaits.waitForSpinner();
+        click_custom(appointment.canceledTab);
+    }
+
+    public void filter_ForCancel()
+    {
+        WebdriverWaits.waitUntilVisible(filterButton);
+        WebdriverWaits.waitForSpinner();
+        click_custom(filterButton);
+        String clientText="Cancel";
+        sendKeys_withClear(searchField, clientText);
+    }
+
+    public void clickOn_HoldTab()
+    {
+        WebdriverWaits.waitUntilVisible(appointment.appointmentsTab);
+        WebdriverWaits.waitForSpinner();
+        click_custom(appointment.appointmentsTab);
+        WebdriverWaits.waitUntilVisible(holdtab);
+        WebdriverWaits.waitForSpinner();
+        click_custom(holdtab);
+
+    }
+
+    public void clickOn_UnHoldBtn()
+    {
+        WebdriverWaits.waitUntilVisible(unHoldBtn);
+        WebdriverWaits.waitForSpinner();
+        click_custom(unHoldBtn);
+
+
+    }
+
+    public void clickOn_UnholdBackBtn()
+    {
+        WebdriverWaits.waitUntilVisible(unoldBackBtn);
+        WebdriverWaits.waitForSpinner();
+        click_custom(unoldBackBtn);
+
+
+    }
+
+    public void viewReceiptButtonDisplayed()
+    {
+        WebdriverWaits.waitUntilVisible(payment.viewReceiptButton);
+        WebdriverWaits.waitForSpinner();
+        click_custom(payment.viewReceiptButton);
+
+
+    }
+
+    public void viewReceiptButtonNotDisplayed()
+    {
+        WebdriverWaits.waitUntilVisible(payment.paymentButton);
+        WebdriverWaits.waitForSpinner();
+        click_custom(payment.paymentButton);
+
+    }
+
+    public void clickOn_CloseBtn()
+    {
+        WebdriverWaits.waitUntilVisible(payment.closeButton);
+        WebdriverWaits.waitForSpinner();
+        click_custom(payment.closeButton);
+    }
+
+    public void clickOn_CollectBtn()
+    {
+        WebdriverWaits.waitUntilVisible(payment.collectButton);
+        WebdriverWaits.waitForSpinner();
+        click_custom(payment.collectButton);
+    }
+
+
+    public void send_AmountInEnterAmount(String amount)
+    {
+        WebdriverWaits.waitUntilVisible(payment.enterAmountField);
+        WebdriverWaits.waitForSpinner();
+        sendKeys_withClear(payment.enterAmountField,amount);
+    }
+
+    public void scrollUptoVAmountDue()
+    {
+        WebdriverWaits.waitUntilVisible(payment.amountDue);
+        WebdriverWaits.waitForSpinner();
+        scrollIntoView(payment.amountDue);
+    }
+
+    public void clickOn_ExportCSVButtonOfUnhold()
+    {
+        click_custom(dashboardPanelPage.exportCSVButton);
+
+    }
+
+    public void clickOn_DirectorTab()
+    {
+        WebdriverWaits.waitUntilVisible(appointment.directorTab);
+        WebdriverWaits.waitForSpinner();
+        click_custom(appointment.directorTab);
+    }
+
+    public void clickOn_DiagonsticiansTab()
+    {
+        WebdriverWaits.waitUntilVisible(appointment.diagnosticianTab);
+        WebdriverWaits.waitForSpinner();
+        click_custom(appointment.diagnosticianTab);
+    }
 }
 

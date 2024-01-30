@@ -6,11 +6,13 @@ import org.automation.pageObjects.*;
 import org.automation.utilities.ActionEngine;
 import org.automation.utilities.DateGenerator;
 import org.automation.utilities.RandomStrings;
+import org.automation.pageObjects.PaymentPage;
 
 
 import org.automation.utilities.*;
 import org.openqa.selenium.By;
 import org.automation.utilities.WebdriverWaits;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
@@ -27,6 +29,7 @@ import java.util.List;
 
 import static org.automation.utilities.Assertions.*;
 import static org.automation.utilities.WebdriverWaits.waitForSpinner;
+import static org.automation.utilities.WebdriverWaits.waitUntilInvisible;
 import static test.SuperAdminTest.adminUserName;
 
 
@@ -550,7 +553,7 @@ SuperAdminPage superAdmin=new SuperAdminPage();
         AdminPage admin = new AdminPage();
         LoginPage login = new LoginPage();
         login.adminLogin("allen", "123456");
-        admin.clickOn_AppointmentsTab();
+        admin.clickOn_UpcomingTab();
         String actualText = getText_custom(admin.getNameOfClient);
         admin.clickOn_ViewDetailsBtn();
         String clientName = getText_custom(admin.clientNameDetail);
@@ -786,8 +789,247 @@ SuperAdminPage superAdmin=new SuperAdminPage();
         LoginPage login = new LoginPage();
         login.adminLogin("allen", "123456");
         admin.clickOn_CompletedTab();
-        String expectedTitle="Completed Appointments";
-        validate_text(admin.title,expectedTitle);
+        admin.clickOn_FilterBtn();
+        String expectedResult=getText_custom(admin.clientNameCompleted);
+        admin.enterClientNameInSearchFieldCompleted();
+        String actualResult=getText_custom(admin.clientNameCompleted);
+        validate_AttText(actualResult, expectedResult);
+    }
+
+    @Test(priority = 48, enabled = true, description = "Admin is able to click on 'Export CSV' button")
+    public void verify_ClickOnExportCSVCompleted() throws FileNotFoundException, InterruptedException {
+        AdminPage admin = new AdminPage();
+        LoginPage login = new LoginPage();
+        login.adminLogin("allen", "123456");
+        admin.clickOn_CompletedTab();
+        admin.clickOn_ExportCSVButtonOfTestComplete();
+        String downloadFile = dashboard.getDownloadFileName();
+        Assert.assertTrue(dashboard.isFileDownloaded(downloadFile));
+    }
+
+    @Test(priority = 49, enabled = true, description = "Admin is able to click on 'View Details' button")
+    public void verify_ClickOnViewDetailsCompleted()
+    {
+        AdminPage admin = new AdminPage();
+        LoginPage login = new LoginPage();
+        login.adminLogin("allen", "123456");
+        admin.clickOn_CompletedTab();
+        String expectedResult=getText_custom(admin.clientNameCompleted);
+        admin.clickOn_ViewDetailsBtn();
+        String clientName = getText_custom(admin.clientNameDetail);
+
+        String[] words = clientName.split(" ");
+        String actualText=null;
+
+        if (words.length >= 2) {
+            // Fetch the first two words
+            String firstWord = words[0];
+            String secondWord = words[1];
+            actualText = firstWord + " " + secondWord;
+
+            // Print the result
+            System.out.println("First word: " + firstWord);
+            System.out.println("Second word: " + secondWord);
+        } else {
+            // Handle the case where there are not enough words
+            System.out.println("The input string does not contain at least two words.");
+        }
+
+        validate_AttText(actualText, expectedResult);
+
+
+    }
+    @Test(priority = 49, enabled = true, description = "Admin is able to click on 'Canceled' button")
+    public void verify_ClickOnCanceledBtn()  {
+        AdminPage admin = new AdminPage();
+        LoginPage login = new LoginPage();
+        login.adminLogin("allen", "123456");
+        admin.clickOn_CanceledTab();
+        String expectedTitle="Canceled Appointments";
+        admin.filter_ForCancel();
+        String statusCancel="Cancel";
+        validate_text(admin.getStatus,statusCancel);
+    }
+
+    @Test(priority = 50, enabled = true, description = "Admin is able to click on 'Filter' button")
+    public void verify_ClickOnFilterCanceled()  {
+        AdminPage admin = new AdminPage();
+        LoginPage login = new LoginPage();
+        login.adminLogin("allen", "123456");
+        admin.clickOn_CanceledTab();
+        admin.clickOn_FilterBtn();
+
+        //Search field
+        String actualSearchText = getDriver().findElement(By.xpath("//input[@id='filterSearch']")).getAttribute("placeholder");
+        System.out.println(actualSearchText);
+        String expectedSearchText="Type here to search";
+        validate_AttText(actualSearchText, expectedSearchText);
+
+    }
+
+    @Test(priority = 51, enabled = true, description = "Admin is able to click on 'Back' button")
+    public void verify_ClickOnUnholdBackBtn()  {
+        AdminPage admin = new AdminPage();
+        LoginPage login = new LoginPage();
+        login.adminLogin("allen", "123456");
+        admin. clickOn_HoldTab();
+        String expectedText =getText_custom(admin.title);
+        admin.clickOn_UnHoldBtn();
+        admin.clickOn_UnholdBackBtn();
+        String actualText =getText_custom(admin.title);
+        validate_AttText(actualText, expectedText);
+
+
+    }
+
+    @Test(priority = 52, enabled = true, description = "Admin is able to click on 'View Receipt' button")
+    public void verify_ClickOnViewReceiptBtn()  {
+        AdminPage admin = new AdminPage();
+        LoginPage login = new LoginPage();
+        PaymentPage payment=new PaymentPage();
+        login.adminLogin("allen", "123456");
+        admin.clickOn_CompletedTab();
+        admin.clickOn_ViewDetailsBtn();
+        admin.scrollUptoVAmountDue();
+        String expectedAmountDue="$0.00";
+        String actualAmountDue=getText_custom(payment.amountDue);
+
+        if(actualAmountDue.equals(expectedAmountDue))
+        {
+            admin.viewReceiptButtonDisplayed();
+            String expectedText="View Receipt";
+            validate_text(admin.titleOfViewReceipt,expectedText);
+
+        }
+
+        else
+        {
+            String amountDue=getText_custom(payment.amountDue);
+            String actualAmount=amountDue.replace( "$","");
+            admin.viewReceiptButtonNotDisplayed();
+            admin.send_AmountInEnterAmount(actualAmount);
+            admin.clickOn_CollectBtn();
+            admin.clickOn_CloseBtn();
+            admin.viewReceiptButtonDisplayed();
+            String expectedText="View Receipt";
+            validate_text(admin.titleOfViewReceipt,expectedText);
+
+        }
+
+    }
+
+    @Test(priority = 52, enabled = true, description = "Admin is able to click on 'Close' button")
+    public void verify_ClickOnViewReceiptCloseBtn()  {
+        AdminPage admin = new AdminPage();
+        LoginPage login = new LoginPage();
+        PaymentPage payment=new PaymentPage();
+        login.adminLogin("allen", "123456");
+        admin.clickOn_CompletedTab();
+        admin.clickOn_ViewDetailsBtn();
+        admin.scrollUptoVAmountDue();
+        String expectedAmountDue="$0.00";
+        String actualAmountDue=getText_custom(payment.amountDue);
+        if(actualAmountDue.equals(expectedAmountDue))
+        {
+            String expectedText=getText_custom(admin.title);
+            admin.viewReceiptButtonDisplayed();
+            admin.clickOn_CloseBtn();
+            String actualText=getText_custom(admin.title);
+            validate_AttText(actualText, expectedText);
+
+        }
+
+        else
+        {
+            String amountDue=getText_custom(payment.amountDue);
+            String actualAmount=amountDue.replace( "$","");
+            admin.viewReceiptButtonNotDisplayed();
+            admin.send_AmountInEnterAmount(actualAmount);
+            admin.clickOn_CollectBtn();
+            admin.clickOn_CloseBtn();
+            String expectedText=getText_custom(admin.title);
+            admin.viewReceiptButtonDisplayed();
+            admin.clickOn_CloseBtn();
+            String actualText=getText_custom(admin.title);
+            validate_AttText(actualText, expectedText);
+
+        }
+
+    }
+
+
+    @Test(priority = 53, enabled = true, description = "Admin is able to click on 'Export CSV' button")
+    public void verify_ClickOnUnholdExportBtn() throws FileNotFoundException, InterruptedException {
+        AdminPage admin = new AdminPage();
+        LoginPage login = new LoginPage();
+        login.adminLogin("allen", "123456");
+        admin. clickOn_HoldTab();
+        admin.clickOn_ExportCSVButtonOfUnhold();
+        String downloadFile = dashboard.getDownloadFileName();
+        Assert.assertTrue(dashboard.isFileDownloaded(downloadFile));
+
+
+    }
+
+    @Test(priority = 54, enabled = true, description = "Admin is able to click on 'Upcoming' subtab")
+    public void verify_ClickOnUpcomingSubtab() throws FileNotFoundException, InterruptedException {
+        AdminPage admin = new AdminPage();
+        LoginPage login = new LoginPage();
+        login.adminLogin("allen", "123456");
+        admin.clickOn_UpcomingTab();
+        String expectedText="Upcoming Appointments";
+        validate_text(admin.title,expectedText);
+
+
+    }
+
+    @Test(priority = 55, enabled = true, description = "Admin is able to click on 'Appointment' subtab")
+    public void verify_ClickOnAppointmentTab() throws FileNotFoundException, InterruptedException {
+        AdminPage admin = new AdminPage();
+        LoginPage login = new LoginPage();
+        login.adminLogin("allen", "123456");
+        admin.clickOn_AppointmentsTab();
+        String expectedText="View All";
+        validate_text(admin.viewAllTab,expectedText);
+
+
+    }
+
+    @Test(priority = 56, enabled = true, description = "Admin is able to click on 'Director' tab")
+    public void verify_ClickOnDirectorTab() throws FileNotFoundException, InterruptedException {
+        AdminPage admin = new AdminPage();
+        LoginPage login = new LoginPage();
+        login.adminLogin("allen", "123456");
+        admin.clickOn_DirectorTab();
+        String expectedText="Directors List";
+        validate_text(admin.title,expectedText);
+
+
+    }
+
+    @Test(priority = 57, enabled = true, description = "Admin is able to click on 'Diagnonstician' tab")
+    public void verify_ClickOnDiagnosticianTab() throws FileNotFoundException, InterruptedException {
+        AdminPage admin = new AdminPage();
+        LoginPage login = new LoginPage();
+        login.adminLogin("allen", "123456");
+        admin.clickOn_DiagonsticiansTab();
+        String expectedText="Diagnosticians List";
+        validate_text(admin.title,expectedText);
+
+
+    }
+
+    @Test(priority = 57, enabled = true, description = "Admin is able to click on 'Appointment' tab ")
+    public void verify_AppointmentTabGetClose() throws FileNotFoundException, InterruptedException {
+        AdminPage admin = new AdminPage();
+        LoginPage login = new LoginPage();
+        login.adminLogin("allen", "123456");
+        admin.clickOn_AppointmentsTab();
+        admin.clickOn_AppointmentsTab();
+        WebElement element=getDriver().findElement(admin.viewAllTab);
+        waitUntilInvisible(admin.viewAllTab);
+        Assert.assertFalse(element.isDisplayed());
+
 
     }
 

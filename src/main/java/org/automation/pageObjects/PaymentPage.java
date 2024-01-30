@@ -14,6 +14,13 @@ public class PaymentPage extends BasePage {
     public By getCust_Name =By.xpath("(//td)[1]");
     public By fromToDateField=By.xpath("//input[@placeholder='%s']");
 
+    public By paymentButton=By.xpath("//button[@class='theme-button green m-2 ng-star-inserted']");
+    public By amountDue=By.xpath("//p[@class='text-danger']");
+    public By enterAmountField=By.xpath("//input[@placeholder='Enter Amount']");
+
+    public By closeButton=By.xpath("(//a[text()='Close'])[2]");
+    public By collectButton=By.xpath("//button[@class='theme-button mx-2']");
+    public By viewReceiptButton=By.xpath("//button[text()=' View Receipt ']");
 
     public void clickOn_PaymentTab(){
         WebdriverWaits.waitUntilVisible(paymentTab);

@@ -65,8 +65,12 @@ public class AppointmentsPage extends BasePage {
     public By searchTextBox = By.id("filterSearch");
     public  By todayTab=By.xpath("//a[contains(text(),'Today')]");
     public By testCompleteTab=By.xpath("//a[text()='Test complete']");
+    public By canceledTab=By.xpath( "//li[@class='ng-star-inserted active']/a");
 
     public By completedTab=By.xpath("//a[text()='Completed ']");
+
+    public By directorTab=By.xpath("//a[text()='Directors']");
+    public By diagnosticianTab=By.xpath("//a[text()='Diagnosticians']");
 
 
 
