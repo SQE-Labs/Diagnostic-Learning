@@ -6,7 +6,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import java.util.List;
 import static org.automation.utilities.Assertions.validate_text;
-import static org.automation.utilities.WebdriverWaits.moveToElement;
+import static org.automation.utilities.WebdriverWaits.*;
 import static test.AdminTest.clientFirstName;
 
 
@@ -269,6 +269,8 @@ public class AppointmentsPage extends BasePage {
     }
 
     public void click_FilterButton() {
+        waitUntilVisible(filterButton);
+        waitForSpinner();
         click_custom(filterButton);
     }
 

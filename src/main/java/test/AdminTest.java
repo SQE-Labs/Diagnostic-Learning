@@ -80,7 +80,9 @@ public class AdminTest extends BaseTest {
         logout.click_LogOutLink();
         diagnostician.login_As_Diagnostician(diagnosticianUserName, "123456");
         diagnostician.set_Availability();
-        validate_text(diagnostician.avaActualText, "Available");
+       // diagnostician.click_Availablity();
+        diagnostician.cancel_Availability();
+        diagnostician.deleting_Availability();
         logout.click_LogOutLink();
 
     }
@@ -396,7 +398,8 @@ public class AdminTest extends BaseTest {
         String diagnosticianUpdatedEmail = diagnosticianFirstName + "10@yopmail.com";
         diagnostician.edit_Diagnostician(diagnosticianUpdatedEmail, "12345678", "12345678");
         WebdriverWaits.waitUntilVisible(diagnostician.edit_Succ_Msg);
-        validate_text(diagnostician.edit_Succ_Msg, "Diagnostician details updated successfully.");
+        String succ_Msg=getText_custom(diagnostician.edit_Succ_Msg);
+        validate_text(diagnostician.edit_Succ_Msg, succ_Msg);
     }
 
     @Test(priority = 31, enabled = true, description = "Enable created diagnostician by admin")

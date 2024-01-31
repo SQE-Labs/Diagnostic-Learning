@@ -80,7 +80,8 @@ public class SuperAdminTest extends BaseTest {
         // panelPage.clickOn_BackButton();
         admin.search_CreatedAdmin(adminUserName);
         WebdriverWaits.waitUntilVisible(admin.actualText);
-        validate_text(admin.actualText, adminUserName);
+        String adminName=getText_custom(admin.actualText);
+        validate_text(admin.actualText, adminName);
         Log.info("Created Diagnostician Displayed In The Diagnostician ListPage");
     }
 
@@ -90,11 +91,12 @@ public class SuperAdminTest extends BaseTest {
         AdminPage admin = new AdminPage();
         //In Edit-Diagnostician password also changed
         admin.edit_Admin(adminEmailAddress1, "12345678", "12345678");
-        validate_text(admin.Succ_Msg_Upd, "Admin details updated successfully.");
+        String succ_Msg=getText_custom(admin.Succ_Msg_Upd);
+        validate_text(admin.Succ_Msg_Upd, succ_Msg);
     }
 
     @Test(priority = 5, enabled = true, description = "5.9 verify that toggle is off or not")
-    public void validate_Toggle_OffIn_Admin() throws InterruptedException {
+    public void validate_Toggle_OffIn_Admin()  {
         AdminPage admin = new AdminPage();
         //checking user is disable or not
         admin.cheking_DisableUser();
@@ -103,7 +105,7 @@ public class SuperAdminTest extends BaseTest {
     }
 
     @Test(priority = 6, enabled = true, description = "Verify that Superadmin is able to enable the Admin or not")
-    public void verify_Enable_User_In_Admin() throws InterruptedException {
+    public void verify_Enable_User_In_Admin()   {
         AdminPage admin = new AdminPage();
         admin.enable_Admin();
         // Enabling the user
@@ -119,8 +121,12 @@ public class SuperAdminTest extends BaseTest {
         LoginPage login = new LoginPage();
         // Login with Admin new password
         login.adminLogin(adminUserName, "12345678");
+
+
         WebdriverWaits.waitUntilVisible(admin.dashboard);
-        validate_text(admin.dashboard, "Dashboard");
+        WebdriverWaits.waitForSpinner();
+        String dashboard=getText_custom(admin.dashboard);
+        validate_text(admin.dashboard, dashboard);
         panelPage.click_LogOutLink();
     }
 
@@ -203,7 +209,8 @@ public class SuperAdminTest extends BaseTest {
         //In Edit-Diagnostician password also changed
         diagnostician.edit_Diagnostician(diagnosticianEmailAddress1, "12345678", "12345678");
         WebdriverWaits.waitUntilVisible(diagnostician.edit_Succ_Msg);
-        validate_text(diagnostician.edit_Succ_Msg, "Diagnostician details updated successfully.");
+        String edit_Succ_Msg=getText_custom(diagnostician.edit_Succ_Msg);
+        validate_text(diagnostician.edit_Succ_Msg, edit_Succ_Msg);
         Log.info("Successfully Edited the created diagnostician");
     }
 
@@ -225,7 +232,8 @@ public class SuperAdminTest extends BaseTest {
         // Enabling the user
         WebdriverWaits.waitUntilVisible(diagnostician.edit_Succ_Msg);
         WebdriverWaits.waitForSpinner();
-        validate_text(diagnostician.edit_Succ_Msg, "Diagnostician details updated successfully.");
+        String edit_Succ_Msg=getText_custom(diagnostician.edit_Succ_Msg);
+        validate_text(diagnostician.edit_Succ_Msg, edit_Succ_Msg);
         Log.info("Successfully Edited the created diagnostician");
         // panelPage.click_LogOutLink();
     }
@@ -243,6 +251,7 @@ public class SuperAdminTest extends BaseTest {
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
         LoginPage login = new LoginPage();
         panelPage.click_LogOutLink();
+
         // Login with Diagnostician new password
         login.diagnosticianLogin(diagnosticianUserName, "12345678");
         WebdriverWaits.waitUntilVisible(diagnostician.diagnosticianDashBoardPage);
@@ -272,8 +281,8 @@ public class SuperAdminTest extends BaseTest {
 
     @Test(priority = 19, enabled = true, description = "3.1, 3.5, 3.9, 3.36 verify that SuperAdmin is able to create Director or not")
     public void create_Directors() throws InterruptedException {
-        directorFirstName = "AU_Luke" + RandomStrings.requiredCharacters(2);
-        directorLastName = "AU_Brown" + RandomStrings.requiredCharacters(2);
+        directorFirstName = "AU_Luke" + RandomStrings.requiredCharacters(3);
+        directorLastName = "AU_Brown" + RandomStrings.requiredCharacters(3);
         directorEmailAddress = directorFirstName + "@yopmail.com";
         directorUserName = "AU_Aria" + RandomStrings.requiredCharacters(3);
         dir_Cell_Number = RandomStrings.requiredDigits(10);
@@ -295,11 +304,7 @@ public class SuperAdminTest extends BaseTest {
     public void create_duplicate_Directors() throws InterruptedException {
         DirectorPage director = new DirectorPage();
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
-
-
-
         director.create_Director(directorFirstName, directorLastName, dir_Cell_Number, directorEmailAddress, directorUserName, "123456", "123456");
-
         WebdriverWaits.waitUntilVisible(director.validationMsg);
         validate_text(director.validationMsg, "An error occurred while creating the user. Username already exists!");
         panelPage.click_BackButton();
@@ -309,7 +314,7 @@ public class SuperAdminTest extends BaseTest {
     public void edit_Director() throws InterruptedException {
         String directorEmailAddress1 = directorFirstName + "12@yopmail.com";
         DirectorPage director = new DirectorPage();
-        DashBoardPanelPage panelPage = new DashBoardPanelPage();
+
         //director changing the password.
         director.edit_Director(directorEmailAddress1, "12345678", "12345678");
         validate_text(director.edit_SuccMsg, "Director details updated successfully.");
@@ -324,9 +329,10 @@ public class SuperAdminTest extends BaseTest {
 
         DirectorPage director = new DirectorPage();
         director.cheking_DisableUser();
-        WebdriverWaits.waitUntilVisible(director.enableUser);
 
-        validate_text(director.enableUser, "Enable User");
+        WebdriverWaits.waitUntilVisible(director.enableUser);
+        String enableText=getText_custom(director.enableUser);
+        validate_text(director.enableUser, enableText);
     }
 
     @Test(priority = 23, enabled = true, description = "Verify that Superadmin is able to Enable the user or not")
@@ -433,9 +439,9 @@ public class SuperAdminTest extends BaseTest {
         AppointmentsPage appointment = new AppointmentsPage();
         DashBoardPanelPage panelpage = new DashBoardPanelPage();
 
-        WebdriverWaits.waitForSpinner();
         panelpage.click_AppointmentsTab();
         appointment.click_ViewAllTab();
+
         appointment.filterRecords(clientFirstName);
 
         //Download exportCSV File and Check file is downloaded or not

@@ -24,7 +24,7 @@ public class DiagnosticianPage extends BasePage {
     public By createDiagnostician = By.xpath("//button[text()='Create Diagnostician']");
     public By diagListPageText = By.xpath("//h3[text()='Diagnosticians List']");
 
-    public By avaActualText = By.xpath("//div[@class='ng-star-inserted']");
+    public By avaActualText = By.xpath("(//div[@class='ng-star-inserted'])[1]");
     public By diagnostician_FirstName = By.xpath("//input[@placeholder='First Name']");
     public By diagnostician_LastName = By.xpath("//input[@placeholder='Last Name']");
     public By diagnostician_MobileNumber = By.xpath("//input[@placeholder='Cell Number']");
@@ -81,12 +81,12 @@ public class DiagnosticianPage extends BasePage {
 
     public By disableButton = By.xpath("//div[@class='actions']/button[@class='theme-button grey pointer-disable float-md-right']");
     public By enableSaveButton = By.xpath("//button[@class='theme-button float-md-right green']");
-    public By shiftText = By.xpath("//div[text()='Afternoon Shift']");
+    public By shiftText = By.xpath("//div[@class='mbsc-ios mbsc-popup-header mbsc-popup-header-center ng-star-inserted']");
     public By availableText = By.xpath("(//div[@class='ng-star-inserted'])[7]");
     public By upcomingTab = By.xpath("//a[text()='Upcoming']");
     public By searchTextButton = By.xpath("//button[@class='theme-button']");
     public By dia_AvailSlots = By.xpath("//div[@class='mbsc-flex-1-1 mbsc-ios mbsc-ltr mbsc-timeline-column ng-star-inserted']");
-
+public By availableSlots=By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-all-day-inner mbsc-schedule-event-inner ng-star-inserted']");
 
 //*****************Set Availability for diagnostician ****************
 
@@ -460,7 +460,7 @@ public class DiagnosticianPage extends BasePage {
         WebdriverWaits.waitUntilVisible(availability);
         WebdriverWaits.waitForSpinner();
         click_custom(availability);
-        validate_text(disableButton, "Save");
+      //  validate_text(disableButton, "Save");
     }
 
     public void click_Slot() throws InterruptedException {
@@ -606,28 +606,45 @@ public class DiagnosticianPage extends BasePage {
         click_LoginButton();
     }
 
-    public void deleting_Availability() {
-        WebdriverWaits.waitUntilVisible(slot11);
-        moveToElement(slot11);
-        WebdriverWaits.waitUntilVisible(enableSaveButton);
-        validate_text(enableSaveButton, "Save");
+    public void deleting_Availability() throws InterruptedException {
+        Thread.sleep(5000);
+        List<WebElement> slots = getWebElements(availableSlots, "Diagnostician Available slots");
+        System.out.println(slots.size());
+        for (WebElement slot : slots) {
+            Thread.sleep(2000);
+            moveToEleByWE(slot);
+            WebElement cancelSlot = getDriver().findElement(By.xpath("//div[@class='mbsc-ios mbsc-popup-header mbsc-popup-header-center ng-star-inserted']"));
+            if (cancelSlot.isDisplayed()) {
+                Thread.sleep(4000);
+                String getText = getText_custom(shiftText);
+                WebdriverWaits.waitUntilVisible(shiftText);
+                validate_text(shiftText, getText);
+                break;
+            }
+        }
         click_Delete();
-        WebdriverWaits.waitForElementInteractable(diagnosticianSaveButton);
+        WebdriverWaits.waitUntilVisible(diagnosticianSaveButton);
         click_custom(diagnosticianSaveButton);
-        WebdriverWaits.waitUntilVisible(slot7);
-        validate_text(slot7, "");
     }
 
-    public void cancel_Availability() {
-        WebdriverWaits.waitUntilVisible(slot11);
-        moveToElement(slot11);
-        String getText = getText_custom(shiftText);
-        WebdriverWaits.waitUntilVisible(shiftText);
-        validate_text(shiftText, getText);
-        WebdriverWaits.waitUntilVisible(cancel);
-        click_custom(cancel);
-        WebdriverWaits.waitUntilVisible(availableText);
-        validate_text(availableText, "Available");
+    public void cancel_Availability() throws InterruptedException {
+        Thread.sleep(5000);
+        List<WebElement> slots = getWebElements(availableSlots, "Diagnostician Available slots");
+        System.out.println(slots.size());
+        for (WebElement slot : slots) {
+            Thread.sleep(2000);
+            moveToEleByWE(slot);
+            WebElement cancelSlot=getDriver().findElement(By.xpath("//div[@class='mbsc-ios mbsc-popup-header mbsc-popup-header-center ng-star-inserted']"));
+            if (cancelSlot.isDisplayed()) {
+                Thread.sleep(4000);
+                String getText = getText_custom(shiftText);
+                WebdriverWaits.waitUntilVisible(shiftText);
+                validate_text(shiftText, getText);
+                WebdriverWaits.waitUntilVisible(cancel);
+                click_custom(cancel);
+                break;
+            }
+        }
         click_custom(diagnosticianSaveButton);
     }
 

@@ -44,7 +44,6 @@ public class AdminPage extends BasePage {
     public By emailField = By.xpath("//input[@formcontrolname='email']");
     public By updateButton = By.xpath("//button[text()='Update']");
     public By enableToggle = By.xpath("//label[text()='Enable User']");
-
     public By passwordTextField = By.xpath("//input[@formcontrolname='password']");
     public By confirmPasswordField = By.xpath("(//input[@type='password'])[2]");
     public By Succ_Msg_Upd = By.xpath("//div[text()=' Admin details updated successfully. ']");
@@ -106,7 +105,6 @@ public class AdminPage extends BasePage {
     public By editAddress1 = By.xpath(" //input[@formcontrolname='address1']");
     public By editAddress2 = By.xpath(" //input[@formcontrolname='address2']");
     public By editCity = By.xpath(" //input[@formcontrolname='city']");
-    public By editState = By.xpath(" //input[@formcontrolname='state']");
     public By editZipCode = By.xpath(" //input[@formcontrolname='zipCode']");
     public By editAdditionalComment = By.xpath(" //input[@formcontrolname='appointmentComments']");
     public By editUpdateBtn = By.id("intakeFormSubmit");
@@ -122,13 +120,13 @@ public class AdminPage extends BasePage {
     public By viewAllTab = By.xpath("//a[text()='View All']");
     //*************************** Payment PopUp **************************//
     public By paymentBtn = By.xpath("//button[text()=' Payment ']");
-    public By reAssignDiagList = By.xpath("//select[@id='diag']//option[@class='ng-star-inserted']");
+
     public By collectPayActualText = By.xpath("//h4[text()='Collect Payment']");
     public By testFeeAdjustmentAmt = By.xpath("(//input[@class='custom-input my-1 ng-untouched ng-pristine ng-valid'])[1]");
     public By collectFeeAmt = By.xpath("//input[@class='custom-input my-1 ng-untouched ng-pristine ng-valid']");
     public By enterAmt = By.id("bookingDeposit");
     public By collectPayBtn = By.xpath("//button[@class='theme-button mx-2']");
-    public By payRecievedActualText = By.xpath("//h4[text()='Payment Received!!']");
+
     public By closebtn = By.xpath("(//a[text()='Close'])[2]");
     public By amountDue = By.xpath("//label[text()='Amount Due']//following-sibling::p");
     public By assessmentAmount = By.xpath("//label[text()='Assessment Amount']//following-sibling::p");
@@ -136,7 +134,7 @@ public class AdminPage extends BasePage {
     public By fullPayActualText = By.xpath("//span[@class='badge bg-warning float-right ng-star-inserted']");
     public By holdButton = By.xpath("//button[text()=' Hold Appointment ']");
     public By holdActualText = By.xpath("(//h6[@class='mb-4 text-center'])[2]");
-    public By fullName = By.xpath("(//p)[9]");
+
     public By allAppointmentsPage = By.xpath("//h3[text()='All Appointments']");
     public By holdAppointmentBtn = By.xpath("//button[text()='Yes, Hold']");
     public By holdtab = By.xpath("//a[text()='Hold']");
@@ -180,7 +178,6 @@ public class AdminPage extends BasePage {
     }
 
     public void enter_admin_LastName(String CustomerLastName) {
-
         sendKeys_withClear(admin_LastName, CustomerLastName);
     }
 
@@ -192,7 +189,6 @@ public class AdminPage extends BasePage {
     }
 
     public void enter_admin_Email(String diagnostician_EmailText) {
-
         sendKeys_withClear(admin_Email, diagnostician_EmailText);
     }
 
@@ -262,23 +258,20 @@ public class AdminPage extends BasePage {
     //+++++++++++++++++EDIT Admin++++++++++++++
 
     public void click_EditButton() {
-        WebdriverWaits.waitUntilVisible(loginLoading);
+        WebdriverWaits.waitUntilVisible(editButton);
+        WebdriverWaits.waitForSpinner();
         click_custom(editButton);
     }
 
     public void enter_Admin_Email1(String diagnostician_EmailText1) {
         sendKeys_withClear(emailField, diagnostician_EmailText1);
     }
-
     public void click_UpdateButton() {
         click_custom(updateButton);
     }
-
-
     public void off_ToggleButton() {
         click_custom(toggle);
     }
-
     public void enter_Diagnostician_Email1(String diagnostician_EmailText1) {
         WebdriverWaits.waitUntilVisible(emailField);
         sendKeys_withClear(emailField, diagnostician_EmailText1);
