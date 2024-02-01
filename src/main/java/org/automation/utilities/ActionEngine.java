@@ -50,13 +50,11 @@ public class ActionEngine extends BaseTest {
         } catch (Exception e) {
             extentTest.log(FAIL, "==> Unable to click  " + label + " due to exception " + e);
             throw new RuntimeException(e);
-
         }
     }
 
     public void sendKeys_custom(By path, String valueToBeSent, String... label) {
         WebdriverWaits.waitUntilVisible(path);
-
         String var = "";
         try {
             var = label.length > 0 ? label[0] : path.toString();
@@ -108,7 +106,6 @@ public class ActionEngine extends BaseTest {
             throw new RuntimeException(e);
 
         }
-
     }
 
 
@@ -142,7 +139,6 @@ public class ActionEngine extends BaseTest {
         }
     }
 
-
     //check if element is Present
     public boolean isElementPresent_custom(WebElement element, String fieldName) {
         boolean flag = false;
@@ -153,14 +149,12 @@ public class ActionEngine extends BaseTest {
         } catch (Exception e) {
             extentTest.log(FAIL, "Checking for presence of field: " + fieldName + " not tested due to exception: " + e);
             return flag;
-
         }
     }
 
 
     //Select dropdown value value by visibleText
     public static void selectDropDownByVisibleText_custom(By path, String ddVisibleText, String... fieldName) {
-
         String var = "";
         try {
             var = fieldName.length > 0 ? fieldName[0] : path.toString();
@@ -170,8 +164,6 @@ public class ActionEngine extends BaseTest {
         } catch (Exception e) {
             extentTest.log(FAIL, "Dropdown value not selected for field: " + var + "  due to exception: " + e);
             throw new RuntimeException(e);
-
-
         }
     }
 
@@ -200,7 +192,6 @@ public class ActionEngine extends BaseTest {
         } catch (Exception e) {
             extentTest.log(FAIL, "Dropdown value not selected for field: " + var + "  due to exception: " + e);
             throw new RuntimeException(e);
-
         }
     }
 
@@ -216,7 +207,6 @@ public class ActionEngine extends BaseTest {
             return text;
         } catch (Exception e) {
             extentTest.log(FAIL, "Unable to get text due to exception : \n" + e);
-
         }
         return text;
     }
@@ -224,7 +214,6 @@ public class ActionEngine extends BaseTest {
     public String getText_custom(WebElement element) {
         String text = "";
         try {
-
             text = element.getText();
             //  Log.debug("Text for " + element + " is " + text);
             extentTest.log(PASS, "Text retrieved is: " + text);
@@ -359,7 +348,7 @@ public class ActionEngine extends BaseTest {
         return text;
     }
 
-    public static String getValueAttribute(By element, String attributeName) {
+    public static String getAttributeValue(By element, String attributeName) {
         try {
             String text=getDriver().findElement(element).getAttribute(attributeName);
             return text;

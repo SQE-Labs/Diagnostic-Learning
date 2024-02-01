@@ -13,9 +13,20 @@ import java.util.List;
 import static org.automation.utilities.Assertions.validate_AttText;
 import static org.automation.utilities.Assertions.validate_text;
 import static org.automation.utilities.WebdriverWaits.*;
+import static org.automation.utilities.Assertions.*;
+import static org.automation.utilities.WebdriverWaits.moveToElement;
+import static test.AdminTest.clientFirstName;
 
 public class AdminPage extends BasePage {
 
+
+    AppointmentsPage appointment=new AppointmentsPage();
+    SuperAdminPage superAdmin=new SuperAdminPage();
+    DashBoardPanelPage dashboardPanelPage=new DashBoardPanelPage();
+
+    PaymentPage payment=new PaymentPage();
+
+    public By adminTab = By.xpath("//a[text()='Admins']");
     public By adminDashboardText = By.xpath("//h3[text()='Dashboard']");
     public By createAdminButton = By.xpath("//button[@class='theme-button']");
     public By loginLoading = By.cssSelector("div.ngx-spinner-overlay");
@@ -158,12 +169,63 @@ public class AdminPage extends BasePage {
     public By collectButton = By.xpath("//button[@class='theme-button mx-2']");
     public By cancelButton = By.xpath("(//a[@class='theme-button grey'])[4]");
     public By clientNameDetail = By.xpath("//h3");
+//    public By clientNameDetail = By.xpath("//label[text()='Full Name']/following-sibling::p");
+
     public By cancelTab = By.xpath("//a[text()='Canceled']");
     public By clientName = By.cssSelector("tr:not([style='display: none;' ]) td:nth-child(1)");
     public By uploadDocumentButton = By.xpath("//button[@class='theme-button m-2 ng-star-inserted']");
     public By uploadButton = By.xpath("//button[@class='theme-button mx-2']");
     public By chooseField = By.xpath("//input[@placeholder='select document to be uploaded']");
     public By closeButton = By.xpath("//a[text()='Close']");
+
+    public By todayAppointmentTitle=By.xpath("//div[@class='align-items-md-center d-flex flex-column flex-md-row page-header']/h3");
+
+
+    public By todayTab=By.xpath("//a[contains(text(),'Today')]");
+
+
+    public By card=By.xpath("(//td[@class='d-block ng-star-inserted'])[1]");
+    public By nameOnCard=By.xpath("(//p[@class='text-purple mb-0'])[1]");
+
+    public By nameOnClientDetails=By.xpath("//div[@class='page-header align-items-lg-center d-flex flex-column flex-md-row']/h3");
+
+   public By todayDateOnCard=By.xpath("//span[@class='text-grey']");
+
+   public By getTestReadyTitle=By.xpath("//div[@class='align-items-md-center d-flex flex-column flex-md-row page-header']/h3");
+
+
+
+   public By titleOfUpcomingPage=By.xpath("//div[@class='page-header align-items-lg-center d-flex flex-column flex-md-row']/h3");
+
+   public By nameOfTestReadyCard=By.xpath("(//div[@class='client-diagno d-flex align-items-center justify-content-between']/p)[1]");
+
+   public By getStatus=By.xpath("(//tr[not(contains(@style,'display: none;'))])[2]//span");
+
+   public By getViewDetails= By.xpath("(//tr[not(contains(@style,'display: none;'))])[2]//a");
+
+   public By getNameOfClient=By.xpath("((//tr[not(contains(@style,'display: none;'))])[2]//td)[1]");
+
+  public By getTitleOfTestComplete=By.xpath("//div[@class='page-header align-items-lg-center d-flex flex-column flex-md-row']/h3");
+
+  public By getTitleOfAttachedDocument=By.xpath("//h5[@class='text-center mb-4']");
+
+
+    public By getTextFromViewDoc = By.xpath("//a[@class='d-flex px-3 py-2 small text-dark text-left text-wrap']");
+
+    public By getTextFromViewDocTwo=By.xpath("//a[@class='d-block px-3 py-2 small text-dark']");
+
+    public By closeIcon=By.xpath("//button[@aria-label='Close']/span");
+
+    public By backButton=By.xpath("//a[@class='grey ml-3 theme-button']");
+
+    public By title=By.xpath("//h3");
+
+    public By clientNameCompleted=By.xpath("((//tr[not(contains(@style,'display: none;'))])[2]/td)[1]");
+    public By unoldBackBtn=By.xpath("//a[@class='theme-button grey mx-2']");
+
+    public By titleOfViewReceipt=By.xpath("//h4[@class='text-center ng-star-inserted']");
+
+    //******************Verifying cancelled appointments*****************
 
 
     public void click_createAdminButton() {
@@ -312,6 +374,10 @@ public class AdminPage extends BasePage {
         WebdriverWaits.waitUntilVisible(chooseField);
         WebdriverWaits.waitForSpinner();
         moveToElement(chooseField);
+    }
+    public void enter_InSearchField(String clientName){
+        enterInSearchField( clientName);
+        click_SearchButton();
     }
 
     public void click_CancelTab() {
@@ -633,6 +699,8 @@ public class AdminPage extends BasePage {
                 break;
             }
         }
+
+
     }
 
     public void click_FollowUpSlotSaveBtn() {
@@ -743,6 +811,24 @@ public class AdminPage extends BasePage {
         WebdriverWaits.waitForSpinner();
         click_custom(testCompleteTab);
     }
+    public void clickOnAppointmentTab() {
+        WebdriverWaits.waitUntilVisible(appointmentTab);
+        WebdriverWaits.waitForSpinner();
+        click_custom(appointmentTab);
+    }
+
+    public void filter_ForUpcoming(String upcomingText)
+    {WebdriverWaits.waitUntilVisible(filterButton);
+        WebdriverWaits.waitForSpinner();
+        click_custom(filterButton);
+        sendKeys_withClear(searchField,upcomingText);
+    }
+
+    public void filter_ForTestReady(String testReady)
+    {
+
+        sendKeys_withClear(searchField, testReady);
+    }
 
     public void click_Re_AssigDropDown() {
         WebdriverWaits.waitUntilVisible(diag);
@@ -790,6 +876,9 @@ public class AdminPage extends BasePage {
         enter_ClientName(clientText);
         Thread.sleep(2000);
         clickOn_ViewDetailLink();
+        enter_ValidAmount();
+        clickOn_CollectButton();
+        clickOn_CancelButton();
     }
 
     public void verify_CancelledApp(String clientName) {
@@ -797,5 +886,276 @@ public class AdminPage extends BasePage {
         verifySearchTextBox();
         enterInSearchField(clientName);
     }
+
+    public void clickOn_TodayTab()
+    {
+
+        WebdriverWaits.waitUntilVisible(appointment.todayTab);
+        WebdriverWaits.waitForSpinner();
+        click_custom(appointment.todayTab);
+    }
+
+    public void clickOn_TestReadyTab()
+    {
+        WebdriverWaits.waitUntilVisible(appointment.appointmentsTab);
+        click_custom(appointment.appointmentsTab);
+    //   WebdriverWaits.waitUntilVisible(appointment.testReadyTab);
+     //   click_custom(appointment.testReadyTab);
+    }
+
+    public void clickOn_UpcomingTab()
+    {
+        WebdriverWaits.waitUntilVisible(appointment.upcomingTab);
+        WebdriverWaits.waitForSpinner();
+        click_custom(appointment.upcomingTab);
+    }
+
+    public void clickOn_Card()
+    {
+        WebdriverWaits.waitUntilVisible(card);
+        click_custom(card);
+    }
+
+    public void enterClientNameInSearchField(String nameOfClients)
+    {
+        String nameOfClient=getText_custom(nameOfTestReadyCard);
+        WebdriverWaits.waitUntilVisible(appointment.viewAllTab);
+        WebdriverWaits.waitForSpinner();
+        click_custom(appointment.viewAllTab);
+        click_custom(filterButton);
+        sendKeys_withClear(searchTextBox,nameOfClients);
+
+    }
+
+    public void enterClientNameInSearchFieldCompleted()
+    {
+        String nameOfClient=getText_custom(clientNameCompleted);
+        sendKeys_withClear(searchTextBox,nameOfClient);
+
+    }
+
+    public void ClickOn_FilterBtn()
+    {
+        WebdriverWaits.waitUntilVisible(appointment.appointmentsTab);
+        click_custom(appointment.appointmentsTab);
+        click_custom(appointment.upcomingTab);
+        click_custom(filterButton);
+
+    }
+
+    public void clickOn_ExportCSVButton()
+    {
+        WebdriverWaits.waitUntilVisible(appointment.appointmentsTab);
+        click_custom(appointment.appointmentsTab);
+       click_custom(appointment.upcomingTab);
+        click_custom(dashboardPanelPage.exportCSVButton);
+
+    }
+
+    public void clickOn_ExportCSVButtonOfTestComplete()
+    {
+        click_custom(dashboardPanelPage.exportCSVButton);
+
+    }
+    public void clickOn_ViewDetailsBtn()
+    {
+        WebdriverWaits.waitUntilVisible(getViewDetails);
+        click_custom(getViewDetails);
+    }
+
+    public void clickOn_BackBtn()
+    {
+        WebdriverWaits.waitUntilVisible(backButton);
+        click_custom(backButton);
+    }
+
+    public void clickOn_AppointmentsTab()
+    {
+        WebdriverWaits.waitUntilVisible(appointment.appointmentsTab);
+        click_custom(appointment.appointmentsTab);
+
+    }
+
+    public void clickOn_TestCompleteTab()
+    {
+        WebdriverWaits.waitUntilVisible(appointment.appointmentsTab);
+        click_custom(appointment.appointmentsTab);
+        WebdriverWaits.waitUntilVisible(appointment.testCompleteTab);
+        click_custom(appointment.testCompleteTab);
+
+    }
+
+    public void clickOn_FilterBtn()
+    {
+        click_custom(filterButton);
+    }
+
+    public void clickOn_ViewObservationBtn()
+    {
+        WebdriverWaits.waitUntilVisible(superAdmin.viewStudentObservationButton);
+        click_custom(superAdmin.viewStudentObservationButton);
+
+    }
+
+    public void clickOn_ViewDocumentBtn()
+    {
+        WebdriverWaits.waitUntilVisible(superAdmin.viewDocumentButton);
+        click_custom(superAdmin.viewDocumentButton);
+    }
+
+    public void clickOn_UploadButton() {
+        WebdriverWaits.waitUntilVisible(uploadDocumentButton);
+        WebdriverWaits.waitForSpinner();
+        scrollIntoView(uploadDocumentButton);
+        click_custom(uploadDocumentButton);
+    }
+
+    public void clickOn_ChooseFile() {
+        WebdriverWaits.waitUntilVisible(chooseField);
+        WebdriverWaits.waitForSpinner();
+        moveToElement(chooseField);
+    }
+
+    public void clickOn_UploadButtons() {
+        click_custom(uploadButton);
+    }
+
+    public void clickOn_CloseIcon()
+    {
+        WebdriverWaits.waitUntilVisible(closeIcon);
+        WebdriverWaits.waitForSpinner();
+        click_custom(closeIcon);
+    }
+
+    public void clickOn_CompletedTab()
+    {
+        WebdriverWaits.waitUntilVisible(appointment.appointmentsTab);
+        WebdriverWaits.waitForSpinner();
+        click_custom(appointment.appointmentsTab);
+        WebdriverWaits.waitUntilVisible(appointment.completedTab);
+        WebdriverWaits.waitForSpinner();
+        click_custom(appointment.completedTab);
+    }
+
+    public void clickOn_CanceledTab()
+    {
+        WebdriverWaits.waitUntilVisible(appointment.appointmentsTab);
+        WebdriverWaits.waitForSpinner();
+        click_custom(appointment.appointmentsTab);
+        WebdriverWaits.waitUntilVisible(appointment.canceledTab);
+        WebdriverWaits.waitForSpinner();
+        click_custom(appointment.canceledTab);
+    }
+
+    public void filter_ForCancel()
+    {
+        WebdriverWaits.waitUntilVisible(filterButton);
+        WebdriverWaits.waitForSpinner();
+        click_custom(filterButton);
+        String clientText="Cancel";
+        sendKeys_withClear(searchField, clientText);
+    }
+
+    public void clickOn_HoldTab()
+    {
+        WebdriverWaits.waitUntilVisible(appointment.appointmentsTab);
+        WebdriverWaits.waitForSpinner();
+        click_custom(appointment.appointmentsTab);
+        WebdriverWaits.waitUntilVisible(holdtab);
+        WebdriverWaits.waitForSpinner();
+        click_custom(holdtab);
+
+    }
+
+    public void clickOn_UnHoldBtn()
+    {
+        WebdriverWaits.waitUntilVisible(unHoldBtn);
+        WebdriverWaits.waitForSpinner();
+        click_custom(unHoldBtn);
+
+
+    }
+
+    public void clickOn_UnholdBackBtn()
+    {
+        WebdriverWaits.waitUntilVisible(unoldBackBtn);
+        WebdriverWaits.waitForSpinner();
+        click_custom(unoldBackBtn);
+
+
+    }
+
+    public void viewReceiptButtonDisplayed()
+    {
+        WebdriverWaits.waitUntilVisible(payment.viewReceiptButton);
+        WebdriverWaits.waitForSpinner();
+        click_custom(payment.viewReceiptButton);
+
+
+    }
+
+    public void viewReceiptButtonNotDisplayed()
+    {
+        WebdriverWaits.waitUntilVisible(payment.paymentButton);
+        WebdriverWaits.waitForSpinner();
+        click_custom(payment.paymentButton);
+
+    }
+
+    public void clickOn_CloseBtn()
+    {
+        WebdriverWaits.waitUntilVisible(payment.closeButton);
+        WebdriverWaits.waitForSpinner();
+        click_custom(payment.closeButton);
+    }
+
+    public void clickOn_CollectBtn()
+    {
+        WebdriverWaits.waitUntilVisible(payment.collectButton);
+        WebdriverWaits.waitForSpinner();
+        click_custom(payment.collectButton);
+    }
+
+
+    public void send_AmountInEnterAmount(String amount)
+    {
+        WebdriverWaits.waitUntilVisible(payment.enterAmountField);
+        WebdriverWaits.waitForSpinner();
+        sendKeys_withClear(payment.enterAmountField,amount);
+    }
+
+    public void scrollUptoVAmountDue()
+    {
+        WebdriverWaits.waitUntilVisible(payment.amountDue);
+        WebdriverWaits.waitForSpinner();
+        scrollIntoView(payment.amountDue);
+    }
+
+    public void clickOn_ExportCSVButtonOfUnhold()
+    {
+        click_custom(dashboardPanelPage.exportCSVButton);
+
+    }
+
+    public void clickOn_DirectorTab()
+    {
+        WebdriverWaits.waitUntilVisible(appointment.directorTab);
+        WebdriverWaits.waitForSpinner();
+        click_custom(appointment.directorTab);
+    }
+
+    public void clickOn_DiagonsticiansTab()
+    {
+        WebdriverWaits.waitUntilVisible(appointment.diagnosticianTab);
+        WebdriverWaits.waitForSpinner();
+        click_custom(appointment.diagnosticianTab);
+    }
+    public void view_AllAppointmentPage(){
+        click_filterButton();
+        enterClientNameInSearchField(clientFirstName);
+        validate_text(getStatus,"Test Ready");
+    }
+
+
 }
 

@@ -80,6 +80,8 @@ public class DirectorPage extends BasePage {
 
 
 
+
+
     public void click_CreateDirectorsButton() {
         WebdriverWaits.waitUntilVisible(createDirectorButton);
         WebdriverWaits.waitForSpinner();
@@ -193,13 +195,9 @@ public class DirectorPage extends BasePage {
     public void enter_Director_Email1(String diagnostician_EmailText1) {
         sendKeys_withClear(emailField, diagnostician_EmailText1);
     }
-
     public void click_PasswordField(String passwordTextFieldText) {
         sendKeys_withClear(passwordTextField, passwordTextFieldText);
     }
-
-
-
     public void click_DontSave() {
         click_custom(dontSaveButton);
     }
@@ -209,11 +207,9 @@ public class DirectorPage extends BasePage {
     public void click_Login_UsernameField(String userNameFieldText) {
         sendKeys_withClear(userNameField, userNameFieldText);
     }
-
     public void click_Login_PasswordField(String PasswordFieldText) {
         sendKeys_withClear(PasswordField, PasswordFieldText);
     }
-
     public void click_Login_Button() {
         click_custom(login);
     }
@@ -222,9 +218,6 @@ public class DirectorPage extends BasePage {
         WebdriverWaits.waitUntilVisible(logOutLink);
         click_custom(logOutLink);
     }
-
-
-
     //*********Create director**************
     public void create_Director(String directorsFirstNameText, String directorsLastNameText, String directorsMobileNumberText, String directorsEmailText, String directorsUserNameText, String password_FieldText, String confirmPasswordFieldText) throws InterruptedException {
         click_CreateDirectorsButton();

@@ -6,12 +6,13 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import java.util.List;
 import static org.automation.utilities.Assertions.validate_text;
-import static org.automation.utilities.WebdriverWaits.*;
+import static org.automation.utilities.WebdriverWaits.moveToElement;
 import static test.AdminTest.clientFirstName;
 
 
 public class AppointmentsPage extends BasePage {
     public By appointmentsTab = By.xpath("//a[@class='collapsed']");
+    public By upcomingTab=By.xpath("//a[text()='Upcoming']");
     public By viewAllTab = By.xpath("//a[text()='View All']");
     public By dashBoardPage = By.xpath("//h3[text()='Dashboard']");
     public By allAppointmentsPage = By.xpath("//h3");
@@ -58,6 +59,17 @@ public class AppointmentsPage extends BasePage {
     public By radioBox = By.xpath("(//label[@class='custom-control-label'])[1]");
     public By yesButton = By.xpath("//button[@class='theme-button danger mx-2 ng-star-inserted']");
     public By searchTextBox = By.id("filterSearch");
+    public  By todayTab=By.xpath("//a[contains(text(),'Today')]");
+    public By testCompleteTab=By.xpath("//a[text()='Test complete']");
+    public By canceledTab=By.xpath( "//li[@class='ng-star-inserted active']/a");
+
+    public By completedTab=By.xpath("//a[text()='Completed ']");
+
+    public By directorTab=By.xpath("//a[text()='Directors']");
+    public By diagnosticianTab=By.xpath("//a[text()='Diagnosticians']");
+
+
+
 
     //******************Verifying cancelled appointments*****************
 
@@ -151,6 +163,7 @@ public class AppointmentsPage extends BasePage {
     }
 
     public void enterAmount(String enterAmountText) throws InterruptedException {
+        WebdriverWaits.waitUntilInvisible(enterAmountField);
         WebdriverWaits.waitUntilVisible(enterAmountField);
         click_custom(enterAmountField);
         sendKeys_withClear(enterAmountField, enterAmountText);
@@ -173,9 +186,9 @@ public class AppointmentsPage extends BasePage {
     }
 
     public void getTotalColumnCount() throws InterruptedException {
-//        int colCount = getColumnCount();
-//        int expLocatorPos = (colCount - 1) * 7 + 1;
-//        System.out.println(expLocatorPos);
+        int colCount = getColumnCount();
+        int expLocatorPos = (colCount - 1) * 7 + 1;
+        System.out.println(expLocatorPos);
 
         Thread.sleep(7000);
         List<WebElement> list = getWebElements(slots, "AppointmentSlots");
@@ -227,12 +240,13 @@ public class AppointmentsPage extends BasePage {
     }
 
 
-    public void selectAssesmentType(int assestmentTypeTexts) {
+    public void selectAssesmentType(String assestmentTypeTexts) {
         WebdriverWaits.waitUntilVisible(assestmentType);
         WebdriverWaits.waitForSpinner();
         click_custom(assestmentType);
-        selectDropDownByIndex_custom(assestmentType, assestmentTypeTexts);
+        selectDropDownByVisibleText_custom(assestmentType, assestmentTypeTexts);
     }
+
     public void fill_clientDetailsSection(String CustomerFirstName, String CustomerLastName, int gradeType, String dateOfBirthText, int schoolTypeOption, String cellNumber, String EmailAddress, String reasonForCallText, String cityText, String stateText, String zipCodeText, String testAmountText, String enterAmountText) throws InterruptedException {
         enterFirstName(CustomerFirstName);
         enterLastName(CustomerLastName);
@@ -269,8 +283,8 @@ public class AppointmentsPage extends BasePage {
     }
 
     public void click_FilterButton() {
-        waitUntilVisible(filterButton);
-        waitForSpinner();
+        WebdriverWaits.waitUntilVisible(filterButton);
+        WebdriverWaits.waitForSpinner();
         click_custom(filterButton);
     }
 

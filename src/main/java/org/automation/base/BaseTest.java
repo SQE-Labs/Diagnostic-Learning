@@ -72,11 +72,11 @@ public class BaseTest {
 				break;
 
 			case "Edge":
-				driver .set( new EdgeDriver());
+				driver .set(new EdgeDriver());
 				break;
 
 			case "FireFox":
-				driver .set( new FirefoxDriver());
+				driver .set(new FirefoxDriver());
 				break;
 
 			default:

@@ -23,4 +23,6 @@ public class SuperAdminPage extends BasePage {
     public void view_ClientObservation_Page(){
         click_ViewStudentObservationButton();
     }
+
 }
+
