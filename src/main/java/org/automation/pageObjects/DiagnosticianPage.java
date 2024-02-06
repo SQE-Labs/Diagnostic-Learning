@@ -30,7 +30,7 @@ public class DiagnosticianPage extends BasePage {
     public By diagnostician_MobileNumber = By.xpath("//input[@placeholder='Cell Number']");
     public By diagnostician_Email = By.xpath("//input[@placeholder='Email']");
     public By assignLocation = By.xpath("//select[@id='testingLocation']");
-    public By locationName = By.xpath("//option[text()='Plano']");
+    public By locationName = By.xpath("//option[text()='Austin']");
     public By userName = By.xpath("//input[@placeholder='Username']");
     public By password_Field = By.xpath("//input[@placeholder='Create Password']");
     public By confirm_PasswordField = By.xpath("//input[@placeholder='Confirm Password']");
@@ -278,11 +278,13 @@ public By availableSlots=By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-al
     }
 
     public void click_UpdateButton() {
+        WebdriverWaits.waitUntilVisible(updateButton);
         click_custom(updateButton);
     }
 
 
     public void off_ToggleButton() {
+        WebdriverWaits.waitUntilVisible(toggle);
         click_custom(toggle);
     }
 

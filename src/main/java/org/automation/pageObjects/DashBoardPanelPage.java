@@ -19,25 +19,16 @@ public class DashBoardPanelPage extends BasePage {
     public By directorsTab = By.xpath("//li[@id='Directors']");
     public By diagnosticianLink = By.xpath("//a[text()='Diagnosticians']");
     public By adminButton = By.xpath("//a[text()='Admins']");
-    public By paymentButton = By.xpath("//a[text()='Payments']");
     public By backButton = By.xpath("//button[text()='Back']");
     public By exportCSVButton = By.xpath("//button[text()='Export to CSV']");
     public By AppointmentsTab = By.xpath("//a[text()=' Appointments ']");
     public By availabilityTab = By.xpath("//a[text()='Availability']");
-    public By editButton = By.xpath("(//a[text()='Edit'])[1]");
     public By viewAllTab = By.xpath("//a[text()='View All']");
-    public By spinner = By.cssSelector("div.ngx-spinner-overlay");
-    public By viewDetailLink = By.xpath("tr:not([style='display: none;' ]) td:nth-child(1)");
-    public By filterButton = By.xpath("//a[text()='Filter']");
-    public By searchField = By.xpath("//input[@id='filterSearch']");
-
-
 
     public void click_LogOutLink() {
         WebdriverWaits.waitUntilVisible(logOutLink);
         click_custom(logOutLink);
     }
-
 
     public void click_ViewAllTab() {
         WebdriverWaits.waitUntilVisible(viewAllTab);
@@ -65,15 +56,6 @@ public class DashBoardPanelPage extends BasePage {
         click_custom(adminButton);
     }
 
-    public void click_On_PaymentTab() {
-        WebdriverWaits.waitUntilInvisible(spinner);
-        click_custom(paymentButton);
-    }
-
-    public void edit_Director() {
-        click_custom(editButton);
-    }
-
     public void click_BackButton() {
         WebdriverWaits.waitUntilVisible(backButton);
         click_custom(backButton);
@@ -96,9 +78,6 @@ public class DashBoardPanelPage extends BasePage {
         }
     }
 
-
-
-
     public String getDownloadFileName() {
 
         ChromeDownloads download = new ChromeDownloads();
@@ -120,6 +99,7 @@ public class DashBoardPanelPage extends BasePage {
         WebdriverWaits.waitUntilVisible(availabilityTab);
         WebdriverWaits.waitForSpinner();
         click_custom(availabilityTab);
+        WebdriverWaits.waitForSpinner();
     }
 
         public static void readCSVFile() throws IOException, CsvException {

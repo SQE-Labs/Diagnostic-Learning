@@ -96,7 +96,7 @@ public class SuperAdminTest extends BaseTest {
     }
 
     @Test(priority = 5, enabled = true, description = "5.9 verify that toggle is off or not")
-    public void validate_Toggle_OffIn_Admin()  {
+    public void validate_Toggle_OffIn_Admin() throws InterruptedException {
         AdminPage admin = new AdminPage();
         //checking user is disable or not
         admin.cheking_DisableUser();
@@ -209,9 +209,7 @@ public class SuperAdminTest extends BaseTest {
         //In Edit-Diagnostician password also changed
         diagnostician.edit_Diagnostician(diagnosticianEmailAddress1, "12345678", "12345678");
         WebdriverWaits.waitUntilVisible(diagnostician.edit_Succ_Msg);
-        String edit_Succ_Msg=getText_custom(diagnostician.edit_Succ_Msg);
-        validate_text(diagnostician.edit_Succ_Msg, edit_Succ_Msg);
-        Log.info("Successfully Edited the created diagnostician");
+        validate_text(diagnostician.edit_Succ_Msg, "Diagnostician details updated successfully.");
     }
 
     @Test(priority = 14, enabled = true, description = "4.13 verify that toggle is off or not for diagnostician by superadmin")
@@ -331,8 +329,7 @@ public class SuperAdminTest extends BaseTest {
         director.cheking_DisableUser();
 
         WebdriverWaits.waitUntilVisible(director.enableUser);
-        String enableText=getText_custom(director.enableUser);
-        validate_text(director.enableUser, enableText);
+        validate_text(director.enableUser, "Enable User");
     }
 
     @Test(priority = 23, enabled = true, description = "Verify that Superadmin is able to Enable the user or not")
@@ -342,7 +339,7 @@ public class SuperAdminTest extends BaseTest {
         director.enable_Director();
         WebdriverWaits.waitUntilVisible(director.edit_SuccMsg);
         validate_text(director.edit_SuccMsg, "Director details updated successfully.");
-        Log.info("Successfully Edited the created director");
+
 
     }
 
@@ -438,6 +435,7 @@ public class SuperAdminTest extends BaseTest {
     public void download_CSV_File() throws InterruptedException, FileNotFoundException {
         AppointmentsPage appointment = new AppointmentsPage();
         DashBoardPanelPage panelpage = new DashBoardPanelPage();
+        ActionEngine action=new ActionEngine();
 
         panelpage.click_AppointmentsTab();
         appointment.click_ViewAllTab();
@@ -447,7 +445,8 @@ public class SuperAdminTest extends BaseTest {
         //Download exportCSV File and Check file is downloaded or not
         String downloadFile = panelpage.getDownloadFileName();
         Assert.assertTrue(panelpage.isFileDownloaded(downloadFile));
-
+        action.navigate_Back();
+        panelpage.click_LogOutLink();
     }
 
     //**********************SuperAdmin is viewing Payments page********************

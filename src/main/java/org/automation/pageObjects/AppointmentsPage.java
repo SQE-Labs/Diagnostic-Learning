@@ -35,17 +35,17 @@ public class AppointmentsPage extends BasePage {
     public By assestmentType = By.id("assestmentType");
     public By newEventText = By.xpath("//div[text()='New Event']");
     public By dateElements = By.xpath("//tr/td[4]");
-    public By dateElement = By.xpath("//tr/td[3]");
+    public By dateElement = By.xpath("(//tr/td[5])[1]");
+    public By dateEle=By.xpath("((//tr[not(contains(@style,'display: none;'))])[2]//td)[3]");
     public By chooseTestingLocation = By.id("testingLocation");
     public By clientFirstName = By.xpath("//input[@placeholder='Client First Name']");
     public By clientLastName = By.xpath("//input[@placeholder='Client Last Name']");
     public By headerResource = By.xpath("//div[@class='header-resource-name']");
     public By dateOfBirth = By.xpath("//input[@placeholder='Date of Birth']");
-    public By saveButton = By.xpath("//mbsc-button[text()=' Save ']");
-    public By appointmentSaveButtonButton = By.xpath("//a[text()='Save']");
+
     public By grade = By.xpath("(//select[@id='schoolType'])[1]");
     public By SchoolType = By.xpath("(//select[@id='schoolType'])[2]");
-    public By phoneNumber = By.xpath("(//input[@class='p-inputtext p-component p-element p-inputmask'])[2]");
+
     public By emailAddress = By.xpath("//input[@placeholder='Email Address']");
     public By reasonForCall = By.id("reasonForCall");
     public By continueToDeposit = By.id("intakeFormSubmit");
@@ -58,7 +58,7 @@ public class AppointmentsPage extends BasePage {
     public By cancelButton = By.xpath("//button[@class='theme-button danger m-2 ng-star-inserted']");
     public By radioBox = By.xpath("(//label[@class='custom-control-label'])[1]");
     public By yesButton = By.xpath("//button[@class='theme-button danger mx-2 ng-star-inserted']");
-    public By searchTextBox = By.id("filterSearch");
+
     public  By todayTab=By.xpath("//a[contains(text(),'Today')]");
     public By testCompleteTab=By.xpath("//a[text()='Test complete']");
     public By canceledTab=By.xpath( "//li[@class='ng-star-inserted active']/a");
@@ -100,10 +100,6 @@ public class AppointmentsPage extends BasePage {
         sendKeys_withClear(cellNumber, cellNumberText);
     }
 
-    public void enterPhoneNumber(String phoneNumberText) {
-        sendKeys_withClear(phoneNumber, phoneNumberText);
-    }
-
     public void enterEmialAddress(String emailAddressText) {
         sendKeys_withClear(emailAddress, emailAddressText);
     }
@@ -134,33 +130,13 @@ public class AppointmentsPage extends BasePage {
         sendKeys_withClear(dateOfBirth, dateOfBirthText);
     }
 
-    public void clickOnSaveButton() {
-        //  click_custom(afternoonToggleButton);
-        click_custom(saveButton);
-    }
-
-    public void clickOnAppSaveButton() {
-        WebdriverWaits.waitUntilVisible(appointmentSaveButtonButton);
-        click_custom(appointmentSaveButtonButton);
-    }
-
-    public void clickOnAssesmentType(int assestmentTypeTexts) {
-        WebdriverWaits.waitUntilVisible(assestmentType);
-        click_custom(assestmentType);
-        selectDropDownByIndex_custom(assestmentType, assestmentTypeTexts);
-    }
-
     public void selectTestinglocation(String chooseLocationText) {
         WebdriverWaits.waitUntilVisible(chooseTestingLocation);
         clickBtn_custom(chooseTestingLocation, "ChooseLocation");
         selectDropDownByVisibleText_custom(chooseTestingLocation, chooseLocationText, "ChooseLocation");
     }
 
-    public void selectAssessmentDate() {
-        WebdriverWaits.waitUntilVisible(assessmentDate);
-        WebdriverWaits.waitForSpinner();
-        clickBtn_custom(assessmentDate);
-    }
+
 
     public void enterAmount(String enterAmountText) throws InterruptedException {
         WebdriverWaits.waitUntilInvisible(enterAmountField);
@@ -192,6 +168,7 @@ public class AppointmentsPage extends BasePage {
 
         Thread.sleep(7000);
         List<WebElement> list = getWebElements(slots, "AppointmentSlots");
+        System.out.println(list);
         for (WebElement slot : list) {
             Thread.sleep(2000);
             click_custom(slot);
@@ -216,11 +193,9 @@ public class AppointmentsPage extends BasePage {
         WebdriverWaits.waitUntilVisible(clickSlotSaveBtn);
         click_custom(clickSlotSaveBtn);
     }
-
     public void clickCalSaveButton() {
         click_custom(clickCalSaveBtn);
     }
-
     public void click_AssessmentDate() {
         WebdriverWaits.waitUntilVisible(assessmentDate);
         WebdriverWaits.waitForSpinner();
@@ -238,7 +213,6 @@ public class AppointmentsPage extends BasePage {
         validate_text(newSlotText, "New event");
         clickCalSaveButton();
     }
-
 
     public void selectAssesmentType(String assestmentTypeTexts) {
         WebdriverWaits.waitUntilVisible(assestmentType);
@@ -314,8 +288,6 @@ public class AppointmentsPage extends BasePage {
         WebdriverWaits.waitUntilVisible(viewDetailsLink);
         click_custom(viewDetailsLink);
     }
-
-
     public void exportCSV_Button() {
         click_AppointmentTab();
         click_ViewAllTab();

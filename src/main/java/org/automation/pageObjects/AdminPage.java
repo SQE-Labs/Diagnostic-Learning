@@ -129,6 +129,7 @@ public class AdminPage extends BasePage {
     public By validateScheduledFollowUp = By.xpath("//h4[text()='Follow Up Scheduled!!']");
     public By followUpBackBtn = By.xpath("(//a[text()='Back'])[3]");
     public By viewAllTab = By.xpath("//a[text()='View All']");
+    public By titleText=By.xpath("//h3");
     //*************************** Payment PopUp **************************//
     public By paymentBtn = By.xpath("//button[text()=' Payment ']");
 
@@ -208,6 +209,7 @@ public class AdminPage extends BasePage {
   public By getTitleOfTestComplete=By.xpath("//div[@class='page-header align-items-lg-center d-flex flex-column flex-md-row']/h3");
 
   public By getTitleOfAttachedDocument=By.xpath("//h5[@class='text-center mb-4']");
+  public By testReadyTab=By.xpath("//a[text()='Test Ready']");
 
 
     public By getTextFromViewDoc = By.xpath("//a[@class='d-flex px-3 py-2 small text-dark text-left text-wrap']");
@@ -351,6 +353,7 @@ public class AdminPage extends BasePage {
 
     public void click_DontSave() {
         WebdriverWaits.waitUntilVisible(dontSaveButton);
+        WebdriverWaits.waitForSpinner();
         click_custom(dontSaveButton);
     }
 
@@ -441,9 +444,10 @@ public class AdminPage extends BasePage {
     }
     //************Checking toggle of or not*************
 
-    public void cheking_DisableUser()   {
+    public void cheking_DisableUser() throws InterruptedException {
         click_EditButton();
         click_DontSave();
+        Thread.sleep(2000);
         click_EditButton();
         click_DontSave();
     }
@@ -655,15 +659,16 @@ public class AdminPage extends BasePage {
         click_custom(holdfilterButton);
     }
 
-    public void send_textHoldSearchBox(String name) {
+    public void send_TextHoldSearchBox(String name) {
         sendKeys_custom(searchTextBox, name);
 
     }
-    public void click_unHoldBtn() {
+    public void click_unHoldBtn() throws InterruptedException {
         WebdriverWaits.waitUntilVisible(unHoldBtn);
         click_custom(unHoldBtn);
         WebdriverWaits.waitUntilVisible(yesUnholdButton);
         click_custom(yesUnholdButton);
+        Thread.sleep(4000);
     }
     public String edit_ClientInfo(String firstName, String lastName, String address1, String grade) {
         String fullName = firstName + " " + lastName;
@@ -824,12 +829,6 @@ public class AdminPage extends BasePage {
         sendKeys_withClear(searchField,upcomingText);
     }
 
-    public void filter_ForTestReady(String testReady)
-    {
-
-        sendKeys_withClear(searchField, testReady);
-    }
-
     public void click_Re_AssigDropDown() {
         WebdriverWaits.waitUntilVisible(diag);
         click_custom(diag);
@@ -846,10 +845,8 @@ public class AdminPage extends BasePage {
         click_custom(clientDetailLink);
         WebdriverWaits.waitUntilVisible(paymentButton);
         WebdriverWaits.waitForSpinner();
-
-        //*************TestCase Removed********************
-//        scrollIntoView(paymentButton);
-//        click_custom(paymentButton);
+        scrollIntoView(paymentButton);
+        click_custom(paymentButton);
     }
 
     public void enter_ValidAmount() throws InterruptedException {
@@ -876,6 +873,7 @@ public class AdminPage extends BasePage {
         enter_ClientName(clientText);
         Thread.sleep(2000);
         clickOn_ViewDetailLink();
+
         enter_ValidAmount();
         clickOn_CollectButton();
         clickOn_CancelButton();
@@ -889,18 +887,14 @@ public class AdminPage extends BasePage {
 
     public void clickOn_TodayTab()
     {
-
         WebdriverWaits.waitUntilVisible(appointment.todayTab);
         WebdriverWaits.waitForSpinner();
         click_custom(appointment.todayTab);
     }
 
     public void clickOn_TestReadyTab()
-    {
-        WebdriverWaits.waitUntilVisible(appointment.appointmentsTab);
-        click_custom(appointment.appointmentsTab);
-    //   WebdriverWaits.waitUntilVisible(appointment.testReadyTab);
-     //   click_custom(appointment.testReadyTab);
+    {WebdriverWaits.waitUntilVisible(testReadyTab );
+        click_custom(testReadyTab );
     }
 
     public void clickOn_UpcomingTab()
@@ -927,30 +921,13 @@ public class AdminPage extends BasePage {
 
     }
 
-    public void enterClientNameInSearchFieldCompleted()
+    public void enterClientNameInSearchFieldCompleted(String nameOfClient)
     {
-        String nameOfClient=getText_custom(clientNameCompleted);
         sendKeys_withClear(searchTextBox,nameOfClient);
 
     }
 
-    public void ClickOn_FilterBtn()
-    {
-        WebdriverWaits.waitUntilVisible(appointment.appointmentsTab);
-        click_custom(appointment.appointmentsTab);
-        click_custom(appointment.upcomingTab);
-        click_custom(filterButton);
 
-    }
-
-    public void clickOn_ExportCSVButton()
-    {
-        WebdriverWaits.waitUntilVisible(appointment.appointmentsTab);
-        click_custom(appointment.appointmentsTab);
-       click_custom(appointment.upcomingTab);
-        click_custom(dashboardPanelPage.exportCSVButton);
-
-    }
 
     public void clickOn_ExportCSVButtonOfTestComplete()
     {
@@ -969,11 +946,9 @@ public class AdminPage extends BasePage {
         click_custom(backButton);
     }
 
-    public void clickOn_AppointmentsTab()
-    {
+    public void clickOn_AppointmentsTab() {
         WebdriverWaits.waitUntilVisible(appointment.appointmentsTab);
         click_custom(appointment.appointmentsTab);
-
     }
 
     public void clickOn_TestCompleteTab()
@@ -1076,7 +1051,7 @@ public class AdminPage extends BasePage {
 
     }
 
-    public void clickOn_UnholdBackBtn()
+    public void click_UnholdBackBtn()
     {
         WebdriverWaits.waitUntilVisible(unoldBackBtn);
         WebdriverWaits.waitForSpinner();
@@ -1134,7 +1109,6 @@ public class AdminPage extends BasePage {
     public void clickOn_ExportCSVButtonOfUnhold()
     {
         click_custom(dashboardPanelPage.exportCSVButton);
-
     }
 
     public void clickOn_DirectorTab()
@@ -1151,7 +1125,6 @@ public class AdminPage extends BasePage {
         click_custom(appointment.diagnosticianTab);
     }
     public void view_AllAppointmentPage(){
-        click_filterButton();
         enterClientNameInSearchField(clientFirstName);
         validate_text(getStatus,"Test Ready");
     }
