@@ -24,6 +24,13 @@ public class DashBoardPanelPage extends BasePage {
     public By AppointmentsTab = By.xpath("//a[text()=' Appointments ']");
     public By availabilityTab = By.xpath("//a[text()='Availability']");
     public By viewAllTab = By.xpath("//a[text()='View All']");
+    public By sss=By.xpath("(//td[@class='export-hide-column'])[2]");
+
+    public void sum(){
+        WebdriverWaits.waitUntilVisible(sss);
+        WebdriverWaits.waitForSpinner();
+        click_custom(sss);
+    }
 
     public void click_LogOutLink() {
         WebdriverWaits.waitUntilVisible(logOutLink);

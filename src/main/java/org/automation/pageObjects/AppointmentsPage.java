@@ -107,6 +107,12 @@ public class AppointmentsPage extends BasePage {
     public void reasonForCallDropDown(String reasonForCallText) {
         selectDropDownByVisibleText_custom(reasonForCall, reasonForCallText);
     }
+    public void click_TestCompleteTab()
+    {
+        WebdriverWaits.waitUntilVisible( testCompleteTab);
+        WebdriverWaits.waitForSpinner();
+        click_custom( testCompleteTab);
+    }
 
     public void click_LogOutLink() {
         refresh_Page();
@@ -168,7 +174,7 @@ public class AppointmentsPage extends BasePage {
 
         Thread.sleep(7000);
         List<WebElement> list = getWebElements(slots, "AppointmentSlots");
-        System.out.println(list);
+        System.out.println(list.size());
         for (WebElement slot : list) {
             Thread.sleep(2000);
             click_custom(slot);

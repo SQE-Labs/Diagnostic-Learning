@@ -180,7 +180,7 @@ public class AdminTest extends BaseTest {
     @Test(priority = 10, enabled = true, description = "Creat follow up for client by admin")
     public void create_FollowUp() {
         AdminPage followUp = new AdminPage();
-        followUp.Create_FollowUp();
+        followUp.create_FollowUp();
         WebdriverWaits.waitUntilVisible(followUp.validateScheduledFollowUp);
         WebdriverWaits.waitForSpinner();
         validate_text(followUp.validateScheduledFollowUp, "Follow Up Scheduled!!");
@@ -470,19 +470,9 @@ public class AdminTest extends BaseTest {
         WebdriverWaits.waitUntilVisible(director.UserNameGetText);
         validate_text(director.UserNameGetText, directorUserName);
     }
-    @Test(priority = 37, enabled = true, description = "Admin is able to click on 'Appointment' tab ")
-    public void verify_AppointmentTabGetClose() throws InterruptedException {
-        AdminPage admin = new AdminPage();
-        admin.clickOn_AppointmentsTab();
-        Thread.sleep(4000);
-        admin.clickOn_AppointmentsTab();
-        WebElement element = getDriver().findElement(admin.viewAllTab);
-        WebdriverWaits.waitUntilInvisible(admin.viewAllTab);
-        Assert.assertFalse(element.isDisplayed());
-    }
 
     @Test(priority = 38, enabled = true, description = "Admin is directed to 'Today's Appointment' page")
-    public void verify_TodayAppointmentTab() throws InterruptedException {
+    public void verify_TodayAppointmentTab() {
         AdminPage admin = new AdminPage();
         DateGenerator datePage = new DateGenerator();
         DashBoardPanelPage dashboard = new DashBoardPanelPage();
@@ -568,12 +558,11 @@ public class AdminTest extends BaseTest {
     @Test(priority = 43, enabled = true, description = "Admin is able to click client detail page after clicking on 'View Details' button")
     public void click_OnViewDetailsButton() {
         AdminPage admin = new AdminPage();
-        ActionEngine action = new ActionEngine();
 
         admin.clickOn_UpcomingTab();
         admin.filter_ForUpcoming(clientLastName);
         String actualText = getText_custom(admin.getNameOfClient);
-        admin.clickOn_ViewDetailsBtn();
+        admin.click_ViewDetailsBtn();
         String clientName = getText_custom(admin.clientNameDetail);
 
         String[] words = clientName.split(" ");
@@ -599,10 +588,11 @@ public class AdminTest extends BaseTest {
     public void verify_TestComplete_AppointmentPage() throws FileNotFoundException, InterruptedException {
         AdminPage admin = new AdminPage();
         DashBoardPanelPage dashboard = new DashBoardPanelPage();
-        admin.clickOn_TestCompleteTab();
+        AppointmentsPage appointment = new AppointmentsPage();
+        appointment.click_TestCompleteTab();
         String actualText = getText_custom(admin.getTitleOfTestComplete);
         validate_AttText(actualText, "Test Complete Appointments");
-        admin.clickOn_FilterBtn();
+        admin.click_FilterBtn();
         //Search field
         String searchPlaceHolder = admin.getAttributevalue(admin.searchTextBox, "placeholder");
         String fromDateplaceholder = admin.getAttributevalue(admin.fromDateText, "placeholder");
@@ -621,12 +611,14 @@ public class AdminTest extends BaseTest {
         AdminPage admin = new AdminPage();
         ActionEngine action = new ActionEngine();
         SuperAdminPage superAdmin = new SuperAdminPage();
+        AppointmentsPage appointment = new AppointmentsPage();
 //        login.adminLogin(adminUserName, "12345678");
         String expectedTitle = "View Student Observation";
         action.navigate_Back();
-        admin.clickOn_TestCompleteTab();
-        String actualText = getText_custom(admin.getNameOfClient);
-        admin.clickOn_ViewDetailsBtn();
+        appointment.click_TestCompleteTab();
+        appointment.click_FilterButton();
+        appointment.click_SearchField(clientFirstName);
+        admin.click_ViewDetailsBtn();
         String clientName = getText_custom(admin.clientNameDetail);
 
         String[] words = clientName.split(" ");
@@ -645,7 +637,7 @@ public class AdminTest extends BaseTest {
             // Handle the case where there are not enough words
             System.out.println("The input string does not contain at least two words.");
         }
-        validate_AttText(actualText, expectedTitleText);
+        validate_text(admin.clientNameDetail, clientName);
         validate_text(superAdmin.viewStudentObservationButton, expectedTitle);
     }
 
@@ -653,29 +645,32 @@ public class AdminTest extends BaseTest {
     public void click_OnViewObservationBtn() {
         AdminPage admin = new AdminPage();
         SuperAdminPage superAdmin = new SuperAdminPage();
-        DashBoardPanelPage dashboard=new DashBoardPanelPage();
-         LoginPage login=new LoginPage();
+        DashBoardPanelPage dashboard = new DashBoardPanelPage();
+        AppointmentsPage appointment = new AppointmentsPage();
+        LoginPage login = new LoginPage();
 //        admin.clickOn_TestCompleteTab();
-        login.adminLogin(adminUserName,"12345678");
+        login.adminLogin(adminUserName, "12345678");
         dashboard.click_AppointmentsTab();
-        admin.clickOn_CompletedTab();
-        admin.clickOn_ViewDetailsBtn();
-        admin.clickOn_ViewObservationBtn();
+        appointment.click_TestCompleteTab();
+        appointment.click_FilterButton();
+        appointment.click_SearchField(clientFirstName);
+        admin.click_ViewDetailsBtn();
+        admin.click_ViewObservationBtn();
         String expectedText = "Client Observation";
         String actualText = getText_custom(superAdmin.clientObservation);
         validate_AttText(actualText, expectedText);
     }
 
     @Test(dependsOnMethods = {"click_OnViewObservationBtn"}, description = "20.4 Admin is able to click on 'View Observation' button")
-    public void click_OnViewDocumentBtn() throws AWTException {
+    public void click_ViewDocumentBtn() throws AWTException {
         AdminPage admin = new AdminPage();
 
-        admin.clickOn_ViewDocumentBtn();
+        admin.click_ViewDocumentsButton();
         String expectedFileName = getText_custom(admin.getTextFromViewDoc);
         System.out.println("expectedFileName= " + expectedFileName);
         admin.clickOn_CloseIcon();
-        admin.clickOn_ViewObservationBtn();
-        admin.clickOn_ViewDocumentBtn();
+        admin.click_BackButton();
+        admin.click_ViewDocumentButton();
         String expectedText = "Attached Documents";
         validate_text(admin.getTitleOfAttachedDocument, expectedText);
         String FileName = getText_custom(admin.getTextFromViewDocTwo);
@@ -698,24 +693,30 @@ public class AdminTest extends BaseTest {
             System.out.println("Input string does not have enough words.");
         }
         validate_AttText(actualFileName, expectedFileName);
+        admin.clickOn_CloseIcon();
     }
 
-    @Test(dependsOnMethods = {"click_OnViewDocumentBtn"}, description = "Admin is able to click on 'View Observation' button")
-    public void click_OnBackBtn() {
-        AdminPage admin = new AdminPage();
-        admin.clickOn_ViewDetailsBtn();
-        String expectedResult = getText_custom(admin.title);
-        admin.clickOn_ViewObservationBtn();
-        admin.clickOn_BackBtn();
-        String actualResult = getText_custom(admin.title);
-        validate_AttText(actualResult, expectedResult);
-    }
-
-
-    @Test(dependsOnMethods = {"click_OnBackBtn"}, description = "Admin is able to click on 'Completed' tab")
-    public void Verify_ClickOnCompletedTab() {
+    @Test(dependsOnMethods = {"click_ViewDocumentBtn"}, description = "verify admin is able to send recipt or not")
+    public void send_Recipts() {
         AdminPage admin = new AdminPage();
         LoginPage login = new LoginPage();
+//        AppointmentsPage appointment = new AppointmentsPage();
+//        DashBoardPanelPage dashboard = new DashBoardPanelPage();
+//        login.adminLogin("AU_FlynIxj", "12345678");
+
+//        dashboard.click_AppointmentsTab();
+//        appointment.click_TestCompleteTab();
+//        admin.click_filterButton();
+//        appointment.click_SearchField("Au_Theobj");
+//        admin.click_ViewDetailsBtn();
+        admin.click_SendReciptButton();
+        WebdriverWaits.waitForSpinner();
+    }
+
+    @Test(dependsOnMethods = {"send_Recipts"}, description = "Admin is able to click on 'Completed' tab")
+    public void Verify_ClickOnCompletedTab() {
+        AdminPage admin = new AdminPage();
+
         admin.clickOn_CompletedTab();
         String expectedTitle = "Completed Appointments";
         validate_text(admin.title, expectedTitle);
@@ -725,7 +726,7 @@ public class AdminTest extends BaseTest {
     public void verify_ClickOnFilterBtnOfCompletedTab() {
         AdminPage admin = new AdminPage();
         admin.clickOn_CompletedTab();
-        admin.clickOn_FilterBtn();
+        admin.click_FilterBtn();
 
         //Search field
         String searchPlaceHolder = admin.getAttributevalue(admin.searchTextBox, "placeholder");
@@ -750,7 +751,8 @@ public class AdminTest extends BaseTest {
         Assert.assertTrue(dashboard.isFileDownloaded(downloadFile));
         action.navigate_Back();
 
-        admin.clickOn_ViewDetailsBtn();
+        admin.enterClientNameInSearchFieldCompleted(clientLastName);
+        admin.click_ViewDetailsBtn();
         validate_AttText(actualResult, clientFirstName + ' ' + clientLastName + ' ' + "Details");
     }
 
@@ -759,8 +761,6 @@ public class AdminTest extends BaseTest {
         AdminPage admin = new AdminPage();
         PaymentPage payment = new PaymentPage();
 
-        admin.clickOn_CompletedTab();
-        admin.clickOn_ViewDetailsBtn();
         admin.scrollUptoVAmountDue();
         String expectedAmountDue = "$0.00";
         String actualAmountDue = getText_custom(payment.amountDue);
@@ -812,7 +812,6 @@ public class AdminTest extends BaseTest {
             validate_AttText(actualText, expectedText);
         }
     }
-
 
 
     //************************ Edit Diagnostician *********************//

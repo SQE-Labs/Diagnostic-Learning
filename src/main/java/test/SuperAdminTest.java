@@ -333,14 +333,13 @@ public class SuperAdminTest extends BaseTest {
     }
 
     @Test(priority = 23, enabled = true, description = "Verify that Superadmin is able to Enable the user or not")
-    public void verify_director_enable_User() {
+    public void verify_director_enable_User() throws InterruptedException {
         DirectorPage director = new DirectorPage();
 
         director.enable_Director();
         WebdriverWaits.waitUntilVisible(director.edit_SuccMsg);
+        Thread.sleep(2000);
         validate_text(director.edit_SuccMsg, "Director details updated successfully.");
-
-
     }
 
 
@@ -415,8 +414,8 @@ public class SuperAdminTest extends BaseTest {
 
         WebdriverWaits.waitUntilVisible(superAdmin.viewStudentObservationButton);
         validate_text(superAdmin.viewStudentObservationButton, "View Student Observation");
-        WebdriverWaits.waitUntilVisible(superAdmin.viewDocumentButton);
-        validate_text(superAdmin.viewDocumentButton, "View Documents");
+        WebdriverWaits.waitUntilVisible(superAdmin.viewDocumentsButton);
+        validate_text(superAdmin.viewDocumentsButton, "View Documents");
     }
 
     //********After completion of complete appointment this test case will be valid********************

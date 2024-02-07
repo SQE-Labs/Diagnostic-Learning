@@ -48,6 +48,7 @@ public class AdminPage extends BasePage {
     public By filterButton = By.xpath("//a[@class='theme-button grey ml-auto mr-3']");
     public By searchField = By.xpath("//input[@id='filterSearch']");
     public By actualText = By.xpath("(//td)[2]");
+    public By backButton=By.xpath("//a[@class='grey ml-3 theme-button']");
 
     //*****************Edit Admin with valid credentials****************
     public By editButton = By.xpath("(//a[text()='Edit'])[1]");
@@ -129,7 +130,8 @@ public class AdminPage extends BasePage {
     public By validateScheduledFollowUp = By.xpath("//h4[text()='Follow Up Scheduled!!']");
     public By followUpBackBtn = By.xpath("(//a[text()='Back'])[3]");
     public By viewAllTab = By.xpath("//a[text()='View All']");
-    public By titleText=By.xpath("//h3");
+    public By titleText=By.xpath("//div[text()='Follow Up']");
+    public By backButn=By.xpath("//a[@class='grey ml-3 theme-button']");
     //*************************** Payment PopUp **************************//
     public By paymentBtn = By.xpath("//button[text()=' Payment ']");
 
@@ -178,13 +180,9 @@ public class AdminPage extends BasePage {
     public By uploadButton = By.xpath("//button[@class='theme-button mx-2']");
     public By chooseField = By.xpath("//input[@placeholder='select document to be uploaded']");
     public By closeButton = By.xpath("//a[text()='Close']");
+    public By viewRecCloseButton=By.xpath("(//a[@class='theme-button grey mx-2'])[4]");
 
     public By todayAppointmentTitle=By.xpath("//div[@class='align-items-md-center d-flex flex-column flex-md-row page-header']/h3");
-
-
-    public By todayTab=By.xpath("//a[contains(text(),'Today')]");
-
-
     public By card=By.xpath("(//td[@class='d-block ng-star-inserted'])[1]");
     public By nameOnCard=By.xpath("(//p[@class='text-purple mb-0'])[1]");
 
@@ -218,7 +216,7 @@ public class AdminPage extends BasePage {
 
     public By closeIcon=By.xpath("//button[@aria-label='Close']/span");
 
-    public By backButton=By.xpath("//a[@class='grey ml-3 theme-button']");
+
 
     public By title=By.xpath("//h3");
 
@@ -226,6 +224,23 @@ public class AdminPage extends BasePage {
     public By unoldBackBtn=By.xpath("//a[@class='theme-button grey mx-2']");
 
     public By titleOfViewReceipt=By.xpath("//h4[@class='text-center ng-star-inserted']");
+
+    //**************************Send recipts****************************
+
+    public By sendReciptButton=By.xpath("(//button[@class='theme-button green m-2 ng-star-inserted'])[1]");
+    public By typesOfEvolution=By.xpath("(//select)[5]");
+    public By dysgraphia=By.xpath("//option[@value='Dysgraphia']");
+    public By secondaryProvider=By.xpath("(//select)[6]");
+    public By name=By.xpath("//option[@value='AU_Ayladrr AU_AriQAz']");
+    public By primaryDia=By.xpath("(//select)[7]");
+    public By diaName=By.xpath("(//option[@value='DSM-V-314.01 - ADHD Combined ICD10-F90.2'])[1]");
+    public By secondaryDia=By.xpath("(//select)[8]");
+    public By secDiaName=By.xpath("(//option[@value='DSM-V-314.01 - ADHD Combined ICD10-F90.2'])[2]");
+    public By tertiaryDia=By.xpath("(//select)[9]");
+    public By terDiaName=By.xpath("(//option[@value='DSM-V-314.01 - ADHD Combined ICD10-F90.2'])[3]");
+    public By sendButton=By.xpath("//button[@class='theme-button mx-2 ng-star-inserted']");
+    public By viewDocumentsButton=By.xpath("//a[@class='ml-auto ml-2 theme-button green']");
+    public By viewDocumentBtn=By.xpath("//a[@class='ml-2 theme-button green ng-star-inserted']");
 
     //******************Verifying cancelled appointments*****************
 
@@ -240,6 +255,7 @@ public class AdminPage extends BasePage {
 
         sendKeys_withClear(admin_FirstName, CustomerFirstName);
     }
+
 
     public void enter_admin_LastName(String CustomerLastName) {
         sendKeys_withClear(admin_LastName, CustomerLastName);
@@ -592,49 +608,9 @@ public class AdminPage extends BasePage {
         selectDropDownByVisibleText_custom(editGrade, grade);
     }
 
-    public void enter_SchoolType(int schoolType) {
-        WebdriverWaits.waitUntilVisible(editSchoolType);
-        selectDropDownByIndex_custom(editSchoolType, schoolType);
-    }
-
-    public void enter_District(String district) {
-        WebdriverWaits.waitUntilVisible(editDistrict);
-        sendKeys_withClear(editDistrict, district);
-    }
-
-    public void enter_Reason(String reason) {
-        WebdriverWaits.waitUntilVisible(editReason);
-        selectDropDownByVisibleText_custom(editReason, reason);
-    }
-
-    public void enter_Address2(String address) {
-        WebdriverWaits.waitUntilVisible(editAddress2);
-        sendKeys_withClear(editAddress2, address);
-    }
-
     public void enter_Address1(String address) {
         WebdriverWaits.waitUntilVisible(editAddress1);
         sendKeys_withClear(editAddress1, address);
-    }
-
-    public void enter_City(String city) {
-        WebdriverWaits.waitUntilVisible(editCity);
-        sendKeys_withClear(editCity, city);
-    }
-
-    public void enter_State(String state) {
-        WebdriverWaits.waitUntilVisible(editCity);
-        sendKeys_withClear(editCity, state);
-    }
-
-    public void enter_ZipCode(String zipCode) {
-        WebdriverWaits.waitUntilVisible(editZipCode);
-        sendKeys_withClear(editZipCode, zipCode);
-    }
-
-    public void enter_comment(String additionalComment) {
-        WebdriverWaits.waitUntilVisible(editAdditionalComment);
-        sendKeys_custom(editAdditionalComment, additionalComment);
     }
 
     public void click_HoldAppointmentBtn() {
@@ -661,7 +637,6 @@ public class AdminPage extends BasePage {
 
     public void send_TextHoldSearchBox(String name) {
         sendKeys_custom(searchTextBox, name);
-
     }
     public void click_unHoldBtn() throws InterruptedException {
         WebdriverWaits.waitUntilVisible(unHoldBtn);
@@ -686,7 +661,6 @@ public class AdminPage extends BasePage {
 
     public void click_UpdateClientBtn() {
         click_custom(editUpdateBtn);
-
     }
 
     public void click_CreateFollowUpBtn() {
@@ -704,8 +678,6 @@ public class AdminPage extends BasePage {
                 break;
             }
         }
-
-
     }
 
     public void click_FollowUpSlotSaveBtn() {
@@ -717,26 +689,25 @@ public class AdminPage extends BasePage {
         WebdriverWaits.waitUntilVisible(followUpSaveBtn);
         click_custom(followUpSaveBtn);
     }
-
     public void click_ConfirmFollowUpBtn() {
         WebdriverWaits.waitUntilVisible(confirmBtn);
         click_custom(confirmBtn);
     }
-
     public void click_BackBtn() {
         WebdriverWaits.waitForSpinner();
         WebdriverWaits.waitUntilVisible(followUpBackBtn);
         click_custom(followUpBackBtn);
-
     }
-
-
-    public void Create_FollowUp() {
+    public void click_BackButton(){
+        click_custom(backButn);
+    }
+    public void create_FollowUp() {
         click_CreateFollowUpBtn();
         click_FollowUpSlot();
         click_FollowUpSlotSaveBtn();
         click_FollowUpSaveBtn();
         click_ConfirmFollowUpBtn();
+
     }
 
     public void change_FollowUp() throws InterruptedException {
@@ -865,6 +836,25 @@ public class AdminPage extends BasePage {
     }
 
 
+    //*************************send recipt******************
+
+    public void click_SendReciptButton(){
+        WebdriverWaits.waitForSpinner();
+        scrollIntoView(sendReciptButton);
+        click_custom(sendReciptButton);
+        click_custom(typesOfEvolution);
+        click_custom(dysgraphia);
+        click_custom(secondaryProvider);
+        click_custom(primaryDia);
+        click_custom(diaName);
+        click_custom(secondaryDia);
+        click_custom(secDiaName);
+        click_custom(tertiaryDia);
+        click_custom(terDiaName);
+        scrollIntoView(sendButton);
+        click_custom(sendButton);
+    }
+
     //*****************Doing full payment by client********************
 
 
@@ -934,49 +924,38 @@ public class AdminPage extends BasePage {
         click_custom(dashboardPanelPage.exportCSVButton);
 
     }
-    public void clickOn_ViewDetailsBtn()
+    public void click_ViewDetailsBtn()
     {
         WebdriverWaits.waitUntilVisible(getViewDetails);
         click_custom(getViewDetails);
     }
 
-    public void clickOn_BackBtn()
-    {
-        WebdriverWaits.waitUntilVisible(backButton);
-        click_custom(backButton);
+
+
+    public void click_ViewDocumentsButton() {
+        WebdriverWaits.waitUntilVisible(viewDocumentsButton);
+        click_custom(viewDocumentsButton);
     }
 
-    public void clickOn_AppointmentsTab() {
-        WebdriverWaits.waitUntilVisible(appointment.appointmentsTab);
-        click_custom(appointment.appointmentsTab);
-    }
 
-    public void clickOn_TestCompleteTab()
-    {
-        WebdriverWaits.waitUntilVisible(appointment.appointmentsTab);
-        click_custom(appointment.appointmentsTab);
-        WebdriverWaits.waitUntilVisible(appointment.testCompleteTab);
-        click_custom(appointment.testCompleteTab);
 
-    }
-
-    public void clickOn_FilterBtn()
+    public void click_FilterBtn()
     {
         click_custom(filterButton);
     }
 
-    public void clickOn_ViewObservationBtn()
+    public void click_ViewObservationBtn()
     {
         WebdriverWaits.waitUntilVisible(superAdmin.viewStudentObservationButton);
         click_custom(superAdmin.viewStudentObservationButton);
 
     }
 
-    public void clickOn_ViewDocumentBtn()
-    {
-        WebdriverWaits.waitUntilVisible(superAdmin.viewDocumentButton);
-        click_custom(superAdmin.viewDocumentButton);
-    }
+     public void click_ViewDocumentButton(){
+        WebdriverWaits.waitUntilVisible(viewDocumentBtn);
+        WebdriverWaits.waitForSpinner();
+        click_custom(viewDocumentBtn);
+     }
 
     public void clickOn_UploadButton() {
         WebdriverWaits.waitUntilVisible(uploadDocumentButton);
@@ -1079,9 +1058,10 @@ public class AdminPage extends BasePage {
 
     public void clickOn_CloseBtn()
     {
-        WebdriverWaits.waitUntilVisible(payment.closeButton);
+        scrollIntoView(viewRecCloseButton);
+        WebdriverWaits.waitUntilVisible(viewRecCloseButton);
         WebdriverWaits.waitForSpinner();
-        click_custom(payment.closeButton);
+        click_custom( viewRecCloseButton);
     }
 
     public void clickOn_CollectBtn()
