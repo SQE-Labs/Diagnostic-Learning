@@ -34,6 +34,8 @@ public class DirectorPage extends BasePage {
     //****************edit created director**************
 
     public By editButton = By.xpath("(//a[text()='Edit'])[1]");
+
+    public By editBtnAfterSearch = By.xpath(" (//tr[not(contains(@style,'display: none;'))])[2]//a");
     public By cellNumber = By.xpath("//input[@placeholder='Cell Number']");
     public By emailField = By.xpath("//input[@formcontrolname='email']");
     public By updateButton = By.xpath("//button[text()='Update']");
@@ -158,7 +160,14 @@ public class DirectorPage extends BasePage {
     //***************edit created director*****************
     public void click_On_EditButton() {
         wait.waitUntilVisible(editButton);
+        WebdriverWaits.waitForSpinner();
         click_custom(editButton);
+    }
+
+    public void click_On_EditBtnAfterSearch() {
+        wait.waitUntilVisible(editBtnAfterSearch);
+        WebdriverWaits.waitForSpinner();
+        click_custom(editBtnAfterSearch);
     }
 
     public void enter_CellNumber(String cellNumberText) {
@@ -286,7 +295,14 @@ public class DirectorPage extends BasePage {
 
     //********Enable user of director************
     public void enable_Director() {
+
         click_On_EditButton();
+        off_ToggleButton();
+        click_UpdateButton();
+    }
+    public void disable_Director() {
+
+        click_On_EditBtnAfterSearch();
         off_ToggleButton();
         click_UpdateButton();
     }

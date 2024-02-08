@@ -18,6 +18,8 @@ public class AdminPage extends BasePage {
     SuperAdminPage superAdmin=new SuperAdminPage();
     DashBoardPanelPage dashboardPanelPage=new DashBoardPanelPage();
 
+
+    DashboardPage dashPage=new DashboardPage();
     PaymentPage payment=new PaymentPage();
 
     public By adminTab = By.xpath("//a[text()='Admins']");
@@ -163,6 +165,8 @@ public class AdminPage extends BasePage {
     public By amountField = By.xpath("//input[@id='bookingDeposit']");
     public By collectButton = By.xpath("//button[@class='theme-button mx-2']");
     public By cancelButton = By.xpath("(//a[@class='theme-button grey'])[4]");
+
+    public By cancelAppointmentBtn = By.xpath( "//button[text()=' Cancel Appointment ']");
     public By clientNameDetail = By.xpath("//label[text()='Full Name']/following-sibling::p");
 
     public By cancelTab = By.xpath("//a[text()='Canceled']");
@@ -212,6 +216,8 @@ public class AdminPage extends BasePage {
 
     public By backButton=By.xpath("//a[@class='grey ml-3 theme-button']");
 
+    public By backBtnCancelPopup=By.xpath("(//a[@class='theme-button grey mx-2'])[1]");
+
     public By title=By.xpath("//h3");
 
     public By clientNameCompleted=By.xpath("((//tr[not(contains(@style,'display: none;'))])[2]/td)[1]");
@@ -219,8 +225,36 @@ public class AdminPage extends BasePage {
 
     public By titleOfViewReceipt=By.xpath("//h4[@class='text-center ng-star-inserted']");
 
+    public By directorName=By.xpath("((//tr[not(contains(@style,'display: none;'))])[2]//td)[1]");
+
+    public By rescheduleAppointmentBtn=By.xpath("//a[text()='Reschedule Appointment']");
+
+   public By cancelAppointmentValMsg=By.xpath("//p[@class='m-0 alert alert-danger']");
+
+   public By cancelRadioBtn=By.xpath("(//div[@class='custom-control custom-radio custom-control-inline'])[1]");
+    public By yesBtn=By.xpath("(//button[@type='submit'])[1]");
+
+   public By nameOfClientDetailsPage=By.xpath("(//div[@class='col-md-4']/label/following-sibling::p)[6]");
+
+    public By closeFollowupButton=By.xpath("//button[@class='theme-button grey float-right']");
+
+    public By cancelBtnOfTimeSlotPopup=By.xpath("(//mbsc-button[@role='button'])[5]");
+
     //******************Verifying cancelled appointments*****************
 
+   public void click_CloseFollowup()
+   {
+       WebdriverWaits.waitUntilVisible(closeFollowupButton);
+       WebdriverWaits.waitForSpinner();
+       click_custom(closeFollowupButton);
+   }
+
+    public void click_CancelBtnTimeSlot()
+    {
+        WebdriverWaits.waitUntilVisible(cancelBtnOfTimeSlotPopup);
+        WebdriverWaits.waitForSpinner();
+        click_custom(cancelBtnOfTimeSlotPopup);
+    }
 
 
     public void clickOn_createAdminButton() {
@@ -953,6 +987,8 @@ public class AdminPage extends BasePage {
 
     public void clickOn_FilterBtn()
     {
+        WebdriverWaits.waitUntilVisible(filterButton);
+        WebdriverWaits.waitForSpinner();
         click_custom(filterButton);
     }
 
@@ -1115,6 +1151,103 @@ public class AdminPage extends BasePage {
         WebdriverWaits.waitUntilVisible(appointment.diagnosticianTab);
         WebdriverWaits.waitForSpinner();
         click_custom(appointment.diagnosticianTab);
+    }
+
+    public void clickOn_ClientNameBackgroundSection()
+    {
+        WebdriverWaits.waitUntilVisible(dashPage.clientNameFromBCGForm);
+        WebdriverWaits.waitForSpinner();
+        click_custom(dashPage.clientNameFromBCGForm);
+
+    }
+
+    public void clickOn_ClientNameFollowupSection()
+    {
+        WebdriverWaits.waitUntilVisible(dashPage.clientNameFromFollowup);
+        WebdriverWaits.waitForSpinner();
+        click_custom(dashPage.clientNameFromFollowup);
+
+    }
+
+    public void enter_ValidData(String text)
+    {
+        WebdriverWaits.waitUntilVisible(dashPage.clientNameFromFollowup);
+        WebdriverWaits.waitForSpinner();
+        sendKeys_withClear(searchTextBox,text );
+
+    }
+
+    public void click_OnViewAllTab()
+    {
+        WebdriverWaits.waitUntilVisible(appointment.viewAllTab);
+        WebdriverWaits.waitForSpinner();
+        click_custom(appointment.viewAllTab);
+
+    }
+
+    public void click_OnRescheduleBtn()
+
+    {
+        WebdriverWaits.waitUntilVisible(rescheduleAppointmentBtn);
+        WebdriverWaits.waitForSpinner();
+        click_custom(rescheduleAppointmentBtn);
+
+    }
+
+    public void click_OnEditBtn()
+    {
+        WebdriverWaits.waitUntilVisible(editClientBtn);
+        WebdriverWaits.waitForSpinner();
+        click_custom(editClientBtn);
+
+    }
+
+    public void enter_DataInEmailField(String email)
+    {
+        WebdriverWaits.waitUntilVisible(editEmail);
+        WebdriverWaits.waitForSpinner();
+        click_custom(editEmail);
+        sendKeys_withClear(editEmail,email);
+    }
+
+    public void enter_DataInEmailSecField(String email)
+    {
+        WebdriverWaits.waitUntilVisible(editEmail2);
+        WebdriverWaits.waitForSpinner();
+        click_custom(editEmail2);
+        sendKeys_withClear(editEmail2,email);
+    }
+
+    public void click_OnCancelBtn()
+    {
+        WebdriverWaits.waitUntilVisible(cancelAppointmentBtn);
+        WebdriverWaits.waitForSpinner();
+        click_custom(cancelAppointmentBtn);
+
+    }
+
+    public void clickOn_backBtnCancelPopup()
+    {
+        WebdriverWaits.waitUntilVisible(backBtnCancelPopup);
+        WebdriverWaits.waitForSpinner();
+        click_custom(backBtnCancelPopup);
+    }
+
+    public void clickOn_CancelRadioBtn()
+    {
+        WebdriverWaits.waitUntilVisible(cancelRadioBtn);
+        WebdriverWaits.waitForSpinner();
+        click_custom(cancelRadioBtn);
+        click_custom(yesBtn);
+        WebdriverWaits.waitForSpinner();
+    }
+
+    public void clickOn_CancelBtnNewSlotPopup()
+    {
+        WebdriverWaits.waitUntilVisible(cancelBtnOfTimeSlotPopup);
+        WebdriverWaits.waitForSpinner();
+        click_custom(cancelBtnOfTimeSlotPopup);
+
     }
 }
 

@@ -4,8 +4,11 @@ import org.automation.base.BasePage;
 import org.automation.utilities.WebdriverWaits;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.testng.Assert;
+
 import java.util.List;
 import static org.automation.utilities.Assertions.validate_text;
+import static org.automation.utilities.WebdriverWaits.moveToEleByWE;
 import static org.automation.utilities.WebdriverWaits.moveToElement;
 import static test.AdminTest.clientFirstName;
 
@@ -52,6 +55,8 @@ public class AppointmentsPage extends BasePage {
     public By emailAddress = By.xpath("//input[@placeholder='Email Address']");
     public By reasonForCall = By.id("reasonForCall");
 
+    public By newEventSlot=By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-background ng-star-inserted']");
+
     public By continueToDeposit = By.id("intakeFormSubmit");
     public By testAmount = By.xpath("//input[@placeholder='Test Amount']");
     public By cellNumber = By.xpath("//input[@placeholder='Cell Number']");
@@ -72,9 +77,11 @@ public class AppointmentsPage extends BasePage {
     public By directorTab=By.xpath("//a[text()='Directors']");
     public By diagnosticianTab=By.xpath("//a[text()='Diagnosticians']");
 
+    public By popupCancelBtn=By.xpath("//mbsc-button[text()=' Cancel ']");
 
+    public By saveBtnCalendar=By.xpath("//a[@class='theme-button green float-right mr-2']");
 
-
+    public By closeBtn=By.xpath("//button[@class='theme-button grey float-right']");
     //******************Verifying cancelled appointments*****************
 
 
@@ -104,19 +111,23 @@ public class AppointmentsPage extends BasePage {
         sendKeys_withClear(cellNumber, cellNumberText);
     }
 
-    public void enterPhoneNumber(String phoneNumberText) {
+    public void enterPhoneNumber(String phoneNumberText)
+    {
         sendKeys_withClear(phoneNumber, phoneNumberText);
     }
 
-    public void enterEmialAddress(String emailAddressText) {
+    public void enterEmialAddress(String emailAddressText)
+    {
         sendKeys_withClear(emailAddress, emailAddressText);
     }
 
-    public void reasonForCallDropDown(String reasonForCallText) {
+    public void reasonForCallDropDown(String reasonForCallText)
+    {
         selectDropDownByVisibleText_custom(reasonForCall, reasonForCallText);
     }
 
-    public void click_LogOutLink() {
+    public void click_LogOutLink()
+    {
         refresh_Page();
         WebdriverWaits.waitUntilVisible(logOutLink);
         WebdriverWaits.waitForSpinner();
@@ -125,26 +136,31 @@ public class AppointmentsPage extends BasePage {
 
 
 
-    public void enterTestAmount(String testAmountText) {
+    public void enterTestAmount(String testAmountText)
+    {
         WebdriverWaits.waitUntilVisible(testAmount);
         sendKeys_withClear(testAmount, testAmountText);
     }
 
-    public void clickOnContinueToDepositButton() {
+    public void clickOnContinueToDepositButton()
+    {
         click_custom(continueToDeposit);
     }
 
-    public void enterInDateField(String dateOfBirthText) throws InterruptedException {
+    public void enterInDateField(String dateOfBirthText) throws InterruptedException
+    {
         click_custom(dateOfBirth);
         WebdriverWaits.waitUntilVisible(dateOfBirth);
         sendKeys_withClear(dateOfBirth, dateOfBirthText);
     }
 
-    public void clickOnSaveButton() {
+    public void clickOnSaveButton()
+    {
         //  click_custom(afternoonToggleButton);
         click_custom(saveButton);
     }
-    public void clickOnAppSaveButton() {
+    public void clickOnAppSaveButton()
+    {
         WebdriverWaits.waitUntilVisible(appointmentSaveButtonButton);
         click_custom(appointmentSaveButtonButton);
     }
@@ -155,26 +171,30 @@ public class AppointmentsPage extends BasePage {
         selectDropDownByIndex_custom(assestmentType, assestmentTypeTexts);
     }
 
-    public void selectTestinglocation(String chooseLocationText) {
+    public void selectTestinglocation(String chooseLocationText)
+    {
         WebdriverWaits.waitUntilVisible(chooseTestingLocation);
         clickBtn_custom(chooseTestingLocation, "ChooseLocation");
         selectDropDownByVisibleText_custom(chooseTestingLocation, chooseLocationText, "ChooseLocation");
     }
 
-    public void selectAssessmentDate() {
+    public void selectAssessmentDate()
+    {
         WebdriverWaits.waitUntilVisible(assessmentDate);
         WebdriverWaits.waitForSpinner();
         clickBtn_custom(assessmentDate);
     }
 
-    public void enterAmount(String enterAmountText) throws InterruptedException {
+    public void enterAmount(String enterAmountText) throws InterruptedException
+    {
         WebdriverWaits.waitUntilInvisible(enterAmountField);
         WebdriverWaits.waitUntilVisible(enterAmountField);
         click_custom(enterAmountField);
         sendKeys_withClear(enterAmountField, enterAmountText);
     }
 
-    public void clickOnCollectDepositButton() {
+    public void clickOnCollectDepositButton()
+    {
         click_custom(collectDeposit);
     }
 
@@ -184,7 +204,8 @@ public class AppointmentsPage extends BasePage {
     }
 
 
-    public int getColumnCount() {
+    public int getColumnCount()
+    {
         List<WebElement> list = getWebElements(headerResource, "Heders");
         return list.size();
     }
@@ -194,13 +215,16 @@ public class AppointmentsPage extends BasePage {
         int expLocatorPos = (colCount - 1) * 7 + 1;
         System.out.println(expLocatorPos);
 
-        Thread.sleep(4000);
+        Thread.sleep(10000);
         List<WebElement> list = getWebElements(slots, "AppointmentSlots");
+        System.out.println(list.size());
         for (WebElement slot : list) {
-            Thread.sleep(3000);
-            click_custom(slot);
+            Thread.sleep(2000);
+            moveToEleByWE(slot);
 
-            if (getDriver().findElements(By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-background ng-star-inserted']")).size() > 0) {
+            if (getDriver().findElements(By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-background ng-star-inserted']")).size() > 0)
+            {
+
                 break;
             }
         }
@@ -225,23 +249,50 @@ public class AppointmentsPage extends BasePage {
         click_custom(clickCalSaveBtn);
     }
 
+    public void clickOnCloseBtn() {
+        click_custom(closeBtn);
+    }
+
+    public void clickOnCancelButton() {
+        click_custom(popupCancelBtn);
+    }
+
     public void click_AssessmentDate() {
         WebdriverWaits.waitUntilVisible(assessmentDate);
         WebdriverWaits.waitForSpinner();
         click_custom(assessmentDate);
     }
-
+public void newEventText()
+{
+    WebdriverWaits.waitUntilVisible(newEventText);
+}
     public void selectAppointmentSlot() throws InterruptedException {
-        click_AssessmentDate();
+
         getTotalColumnCount();
         WebdriverWaits.waitUntilVisible(newEventText);
         validate_text(newEventText, "New Event");
 
         clickSlotSaveButton();
-        WebdriverWaits.waitUntilVisible(newSlotText);
-        validate_text(newSlotText, "New event");
+      //  WebdriverWaits.waitUntilVisible(newSlotText);
+        //validate_text(newSlotText, "New event");
         clickCalSaveButton();
     }
+
+    public void selectAppointmentSlotCancelBtn() throws InterruptedException {
+
+        getTotalColumnCount();
+        WebdriverWaits.waitUntilVisible(newEventText);
+        validate_text(newEventText, "New Event");
+
+        clickSlotSaveButton();
+        //  WebdriverWaits.waitUntilVisible(newSlotText);
+        //validate_text(newSlotText, "New event");
+        clickOnCloseBtn();
+    }
+
+
+
+
 
 
     public void selectAssesmentType(String assestmentTypeTexts) {

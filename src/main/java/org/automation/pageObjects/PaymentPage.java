@@ -22,6 +22,7 @@ public class PaymentPage extends BasePage {
     public By collectButton=By.xpath("//button[@class='theme-button mx-2']");
     public By viewReceiptButton=By.xpath("//button[text()=' View Receipt ']");
 
+
     public void clickOn_PaymentTab(){
         WebdriverWaits.waitUntilVisible(paymentTab);
         WebdriverWaits.waitForSpinner();
