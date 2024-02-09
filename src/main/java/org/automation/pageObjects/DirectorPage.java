@@ -63,8 +63,7 @@ public class DirectorPage extends BasePage {
     public By saveButton = By.xpath("//button[text()='Save']");
     public By validationMsg = By.cssSelector(".alert.alert-danger.ng-star-inserted");
 
-    public By selectYear = By.xpath("//div[text()=' 2023 ']");
-    public By selectMonth = By.xpath("(//div[text()=' Dec '])[2]");
+
 
     //**************relogin with new password***********
 
@@ -76,10 +75,6 @@ public class DirectorPage extends BasePage {
     public By validation_Msg = By.xpath("//small[text()='Username or password is incorrect']");
 
     //*****************Paying full payment*****************
-
-
-
-
 
 
     public void click_CreateDirectorsButton() {
@@ -157,34 +152,9 @@ public class DirectorPage extends BasePage {
         click_custom(editButton);
     }
 
-    public void enter_CellNumber(String cellNumberText) {
-        WebdriverWaits.waitUntilVisible(cellNumber);
-        sendKeys_withClear(cellNumber, cellNumberText);
-    }
 
     public void click_UpdateButton() {
         click_custom(updateButton);
-    }
-
-    public void clickOn_YearHeader() {
-        click_custom(yearHeader);
-    }
-
-    public void clickOn_MonthHeader() {
-        WebdriverWaits.waitUntilVisible(monthHeader);
-        click_custom(monthHeader);
-    }
-
-    public void select_Year() {
-        WebdriverWaits.waitUntilVisible(selectYear);
-        click_custom(selectYear);
-
-    }
-
-    public void select_Month() {
-        WebdriverWaits.waitUntilVisible(selectMonth);
-        click_custom(selectMonth);
-
     }
 
     public void off_ToggleButton() {
@@ -234,7 +204,7 @@ public class DirectorPage extends BasePage {
 
 
     //**************Search created director*************
-    public void search_CreatedDirector(String UserName) throws InterruptedException {
+    public void search_CreatedDirector(String UserName) {
         click_filterButton();
         enterInSearchField(UserName);
     }

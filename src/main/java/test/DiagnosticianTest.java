@@ -54,6 +54,7 @@ public class DiagnosticianTest extends BaseTest {
         DiagnosticianPage diagnostician = new DiagnosticianPage();
         diagnostician.view_ClientDetail(clientFirstName);
         WebdriverWaits.waitUntilVisible(diagnostician.clientDetailText);
+        WebdriverWaits.waitForSpinner();
         validate_text(diagnostician.clientDetailText, clientFirstName + ' ' + clientLastName + ' ' + "Details");
     }
 

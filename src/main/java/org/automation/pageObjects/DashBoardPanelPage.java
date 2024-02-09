@@ -16,7 +16,7 @@ import static org.automation.utilities.WebdriverWaits.moveToElement;
 
 public class DashBoardPanelPage extends BasePage {
     public By logOutLink = By.xpath("//a[text()='Log Out']");
-    public By directorsTab = By.xpath("//li[@id='Directors']");
+    public By directorsTab = By.xpath("//a[text()='Directors']");
     public By diagnosticianLink = By.xpath("//a[text()='Diagnosticians']");
     public By adminButton = By.xpath("//a[text()='Admins']");
     public By backButton = By.xpath("//button[text()='Back']");
@@ -24,13 +24,9 @@ public class DashBoardPanelPage extends BasePage {
     public By AppointmentsTab = By.xpath("//a[text()=' Appointments ']");
     public By availabilityTab = By.xpath("//a[text()='Availability']");
     public By viewAllTab = By.xpath("//a[text()='View All']");
-    public By sss=By.xpath("(//td[@class='export-hide-column'])[2]");
+    public By completedTab=By.xpath("//a[text()='Completed ']");
 
-    public void sum(){
-        WebdriverWaits.waitUntilVisible(sss);
-        WebdriverWaits.waitForSpinner();
-        click_custom(sss);
-    }
+
 
     public void click_LogOutLink() {
         WebdriverWaits.waitUntilVisible(logOutLink);
@@ -43,9 +39,10 @@ public class DashBoardPanelPage extends BasePage {
         moveToElement(viewAllTab);
     }
 
-    public void click_DirectorTab() {
+    public void click_DirectorTab() throws InterruptedException {
         WebdriverWaits.waitUntilVisible(directorsTab);
         WebdriverWaits.waitForSpinner();
+        Thread.sleep(4000);
         click_custom(directorsTab);
     }
 
@@ -107,6 +104,12 @@ public class DashBoardPanelPage extends BasePage {
         WebdriverWaits.waitForSpinner();
         click_custom(availabilityTab);
         WebdriverWaits.waitForSpinner();
+    }
+    public void click_CompletedTab() throws InterruptedException {
+        Thread.sleep(4000);
+        WebdriverWaits.waitUntilVisible(completedTab);
+        WebdriverWaits.waitForSpinner();
+        moveToElement(completedTab);
     }
 
         public static void readCSVFile() throws IOException, CsvException {

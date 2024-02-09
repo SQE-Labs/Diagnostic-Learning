@@ -30,7 +30,7 @@ public class AppointmentsPage extends BasePage {
     public By exportCSVButton = By.xpath("//button[text()='Export to CSV']");
     public By assessmentDate = By.id("assessmentDate");
     public By viewDetails = By.xpath("//a[@class='theme-button grey']");
-    public By App_Text = By.xpath("//h3");
+    public By app_Text = By.xpath("//h3");
     public By viewAllActualText = By.xpath("//h3[@class='mb-4 mb-md-0']");
     public By assestmentType = By.id("assestmentType");
     public By newEventText = By.xpath("//div[text()='New Event']");
@@ -130,7 +130,7 @@ public class AppointmentsPage extends BasePage {
         click_custom(continueToDeposit);
     }
 
-    public void enterInDateField(String dateOfBirthText) throws InterruptedException {
+    public void enterInDateField(String dateOfBirthText)   {
         click_custom(dateOfBirth);
         WebdriverWaits.waitUntilVisible(dateOfBirth);
         sendKeys_withClear(dateOfBirth, dateOfBirthText);
@@ -176,7 +176,7 @@ public class AppointmentsPage extends BasePage {
         List<WebElement> list = getWebElements(slots, "AppointmentSlots");
         System.out.println(list.size());
         for (WebElement slot : list) {
-            Thread.sleep(2000);
+            Thread.sleep(1000);
             click_custom(slot);
 
             if (getDriver().findElements(By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-background ng-star-inserted']")).size() > 0) {
@@ -248,6 +248,7 @@ public class AppointmentsPage extends BasePage {
 
         clickViewDetailsButton();
         WebdriverWaits.waitForSpinner();
+        Thread.sleep(5000);
     }
 
     public void click_AppointmentTab() {

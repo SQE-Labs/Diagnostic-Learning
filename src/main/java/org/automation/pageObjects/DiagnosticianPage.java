@@ -270,7 +270,7 @@ public By availableSlots=By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-al
     public void click_EditButton() throws InterruptedException {
         WebdriverWaits.waitUntilVisible(editButton);
         Thread.sleep(3000);
-        click_custom(editButton);
+        moveToElement(editButton);
     }
 
     public void enter_CellNumber(String cellNumberText) {
@@ -283,8 +283,9 @@ public By availableSlots=By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-al
     }
 
 
-    public void off_ToggleButton() {
+    public void off_ToggleButton() throws InterruptedException {
         WebdriverWaits.waitUntilVisible(toggle);
+        Thread.sleep(2000);
         click_custom(toggle);
     }
 
@@ -473,7 +474,7 @@ public By availableSlots=By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-al
         for (WebElement slot : slots) {
             Thread.sleep(2000);
             moveToEleByWE(slot);
-            if (getDriver().findElements(By.xpath("//div[@class='ng-star-inserted']")).size() > 4) {
+            if (getDriver().findElements(By.xpath("//div[@class='ng-star-inserted']")).size() > 3) {
                 break;
             }
         }
