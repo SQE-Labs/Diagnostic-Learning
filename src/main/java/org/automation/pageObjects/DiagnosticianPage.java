@@ -38,7 +38,7 @@ public class DiagnosticianPage extends BasePage {
     public By validationMsg = By.cssSelector(".alert.alert-danger.ng-star-inserted");
 
 
-    public By actualText=By.cssSelector("tr:not([style='display: none;' ]) td:nth-child(2)");
+    public By actualText = By.cssSelector("tr:not([style='display: none;' ]) td:nth-child(2)");
     public By backButton = By.xpath("//button[text()='Back']");
     public By diagnosticianDashBoardPage = By.xpath("(//h3)[1]");
     public By back_Button = By.xpath("//button[@class='theme-button grey float-md-right mr-md-4']");
@@ -51,7 +51,8 @@ public class DiagnosticianPage extends BasePage {
 
     public By viewClientDetailLink = By.xpath("(//td)[6]");
     public By clientDetailText = By.xpath("//div[contains(@class,'page-header align-items-lg-center')]");
-    public  By clientNameText=By.xpath("//h3");
+    public By clientNameText = By.cssSelector("tr:not([style='display: none;' ]) td:nth-child(1)");
+    public By clientText=By.xpath("//h3");
     public By fromDate = By.xpath("//input[@placeholder='From Date']");
     public By toDate = By.xpath("//input[@placeholder='To Date']");
 
@@ -70,24 +71,9 @@ public class DiagnosticianPage extends BasePage {
     public By dontSaveButton = By.xpath("//a[@class='theme-button grey']");
 
     //**************DIAGNOSTICIAN LOOGING IN WITH NEW PASSWORD*************
-
     public By userNameField = By.xpath("//input[@placeholder='Username']");
-
-
     public By validation_Msg = By.xpath("//p[@class='text-danger']");
 
-    //*****************Verify diagnostician is viewing appointments page***************
-
-    public By today_appointments = By.xpath("(//h6[@class='card-heading'])[1]");
-    public By view_DetailApp = By.xpath("//a[text()='View Details']");
-    public By start_Assesment = By.xpath("//a[text()='Start Assessment']");
-    public By no_Payment = By.xpath("//a[text()='No Payment']");
-    public By bouncing_Leg = By.xpath("(//div[@class='custom-control custom-checkbox'])[1]");
-    public By humming = By.xpath("(//div[@class='custom-control custom-checkbox'])[5]");
-    public By playing_with_pencil = By.xpath("(//div[@class='custom-control custom-checkbox'])[8]");
-    public By difficulty_Sitting = By.xpath("(//div[@class='custom-control custom-checkbox'])[14]");
-    public By Playing_with_hair = By.xpath("(//div[@class='custom-control custom-checkbox'])[13]");
-    public By excessive_Talking = By.xpath("(//div[@class='custom-control custom-checkbox'])[16]");
 
     public By appointmentsTab = By.xpath("//a[text()=' Appointments ']");
     public By viewAllTab = By.xpath("(//a)[3]");
@@ -99,7 +85,7 @@ public class DiagnosticianPage extends BasePage {
     public By availableText = By.xpath("(//div[@class='ng-star-inserted'])[7]");
     public By upcomingTab = By.xpath("//a[text()='Upcoming']");
     public By searchTextButton = By.xpath("//button[@class='theme-button']");
-    public By dia_AvailSlots=By.xpath("//div[@class='mbsc-flex-1-1 mbsc-ios mbsc-ltr mbsc-timeline-column ng-star-inserted']");
+    public By dia_AvailSlots = By.xpath("//div[@class='mbsc-flex-1-1 mbsc-ios mbsc-ltr mbsc-timeline-column ng-star-inserted']");
 
 
 //*****************Set Availability for diagnostician ****************
@@ -143,18 +129,13 @@ public class DiagnosticianPage extends BasePage {
 
     public By availability = By.xpath("//a[text()='Availability']");
 
-    public By slot3 = By.xpath("(//div[@class='mbsc-flex-1-1 mbsc-ios mbsc-ltr mbsc-timeline-column ng-star-inserted'])[4]");
-    public By slot4 = By.xpath("(//div[@class='mbsc-flex-1-1 mbsc-ios mbsc-ltr mbsc-timeline-column ng-star-inserted'])[5]");
 
-    public By slot6 = By.xpath("(//div[@class='mbsc-flex-1-1 mbsc-ios mbsc-ltr mbsc-timeline-column ng-star-inserted'])[7]");
     public By slot7 = By.xpath("(//div[@class='mbsc-flex-1-1 mbsc-ios mbsc-ltr mbsc-timeline-column ng-star-inserted'])[8]");
-    public By slot8 = By.xpath("(//div[@class='mbsc-flex-1-1 mbsc-ios mbsc-ltr mbsc-timeline-column ng-star-inserted'])[9]");
-    public By slot9 = By.xpath("(//div[@class='mbsc-flex-1-1 mbsc-ios mbsc-ltr mbsc-timeline-column ng-star-inserted'])[10]");
-    public By slot10 = By.xpath("(//div[@class='mbsc-flex-1-1 mbsc-ios mbsc-ltr mbsc-timeline-column ng-star-inserted'])[11]");
+
     public By slot11 = By.xpath("(//div[@class='mbsc-flex-1-1 mbsc-ios mbsc-ltr mbsc-timeline-column ng-star-inserted'])[12]");
 
     public By diagnosticianSaveButton = By.xpath("//button[text()='Save']");
-    public By todayLink = By.xpath("//mbsc-button[text()=' Today ']");
+
     public By delete = By.xpath("//mbsc-button[text()=' Delete ']");
     public By cancel = By.xpath("//mbsc-button[text()=' Cancel ']");
     public static By userNameText = By.xpath("(//td)[2]");
@@ -194,7 +175,7 @@ public class DiagnosticianPage extends BasePage {
     //****************Complete Assessment*******************
 
     public By testComTab = By.xpath("//a[text()='Test complete']");
-
+    public By cancelTab = By.xpath("//a[text()='Canceled']");
 
 
     DashBoardPanelPage panelPage = new DashBoardPanelPage();
@@ -204,7 +185,9 @@ public class DiagnosticianPage extends BasePage {
         WebdriverWaits.waitForSpinner();
         click_custom(createDiagnostician);
     }
-
+    public void click_Back_Button() {
+        click_custom(backButton);
+    }
     public void enter_diagnostician_FirstName(String CustomerFirstName) {
         sendKeys_withClear(diagnostician_FirstName, CustomerFirstName);
     }
@@ -238,19 +221,22 @@ public class DiagnosticianPage extends BasePage {
     public void confirm_PasswordField(String confirmPasswordText) {
         sendKeys_withClear(confirm_PasswordField, confirmPasswordText);
     }
-
-    public void clickOn_createDiagnosticianButton() {
-        click_custom(createDiagnosticianButton);
-    }
-    public void clickOn_FilterButton(){
+    public void click_FilterButton() {
         WebdriverWaits.waitUntilVisible(filterButton);
         WebdriverWaits.waitForSpinner();
         click_custom(filterButton);
+
     }
 
 
-    public void click_Back_Button() {
-        click_custom(backButton);
+    public void search_ClientPage(String searchFieldText) {
+        WebdriverWaits.waitUntilVisible(filterButton);
+        WebdriverWaits.waitForSpinner();
+        click_custom(filterButton);
+        String AttText = getDriver().findElement(By.xpath("//input[@id='filterSearch']")).getAttribute("placeholder");
+        System.out.println(AttText);
+        validate_AttText(AttText, "Type here to search");
+        sendKeys_withClear(searchField, searchFieldText);
     }
 
 
@@ -260,15 +246,15 @@ public class DiagnosticianPage extends BasePage {
         WebdriverWaits.waitUntilVisible(filterButton);
         WebdriverWaits.waitForSpinner();
         click_custom(filterButton);
-        String AttText=getDriver().findElement(By.xpath("//input[@id='filterSearch']")).getAttribute("placeholder");
+        String AttText = getDriver().findElement(By.xpath("//input[@id='filterSearch']")).getAttribute("placeholder");
         System.out.println(AttText);
         validate_AttText(AttText, "Type here to search");
 
-        String fromDateText=getDriver().findElement(By.xpath("//input[@placeholder='From Date']")).getAttribute("placeholder");
+        String fromDateText = getDriver().findElement(By.xpath("//input[@placeholder='From Date']")).getAttribute("placeholder");
         getAttributevalue(fromDate, "placeholder");
         validate_AttText(fromDateText, "From Date");
 
-        String toDateText=getDriver().findElement(By.xpath("//input[@placeholder='To Date']")).getAttribute("placeholder");
+        String toDateText = getDriver().findElement(By.xpath("//input[@placeholder='To Date']")).getAttribute("placeholder");
         WebdriverWaits.waitUntilVisible(toDate);
         validate_AttText(toDateText, "To Date");
     }
@@ -277,13 +263,13 @@ public class DiagnosticianPage extends BasePage {
         sendKeys_withClear(searchField, searchFieldText);
     }
 
-    public void clickOn_ViewDetailLink() {
+    public void click_ViewDetailLink() {
         click_custom(viewClientDetailLink);
     }
 
     //+++++++++++++++++EDIT DIAGNOSTICIAN++++++++++++++
 
-    public void click_On_EditButton() throws InterruptedException {
+    public void click_EditButton() throws InterruptedException {
         WebdriverWaits.waitUntilVisible(editButton);
         Thread.sleep(3000);
         click_custom(editButton);
@@ -306,33 +292,31 @@ public class DiagnosticianPage extends BasePage {
         sendKeys_withClear(emailField, diagnostician_EmailText1);
     }
 
-    public void clickOn_PasswordField(String passwordTextFieldText) {
+    public void click_PasswordField(String passwordTextFieldText) {
         sendKeys_withClear(passwordTextField, passwordTextFieldText);
     }
 
-    public void clickOn_confirmPasswordFieldField(String confirmPasswordFieldText) {
+    public void click_confirmPasswordFieldField(String confirmPasswordFieldText) {
         sendKeys_withClear(confirmPasswordField, confirmPasswordFieldText);
     }
 
-    public void clickOn_DontSave() {
+    public void click_DontSave() {
         WebdriverWaits.waitUntilVisible(dontSaveButton);
         click_custom(dontSaveButton);
     }
 
     //**********Diagnostician is viewing appointments************
-    public void clickOn_AppointmentTab() {
+    public void click_AppointmentTab() {
         moveToElement(appointmentsTab);
-
-
     }
 
-    public void clickOn_upcomingTab() {
+    public void click_upcomingTab() {
         WebdriverWaits.waitUntilVisible(upcomingTab);
         moveToElement(upcomingTab);
     }
 
 
-    public String create_Diagnostician(String CustomerFirstName, String CustomerLastName, String diagnostician_MobileNumberText, String EmailAddress, String UserName, String PasswordText, String RePassword) throws InterruptedException {
+    public void create_Diagnostician(String CustomerFirstName, String CustomerLastName, String diagnostician_MobileNumberText, String EmailAddress, String UserName, String PasswordText, String RePassword) throws InterruptedException {
         WebdriverWaits.waitForSpinner();
         click_createDiagnosticianButton();
         enter_diagnostician_FirstName(CustomerFirstName);
@@ -343,16 +327,16 @@ public class DiagnosticianPage extends BasePage {
         userNameField(UserName);
         create_passwordField(PasswordText);
         confirm_PasswordField(RePassword);
-        clickOn_createDiagnosticianButton();
-        String UserNameTexts = panelPage.RecentUser();
-        return UserNameTexts;
+        click_createDiagnosticianButton();
+
     }
 
     public void search_CreatedDiagnostician(String UserName) {
-        click_filterButton();
+        click_FilterButton();
         enterInSearchField(UserName);
     }
-    public void serach_Dia(String diaName){
+
+    public void serach_Dia(String diaName) {
         WebdriverWaits.waitUntilVisible(filterButton);
         WebdriverWaits.waitForSpinner();
         click_custom(filterButton);
@@ -360,49 +344,48 @@ public class DiagnosticianPage extends BasePage {
     }
 
     public void edit_Diagnostician(String EmailAddress1, String passwordTextFieldText, String confirmPasswordFieldText) throws InterruptedException {
-        click_On_EditButton();
+        click_EditButton();
         // enter_CellNumber(cellNumberText);
         enter_Diagnostician_Email1(EmailAddress1);
-        clickOn_PasswordField(passwordTextFieldText);
-        clickOn_confirmPasswordFieldField(confirmPasswordFieldText);
+        click_PasswordField(passwordTextFieldText);
+        click_confirmPasswordFieldField(confirmPasswordFieldText);
         off_ToggleButton();
         click_UpdateButton();
     }
 
     public void cheking_DisableUser() throws InterruptedException {
-        click_On_EditButton();
-        clickOn_DontSave();
-        click_On_EditButton();
-        clickOn_DontSave();
+        click_EditButton();
+        click_DontSave();
+        click_EditButton();
+        click_DontSave();
     }
 
     public void disable_Diagnostician(String userNameText) throws InterruptedException {
-        clickOn_FilterButton();
+        click_FilterButton();
         enterInSearchField(userNameText);
         Thread.sleep(2000);
-        click_On_EditButton();
+        click_EditButton();
         off_ToggleButton();
     }
 
     public void enable_DiagnosticianUser() throws InterruptedException {
-        click_On_EditButton();
+        click_EditButton();
         off_ToggleButton();
         click_UpdateButton();
 
     }
 
     public void verify_DontSave(String cellNumberText, String EmailAddress1, String passwordTextFieldText, String confirmPasswordFieldText) throws InterruptedException {
-        click_On_EditButton();
+        click_EditButton();
         enter_CellNumber(cellNumberText);
         enter_Diagnostician_Email1(EmailAddress1);
-        clickOn_PasswordField(passwordTextFieldText);
-        clickOn_confirmPasswordFieldField(confirmPasswordFieldText);
-        clickOn_DontSave();
+        click_PasswordField(passwordTextFieldText);
+        click_confirmPasswordFieldField(confirmPasswordFieldText);
+        click_DontSave();
     }
 
 
     //****************Diagnostician is checking todays appointments**************
-
 
     public void selectAssessmentDate() {
         WebdriverWaits.waitUntilVisible(assessmentDate);
@@ -419,12 +402,12 @@ public class DiagnosticianPage extends BasePage {
         return list.size();
     }
 
-    public void clickOnSaveButton() {
+    public void click_SaveButton() {
         //  click_custom(afternoonToggleButton);
         click_custom(saveButton);
     }
 
-    public void clickOnAppSaveButton() {
+    public void click_AppSaveButton() {
         click_custom(appointmentSaveButtonButton);
     }
 
@@ -436,7 +419,7 @@ public class DiagnosticianPage extends BasePage {
         click_custom(clickOnBox);
     }
 
-    public void clickOnAssesmentType(int assestmentTypeTexts) {
+    public void click_AssesmentType(int assestmentTypeTexts) {
 
         click_custom(assestmentType);
         selectDropDownByIndex_custom(assestmentType, assestmentTypeTexts);
@@ -461,54 +444,37 @@ public class DiagnosticianPage extends BasePage {
         click_custom(dlsDyslexiaCheckBox);
     }
 
-    public void clickOnTestPlanSaveButton() {
-        click_custom(testPlanSaveButton);
-    }
-
 //******************Logging as diagnostician************
 
     public void enter_UserName(String CustomerFirstName) {
         WebdriverWaits.waitUntilVisible(userNameField);
         sendKeys_withClear(userNameField, CustomerFirstName);
     }
-
     public void enter_Password(String PasswordText) {
         sendKeys_withClear(passwordField, PasswordText);
     }
-
     public void click_LoginButton() {
         click_custom(loginButton);
     }
 
     //******************checking availability*************
-    public void click_On_Availablity() {
+    public void click_Availablity() {
         WebdriverWaits.waitUntilVisible(availability);
         WebdriverWaits.waitForSpinner();
         click_custom(availability);
         validate_text(disableButton, "Save");
     }
 
-    public void click_On_Slot() throws InterruptedException {
+    public void click_Slot() throws InterruptedException {
         // use logic??
-//        WebdriverWaits.waitUntilVisible(slot10);
-//        click_custom(slot3);
-////       click_custom(slot4);
-//          click_custom(slot5);
-//        click_custom(slot6);
-//        click_custom(slot7);
-//        click_custom(slot8);
-//        click_custom(slot9);
-//        click_custom(slot10);
-//        click_custom(slot11);
-//        click_custom(slot12);
-//        click_custom(slot13);
+
         Thread.sleep(5000);
-        List<WebElement> slots=getWebElements(dia_AvailSlots,"Diagnostician Available slots");
+        List<WebElement> slots = getWebElements(dia_AvailSlots, "Diagnostician Available slots");
         System.out.println(slots.size());
-        for(WebElement slot : slots){
+        for (WebElement slot : slots) {
             Thread.sleep(2000);
             moveToEleByWE(slot);
-            if(getDriver().findElements(By.xpath("//div[@class='ng-star-inserted']")).size()>6){
+            if (getDriver().findElements(By.xpath("//div[@class='ng-star-inserted']")).size() > 4) {
                 break;
             }
         }
@@ -520,27 +486,27 @@ public class DiagnosticianPage extends BasePage {
         // click_custom(logOutLink);
     }
 
-    public void click_On_Delete() {
+    public void click_Delete() {
         click_custom(delete);
     }
 
     public void set_Availability() throws InterruptedException {
-        click_On_Availablity();
-        click_On_Slot();
+        click_Availablity();
+        click_Slot();
     }
 
     //**************Diagnostician Started Assessment***************
-    public void clickOn_TodasTab() {
+    public void click_TodasTab() {
         WebdriverWaits.waitForSpinner();
         click_custom(todaysTab);
     }
 
-    public void clickOn_ViewDetails() {
+    public void click_ViewDetails() {
         WebdriverWaits.waitForSpinner();
         click_custom(viewDetails);
     }
 
-    public void clickOn_StartAssButtn() {
+    public void click_StartAssButtn() {
         WebdriverWaits.waitUntilVisible(startAssButtn);
         scrollIntoView(startAssButtn);
         click_custom(startAssButtn);
@@ -549,7 +515,7 @@ public class DiagnosticianPage extends BasePage {
     public void enter_LowAmount() throws InterruptedException {
         String Inr = getText_custom(inr).replace("$", "");
         double amount = parseDouble(Inr);
-        double value = amount - 50;
+        double value = amount - 20;
         Thread.sleep(4000);
         sendKeys_withClear(amountField, String.valueOf(value));
     }
@@ -568,7 +534,7 @@ public class DiagnosticianPage extends BasePage {
         sendKeys_withClear(amountField, String.valueOf(value));
     }
 
-    public void clickOn_CollectButton() {
+    public void click_CollectButton() {
         click_custom(collectButton);
     }
 
@@ -584,7 +550,7 @@ public class DiagnosticianPage extends BasePage {
         }
     }
 
-    public void clickOn_CheckBox() {
+    public void click_CheckBox() {
         WebdriverWaits.waitUntilVisible(bouncingLegCheckBox);
         WebdriverWaits.waitForSpinner();
         moveToElement(bouncingLegCheckBox);
@@ -599,7 +565,7 @@ public class DiagnosticianPage extends BasePage {
         }
     }
 
-    public void clickOn_Complete_AssButton() {
+    public void click_Complete_AssButton() {
         WebdriverWaits.waitUntilVisible(completeAssButton);
         validate_text(completeAssButton, "Complete Assessment");
 
@@ -617,15 +583,9 @@ public class DiagnosticianPage extends BasePage {
         click_custom(yesCompleteAssButton);
     }
 
-    public void clickOn_PaymentLinkButton() {
-        WebdriverWaits.waitForSpinner();
-        click_custom(paymentLinkButton);
-        switchToWindow();
-    }
-
     //************diagnostician verifying complete assessment*************
 
-    public void clickOn_CompleteAssTab() {
+    public void click_CompleteAssTab() {
         click_custom(testComTab);
     }
 
@@ -635,9 +595,9 @@ public class DiagnosticianPage extends BasePage {
 
     public void appointmentDateSelecting(int Type) {
         getTotalColumnCount();
-        clickOnSaveButton();
-        clickOnAppSaveButton();
-        clickOnAssesmentType(Type);
+        click_SaveButton();
+        click_AppSaveButton();
+        click_AssesmentType(Type);
     }
 
     public void login_As_Diagnostician(String UserName, String PasswordText) {
@@ -651,7 +611,7 @@ public class DiagnosticianPage extends BasePage {
         moveToElement(slot11);
         WebdriverWaits.waitUntilVisible(enableSaveButton);
         validate_text(enableSaveButton, "Save");
-        click_On_Delete();
+        click_Delete();
         WebdriverWaits.waitForElementInteractable(diagnosticianSaveButton);
         click_custom(diagnosticianSaveButton);
         WebdriverWaits.waitUntilVisible(slot7);
@@ -673,26 +633,30 @@ public class DiagnosticianPage extends BasePage {
 
     public void view_ClientDetail(String clientLastName) {
         click_custom(filterButton);
-          WebdriverWaits.waitUntilVisible(searchTextButton);
+        WebdriverWaits.waitUntilVisible(searchTextButton);
         validate_text(searchTextButton, "Search");
         enterInSearchField(clientLastName);
-        clickOn_ViewDetailLink();
+        click_ViewDetailLink();
     }
-    public void enter_ClientDetail(String clientLastName){
+
+    public void enter_ClientDetail(String clientLastName) {
         enterInSearchField(clientLastName);
-        clickOn_ViewDetailLink();
+        click_ViewDetailLink();
     }
 
 //**************Diagnostician Started Assessment***************
 
     public void payment_NewPage() {
-        clickOn_TodasTab();
-        clickOn_ViewDetails();
-        clickOn_StartAssButtn();
-        clickOn_PaymentLinkButton();
-        WebdriverWaits.waitUntilVisible(merchantLoginPage);
-        validate_text(merchantLoginPage, "Merchant" + ' ' + "Login");
-        switchToParentWindow();
+        click_TodasTab();
+        click_ViewDetails();
+        click_StartAssButtn();
+
+        //****************This Test case is removed *************
+
+//        clickOn_PaymentLinkButton();
+//        WebdriverWaits.waitUntilVisible(merchantLoginPage);
+//        validate_text(merchantLoginPage, "Merchant" + ' ' + "Login");
+//        switchToParentWindow();
     }
 
     public void start_Assessment_ByPaying_LessAmount(String textAreaText) throws InterruptedException {
@@ -703,21 +667,27 @@ public class DiagnosticianPage extends BasePage {
         WebdriverWaits.waitUntilVisible(collectButn);
         validate_text(collectButn, "Collect");
 
-        clickOn_CollectButton();
+        click_CollectButton();
         WebdriverWaits.waitUntilVisible(pageTitle);
         validate_text(pageTitle, clientFirstName + ' ' + clientLastName + ' ' + "Assessment");
 
-        clickOn_CheckBox();
+        click_CheckBox();
 
         enter_InTextArea(textAreaText);
         WebdriverWaits.waitUntilVisible(saveDraftObservationButton);
         validate_text(saveDraftObservationButton, "Save Draft Observation");
 
-        clickOn_Complete_AssButton();
+        click_Complete_AssButton();
     }
 
     public void verify_CompleteAss() {
-        clickOn_CompleteAssTab();
+        click_CompleteAssTab();
+    }
+
+    public void click_CancelTab() {
+        WebdriverWaits.waitUntilVisible(cancelTab);
+        WebdriverWaits.waitForSpinner();
+        moveToElement(cancelTab);
     }
 
 

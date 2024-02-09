@@ -12,6 +12,7 @@ import java.util.List;
 
 import static com.relevantcodes.extentreports.LogStatus.FAIL;
 import static com.relevantcodes.extentreports.LogStatus.PASS;
+import static org.automation.utilities.WebdriverWaits.moveToElement;
 
 public class DashBoardPanelPage extends BasePage {
     public By logOutLink = By.xpath("//a[text()='Log Out']");
@@ -21,7 +22,7 @@ public class DashBoardPanelPage extends BasePage {
     public By paymentButton = By.xpath("//a[text()='Payments']");
     public By backButton = By.xpath("//button[text()='Back']");
     public By exportCSVButton = By.xpath("//button[text()='Export to CSV']");
-    public By AppointmentsTab = By.xpath("//a[@class='collapsed']");
+    public By AppointmentsTab = By.xpath("//a[text()=' Appointments ']");
     public By availabilityTab = By.xpath("//a[text()='Availability']");
     public By editButton = By.xpath("(//a[text()='Edit'])[1]");
     public By viewAllTab = By.xpath("//a[text()='View All']");
@@ -41,7 +42,7 @@ public class DashBoardPanelPage extends BasePage {
     public void click_ViewAllTab() {
         WebdriverWaits.waitUntilVisible(viewAllTab);
         WebdriverWaits.waitForSpinner();
-        click_custom(viewAllTab);
+        moveToElement(viewAllTab);
     }
 
     public void click_DirectorTab() {
@@ -73,7 +74,7 @@ public class DashBoardPanelPage extends BasePage {
         click_custom(editButton);
     }
 
-    public void clickOn_BackButton() {
+    public void click_BackButton() {
         WebdriverWaits.waitUntilVisible(backButton);
         click_custom(backButton);
     }
@@ -83,7 +84,7 @@ public class DashBoardPanelPage extends BasePage {
         String home = System.getProperty("user.home");
         String file_with_location = home + "/Downloads/" + fileName;
         File file = new File(file_with_location.trim());
-       // String fileTest = file.getName();
+      //  String fileTest = file.getName();
         if (file.exists() && file.length() != 0) {
             System.out.println(file_with_location + " is present with size greater than 0 ");
             extentTest.log(PASS, file_with_location + " is present  with size greater than 0");
@@ -95,9 +96,6 @@ public class DashBoardPanelPage extends BasePage {
         }
     }
 
-
-
-
     public String getDownloadFileName() {
 
         ChromeDownloads download = new ChromeDownloads();
@@ -105,13 +103,20 @@ public class DashBoardPanelPage extends BasePage {
         return downloadedFile;
     }
 
-    public void clickOn_ExportCSVButton() {
+    public void click_ExportCSVButton() {
         click_custom(exportCSVButton);
     }
 
-    public void clickOn_AppointmentsTab() {
+    public void click_AppointmentsTab(){
+        WebdriverWaits.waitUntilInvisible(spinner);
         WebdriverWaits.waitForSpinner();
         click_custom(AppointmentsTab);
+    }
+
+    public void click_AppointmentsTab2(){
+        WebdriverWaits.waitUntilInvisible(availabilityTab);
+        WebdriverWaits.waitForSpinner();
+        click_custom(availabilityTab);
     }
 
     public void click_Availability() {
@@ -119,14 +124,6 @@ public class DashBoardPanelPage extends BasePage {
         WebdriverWaits.waitForSpinner();
         click_custom(availabilityTab);
     }
-
-    public  String RecentUser() throws InterruptedException {
-        // driver.get(DataInterface.AdminURL);
-        //click_custom(filterButton);
-        Thread.sleep(4000);
-        return getText_custom(DiagnosticianPage.userNameText);
-    }
-
 
         public static void readCSVFile() throws IOException, CsvException {
         String path = "C:\\Users\\SQE Labs\\Downloads\\.csv(10)";

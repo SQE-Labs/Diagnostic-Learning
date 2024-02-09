@@ -8,6 +8,7 @@ import org.automation.pageObjects.*;
 import org.automation.utilities.ActionEngine;
 import org.automation.utilities.DateGenerator;
 import org.automation.utilities.WebdriverWaits;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -21,6 +22,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.List;
 
+import static org.automation.utilities.Assertions.validate_AttText;
 import static org.automation.utilities.Assertions.validate_text;
 import static test.AdminTest.*;
 
@@ -28,52 +30,48 @@ import static test.AdminTest.*;
 public class DiagnosticianTest extends BaseTest {
 
 
-
-
-    @Test(priority = 0, enabled = true, description = "Login as a diagnostician and verify it is diagnostician dashboard page or not")
-    public void diagnostician_Login() {
+    @Test(priority = 0, enabled = true, description = "1, Login as a diagnostician and verify it is diagnostician dashboard page or not")
+    public void verify_diagnostician_Login() {
         LoginPage login = new LoginPage();
 
-        login.diagnosticianLogin(diagnosticianUserName, "123456");
+        login.diagnostician_Login(diagnosticianUserName, "12345678");
         DiagnosticianPage diagnostician = new DiagnosticianPage();
         WebdriverWaits.waitUntilVisible(diagnostician.dashboard);
         validate_text(diagnostician.dashboard, "Dashboard");
     }
 
-//    @Test(priority = 1, enabled = true, description = "diagnostician Scheduling availability")
-//    public void diagnostician_Availability() throws InterruptedException {
-//        DiagnosticianPage diagnostician = new DiagnosticianPage();
-//        diagnostician.set_Availability();
-//        diagnostician.cancel_Availability();
-//        diagnostician.deleting_Availability();
-//    }
+    @Test(priority = 1, enabled = true, description = "18, 19, 20, 21, 22, 23 diagnostician Scheduling availability")
+    public void verify_diagnostician_Availability() throws InterruptedException {
+        DiagnosticianPage diagnostician = new DiagnosticianPage();
+        diagnostician.set_Availability();
+        diagnostician.cancel_Availability();
+        diagnostician.deleting_Availability();
+    }
 
-    @Test(priority = 2, enabled = true, description = "Diagnostician is Verifying upcoming appointments")
+    @Test(priority = 2, enabled = true, description = "31 Diagnostician is Verifying upcoming appointments")
     public void verify_UpcomingAppointments() {
         DiagnosticianPage diagnostician = new DiagnosticianPage();
-        diagnostician.clickOn_AppointmentTab();
-        diagnostician.clickOn_upcomingTab();
+        diagnostician.click_AppointmentTab();
+        diagnostician.click_upcomingTab();
         WebdriverWaits.waitUntilVisible(diagnostician.upcomingPageTitle);
         validate_text(diagnostician.upcomingPageTitle, "Upcoming Appointments");
     }
 
-    @Test(priority = 3, enabled = true, description = "Verify diagnostian client details page")
+    @Test(priority = 3, enabled = true, description = "32 Verify diagnostian client details page")
     public void verify_ClientDetailsPage() {
         DiagnosticianPage diagnostician = new DiagnosticianPage();
-
-        diagnostician.view_ClientDetail(clientLastName);
+        diagnostician.view_ClientDetail(clientFirstName);
         WebdriverWaits.waitUntilVisible(diagnostician.clientDetailText);
-        validate_text(diagnostician.clientDetailText, clientFirstName +' '+ clientLastName +' '+"Details");
+        validate_text(diagnostician.clientDetailText, clientFirstName + ' ' + clientLastName + ' ' + "Details");
     }
 
-    @Test(priority = 4, enabled = true, description = "Diagnostician is verifying  that relevant records appear after selecting valid range of date, on 'Upcoming Appointments' page.")
-    public void verify_FromAndTodate() throws InterruptedException {
+    @Test(priority = 4, enabled = true, description = "  44 Diagnostician is verifying  that relevant records appear after selecting valid range of date, on 'Upcoming Appointments' page.")
+    public void verify_From_And_Todate() {
         AppointmentsPage appPage = new AppointmentsPage();
         DiagnosticianPage diagnostician = new DiagnosticianPage();
-        diagnostician.clickOn_upcomingTab();
+        diagnostician.click_upcomingTab();
 
         WebdriverWaits.waitForSpinner();
-        // diagnostician.clickOn_upcomingTab();
         diagnostician.click_filterButton();
         ActionEngine engine;
         engine = new ActionEngine();
@@ -100,26 +98,25 @@ public class DiagnosticianTest extends BaseTest {
         Assert.assertTrue(result);
     }
 
-    @Test(priority = 5, enabled = true, description = "Verify diagnostician is able to download csv file or not")
-    public void download_CSV_File() throws InterruptedException, IOException, AWTException, CsvException {
+    @Test(priority = 5, enabled = true, description = "31, 32 ,44, 46 Verify diagnostician is able to download csv file or not")
+    public void verify_download_CSV_File() throws InterruptedException, IOException, AWTException, CsvException {
         AppointmentsPage appointment = new AppointmentsPage();
         DashBoardPanelPage panelpage = new DashBoardPanelPage();
         DiagnosticianPage diagnostician = new DiagnosticianPage();
         ActionEngine action = new ActionEngine();
         action.navigate_Back();
-        Thread.sleep(5000);
+        Thread.sleep(3000);
         WebdriverWaits.waitForSpinner();
-        diagnostician.clickOn_upcomingTab();
-        // diagnostician.clickOn_upcomingTab();
-        appointment.clickOn_ExportCSVButton();
+        diagnostician.click_upcomingTab();
+        appointment.click_ExportCSVButton();
+        Thread.sleep(3000);
         //Download exportCSV File and Check file is downloaded or not
         String downloadFile = panelpage.getDownloadFileName();
         Assert.assertTrue(panelpage.isFileDownloaded(downloadFile));
-        // panelpage.readCSVFile();
     }
 
-    @Test(priority = 6, enabled = true, description = "diagnostician is starting assessment")
-    public void todays_Appointments() throws InterruptedException {
+    @Test(priority = 6, enabled = true, description = "26, 27, 28, 12, 13, 14, 16, 17, 18  diagnostician is starting assessment")
+    public void verify_todays_Appointments() throws InterruptedException {
         ActionEngine action = new ActionEngine();
         DiagnosticianPage diagnostician = new DiagnosticianPage();
         action.navigate_Back();
@@ -127,37 +124,40 @@ public class DiagnosticianTest extends BaseTest {
         diagnostician.start_Assessment_ByPaying_LessAmount("I am doing Simple Testing");
         WebdriverWaits.waitUntilVisible(diagnostician.upcoming_App);
         WebdriverWaits.waitForSpinner();
-        validate_text(diagnostician.upcoming_App,  "Upcoming Appointments");
+        validate_text(diagnostician.upcoming_App, "Upcoming Appointments");
 
     }
 
-    @Test(priority = 7,enabled = true,description = "diagnostician is verifying completed assessments")
-    public void verify_CompleteAssessment(){
+    @Test(priority = 7, enabled = true, description = "73,74,86 diagnostician is verifying completed assessments")
+    public void verify_Completed_Assessment() {
         DiagnosticianPage diagnostician = new DiagnosticianPage();
 
         diagnostician.verify_CompleteAss();
         diagnostician.click_filterButton();
-        diagnostician.enter_ClientDetail(clientLastName);
-        WebdriverWaits.waitUntilVisible(diagnostician.clientNameText);
-        validate_text(diagnostician.clientNameText, clientFirstName +' '+ clientLastName +' '+ "Details");
-        // panelPage.click_LogOutLink();
-    }
-    @Test(priority = 8, enabled = true, description = "Verify diagnostician is able to download csv file or not after completing the assessment")
-    public void download_CSV_File_For_completeAss() throws InterruptedException, IOException {
-        AppointmentsPage appointment = new AppointmentsPage();
-        DashBoardPanelPage panelpage = new DashBoardPanelPage();
-        DiagnosticianPage diagnostician = new DiagnosticianPage();
-        ActionEngine action = new ActionEngine();
-        diagnostician.verify_CompleteAss();
-        diagnostician.search_CreatedDiagnostician(clientLastName);
+        diagnostician.enter_ClientDetail(clientFirstName);
+        WebdriverWaits.waitUntilVisible(diagnostician.clientText);
+        validate_text(diagnostician.clientText, clientFirstName +' '+clientLastName+' '+ "Details");
 
-        appointment.clickOn_ExportCSVButton();
-        //Download exportCSV File and Check file is downloaded or not
-        String downloadFile = panelpage.getDownloadFileName();
-        Assert.assertTrue(panelpage.isFileDownloaded(downloadFile));
-        // panelpage.readCSVFile();
-        action.navigate_Back();
-        panelpage.click_LogOutLink();
+    }
+
+    @Test(priority = 8, enabled = true, description = "24, 86, 88 Verify diagnostician is able to download csv file or not after completing the assessment")
+    public void verify_completeAss()   {
+        DiagnosticianPage diagnostician = new DiagnosticianPage();
+        diagnostician.verify_CompleteAss();
+        diagnostician.search_CreatedDiagnostician(clientFirstName);
+        WebdriverWaits.waitUntilVisible(diagnostician.clientNameText);
+        validate_text(diagnostician.clientNameText, clientFirstName +' '+ clientLastName);
+    }
+
+    @Test(priority = 9, enabled = true, description = "89, 90  Verify diagnostician is able to download csv file or not after completing the assessment")
+    public void verify_Cancelled_Appointments() {
+        DiagnosticianPage diagnostician = new DiagnosticianPage();
+        DashBoardPanelPage panelpage = new DashBoardPanelPage();
+        diagnostician.click_CancelTab();
+        diagnostician.search_ClientPage(clientLastName);
+        WebdriverWaits.waitUntilVisible(diagnostician.clientNameText);
+        validate_text(diagnostician.clientNameText, clientFirstName +' '+ clientLastName);
+         panelpage.click_LogOutLink();
     }
 }
 

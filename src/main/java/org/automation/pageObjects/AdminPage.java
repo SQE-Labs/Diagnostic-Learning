@@ -162,6 +162,8 @@ public class AdminPage extends BasePage {
     public By clientDetailLink = By.cssSelector("tr:not([style='display: none;' ]) td:nth-child(7)");
     public By paymentButton = By.xpath("//button[@class='theme-button green m-2 ng-star-inserted']");
     public By inr = By.xpath("(//td)[10]");
+    public By searchButton=By.xpath("//button[@class='theme-button']");
+
     public By amountField = By.xpath("//input[@id='bookingDeposit']");
     public By collectButton = By.xpath("//button[@class='theme-button mx-2']");
     public By cancelButton = By.xpath("(//a[@class='theme-button grey'])[4]");
@@ -1209,7 +1211,10 @@ public class AdminPage extends BasePage {
         click_custom(editEmail);
         sendKeys_withClear(editEmail,email);
     }
-
+    public void click_SearchButton(){
+        WebdriverWaits.waitUntilVisible(searchButton);
+        click_custom(searchButton);
+    }
     public void enter_DataInEmailSecField(String email)
     {
         WebdriverWaits.waitUntilVisible(editEmail2);

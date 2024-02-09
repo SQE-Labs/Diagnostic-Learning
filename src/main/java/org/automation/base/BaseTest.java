@@ -4,6 +4,7 @@ package org.automation.base;
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.automation.elements.Element;
 import org.automation.utilities.PropertiesUtil;
 import org.automation.utilities.Screenshot;
@@ -11,6 +12,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 
@@ -18,8 +22,9 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
-import java.sql.Connection;
+
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 import static java.io.File.separator;
 import static java.nio.file.Files.lines;
@@ -42,7 +47,8 @@ public class BaseTest {
 		// driver.remove();
 	}
 
-	@BeforeSuite
+
+@BeforeSuite
 	public void setExtent() throws InterruptedException, IOException {
 		extent = new ExtentReports(System.getProperty("user.dir") + "/test-report/ExtentReportResult.html", true);
 		extent.addSystemInfo("Environment", "QA");
@@ -65,14 +71,20 @@ public class BaseTest {
 				//driver.set(new ChromeDriver());
 				break;
 
-			case "fireFox":
-				// WebDriverManager.firefoxdriver().setup();
-				// driver = new FirefoxDriver(BrowserOptions.getFirefoxOptions());
+			case "Edge":
+				driver .set( new EdgeDriver());
 				break;
+
+			case "FireFox":
+				driver .set( new FirefoxDriver());
+				break;
+
 			default:
 				throw new IllegalStateException("Unexpected value: " + browser);
 		}
 		// driver.set(Objects.requireNonNull(driver));
+
+
 
 		getDriver().manage().window().maximize();
 		getDriver().navigate().to(url);

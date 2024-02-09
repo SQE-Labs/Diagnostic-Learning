@@ -10,18 +10,18 @@ public class SuperAdminPage extends BasePage {
     public By clientObservation=By.xpath("//h4");
     public By backButton=By.xpath("//a[@class='grey ml-3 theme-button']");
 
-    public void clickOn_ViewStudentObservationButton(){
+    public void click_ViewStudentObservationButton(){
         WebdriverWaits.waitUntilVisible(viewStudentObservationButton);
         WebdriverWaits.waitForSpinner();
         click_custom(viewStudentObservationButton);
     }
-    public void clickOn_BackButton(){
+    public void click_BackButton(){
         WebdriverWaits.waitUntilVisible(backButton);
         click_custom(backButton);
     }
 
     public void view_ClientObservation_Page(){
-        clickOn_ViewStudentObservationButton();
+        click_ViewStudentObservationButton();
     }
 
 }
