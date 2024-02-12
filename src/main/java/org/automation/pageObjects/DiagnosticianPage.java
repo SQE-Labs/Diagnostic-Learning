@@ -583,8 +583,6 @@ public By availableSlots=By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-al
         click_custom(yesCompleteAssButton);
     }
 
-
-
     //************diagnostician verifying complete assessment*************
 
     public void click_CompleteAssTab() {

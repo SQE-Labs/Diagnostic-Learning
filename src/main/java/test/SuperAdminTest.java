@@ -64,7 +64,7 @@ public class SuperAdminTest extends BaseTest {
         panelPage.click_On_AdminTab();
         WebdriverWaits.waitForSpinner();
 
-        //*************Creating admin by superAdmin************
+ //*************Creating admin by superAdmin************
 
         admin.create_Admin(adminFirstName, adminLastName, admin_cell_Number, adminEmailAddress, adminUserName, "123456", "123456");
         WebdriverWaits.waitUntilVisible(admin.succ_Msg);
@@ -214,6 +214,7 @@ public class SuperAdminTest extends BaseTest {
         diagnostician.edit_Diagnostician(diagnosticianEmailAddress1, "12345678", "12345678");
         WebdriverWaits.waitUntilVisible(diagnostician.edit_Succ_Msg);
         validate_text(diagnostician.edit_Succ_Msg, "Diagnostician details updated successfully.");
+        Log.info("Successfully Edited the created diagnostician");
     }
 
     @Test(priority = 14, enabled = true, description = "4.13 verify that toggle is off or not for diagnostician by superadmin")
@@ -255,10 +256,11 @@ public class SuperAdminTest extends BaseTest {
         panelPage.click_LogOutLink();
 
         // Login with Diagnostician new password
-        login.diagnosticianLogin(diagnosticianUserName, "12345678");
+        login.diagnostician_Login(diagnosticianUserName, "12345678");
         WebdriverWaits.waitUntilVisible(diagnostician.diagnosticianDashBoardPage);
         validate_text(diagnostician.diagnosticianDashBoardPage, "Dashboard");
     }
+
 
     @Test(priority = 18, enabled = true, description = "4.16 Verify that diagnostician is able to login with old password or not")
     public void validate_diagnostician_relogin_old_pwd() throws InterruptedException {
@@ -267,7 +269,7 @@ public class SuperAdminTest extends BaseTest {
         // Logging with Old password to get validation message.
         DashBoardPanelPage panelpage = new DashBoardPanelPage();
         panelpage.click_LogOutLink();
-        login.diagnosticianLogin(diagnosticianUserName, "123456");
+        login.diagnostician_Login(diagnosticianUserName, "123456");
         WebdriverWaits.waitUntilVisible(diagnostician.validation_Msg);
         Thread.sleep(2000);
         validate_text(diagnostician.validation_Msg, "Username or password is incorrect");
@@ -299,13 +301,20 @@ public class SuperAdminTest extends BaseTest {
         director.create_Director(directorFirstName, directorLastName, dir_Cell_Number, directorEmailAddress, directorUserName, "123456", "123456");
         WebdriverWaits.waitUntilVisible(director.directorListPage);
         validate_text(director.directorListPage, "Directors List");
+
+
+
     }
 
     @Test(priority = 20, enabled = true, description = "3.1, 3.5, 3.9, 3.36 verify that duplicate Director throws error")
     public void create_duplicate_Directors() throws InterruptedException {
         DirectorPage director = new DirectorPage();
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
+
+
+
         director.create_Director(directorFirstName, directorLastName, dir_Cell_Number, directorEmailAddress, directorUserName, "123456", "123456");
+
         WebdriverWaits.waitUntilVisible(director.validationMsg);
         validate_text(director.validationMsg, "An error occurred while creating the user. Username already exists!");
         panelPage.click_BackButton();
@@ -323,23 +332,28 @@ public class SuperAdminTest extends BaseTest {
     }
 
 
+
+
     @Test(priority = 22, enabled = true, description = "3.19, 3.20 verify that superadmin is able to enable Director")
-    public void validate_director_Toggle_Off()   {
+    public void validate_director_Toggle_Off() throws InterruptedException {
 
         DirectorPage director = new DirectorPage();
         director.cheking_DisableUser();
 
         WebdriverWaits.waitUntilVisible(director.enableUser);
+
         validate_text(director.enableUser, "Enable User");
     }
 
     @Test(priority = 23, enabled = true, description = "Verify that Superadmin is able to Enable the user or not")
-    public void verify_director_enable_User()   {
+    public void verify_director_enable_User() {
         DirectorPage director = new DirectorPage();
 
         director.enable_Director();
         WebdriverWaits.waitUntilVisible(director.edit_SuccMsg);
         validate_text(director.edit_SuccMsg, "Director details updated successfully.");
+        Log.info("Successfully Edited the created director");
+
     }
 
 
@@ -377,10 +391,10 @@ public class SuperAdminTest extends BaseTest {
 
     //************Appointments page******************
 
-    @Test(dependsOnMethods = {"verify_Full_Payment"})
-    public void verify_Appointments_Page() {
+    @Test( dependsOnMethods={ "verify_Full_Payment"})
+    public void verify_Appointments_Page()   {
         AppointmentsPage appointment = new AppointmentsPage();
-        DashBoardPanelPage panelPage = new DashBoardPanelPage();
+        DashBoardPanelPage panelPage=new DashBoardPanelPage();
         LoginPage login = new LoginPage();
         login.superAdminLogin();
         WebdriverWaits.waitUntilVisible(appointment.dashBoardPage);
