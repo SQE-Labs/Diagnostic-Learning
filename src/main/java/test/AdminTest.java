@@ -1324,7 +1324,6 @@ public class AdminTest extends BaseTest {
         admin.clickOn_backBtnCancelPopup();
         String actualName = getText_custom(admin.title);
         validate_AttText(actualName, expectedName);
-
     }
 
     @Test(priority = 71, enabled = true, description = "'Cancel' radio button clicked by Admin")

@@ -107,13 +107,15 @@ public class DashBoardPanelPage extends BasePage {
         click_custom(exportCSVButton);
     }
 
-    public void click_AppointmentsTab(){
-        WebdriverWaits.waitUntilInvisible(spinner);
+    public void click_AppointmentsTab()
+    {
+        WebdriverWaits.waitUntilVisible(AppointmentsTab);
         WebdriverWaits.waitForSpinner();
         click_custom(AppointmentsTab);
     }
 
-    public void click_AppointmentsTab2(){
+    public void click_AppointmentsTab2()
+    {
         WebdriverWaits.waitUntilInvisible(availabilityTab);
         WebdriverWaits.waitForSpinner();
         click_custom(availabilityTab);

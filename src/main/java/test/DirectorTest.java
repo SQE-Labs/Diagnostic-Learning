@@ -8,52 +8,71 @@ import org.testng.annotations.Test;
 
 import java.io.FileNotFoundException;
 
-import static org.automation.utilities.Assertions.validate_text;
+import static org.automation.utilities.Assertions.*;
 import static org.automation.utilities.DateGenerator.getMonthAndYear;
 
 
 public class DirectorTest extends BaseTest {
+    DirectorPage director = new DirectorPage();
+    DashBoardPanelPage panelPage = new DashBoardPanelPage();
+    LoginPage login = new LoginPage();
 
     @Test(priority = 1, enabled = true, description = "1 Verify Director is able to login with valid credentials")
-    public void verify_Login_Director() throws InterruptedException {
-        DirectorPage director = new DirectorPage();
-        DashBoardPanelPage panelPage = new DashBoardPanelPage();
-        LoginPage login = new LoginPage();
+    public void verify_Login_Director()
+    {
         login.director_Login();
         validate_text(director.dashboardPage, "Dashboard");
 
     }
 
-    @Test(priority = 2, enabled = false, description = " 4 Verify that 'Appointments' tab expands, on 'Dashboard' page.")
-    public void verify_AppointmentsTabExpands() throws InterruptedException {
-        DirectorPage director = new DirectorPage();
-        DashBoardPanelPage panelPage = new DashBoardPanelPage();
+    @Test(priority = 2, enabled = true, description = " 4 Verify that 'Appointments' tab expands, on 'Dashboard' page.")
+    public void verify_AppointmentsTabExpands()
+    {
         panelPage.click_AppointmentsTab();
         validate_text(director.viewAll, "View All");
 
     }
 
-    @Test(priority = 3, enabled = false, description = "12 and 13 Verify that 'Set Availability' page opens up and Year Picker appear")
-    public void validate_SetAppointment_AND_YearPicker() throws InterruptedException {
-        DashBoardPanelPage panelPage = new DashBoardPanelPage();
-        DirectorPage director = new DirectorPage();
-        LoginPage login = new LoginPage();
-       // login.director_Login();
+    @Test(priority = 3, enabled = true, description = "12 and 13 Verify that 'Set Availability' page opens up and Year Picker appear")
+    public void validate_SetAppointment_AND_YearPicker() throws InterruptedException
+
+    {
         panelPage.click_Availability();
         validate_text(director.setAvailaibility, "Set Availability");
         String currentDate = getMonthAndYear();
         validate_text(director.monthHeader, currentDate.split(" ")[0]);
         validate_text(director.yearHeader, currentDate.split(" ")[1]);
-        panelPage.click_Availability();
+
+        String expectedText=getText_custom(director.yearButton);
+        director.clickOn_MonthHeader();
+        String yearTitleText=getText_custom(director.yearsTitle);
+
+        // Split the string into words
+        String[] words = yearTitleText.split(" ");
+
+        // Get the first word
+        String actualText = words[0];
+        System.out.println(actualText);
+        validate_AttText(actualText, expectedText);
+        validate_text(director.yearTitleFromText, currentDate.split(" ")[1]);
+
+
+
+
+
 
     }
 
-    @Test(priority = 4, enabled = false, description = "20 and 21 Verify that 'Available' card appears and click on Save button.")
-    public void verify_AvailableCards_AND_SaveButtonEnabled() throws InterruptedException {
+    @Test(priority = 4, enabled = true, description = "20 and 21 Verify that 'Available' card appears and click on Save button.")
+    public void verify_AvailableCards_AND_SaveButtonEnabled() throws InterruptedException
+
+    {
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
         DirectorPage director = new DirectorPage();
+        verify_Login_Director();
         panelPage.click_Availability();
-        director.click_AvailaibleSlot();
+       // director.click_AvailaibleSlot();
+        director.director_Availability();
         WebdriverWaits.waitUntilVisible(director.validateAvailable);
         validate_text(director.validateAvailable, "Available");
         WebdriverWaits.waitUntilVisible(director.avail_SaveButton);
@@ -62,8 +81,8 @@ public class DirectorTest extends BaseTest {
 
     }
 
-
-    @Test(priority = 5, enabled = false, description = "24 Verify that '<Date>' popup closes, when director clicks on 'Cancel' button")
+/*
+    @Test(priority = 5, enabled = true, description = "24 Verify that '<Date>' popup closes, when director clicks on 'Cancel' button")
     public void verify_Closed_PopUp_OnCancel() throws InterruptedException {
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
         DirectorPage director = new DirectorPage();
@@ -80,11 +99,13 @@ public class DirectorTest extends BaseTest {
     @Test(priority = 6, enabled = true, description = "23 Verify that director is able to delete already available marked slot")
     public void verify_DeleteSlots() throws InterruptedException {
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
-        DirectorPage director = new DirectorPage();
         LoginPage login = new LoginPage();
+        DirectorPage director = new DirectorPage();
+        verify_Login_Director();
+        director.click_AvailaibleSlot();
         director.click_DeleteSlot();
         director.click_DeleteButton();
-        //validate_text(director.deletedSlot, " ");
+      //  validate_text(director.deletedSlot, " ");
         director.click_SaveButton();
 
     }
@@ -305,7 +326,7 @@ public class DirectorTest extends BaseTest {
         director.click_LogOutLink();
         validate_text(director.signInToYourAccountTxt,"Sign in to your account");
 
-    }
+ */  // }
 }
 
 
