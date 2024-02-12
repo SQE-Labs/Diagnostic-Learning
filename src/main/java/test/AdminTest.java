@@ -41,6 +41,14 @@ import static test.SuperAdminTest.adminUserName;
 
 public class AdminTest extends BaseTest {
 
+    AppointmentsPage appointment=new AppointmentsPage();
+    SuperAdminPage superAdmin=new SuperAdminPage();
+    DashboardPage dashPage=new DashboardPage();
+
+    PaymentPage payment=new PaymentPage();
+
+    DashBoardPanelPage dashboardPanelPage=new DashBoardPanelPage();
+
     public static String clientLastName;
     public static String diagnosticianUserName;
 
@@ -500,7 +508,9 @@ public class AdminTest extends BaseTest {
 
 
     @Test(priority = 26, enabled = false, description = "verify yes hold button on hold appointment button.")
-    public void verify_YesHoldBtn() {
+    public void verify_YesHoldBtn()
+
+    {
         AdminPage hold = new AdminPage();
         hold.click_yesHoldBtn();
         WebdriverWaits.waitUntilVisible(hold.allAppointmentsPage);
@@ -535,7 +545,7 @@ public class AdminTest extends BaseTest {
     {
         AdminPage admin = new AdminPage();
         DateGenerator datePage = new DateGenerator();
-        admin.clickOn_TodayTab();
+        appointment.clickOn_TodayTab();
         validate_text(admin.todayAppointmentTitle, expectedTextforToayTitle);
         String expectedDate = datePage.getCurrentDateFromSystem();
         validate_text(admin.todayDateOnCard, expectedDate);
@@ -547,7 +557,7 @@ public class AdminTest extends BaseTest {
     {
         AdminPage admin = new AdminPage();
         admin.clickOn_AppointmentTab();
-        admin.clickOn_TodayTab();
+        appointment.clickOn_TodayTab();
         String actualText = getText_custom(admin.nameOnCard);
         admin.clickOn_Card();
         String clientName = getText_custom(admin.clientNameDetail);
@@ -579,9 +589,9 @@ public class AdminTest extends BaseTest {
         login.adminLogin("allen", "123456");
         String expectedTitle = "Test Ready Appointments";
         admin.clickOn_AppointmentTab();
-        admin.clickOn_TestReadyTab();
+        appointment.clickOn_TestReadyTab();
         validate_text(admin.getTestReadyTitle, expectedTitle);
-        admin.enterClientNameInSearchField();
+        appointment.enterClientNameInSearchField();
         String expectedStatus = "Test Ready";
         validate_text(admin.getStatus, expectedStatus);
 
@@ -593,7 +603,7 @@ public class AdminTest extends BaseTest {
         LoginPage login = new LoginPage();
         login.adminLogin("allen", "123456");
         admin.clickOnAppointmentTab();
-        admin.clickOn_TestReadyTab();
+        appointment.clickOn_TestReadyTab();
         String actualText = getText_custom(admin.nameOnCard);
         admin.clickOn_Card();
         String clientName = getText_custom(admin.clientNameDetail);
@@ -625,7 +635,7 @@ public class AdminTest extends BaseTest {
         login.adminLogin("allen", "123456");
         String expectedTitle = "Upcoming Appointments";
         admin.clickOnAppointmentTab();
-        admin.clickOn_UpcomingTab();
+        appointment.clickOn_UpcomingTab();
         validate_text(admin.titleOfUpcomingPage, expectedTitle);
         admin.filter_ForUpcoming();
         String statusTestReady = "Test Ready";
@@ -640,7 +650,7 @@ public class AdminTest extends BaseTest {
         AdminPage admin = new AdminPage();
         LoginPage login = new LoginPage();
         login.adminLogin("allen", "123456");
-        admin.ClickOn_FilterBtn();
+        appointment.ClickOn_FilterBtn();
 
         //Search field
         String searchPlaceHolder = admin.getAttributevalue(admin.searchTextBox, "placeholder");
@@ -659,7 +669,7 @@ public class AdminTest extends BaseTest {
         LoginPage login = new LoginPage();
         DashBoardPanelPage dashboard=new DashBoardPanelPage();
         login.adminLogin("allen", "123456");
-        admin.clickOn_ExportCSVButton();
+        appointment.clickOn_ExportCSVBtn();
         String downloadFile = dashboard.getDownloadFileName();
         Assert.assertTrue(dashboard.isFileDownloaded(downloadFile));
 
@@ -670,7 +680,7 @@ public class AdminTest extends BaseTest {
         AdminPage admin = new AdminPage();
         LoginPage login = new LoginPage();
         login.adminLogin("allen", "123456");
-        admin.clickOn_UpcomingTab();
+        appointment.clickOn_UpcomingTab();
         waitUntilVisible(admin.getNameOfClient);
         String expectedText = getText_custom(admin.getNameOfClient);
         admin.clickOn_ViewDetailsBtn();
@@ -684,7 +694,7 @@ public class AdminTest extends BaseTest {
         AdminPage admin = new AdminPage();
         LoginPage login = new LoginPage();
         login.adminLogin("allen", "123456");
-        admin.clickOn_TestCompleteTab();
+        appointment.clickOn_TestCompleteTab();
         String expectedText = "Test Complete Appointments";
         String actualText = getText_custom(admin.getTitleOfTestComplete);
         validate_AttText(actualText, expectedText);
@@ -698,7 +708,7 @@ public class AdminTest extends BaseTest {
         SuperAdminPage superAdmin=new SuperAdminPage();
         login.adminLogin("allen", "123456");
         String expectedTitle = "View Student Observation";
-        admin.clickOn_TestCompleteTab();
+        appointment.clickOn_TestCompleteTab();
         String actualText = getText_custom(admin.getNameOfClient);
         admin.clickOn_ViewDetailsBtn();
         String clientName = getText_custom(admin.clientNameDetail);
@@ -731,9 +741,9 @@ public class AdminTest extends BaseTest {
         LoginPage login = new LoginPage();
         SuperAdminPage superAdmin=new SuperAdminPage();
         login.adminLogin("allen", "123456");
-        admin.clickOn_TestCompleteTab();
+        appointment.clickOn_TestCompleteTab();
         admin.clickOn_ViewDetailsBtn();
-        admin.clickOn_ViewObservationBtn();
+        superAdmin.clickOn_ViewObservationBtn();
         String expectedText = "Client Observation";
         String actualText = getText_custom(superAdmin.clientObservation);
         validate_AttText(actualText, expectedText);
@@ -745,19 +755,19 @@ public class AdminTest extends BaseTest {
         AdminPage admin = new AdminPage();
         LoginPage login = new LoginPage();
         login.adminLogin("allen", "123456");
-        admin.clickOn_TestCompleteTab();
+        appointment.clickOn_TestCompleteTab();
         admin.clickOn_ViewDetailsBtn();
         admin.clickOn_UploadButton();
         admin.clickOn_ChooseFile();
         String filepath = "Downloads\\file-sample_1MB.doc";
         ChromeDownloads.uploadFileUsingRobot(filepath);
         admin.clickOn_UploadButtons();
-        admin.clickOn_ViewDocumentBtn();
+        superAdmin.clickOn_ViewDocumentBtn();
         String expectedFileName = getText_custom(admin.getTextFromViewDoc);
         System.out.println("expectedFileName= " + expectedFileName);
         admin.clickOn_CloseIcon();
-        admin.clickOn_ViewObservationBtn();
-        admin.clickOn_ViewDocumentBtn();
+        superAdmin.clickOn_ViewObservationBtn();
+        superAdmin.clickOn_ViewDocumentBtn();
         String expectedText = "Attached Documents";
         validate_text(admin.getTitleOfAttachedDocument, expectedText);
         String FileName = getText_custom(admin.getTextFromViewDocTwo);
@@ -790,10 +800,10 @@ public class AdminTest extends BaseTest {
         AdminPage admin = new AdminPage();
         LoginPage login = new LoginPage();
         login.adminLogin("allen", "123456");
-        admin.clickOn_TestCompleteTab();
+        appointment.clickOn_TestCompleteTab();
         admin.clickOn_ViewDetailsBtn();
         String expectedResult = getText_custom(admin.title);
-        admin.clickOn_ViewObservationBtn();
+        superAdmin.clickOn_ViewObservationBtn();
         admin.clickOn_BackBtn();
         String actualResult = getText_custom(admin.title);
         validate_AttText(actualResult, expectedResult);
@@ -805,7 +815,7 @@ public class AdminTest extends BaseTest {
         AdminPage admin = new AdminPage();
         LoginPage login = new LoginPage();
         login.adminLogin("allen", "123456");
-        admin.clickOn_TestCompleteTab();
+        appointment.clickOn_TestCompleteTab();
         admin.clickOn_FilterBtn();
 
         //Search field
@@ -824,8 +834,8 @@ public class AdminTest extends BaseTest {
         LoginPage login = new LoginPage();
         DashBoardPanelPage dashboard=new DashBoardPanelPage();
         login.adminLogin("allen", "123456");
-        admin.clickOn_TestCompleteTab();
-        admin.clickOn_ExportCSVButtonOfTestComplete();
+        appointment.clickOn_TestCompleteTab();
+        dashboardPanelPage.clickOn_ExportCSVButtonOfTestComplete();
         String downloadFile = dashboard.getDownloadFileName();
         Assert.assertTrue(dashboard.isFileDownloaded(downloadFile));
 
@@ -836,7 +846,7 @@ public class AdminTest extends BaseTest {
         AdminPage admin = new AdminPage();
         LoginPage login = new LoginPage();
         login.adminLogin("allen", "123456");
-        admin.clickOn_CompletedTab();
+        appointment.clickOn_CompletedTab();
         String expectedTitle = "Completed Appointments";
         validate_text(admin.title, expectedTitle);
 
@@ -847,7 +857,7 @@ public class AdminTest extends BaseTest {
         AdminPage admin = new AdminPage();
         LoginPage login = new LoginPage();
         login.adminLogin("allen", "123456");
-        admin.clickOn_CompletedTab();
+        appointment.clickOn_CompletedTab();
         admin.clickOn_FilterBtn();
 
         //Search field
@@ -865,7 +875,7 @@ public class AdminTest extends BaseTest {
         AdminPage admin = new AdminPage();
         LoginPage login = new LoginPage();
         login.adminLogin("allen", "123456");
-        admin.clickOn_CompletedTab();
+        appointment.clickOn_CompletedTab();
         admin.clickOn_FilterBtn();
         String expectedResult = getText_custom(admin.clientNameCompleted);
         admin.enterClientNameInSearchFieldCompleted();
@@ -879,8 +889,8 @@ public class AdminTest extends BaseTest {
         LoginPage login = new LoginPage();
         DashBoardPanelPage dashboard=new DashBoardPanelPage();
         login.adminLogin("allen", "123456");
-        admin.clickOn_CompletedTab();
-        admin.clickOn_ExportCSVButtonOfTestComplete();
+        appointment.clickOn_CompletedTab();
+        dashboardPanelPage.clickOn_ExportCSVButtonOfTestComplete();
         String downloadFile = dashboard.getDownloadFileName();
         Assert.assertTrue(dashboard.isFileDownloaded(downloadFile));
     }
@@ -890,7 +900,7 @@ public class AdminTest extends BaseTest {
         AdminPage admin = new AdminPage();
         LoginPage login = new LoginPage();
         login.adminLogin("allen", "123456");
-        admin.clickOn_CompletedTab();
+        appointment.clickOn_CompletedTab();
         String expectedResult = getText_custom(admin.clientNameCompleted);
         admin.clickOn_ViewDetailsBtn();
         String clientName = getText_custom(admin.clientNameDetail);
@@ -922,7 +932,7 @@ public class AdminTest extends BaseTest {
         AdminPage admin = new AdminPage();
         LoginPage login = new LoginPage();
         login.adminLogin("allen", "123456");
-        admin.clickOn_CanceledTab();
+        appointment.clickOn_CanceledTab();
         String expectedTitle = "Canceled Appointments";
         admin.filter_ForCancel();
         String statusCancel = "Cancel";
@@ -934,7 +944,7 @@ public class AdminTest extends BaseTest {
         AdminPage admin = new AdminPage();
         LoginPage login = new LoginPage();
         login.adminLogin("allen", "123456");
-        admin.clickOn_CanceledTab();
+        appointment.clickOn_CanceledTab();
         admin.clickOn_FilterBtn();
 
         //Search field
@@ -950,7 +960,7 @@ public class AdminTest extends BaseTest {
         AdminPage admin = new AdminPage();
         LoginPage login = new LoginPage();
         login.adminLogin("allen", "123456");
-        admin.clickOn_HoldTab();
+        appointment.clickOn_HoldTab();
         String expectedText = getText_custom(admin.title);
         admin.clickOn_UnHoldBtn();
         admin.clickOn_UnholdBackBtn();
@@ -964,25 +974,25 @@ public class AdminTest extends BaseTest {
         LoginPage login = new LoginPage();
         PaymentPage payment = new PaymentPage();
         login.adminLogin("allen", "123456");
-        admin.clickOn_CompletedTab();
+        appointment.clickOn_CompletedTab();
         admin.clickOn_ViewDetailsBtn();
-        admin.scrollUptoVAmountDue();
+        payment.scrollUptoVAmountDue();
         String expectedAmountDue = "$0.00";
         String actualAmountDue = getText_custom(payment.amountDue);
 
         if (actualAmountDue.equals(expectedAmountDue)) {
-            admin.viewReceiptButtonDisplayed();
+            payment.viewReceiptButtonDisplayed();
             String expectedText = "View Receipt";
             validate_text(admin.titleOfViewReceipt, expectedText);
 
         } else {
             String amountDue = getText_custom(payment.amountDue);
             String actualAmount = amountDue.replace("$", "");
-            admin.viewReceiptButtonNotDisplayed();
-            admin.send_AmountInEnterAmount(actualAmount);
-            admin.clickOn_CollectBtn();
-            admin.clickOn_CloseBtn();
-            admin.viewReceiptButtonDisplayed();
+            payment.viewReceiptButtonNotDisplayed();
+            payment.send_AmountInEnterAmount(actualAmount);
+            payment.clickOn_CollectBtn();
+            payment.clickOn_CloseBtn();
+            payment.viewReceiptButtonDisplayed();
             String expectedText = "View Receipt";
             validate_text(admin.titleOfViewReceipt, expectedText);
 
@@ -996,28 +1006,28 @@ public class AdminTest extends BaseTest {
         LoginPage login = new LoginPage();
         PaymentPage payment = new PaymentPage();
         login.adminLogin("allen", "123456");
-        admin.clickOn_CompletedTab();
+        appointment.clickOn_CompletedTab();
         admin.clickOn_ViewDetailsBtn();
-        admin.scrollUptoVAmountDue();
+        payment.scrollUptoVAmountDue();
         String expectedAmountDue = "$0.00";
         String actualAmountDue = getText_custom(payment.amountDue);
         if (actualAmountDue.equals(expectedAmountDue)) {
             String expectedText = getText_custom(admin.title);
-            admin.viewReceiptButtonDisplayed();
-            admin.clickOn_CloseBtn();
+            payment.viewReceiptButtonDisplayed();
+            payment.clickOn_CloseBtn();
             String actualText = getText_custom(admin.title);
             validate_AttText(actualText, expectedText);
 
         } else {
             String amountDue = getText_custom(payment.amountDue);
             String actualAmount = amountDue.replace("$", "");
-            admin.viewReceiptButtonNotDisplayed();
-            admin.send_AmountInEnterAmount(actualAmount);
-            admin.clickOn_CollectBtn();
-            admin.clickOn_CloseBtn();
+            payment.viewReceiptButtonNotDisplayed();
+            payment.send_AmountInEnterAmount(actualAmount);
+            payment.clickOn_CollectBtn();
+            payment.clickOn_CloseBtn();
             String expectedText = getText_custom(admin.title);
-            admin.viewReceiptButtonDisplayed();
-            admin.clickOn_CloseBtn();
+            payment.viewReceiptButtonDisplayed();
+            payment.clickOn_CloseBtn();
             String actualText = getText_custom(admin.title);
             validate_AttText(actualText, expectedText);
 
@@ -1032,8 +1042,8 @@ public class AdminTest extends BaseTest {
         LoginPage login = new LoginPage();
         DashBoardPanelPage dashboard=new DashBoardPanelPage();
         login.adminLogin("allen", "123456");
-        admin.clickOn_HoldTab();
-        admin.clickOn_ExportCSVButtonOfUnhold();
+        appointment.clickOn_HoldTab();
+        dashboardPanelPage.clickOn_ExportCSVButtonOfUnhold();
         String downloadFile = dashboard.getDownloadFileName();
         Assert.assertTrue(dashboard.isFileDownloaded(downloadFile));
     }
@@ -1043,7 +1053,7 @@ public class AdminTest extends BaseTest {
         AdminPage admin = new AdminPage();
         LoginPage login = new LoginPage();
         login.adminLogin("allen", "123456");
-        admin.clickOn_UpcomingTab();
+        appointment.clickOn_UpcomingTab();
         String expectedText = "Upcoming Appointments";
         validate_text(admin.title, expectedText);
     }
@@ -1053,7 +1063,7 @@ public class AdminTest extends BaseTest {
         AdminPage admin = new AdminPage();
         LoginPage login = new LoginPage();
         login.adminLogin("allen", "123456");
-        admin.clickOn_AppointmentsTab();
+        appointment.clickOn_AppointmentsTab();
         String expectedText = "View All";
         validate_text(admin.viewAllTab, expectedText);
 
@@ -1065,7 +1075,7 @@ public class AdminTest extends BaseTest {
         AdminPage admin = new AdminPage();
         LoginPage login = new LoginPage();
         login.adminLogin("allen", "123456");
-        admin.clickOn_DirectorTab();
+        appointment.clickOn_DirectorTab();
         String expectedText = "Directors List";
         validate_text(admin.title, expectedText);
 
@@ -1077,7 +1087,7 @@ public class AdminTest extends BaseTest {
         AdminPage admin = new AdminPage();
         LoginPage login = new LoginPage();
         login.adminLogin("allen", "123456");
-        admin.clickOn_DiagonsticiansTab();
+        appointment.clickOn_DiagonsticiansTab();
         String expectedText = "Diagnosticians List";
         validate_text(admin.title, expectedText);
 
@@ -1089,8 +1099,8 @@ public class AdminTest extends BaseTest {
         AdminPage admin = new AdminPage();
         LoginPage login = new LoginPage();
         login.adminLogin("allen", "123456");
-        admin.clickOn_AppointmentsTab();
-        admin.clickOn_AppointmentsTab();
+        appointment.clickOn_AppointmentsTab();
+        appointment.clickOn_AppointmentsTab();
         WebElement element = getDriver().findElement(admin.viewAllTab);
         waitUntilInvisible(admin.viewAllTab);
         Assert.assertFalse(element.isDisplayed());
@@ -1106,7 +1116,7 @@ public class AdminTest extends BaseTest {
         login.adminLogin("allen", "123456");
         waitUntilVisible(dashPage.clientNameFromBCGForm);
         String ExpectedName = getText_custom(dashPage.clientNameFromBCGForm);
-        admin.clickOn_ClientNameBackgroundSection();
+        dashPage.clickOn_ClientNameBackgroundSection();
         String actualName = getText_custom(admin.clientNameDetail);
         validate_AttText(actualName, ExpectedName);
 
@@ -1121,7 +1131,7 @@ public class AdminTest extends BaseTest {
         login.adminLogin("allen", "123456");
         waitUntilVisible(dashPage.clientNameFromFollowup);
         String ExpectedName = getText_custom(dashPage.clientNameFromFollowup);
-        admin.clickOn_ClientNameFollowupSection();
+        dashPage.clickOn_ClientNameFollowupSection();
         String actualName = getText_custom(admin.clientNameDetail);
         validate_AttText(actualName, ExpectedName);
     }
@@ -1160,7 +1170,7 @@ public class AdminTest extends BaseTest {
         AdminPage admin = new AdminPage();
         LoginPage login = new LoginPage();
         login.adminLogin("allen", "123456");
-        admin.clickOn_DirectorTab();
+        appointment.clickOn_DirectorTab();
         admin.clickOn_FilterBtn();
         //Search field
         String searchPlaceHolder = admin.getAttributevalue(admin.searchTextBox, "placeholder");
@@ -1174,10 +1184,10 @@ public class AdminTest extends BaseTest {
         AdminPage admin = new AdminPage();
         LoginPage login = new LoginPage();
         login.adminLogin("allen", "123456");
-        admin.clickOn_DirectorTab();
+        appointment.clickOn_DirectorTab();
         admin.clickOn_FilterBtn();
         String expectedName = getText_custom(admin.directorName);
-        admin.enter_ValidData(expectedName);
+        dashPage.enter_ValidData(expectedName);
         validate_text(admin.directorName, expectedName);
     }
 
@@ -1187,10 +1197,10 @@ public class AdminTest extends BaseTest {
         LoginPage login = new LoginPage();
         login.adminLogin("allen", "123456");
         DirectorPage director = new DirectorPage();
-        admin.clickOn_DirectorTab();
+        appointment.clickOn_DirectorTab();
         admin.clickOn_FilterBtn();
         String status = "Active";
-        admin.enter_ValidData(status);
+        dashPage.enter_ValidData(status);
         director.disable_Director();
         validate_text(director.edit_SuccMsg, "Director details updated successfully.");
         System.out.println("Successfully Edited the created director");
@@ -1202,7 +1212,7 @@ public class AdminTest extends BaseTest {
         LoginPage login = new LoginPage();
         DiagnosticianPage diagnostic = new DiagnosticianPage();
         login.adminLogin("allen", "123456");
-        admin.clickOn_DiagonsticiansTab();
+        appointment.clickOn_DiagonsticiansTab();
         diagnostic.click_createDiagnosticianButton();
         diagnostic.click_Back_Button();
         String expectedText = "Diagnosticians List";
@@ -1215,11 +1225,11 @@ public class AdminTest extends BaseTest {
         LoginPage login = new LoginPage();
         DiagnosticianPage diagnostic = new DiagnosticianPage();
         login.adminLogin("allen", "123456");
-        admin.clickOn_AppointmentsTab();
-        admin.click_OnViewAllTab();
+        appointment.clickOn_AppointmentsTab();
+        appointment.click_OnViewAllTab();
         admin.clickOn_FilterBtn();
         String status = "Test Ready";
-        admin.enter_ValidData(status);
+        dashPage.enter_ValidData(status);
         admin.clickOn_ViewDetailsBtn();
         admin.click_OnRescheduleBtn();
         String expectedTitle = "Reschedule Appointment";
@@ -1256,11 +1266,11 @@ public class AdminTest extends BaseTest {
         ReschedulePage reschedule = new ReschedulePage();
         DiagnosticianPage diagnostic = new DiagnosticianPage();
         login.adminLogin("allen", "123456");
-        admin.clickOn_AppointmentsTab();
-        admin.click_OnViewAllTab();
+        appointment.clickOn_AppointmentsTab();
+        appointment.click_OnViewAllTab();
         admin.clickOn_FilterBtn();
         String status = "Test Ready";
-        admin.enter_ValidData(status);
+        dashPage.enter_ValidData(status);
         admin.clickOn_ViewDetailsBtn();
         admin.click_OnRescheduleBtn();
         Thread.sleep(4000);
@@ -1290,11 +1300,11 @@ public class AdminTest extends BaseTest {
         ReschedulePage reschedule = new ReschedulePage();
         DiagnosticianPage diagnostic = new DiagnosticianPage();
         login.adminLogin("allen", "123456");
-        admin.clickOn_AppointmentsTab();
-        admin.click_OnViewAllTab();
+        appointment.clickOn_AppointmentsTab();
+        appointment.click_OnViewAllTab();
         admin.clickOn_FilterBtn();
         String status = "Test Ready";
-        admin.enter_ValidData(status);
+        dashPage.enter_ValidData(status);
         admin.clickOn_ViewDetailsBtn();
         admin.click_OnEditBtn();
         String expectedClassName = "border-danger";
@@ -1313,11 +1323,11 @@ public class AdminTest extends BaseTest {
         ReschedulePage reschedule = new ReschedulePage();
         DiagnosticianPage diagnostic = new DiagnosticianPage();
         login.adminLogin("allen", "123456");
-        admin.clickOn_AppointmentsTab();
-        admin.click_OnViewAllTab();
+        appointment.clickOn_AppointmentsTab();
+        appointment.click_OnViewAllTab();
         admin.clickOn_FilterBtn();
         String status = "Test Ready";
-        admin.enter_ValidData(status);
+        dashPage.enter_ValidData(status);
         admin.clickOn_ViewDetailsBtn();
         String expectedName = getText_custom(admin.title);
         admin.click_OnCancelBtn();
@@ -1334,18 +1344,18 @@ public class AdminTest extends BaseTest {
         ReschedulePage reschedule = new ReschedulePage();
         DiagnosticianPage diagnostic = new DiagnosticianPage();
         login.adminLogin("allen", "123456");
-        admin.clickOn_AppointmentsTab();
-        admin.click_OnViewAllTab();
+        appointment.clickOn_AppointmentsTab();
+        appointment.click_OnViewAllTab();
         admin.clickOn_FilterBtn();
         String status = "Test Ready";
-        admin.enter_ValidData(status);
+        dashPage.enter_ValidData(status);
         admin.clickOn_ViewDetailsBtn();
         String nameOfClient = getText_custom(admin.nameOfClientDetailsPage);
         String expectedName = "Appointment is Canceled";
         admin.click_OnCancelBtn();
         admin.clickOn_CancelRadioBtn();
         admin.clickOn_FilterBtn();
-        admin.enter_ValidData(nameOfClient);
+        dashPage.enter_ValidData(nameOfClient);
         admin.clickOn_ViewDetailsBtn();
         String actualName = getText_custom(admin.cancelAppointmentValMsg);
         validate_AttText(actualName, expectedName);
@@ -1356,11 +1366,11 @@ public class AdminTest extends BaseTest {
         AdminPage admin = new AdminPage();
         LoginPage login = new LoginPage();
         login.adminLogin("allen", "123456");
-        admin.clickOn_AppointmentsTab();
-        admin.click_OnViewAllTab();
+        appointment.clickOn_AppointmentsTab();
+        appointment.click_OnViewAllTab();
         admin.clickOn_FilterBtn();
         String status = "Test Ready";
-        admin.enter_ValidData(status);
+        dashPage.enter_ValidData(status);
         admin.clickOn_ViewDetailsBtn();
         String expectedTitle = getText_custom(admin.title);
         admin.click_CreateFollowUpBtn();
@@ -1375,11 +1385,11 @@ public class AdminTest extends BaseTest {
         LoginPage login = new LoginPage();
         AppointmentsPage appPage = new AppointmentsPage();
         login.adminLogin("allen", "123456");
-        admin.clickOn_AppointmentsTab();
-        admin.click_OnViewAllTab();
+        appointment.clickOn_AppointmentsTab();
+        appointment.click_OnViewAllTab();
         admin.clickOn_FilterBtn();
         String status = "Test Ready";
-        admin.enter_ValidData(status);
+        dashPage.enter_ValidData(status);
         admin.clickOn_ViewDetailsBtn();
         admin.click_CreateFollowUpBtn();
         admin.click_FollowUpSlot();

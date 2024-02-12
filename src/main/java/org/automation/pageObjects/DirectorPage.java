@@ -279,7 +279,6 @@ public class DirectorPage extends BasePage {
     public void click_Login_Button() {
         click_custom(login);
     }
-
     public void clickOn_availableBox() {
         click_custom(clickOnBox);
         click_custom(clickOnBox1);

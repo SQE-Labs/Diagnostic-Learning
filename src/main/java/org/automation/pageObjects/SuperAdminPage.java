@@ -19,6 +19,18 @@ public class SuperAdminPage extends BasePage {
         WebdriverWaits.waitUntilVisible(backButton);
         click_custom(backButton);
     }
+    public void clickOn_ViewObservationBtn()
+    {
+        WebdriverWaits.waitUntilVisible(viewStudentObservationButton);
+        click_custom(viewStudentObservationButton);
+
+    }
+
+    public void clickOn_ViewDocumentBtn()
+    {
+        WebdriverWaits.waitUntilVisible(viewDocumentButton);
+        click_custom(viewDocumentButton);
+    }
 
     public void view_ClientObservation_Page(){
         click_ViewStudentObservationButton();

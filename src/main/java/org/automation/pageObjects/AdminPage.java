@@ -14,14 +14,6 @@ import static org.automation.utilities.WebdriverWaits.moveToElement;
 
 public class AdminPage extends BasePage {
 
-    AppointmentsPage appointment=new AppointmentsPage();
-    SuperAdminPage superAdmin=new SuperAdminPage();
-    DashBoardPanelPage dashboardPanelPage=new DashBoardPanelPage();
-
-
-    DashboardPage dashPage=new DashboardPage();
-    PaymentPage payment=new PaymentPage();
-
     public By adminTab = By.xpath("//a[text()='Admins']");
     public By adminDashboardText = By.xpath("//h3[text()='Dashboard']");
     public By createAdminButton = By.xpath("//button[@class='theme-button']");
@@ -887,29 +879,7 @@ public class AdminPage extends BasePage {
         enterInSearchField(clientName);
     }
 
-    public void clickOn_TodayTab()
-    {
-        WebdriverWaits.waitUntilVisible(appointment.appointmentsTab);
-        click_custom(appointment.appointmentsTab);
-        WebdriverWaits.waitUntilVisible(appointment.todayTab);
-        click_custom(appointment.todayTab);
-    }
 
-    public void clickOn_TestReadyTab()
-    {
-        WebdriverWaits.waitUntilVisible(appointment.appointmentsTab);
-        click_custom(appointment.appointmentsTab);
-        WebdriverWaits.waitUntilVisible(appointment.testReadyTab);
-        click_custom(appointment.testReadyTab);
-    }
-
-    public void clickOn_UpcomingTab()
-    {
-        WebdriverWaits.waitUntilVisible(appointment.appointmentsTab);
-        click_custom(appointment.appointmentsTab);
-        WebdriverWaits.waitUntilVisible(appointment.upcomingTab);
-        click_custom(appointment.upcomingTab);
-    }
 
     public void clickOn_Card()
     {
@@ -917,17 +887,7 @@ public class AdminPage extends BasePage {
         click_custom(card);
     }
 
-    public void enterClientNameInSearchField()
-    {
 
-        String nameOfClient=getText_custom(nameOfTestReadyCard);
-        WebdriverWaits.waitUntilVisible(appointment.appointmentsTab);
-        click_custom(appointment.appointmentsTab);
-        click_custom(appointment.viewAllTab);
-        click_custom(filterButton);
-        sendKeys_withClear(searchTextBox,nameOfClient);
-
-    }
 
     public void enterClientNameInSearchFieldCompleted()
     {
@@ -936,29 +896,9 @@ public class AdminPage extends BasePage {
 
     }
 
-    public void ClickOn_FilterBtn()
-    {
-        WebdriverWaits.waitUntilVisible(appointment.appointmentsTab);
-        click_custom(appointment.appointmentsTab);
-        click_custom(appointment.upcomingTab);
-        click_custom(filterButton);
 
-    }
 
-    public void clickOn_ExportCSVButton()
-    {
-        WebdriverWaits.waitUntilVisible(appointment.appointmentsTab);
-        click_custom(appointment.appointmentsTab);
-        click_custom(appointment.upcomingTab);
-        click_custom(dashboardPanelPage.exportCSVButton);
 
-    }
-
-    public void clickOn_ExportCSVButtonOfTestComplete()
-    {
-        click_custom(dashboardPanelPage.exportCSVButton);
-
-    }
     public void clickOn_ViewDetailsBtn()
     {
         WebdriverWaits.waitUntilVisible(getViewDetails);
@@ -971,21 +911,7 @@ public class AdminPage extends BasePage {
         click_custom(backButton);
     }
 
-    public void clickOn_AppointmentsTab()
-    {
-        WebdriverWaits.waitUntilVisible(appointment.appointmentsTab);
-        click_custom(appointment.appointmentsTab);
 
-    }
-
-    public void clickOn_TestCompleteTab()
-    {
-        WebdriverWaits.waitUntilVisible(appointment.appointmentsTab);
-        click_custom(appointment.appointmentsTab);
-        WebdriverWaits.waitUntilVisible(appointment.testCompleteTab);
-        click_custom(appointment.testCompleteTab);
-
-    }
 
     public void clickOn_FilterBtn()
     {
@@ -994,18 +920,7 @@ public class AdminPage extends BasePage {
         click_custom(filterButton);
     }
 
-    public void clickOn_ViewObservationBtn()
-    {
-        WebdriverWaits.waitUntilVisible(superAdmin.viewStudentObservationButton);
-        click_custom(superAdmin.viewStudentObservationButton);
 
-    }
-
-    public void clickOn_ViewDocumentBtn()
-    {
-        WebdriverWaits.waitUntilVisible(superAdmin.viewDocumentButton);
-        click_custom(superAdmin.viewDocumentButton);
-    }
 
     public void clickOn_UploadButton() {
         WebdriverWaits.waitUntilVisible(uploadDocumentButton);
@@ -1031,25 +946,7 @@ public class AdminPage extends BasePage {
         click_custom(closeIcon);
     }
 
-    public void clickOn_CompletedTab()
-    {
-        WebdriverWaits.waitUntilVisible(appointment.appointmentsTab);
-        WebdriverWaits.waitForSpinner();
-        click_custom(appointment.appointmentsTab);
-        WebdriverWaits.waitUntilVisible(appointment.completedTab);
-        WebdriverWaits.waitForSpinner();
-        click_custom(appointment.completedTab);
-    }
 
-    public void clickOn_CanceledTab()
-    {
-        WebdriverWaits.waitUntilVisible(appointment.appointmentsTab);
-        WebdriverWaits.waitForSpinner();
-        click_custom(appointment.appointmentsTab);
-        WebdriverWaits.waitUntilVisible(appointment.canceledTab);
-        WebdriverWaits.waitForSpinner();
-        click_custom(appointment.canceledTab);
-    }
 
     public void filter_ForCancel()
     {
@@ -1060,16 +957,7 @@ public class AdminPage extends BasePage {
         sendKeys_withClear(searchField, clientText);
     }
 
-    public void clickOn_HoldTab()
-    {
-        WebdriverWaits.waitUntilVisible(appointment.appointmentsTab);
-        WebdriverWaits.waitForSpinner();
-        click_custom(appointment.appointmentsTab);
-        WebdriverWaits.waitUntilVisible(holdtab);
-        WebdriverWaits.waitForSpinner();
-        click_custom(holdtab);
 
-    }
 
     public void clickOn_UnHoldBtn()
     {
@@ -1089,103 +977,15 @@ public class AdminPage extends BasePage {
 
     }
 
-    public void viewReceiptButtonDisplayed()
-    {
-        WebdriverWaits.waitUntilVisible(payment.viewReceiptButton);
-        WebdriverWaits.waitForSpinner();
-        click_custom(payment.viewReceiptButton);
 
 
-    }
-
-    public void viewReceiptButtonNotDisplayed()
-    {
-        WebdriverWaits.waitUntilVisible(payment.paymentButton);
-        WebdriverWaits.waitForSpinner();
-        click_custom(payment.paymentButton);
-
-    }
-
-    public void clickOn_CloseBtn()
-    {
-        WebdriverWaits.waitUntilVisible(payment.closeButton);
-        WebdriverWaits.waitForSpinner();
-        click_custom(payment.closeButton);
-    }
-
-    public void clickOn_CollectBtn()
-    {
-        WebdriverWaits.waitUntilVisible(payment.collectButton);
-        WebdriverWaits.waitForSpinner();
-        click_custom(payment.collectButton);
-    }
 
 
-    public void send_AmountInEnterAmount(String amount)
-    {
-        WebdriverWaits.waitUntilVisible(payment.enterAmountField);
-        WebdriverWaits.waitForSpinner();
-        sendKeys_withClear(payment.enterAmountField,amount);
-    }
 
-    public void scrollUptoVAmountDue()
-    {
-        WebdriverWaits.waitUntilVisible(payment.amountDue);
-        WebdriverWaits.waitForSpinner();
-        scrollIntoView(payment.amountDue);
-    }
 
-    public void clickOn_ExportCSVButtonOfUnhold()
-    {
-        click_custom(dashboardPanelPage.exportCSVButton);
 
-    }
 
-    public void clickOn_DirectorTab()
-    {
-        WebdriverWaits.waitUntilVisible(appointment.directorTab);
-        WebdriverWaits.waitForSpinner();
-        click_custom(appointment.directorTab);
-    }
 
-    public void clickOn_DiagonsticiansTab()
-    {
-        WebdriverWaits.waitUntilVisible(appointment.diagnosticianTab);
-        WebdriverWaits.waitForSpinner();
-        click_custom(appointment.diagnosticianTab);
-    }
-
-    public void clickOn_ClientNameBackgroundSection()
-    {
-        WebdriverWaits.waitUntilVisible(dashPage.clientNameFromBCGForm);
-        WebdriverWaits.waitForSpinner();
-        click_custom(dashPage.clientNameFromBCGForm);
-
-    }
-
-    public void clickOn_ClientNameFollowupSection()
-    {
-        WebdriverWaits.waitUntilVisible(dashPage.clientNameFromFollowup);
-        WebdriverWaits.waitForSpinner();
-        click_custom(dashPage.clientNameFromFollowup);
-
-    }
-
-    public void enter_ValidData(String text)
-    {
-        WebdriverWaits.waitUntilVisible(dashPage.clientNameFromFollowup);
-        WebdriverWaits.waitForSpinner();
-        sendKeys_withClear(searchTextBox,text );
-
-    }
-
-    public void click_OnViewAllTab()
-    {
-        WebdriverWaits.waitUntilVisible(appointment.viewAllTab);
-        WebdriverWaits.waitForSpinner();
-        click_custom(appointment.viewAllTab);
-
-    }
 
     public void click_OnRescheduleBtn()
 

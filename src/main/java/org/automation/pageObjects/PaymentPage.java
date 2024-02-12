@@ -6,6 +6,8 @@ import org.automation.utilities.WebdriverWaits;
 import org.openqa.selenium.By;
 
 public class PaymentPage extends BasePage {
+
+
     public By paymentTab= By.xpath("//a[text()='Payments']");
     public By paymentListPage=By.xpath("//h3[text()='Payments']");
     public By filterButton = By.xpath("//a[text()='Filter']");
@@ -72,6 +74,52 @@ public class PaymentPage extends BasePage {
         click_filterButton();
         enterInSearchField(UserName);
         ActionEngine.GetValueAttribute(searchField,"placeholder");
+    }
+
+    public void viewReceiptButtonDisplayed()
+    {
+        WebdriverWaits.waitUntilVisible(viewReceiptButton);
+        WebdriverWaits.waitForSpinner();
+        click_custom(viewReceiptButton);
+
+
+    }
+
+    public void viewReceiptButtonNotDisplayed()
+    {
+        WebdriverWaits.waitUntilVisible(paymentButton);
+        WebdriverWaits.waitForSpinner();
+        click_custom(paymentButton);
+
+    }
+
+    public void clickOn_CloseBtn()
+    {
+        WebdriverWaits.waitUntilVisible(closeButton);
+        WebdriverWaits.waitForSpinner();
+        click_custom(closeButton);
+    }
+
+    public void clickOn_CollectBtn()
+    {
+        WebdriverWaits.waitUntilVisible(collectButton);
+        WebdriverWaits.waitForSpinner();
+        click_custom(collectButton);
+    }
+
+
+    public void send_AmountInEnterAmount(String amount)
+    {
+        WebdriverWaits.waitUntilVisible(enterAmountField);
+        WebdriverWaits.waitForSpinner();
+        sendKeys_withClear(enterAmountField,amount);
+    }
+
+    public void scrollUptoVAmountDue()
+    {
+        WebdriverWaits.waitUntilVisible(amountDue);
+        WebdriverWaits.waitForSpinner();
+        scrollIntoView(amountDue);
     }
 
 }

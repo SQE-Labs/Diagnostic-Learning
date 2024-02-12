@@ -103,6 +103,18 @@ public class DashBoardPanelPage extends BasePage {
         return downloadedFile;
     }
 
+    public void clickOn_ExportCSVButtonOfTestComplete()
+    {
+        click_custom(exportCSVButton);
+
+    }
+
+    public void clickOn_ExportCSVButtonOfUnhold()
+    {
+        click_custom(exportCSVButton);
+
+    }
+
     public void click_ExportCSVButton() {
         click_custom(exportCSVButton);
     }
