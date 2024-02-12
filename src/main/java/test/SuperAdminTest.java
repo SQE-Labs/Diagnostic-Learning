@@ -97,6 +97,7 @@ public class SuperAdminTest extends BaseTest {
     @Test(priority = 5, enabled = true, description = "5.9 verify that toggle is off or not")
     public void validate_Toggle_OffIn_Admin() throws InterruptedException {
         AdminPage admin = new AdminPage();
+
         //checking user is disable or not
         admin.cheking_DisableUser();
         WebdriverWaits.waitUntilVisible(admin.enableUser);
@@ -106,10 +107,12 @@ public class SuperAdminTest extends BaseTest {
     @Test(priority = 6, enabled = true, description = "Verify that Superadmin is able to enable the Admin or not")
     public void verify_Enable_User_In_Admin() {
         AdminPage admin = new AdminPage();
+        DashBoardPanelPage panelPage = new DashBoardPanelPage();
         admin.enable_Admin();
 
         // Enabling the user
         validate_text(admin.Succ_Msg_Upd, "Admin details updated successfully.");
+        panelPage.click_LogOutLink();
 
     }
 
@@ -117,7 +120,6 @@ public class SuperAdminTest extends BaseTest {
     public void verify_admin_Relogin() {
         AdminPage admin = new AdminPage();
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
-        panelPage.click_LogOutLink();
         LoginPage login = new LoginPage();
 
         // Login with Admin new password
@@ -126,7 +128,9 @@ public class SuperAdminTest extends BaseTest {
 
         WebdriverWaits.waitUntilVisible(admin.dashboard);
         WebdriverWaits.waitForSpinner();
+
         validate_text(admin.dashboard, "Dashboard");
+
         panelPage.click_LogOutLink();
     }
 
@@ -256,7 +260,6 @@ public class SuperAdminTest extends BaseTest {
         validate_text(diagnostician.diagnosticianDashBoardPage, "Dashboard");
     }
 
-
     @Test(priority = 18, enabled = true, description = "4.16 Verify that diagnostician is able to login with old password or not")
     public void validate_diagnostician_relogin_old_pwd() throws InterruptedException {
         DiagnosticianPage diagnostician = new DiagnosticianPage();
@@ -321,7 +324,7 @@ public class SuperAdminTest extends BaseTest {
 
 
     @Test(priority = 22, enabled = true, description = "3.19, 3.20 verify that superadmin is able to enable Director")
-    public void validate_director_Toggle_Off() throws InterruptedException {
+    public void validate_director_Toggle_Off()   {
 
         DirectorPage director = new DirectorPage();
         director.cheking_DisableUser();
@@ -331,7 +334,7 @@ public class SuperAdminTest extends BaseTest {
     }
 
     @Test(priority = 23, enabled = true, description = "Verify that Superadmin is able to Enable the user or not")
-    public void verify_director_enable_User() throws InterruptedException {
+    public void verify_director_enable_User()   {
         DirectorPage director = new DirectorPage();
 
         director.enable_Director();

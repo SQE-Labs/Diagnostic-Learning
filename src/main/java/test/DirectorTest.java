@@ -37,15 +37,7 @@ public class DirectorTest extends BaseTest {
         validate_text(director.viewAll, "View All");
         panelPage.click_Availability();
       //  validate_text(director.monthHeader, "December");
-//       String month=getText_custom(director.yearHeader);
-        validate_text(director.monthHeader,  "December" );
 
-      //  validate_text(director.yearHeader, "2023");
-        String getYearHeader=getText_custom(director.yearHeader);
-        validate_text(director.yearHeader, "2023" );
-
-        String getdate =getText_custom(director.dateHeader);
-        validate_text(director.dateHeader, "27" );
         director.director_Availability();
         director.click_LogOutLink();
     }

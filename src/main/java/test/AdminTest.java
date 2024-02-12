@@ -108,7 +108,6 @@ public class AdminTest extends BaseTest {
         validate_text(director.directorActualText, "Directors List");
         director.create_Director(directorFirstName, directorLastName, dirCellNumber, directorEmailAddress, directorUserName, "123456", "123456");
         panelpage.click_LogOutLink();
-
     }
 
     @Test(priority = 4, enabled = true, description = "Set availability for director by admin.")

@@ -30,6 +30,7 @@ public class DashBoardPanelPage extends BasePage {
 
     public void click_LogOutLink() {
         WebdriverWaits.waitUntilVisible(logOutLink);
+        WebdriverWaits.waitForSpinner();
         click_custom(logOutLink);
     }
 

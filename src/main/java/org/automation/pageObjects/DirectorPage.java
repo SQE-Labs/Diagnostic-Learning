@@ -277,7 +277,6 @@ public class DirectorPage extends BasePage {
                     break;
                 }
             }
-
         }
         click_SaveButton();
     }
