@@ -1,7 +1,7 @@
 package test;
 
 import org.automation.base.BaseTest;
-
+import org.automation.logger.Log;
 import org.automation.pageObjects.*;
 import org.automation.utilities.ActionEngine;
 import org.automation.utilities.DateGenerator;
@@ -18,7 +18,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.List;
-
 import static org.automation.utilities.Assertions.*;
 import static org.automation.utilities.WebdriverWaits.waitForSpinner;
 import static org.automation.utilities.WebdriverWaits.waitUntilVisible;
@@ -38,19 +37,33 @@ public class AdminTest extends BaseTest {
     String clientEmail2;
     String clientCellNumber;
     String diagnosticianFirstName;
-    String diagnosticianLastName;
-    String diagnosticianEmailAddress;
+    public String diagnosticianEmailAddress;
+    public String diagnosticianLastName;
+    public String dia_Cell_Number;
+
     List<WebElement> diagList;
+    String holdAppointmentname;
 
 
-    @Test(priority = 0, enabled = true, description = "1.1 Verify admin is able to login with valid credentials")
-    public void admin_login() {
+    @Test(priority = 0, enabled = true, description = "Verify admin is able to login with valid credentials")
+    public void admin_login() throws InterruptedException {
         LoginPage login = new LoginPage();
+        DashBoardPanelPage panelPage = new DashBoardPanelPage();
+        DiagnosticianPage diagnostician = new DiagnosticianPage();
+        //Login by using superAdmin credentials
+        login.superAdminLogin();
+        panelPage.click_DiagnosticianTab();
+        diagnostician.create_Diagnostician(diagnosticianFirstName, diagnosticianLastName, dia_Cell_Number, diagnosticianEmailAddress, diagnosticianUserName, "123456", "123456");
+        WebdriverWaits.waitUntilVisible(diagnostician.actualText);
+        validate_text(diagnostician.actualText, diagnosticianUserName);
+        Log.info("Successfully SuperAdmin Created diagnostician");
+
         login.adminLogin(adminUserName, "12345678");
         AdminPage dasboard = new AdminPage();
         WebdriverWaits.waitUntilVisible(dasboard.adminDashboardText);
         waitForSpinner();
         validate_text(dasboard.adminDashboardText, "Dashboard");
+
     }
 
     //********* Create Daignostician by admin
@@ -92,9 +105,8 @@ public class AdminTest extends BaseTest {
         logout.click_LogOutLink();
 
     }
-
-    @Test(priority = 3, enabled = true, description = "3.1, 3.6, 4.1  Creating Director from admin")
-    public void verify_createDirector() throws InterruptedException {
+    @Test(priority = 3, enabled = true, description = "Creating Director from admin")
+    public void create_Director() throws InterruptedException {
         DashBoardPanelPage panelpage = new DashBoardPanelPage();
         DirectorPage director = new DirectorPage();
         LoginPage login = new LoginPage();
@@ -108,9 +120,7 @@ public class AdminTest extends BaseTest {
         validate_text(director.directorActualText, "Directors List");
         director.create_Director(directorFirstName, directorLastName, dirCellNumber, directorEmailAddress, directorUserName, "123456", "123456");
         panelpage.click_LogOutLink();
-
     }
-
     @Test(priority = 4, enabled = true, description = "Set availability for director by admin.")
     public void director_Availability() throws InterruptedException {
         LoginPage login = new LoginPage();
@@ -120,7 +130,6 @@ public class AdminTest extends BaseTest {
         panelPage.click_Availability();
         director.director_Availability();
         panelPage.click_LogOutLink();
-
     }
 
     @Test(priority = 5, enabled = true, description = "2.1, 2.2, 2.5, 2.10, 2.12, Appointment scheduled by admin for a client")
@@ -241,8 +250,8 @@ public class AdminTest extends BaseTest {
         validate_text(editType.clientAsses, "IQ");
     }
 
-    @Test(priority = 17, enabled = true, description = "Verify save Test plan button on <Client> details page.")
-    public void verify_EditTestPlan()   {
+    @Test(priority = 16, enabled = true, description = "Verify save Test plan button on <Client> details page.")
+    public void edit_Testplan()   {
         AdminPage testPlan = new AdminPage();
         testPlan.edit_TestPlan();
         validate_text(testPlan.actualEditTest, "WRAML");
@@ -794,7 +803,7 @@ public class AdminTest extends BaseTest {
     //************************ Edit Diagnostician *********************//
 
     //******************** Logout button **************//
-    @Test(priority = 46, enabled = true, description = "Verify login button for admin.")
+    @Test(priority = 36, enabled = true, description = "Verify login button for admin.")
     public void verify_Admin_LogOut() {
         DashBoardPanelPage panelpage = new DashBoardPanelPage();
         panelpage.click_LogOutLink();

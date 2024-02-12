@@ -196,6 +196,8 @@ public class AdminPage extends BasePage {
 
     public By getTitleOfAttachedDocument = By.xpath("//h5[@class='text-center mb-4']");
     public By testReadyTab = By.xpath("//a[text()='Test Ready']");
+    public By todaysTab = By.xpath("//a[text()='Today']");
+
 
 
     public By getTextFromViewDoc = By.xpath("//a[@class='d-block px-3 py-2 small text-dark']");
@@ -837,9 +839,9 @@ public class AdminPage extends BasePage {
     }
 
     public void clickOn_TodayTab() {
-        WebdriverWaits.waitUntilVisible(appointment.todayTab);
+        WebdriverWaits.waitUntilVisible( todaysTab);
         WebdriverWaits.waitForSpinner();
-        click_custom(appointment.todayTab);
+        click_custom( todaysTab);
     }
 
     public void clickOn_TestReadyTab() {

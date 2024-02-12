@@ -22,10 +22,22 @@ public class PaymentPage extends BasePage {
     public By collectButton=By.xpath("//button[@class='theme-button mx-2']");
     public By viewReceiptButton=By.xpath("//button[text()=' View Receipt ']");
 
+    public By testFeeAdjustment = By.xpath("//*[@id=\"paymentModal\"]/div/div/table/tbody/tr[3]/td[2]/input");
+
+    public By closeButtonPopUp = By.xpath("(//a[text()='Close'])[2]");
+    public By ValMsgAfterNegativeValueTXT = By.xpath("//div[@class='validation-message ng-star-inserted']");
+    public By collectAmountAdjustment = By.xpath("//*[@id='paymentModal']/div/div/table/tbody/tr[4]/td[2]/input");
+
+
     public void click_PaymentTab(){
         WebdriverWaits.waitUntilVisible(paymentTab);
         WebdriverWaits.waitForSpinner();
         click_custom(paymentTab);
+    }
+    public void click_CollectButton(){
+        WebdriverWaits.waitUntilVisible(collectButton);
+        WebdriverWaits.waitForSpinner();
+        click_custom(collectButton);
     }
     public void click_filterButton() {
         WebdriverWaits.waitForSpinner();
@@ -35,10 +47,31 @@ public class PaymentPage extends BasePage {
         WebdriverWaits.waitUntilVisible(searchField);
         sendKeys_withClear(searchField, searchFieldText);
     }
+    public void click_CloseBtn_PopUp(){
+        WebdriverWaits.waitUntilVisible(closeButtonPopUp);
+        WebdriverWaits.waitForSpinner();
+        click_custom(closeButtonPopUp);
+    }
+
+
+
+
+    public void enter_collectAmountAdjustment(String testFeeAdjustmentTXT){
+        WebdriverWaits.waitUntilVisible(collectAmountAdjustment);
+        WebdriverWaits.waitForSpinner();
+        sendKeys_withClear(collectAmountAdjustment,testFeeAdjustmentTXT);
+    }
+
+    public void enter_TestFeeAdjustment(String testFeeAdjustmentTXT){
+        WebdriverWaits.waitUntilVisible(testFeeAdjustment);
+        WebdriverWaits.waitForSpinner();
+        sendKeys_withClear(testFeeAdjustment,testFeeAdjustmentTXT);
+    }
+
     public void search_CreatedDiagnostician(String UserName)  {
         click_filterButton();
         enterInSearchField(UserName);
-        ActionEngine.getAttributeValue(searchField,"placeholder");
+        ActionEngine.getValueAttribute(searchField,"placeholder");
     }
 
 }
