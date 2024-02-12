@@ -181,9 +181,8 @@ public class DirectorPage extends BasePage {
     public void click_confirmPasswordField(String confirmPasswordFieldText) {
         sendKeys_withClear(confirm_PasswordField, confirmPasswordFieldText);
     }
-
-    public void enter_ConfirmPassword(String rePassword) {
-        sendKeys_withClear(confirmPasswordField, rePassword);
+    public void enter_ConfirmPassword(String rePassword){
+        sendKeys_withClear(confirmPasswordField,rePassword);
     }
 
     public void click_createDirectorButton() {
@@ -275,15 +274,7 @@ public class DirectorPage extends BasePage {
         click_custom(login);
     }
 
-    public void clickOn_availableBox() {
-        click_custom(clickOnBox);
-        click_custom(clickOnBox1);
-        click_custom(clickOnBox2);
-        click_custom(clickOnBox3);
-        click_custom(clickOnBox4);
-        click_custom(clickOnBox5);
-        click_custom(clickOnBox6);
-    }
+
 
 //    public void click_LogOutLink() {
 //        WebdriverWaits.waitUntilVisible(logOutLink);
@@ -374,10 +365,8 @@ public class DirectorPage extends BasePage {
         System.out.println(list.size());
         for (WebElement box : list) {
             Thread.sleep(2000);
-
-            moveToEleByWE(box);
-            if (getDriver().findElements(By.xpath("//div[@class='ng-star-inserted']")).size() > 2) {
-
+             moveToEleByWE(box);
+            if(getDriver().findElements(By.xpath("//div[@class='ng-star-inserted']")).size()>2){
                 if (getDriver().findElement(By.xpath("//div[@class='ng-star-inserted']")).getText().equals("Available")) {
                     break;
                 }
@@ -387,3 +376,8 @@ public class DirectorPage extends BasePage {
         click_SaveButton();
     }
 }
+
+
+
+
+

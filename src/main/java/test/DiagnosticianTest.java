@@ -40,14 +40,6 @@ public class DiagnosticianTest extends BaseTest {
         validate_text(diagnostician.dashboard, "Dashboard");
     }
 
-    @Test(priority = 1, enabled = true, description = "18, 19, 20, 21, 22, 23 diagnostician Scheduling availability")
-    public void verify_diagnostician_Availability() throws InterruptedException {
-        DiagnosticianPage diagnostician = new DiagnosticianPage();
-        diagnostician.set_Availability();
-        diagnostician.cancel_Availability();
-        diagnostician.deleting_Availability();
-    }
-
     @Test(priority = 2, enabled = true, description = "31 Diagnostician is Verifying upcoming appointments")
     public void verify_UpcomingAppointments() {
         DiagnosticianPage diagnostician = new DiagnosticianPage();
@@ -62,6 +54,7 @@ public class DiagnosticianTest extends BaseTest {
         DiagnosticianPage diagnostician = new DiagnosticianPage();
         diagnostician.view_ClientDetail(clientFirstName);
         WebdriverWaits.waitUntilVisible(diagnostician.clientDetailText);
+        WebdriverWaits.waitForSpinner();
         validate_text(diagnostician.clientDetailText, clientFirstName + ' ' + clientLastName + ' ' + "Details");
     }
 

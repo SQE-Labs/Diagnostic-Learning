@@ -63,7 +63,7 @@ public class BaseTest {
 		switch (browser) {
 			case "chrome":
 				ChromeOptions chromeOptions = new ChromeOptions();
-				chromeOptions.setBrowserVersion("120");
+				chromeOptions.setBrowserVersion("121");
 				//WebDriverManager.chromedriver().setup();
 				driver.set(new ChromeDriver(chromeOptions));
 				//WebDriverManager.chromedriver().setup();
@@ -72,11 +72,11 @@ public class BaseTest {
 				break;
 
 			case "Edge":
-				driver .set( new EdgeDriver());
+				driver .set(new EdgeDriver());
 				break;
 
 			case "FireFox":
-				driver .set( new FirefoxDriver());
+				driver .set(new FirefoxDriver());
 				break;
 
 			default:

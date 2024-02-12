@@ -114,9 +114,9 @@ public class DirectorTest extends BaseTest {
         AdminPage admin = new AdminPage();
         appointment.click_UpcomingCard();
         appointment.click_Filter();
-        String searchPlaceHolder = admin.GetValueAttribute(appointment.searchTextBox, "placeholder");
-        String fromDateplaceholder = admin.GetValueAttribute(appointment.fromDateText, "placeholder");
-        String toDatePlaceholder = admin.GetValueAttribute(appointment.toDateText, "placeholder");
+        String searchPlaceHolder = admin.getAttributevalue(appointment.searchTextBox, "placeholder");
+        String fromDateplaceholder = admin.getAttributevalue(appointment.fromDateText, "placeholder");
+        String toDatePlaceholder = admin.getAttributevalue(appointment.toDateText, "placeholder");
         Assert.assertEquals(fromDateplaceholder, "From Date");
         Assert.assertEquals(toDatePlaceholder, "To Date");
         Assert.assertEquals(searchPlaceHolder, "Type here to search");
