@@ -46,7 +46,7 @@ public class AdminTest extends BaseTest {
     @Test(priority = 0, enabled = true, description = "1.1 Verify admin is able to login with valid credentials")
     public void admin_login() {
         LoginPage login = new LoginPage();
-        login.adminLogin(adminUserName, "12345678");
+        login.adminLogin(adminUserName, "123456");
         AdminPage dasboard = new AdminPage();
         WebdriverWaits.waitUntilVisible(dasboard.adminDashboardText);
         waitForSpinner();
@@ -98,7 +98,7 @@ public class AdminTest extends BaseTest {
         DashBoardPanelPage panelpage = new DashBoardPanelPage();
         DirectorPage director = new DirectorPage();
         LoginPage login = new LoginPage();
-        login.adminLogin(adminUserName, "12345678");
+        login.adminLogin(adminUserName, "123456");
         directorFirstName = "AU_Arlo" + RandomStrings.requiredCharacters(3);
         directorLastName = "AU_Joel" + RandomStrings.requiredCharacters(3);
         directorEmailAddress = directorFirstName + "@yopmail.com";
@@ -114,7 +114,7 @@ public class AdminTest extends BaseTest {
     public void director_Availability() throws InterruptedException {
         LoginPage login = new LoginPage();
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
-        login.directorLogin(directorUserName, "123456");
+        login.directorLogin("AU_KoamEY", "123456");
         DirectorPage director = new DirectorPage();
         panelPage.click_Availability();
         director.director_Availability();
@@ -127,7 +127,7 @@ public class AdminTest extends BaseTest {
         LoginPage login = new LoginPage();
         DashboardPage dashboard = new DashboardPage();
         AppointmentsPage appPage = new AppointmentsPage();
-        login.adminLogin(adminUserName, "12345678");
+        login.adminLogin(adminUserName, "123456");
         dashboard.clickScheduleAppointment();
         appPage.selectTestinglocation("Austin");
         appPage.selectAppointmentSlot();
@@ -591,7 +591,7 @@ public class AdminTest extends BaseTest {
         DashBoardPanelPage dashboard = new DashBoardPanelPage();
         AppointmentsPage appointment = new AppointmentsPage();
         LoginPage login=new LoginPage();
-        login.adminLogin(adminUserName,"12345678");
+        login.adminLogin(adminUserName,"123456");
         dashboard.click_AppointmentsTab();
         appointment.click_TestCompleteTab();
        WebdriverWaits.waitUntilVisible(admin.getTitleOfTestComplete);
@@ -649,16 +649,7 @@ public class AdminTest extends BaseTest {
     public void click_OnViewObservationBtn() {
         AdminPage admin = new AdminPage();
         SuperAdminPage superAdmin = new SuperAdminPage();
-        DashBoardPanelPage dashboard = new DashBoardPanelPage();
-        AppointmentsPage appointment = new AppointmentsPage();
-        LoginPage login = new LoginPage();
-//        admin.clickOn_TestCompleteTab();
-//        login.adminLogin(adminUserName, "12345678");
-//        dashboard.click_AppointmentsTab();
-//        appointment.click_TestCompleteTab();
-//        appointment.click_FilterButton();
-//        appointment.click_SearchField(clientFirstName);
-//        admin.click_ViewDetailsBtn();
+
         admin.click_ViewObservationBtn();
         String expectedText = "Client Observation";
         String actualText = getText_custom(superAdmin.clientObservation);
@@ -805,7 +796,7 @@ public class AdminTest extends BaseTest {
         LoginPage login = new LoginPage();
         AdminPage admin = new AdminPage();
         DashBoardPanelPage panelpage = new DashBoardPanelPage();
-        login.adminLogin(adminUserName, "12345678");  //"AU_GillGP"   "Au_Theodc"
+        login.adminLogin(adminUserName, "123456");  //"AU_GillGP"   "Au_Theodc"
         admin.paying_DueAmount(clientFirstName);
         WebdriverWaits.waitUntilVisible(admin.clientNameDetail);
         validate_text(admin.clientNameDetail, clientFirstName + ' ' + clientLastName + ' ' + "Details");

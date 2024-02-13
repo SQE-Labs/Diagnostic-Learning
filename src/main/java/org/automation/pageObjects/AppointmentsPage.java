@@ -7,7 +7,6 @@ import org.openqa.selenium.WebElement;
 import java.util.List;
 import static org.automation.utilities.Assertions.validate_text;
 import static org.automation.utilities.WebdriverWaits.moveToElement;
-import static test.AdminTest.clientFirstName;
 
 
 public class AppointmentsPage extends BasePage {
@@ -67,6 +66,9 @@ public class AppointmentsPage extends BasePage {
 
     public By directorTab=By.xpath("//a[text()='Directors']");
     public By diagnosticianTab=By.xpath("//a[text()='Diagnosticians']");
+
+    public List<WebElement> totalSlots=getWebElements(By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-background ng-star-inserted']"));
+
 
 
 
@@ -178,8 +180,7 @@ public class AppointmentsPage extends BasePage {
         for (WebElement slot : list) {
             Thread.sleep(1000);
             click_custom(slot);
-
-            if (getDriver().findElements(By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-background ng-star-inserted']")).size() > 0) {
+            if (totalSlots.size() > 0) {
                 break;
             }
         }

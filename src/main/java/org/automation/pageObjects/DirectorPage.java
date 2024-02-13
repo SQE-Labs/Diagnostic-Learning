@@ -37,7 +37,7 @@ public class DirectorPage extends BasePage {
     //****************edit created director**************
 
     public By editButton = By.xpath("(//a[text()='Edit'])[1]");
-    public By cellNumber = By.xpath("//input[@placeholder='Cell Number']");
+
     public By emailField = By.xpath("//input[@formcontrolname='email']");
     public By updateButton = By.xpath("//button[text()='Update']");
 
@@ -54,15 +54,8 @@ public class DirectorPage extends BasePage {
     public By enableUser = By.xpath("//label[text()='Enable User']");
     public By dashboardPage = By.xpath("//h3[text()='Dashboard']");
     public By viewAll = By.xpath("//a[text()='View All']");
-
-
-    public By monthHeader = By.xpath("//span[@class='mbsc-calendar-month mbsc-calendar-title mbsc-ios ng-star-inserted']");
-    public By yearHeader = By.xpath("//span[@class='mbsc-calendar-title mbsc-calendar-year mbsc-ios ng-star-inserted']");
-    public By dateHeader = By.xpath("//div[@class='mbsc-ios mbsc-ltr mbsc-schedule-header-day mbsc-selected ng-star-inserted']']");
-
     public By saveButton = By.xpath("//button[text()='Save']");
     public By validationMsg = By.cssSelector(".alert.alert-danger.ng-star-inserted");
-
 
 
     //**************relogin with new password***********
@@ -73,6 +66,9 @@ public class DirectorPage extends BasePage {
     public By logOutLink = By.xpath("//a[text()='Log Out']");
     public By directorDashBoardPage = By.xpath("//h3[text()='Dashboard']");
     public By validation_Msg = By.xpath("//small[text()='Username or password is incorrect']");
+    public By totalSlots = By.xpath("//div[@class='ng-star-inserted']");
+    public By totalAvailleSlots = By.xpath("//div[@class='mbsc-flex-1-0 mbsc-ios mbsc-schedule-item ng-star-inserted']");
+
 
     //*****************Paying full payment*****************
 
@@ -123,8 +119,9 @@ public class DirectorPage extends BasePage {
     public void click_confirmPasswordField(String confirmPasswordFieldText) {
         sendKeys_withClear(confirm_PasswordField, confirmPasswordFieldText);
     }
-    public void enter_ConfirmPassword(String rePassword){
-        sendKeys_withClear(confirmPasswordField,rePassword);
+
+    public void enter_ConfirmPassword(String rePassword) {
+        sendKeys_withClear(confirmPasswordField, rePassword);
     }
 
     public void click_createDirectorButton() {
@@ -165,9 +162,11 @@ public class DirectorPage extends BasePage {
     public void enter_Director_Email1(String diagnostician_EmailText1) {
         sendKeys_withClear(emailField, diagnostician_EmailText1);
     }
+
     public void click_PasswordField(String passwordTextFieldText) {
         sendKeys_withClear(passwordTextField, passwordTextFieldText);
     }
+
     public void click_DontSave() {
         click_custom(dontSaveButton);
     }
@@ -177,9 +176,11 @@ public class DirectorPage extends BasePage {
     public void click_Login_UsernameField(String userNameFieldText) {
         sendKeys_withClear(userNameField, userNameFieldText);
     }
+
     public void click_Login_PasswordField(String PasswordFieldText) {
         sendKeys_withClear(PasswordField, PasswordFieldText);
     }
+
     public void click_Login_Button() {
         click_custom(login);
     }
@@ -188,6 +189,7 @@ public class DirectorPage extends BasePage {
         WebdriverWaits.waitUntilVisible(logOutLink);
         click_custom(logOutLink);
     }
+
     //*********Create director**************
     public void create_Director(String directorsFirstNameText, String directorsLastNameText, String directorsMobileNumberText, String directorsEmailText, String directorsUserNameText, String password_FieldText, String confirmPasswordFieldText) throws InterruptedException {
         click_CreateDirectorsButton();
@@ -266,21 +268,22 @@ public class DirectorPage extends BasePage {
     }
 
     public void director_Availability() throws InterruptedException {
-        Thread.sleep(9000);
-        List<WebElement> list = getDriver().findElements(By.xpath("//div[@class='mbsc-flex-1-0 mbsc-ios mbsc-schedule-item ng-star-inserted']"));
+        WebdriverWaits.waitForSpinner();
+        List<WebElement> list = getWebElements(totalAvailleSlots, "Available slots");
         System.out.println(list.size());
         for (WebElement box : list) {
             Thread.sleep(2000);
-             moveToEleByWE(box);
-            if(getDriver().findElements(By.xpath("//div[@class='ng-star-inserted']")).size()>2){
-                if (getDriver().findElement(By.xpath("//div[@class='ng-star-inserted']")).getText().equals("Available")) {
+            moveToEleByWE(box);
+            if (getWebElements(totalSlots).size() > 2) {
+              //  if (totalSlots.contains("Available")) {
                     break;
                 }
             }
+
+            click_SaveButton();
         }
-        click_SaveButton();
     }
-}
+
 
 
 

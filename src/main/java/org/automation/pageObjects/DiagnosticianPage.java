@@ -129,7 +129,7 @@ public By availableSlots=By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-al
 
     public By availability = By.xpath("//a[text()='Availability']");
 
-
+    public List<WebElement> totalSlots=getWebElements(By.xpath("//div[@class='ng-star-inserted']"));
     public By slot7 = By.xpath("(//div[@class='mbsc-flex-1-1 mbsc-ios mbsc-ltr mbsc-timeline-column ng-star-inserted'])[8]");
 
     public By slot11 = By.xpath("(//div[@class='mbsc-flex-1-1 mbsc-ios mbsc-ltr mbsc-timeline-column ng-star-inserted'])[12]");
@@ -474,7 +474,7 @@ public By availableSlots=By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-al
         for (WebElement slot : slots) {
             Thread.sleep(2000);
             moveToEleByWE(slot);
-            if (getDriver().findElements(By.xpath("//div[@class='ng-star-inserted']")).size() > 3) {
+            if (totalSlots.size() > 3) {
                 break;
             }
         }

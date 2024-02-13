@@ -53,7 +53,6 @@ public class AdminPage extends BasePage {
 
     //*****************Edit Admin with valid credentials****************
     public By editButton = By.xpath("(//a[text()='Edit'])[1]");
-
     public By emailField = By.xpath("//input[@formcontrolname='email']");
     public By updateButton = By.xpath("//button[text()='Update']");
 
@@ -940,13 +939,6 @@ public class AdminPage extends BasePage {
         WebdriverWaits.waitForSpinner();
         scrollIntoView(payment.amountDue);
     }
-
-
-
-
-
-
-
     public void view_AllAppointmentPage() {
         enterClientNameInSearchField(clientFirstName);
     }

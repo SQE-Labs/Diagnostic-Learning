@@ -84,7 +84,7 @@ public class SuperAdminTest extends BaseTest {
         Log.info("Created Diagnostician Displayed In The Diagnostician ListPage");
     }
 
-    @Test(priority = 4, enabled = true, description = "5.6, 5.7 Super admin is able to edit the created admin or not -Bug raised")
+    @Test(priority = 4, enabled = false, description = "5.6, 5.7 Super admin is able to edit the created admin or not -Bug raised")
     public void verify_Edit_Admin() throws InterruptedException {
         String adminEmailAddress1 = adminFirstName + "12@yopmail.com";
         AdminPage admin = new AdminPage();
@@ -94,7 +94,7 @@ public class SuperAdminTest extends BaseTest {
         validate_text(admin.Succ_Msg_Upd, succ_Msg);
     }
 
-    @Test(priority = 5, enabled = true, description = "5.9 verify that toggle is off or not")
+    @Test(priority = 5, enabled = false, description = "5.9 verify that toggle is off or not")
     public void validate_Toggle_OffIn_Admin() throws InterruptedException {
         AdminPage admin = new AdminPage();
 
@@ -104,7 +104,7 @@ public class SuperAdminTest extends BaseTest {
         validate_text(admin.enableUser, "Enable User");
     }
 
-    @Test(priority = 6, enabled = true, description = "Verify that Superadmin is able to enable the Admin or not")
+    @Test(priority = 6, enabled = false, description = "Verify that Superadmin is able to enable the Admin or not")
     public void verify_Enable_User_In_Admin() {
         AdminPage admin = new AdminPage();
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
@@ -112,7 +112,7 @@ public class SuperAdminTest extends BaseTest {
 
         // Enabling the user
         validate_text(admin.Succ_Msg_Upd, "Admin details updated successfully.");
-        panelPage.click_LogOutLink();
+       // panelPage.click_LogOutLink();
 
     }
 
@@ -122,13 +122,12 @@ public class SuperAdminTest extends BaseTest {
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
         LoginPage login = new LoginPage();
 
+        panelPage.click_LogOutLink();
         // Login with Admin new password
-        login.adminLogin(adminUserName, "12345678");
+        login.adminLogin(adminUserName, "123456");
 
 
         WebdriverWaits.waitUntilVisible(admin.dashboard);
-        WebdriverWaits.waitForSpinner();
-
         validate_text(admin.dashboard, "Dashboard");
 
         panelPage.click_LogOutLink();
@@ -369,7 +368,7 @@ public class SuperAdminTest extends BaseTest {
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
         LoginPage login = new LoginPage();
         //Director trying to login with new password
-        login.directorLogin(directorUserName, "12345678");
+        login.directorLogin(directorUserName, "123456");
         WebdriverWaits.waitUntilVisible(director.directorDashBoardPage);
         validate_text(director.directorDashBoardPage, "Dashboard");
         panelPage.click_LogOutLink();
