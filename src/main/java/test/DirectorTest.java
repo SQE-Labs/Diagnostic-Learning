@@ -110,7 +110,7 @@ public class DirectorTest extends BaseTest {
 
     }
 
-    @Test(priority = 7, enabled = false, description = "6 Verify that director is directed to 'Today's Appointments' page")
+    @Test(priority = 7, enabled = true, description = "6 Verify that director is directed to 'Today's Appointments' page")
     public void verify_Today_AppointmentPage() throws InterruptedException {
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
         AppointmentsPage appointment = new AppointmentsPage();
@@ -120,7 +120,7 @@ public class DirectorTest extends BaseTest {
 
     }
 
-    @Test(priority = 8, enabled = false, description = "8 Verify that director is directed to 'Today's Appointments' page")
+    @Test(priority = 8, enabled = true, description = "8 Verify that director is directed to 'Today's Appointments' page")
     public void verify_Upcoming_AppointmentPage() throws InterruptedException
     {
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
@@ -130,7 +130,7 @@ public class DirectorTest extends BaseTest {
 
     }
 
-    @Test(priority = 9, enabled = false, description = "13 Verify that search textbox, 'From Date' and 'To Date' date picker appear")
+    @Test(priority = 9, enabled = true, description = "13 Verify that search textbox, 'From Date' and 'To Date' date picker appear")
     public void verify_SearchTextBox() throws InterruptedException
     {
         AppointmentsPage appointment = new AppointmentsPage();
@@ -146,7 +146,7 @@ public class DirectorTest extends BaseTest {
     }
 
 
-    @Test(priority = 10, enabled = false, description = "14 Verify that relevant records appear after entering valid data in search textbox, on 'Upcoming Appointments' page")
+    @Test(priority = 10, enabled = true, description = "14 Verify that relevant records appear after entering valid data in search textbox, on 'Upcoming Appointments' page")
     public void verify_RelevantRecords() throws InterruptedException {
         AppointmentsPage appointment = new AppointmentsPage();
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
@@ -160,7 +160,7 @@ public class DirectorTest extends BaseTest {
     }
 
     //TODO //After the fix we will added assertions//
-    @Test(priority = 11, enabled = false, description = "16 Verify that date picker appears after clicking on calendar icon in 'From Date' field")
+    @Test(priority = 11, enabled = true, description = "16 Verify that date picker appears after clicking on calendar icon in 'From Date' field")
     public void verify_FromDatePickerAppear() throws InterruptedException {
         AppointmentsPage appointment = new AppointmentsPage();
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
@@ -185,7 +185,7 @@ public class DirectorTest extends BaseTest {
         appointment.click_ToDate();
     }
 
-    @Test(priority = 13, enabled = false, description = "28 Verify that CSV file gets downloaded after clicking on 'Export to CSV' button")
+    @Test(priority = 13, enabled = true, description = "28 Verify that CSV file gets downloaded after clicking on 'Export to CSV' button")
     public void verify_CSV_GetsDownloaded() throws InterruptedException, FileNotFoundException {
         AppointmentsPage appointment = new AppointmentsPage();
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
@@ -200,7 +200,7 @@ public class DirectorTest extends BaseTest {
 
     }
 
-    @Test(priority = 14, enabled = false, description = "29 Verify that admin is directed to '<client Details>' page after clicking 'View Details'  button")
+    @Test(priority = 14, enabled = true, description = "29 Verify that admin is directed to '<client Details>' page after clicking 'View Details'  button")
     public void verify_ViewDetailsPage() throws InterruptedException {
         AppointmentsPage appointment = new AppointmentsPage();
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
@@ -213,7 +213,7 @@ public class DirectorTest extends BaseTest {
 
     }
 
-    @Test(priority = 15, enabled = false, description = "Verify that 'Test Plan' pop up appears after clicking 'Test Plan' button")
+    @Test(priority = 15, enabled = true, description = "Verify that 'Test Plan' pop up appears after clicking 'Test Plan' button")
     public void verify_TestPlan_PopupAppears() throws InterruptedException {
         AppointmentsPage appointment = new AppointmentsPage();
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
@@ -225,7 +225,7 @@ public class DirectorTest extends BaseTest {
 
     }
 
-    @Test(priority = 16, enabled = false, description = " Verify that 'Test Plan' pop up appears after clicking 'Test Plan' button.")
+    @Test(priority = 16, enabled = true, description = " Verify that 'Test Plan' pop up appears after clicking 'Test Plan' button.")
     public void verify_TestPlan_AND_AddComments() throws InterruptedException {
         AppointmentsPage appointment = new AppointmentsPage();
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
@@ -241,7 +241,7 @@ public class DirectorTest extends BaseTest {
 
     }
 
-    @Test(priority = 17, enabled = false, description = "33 Verify that changes made by director on 'Test Plan' popup does not get saved, after clicking 'Close' button")
+    @Test(priority = 17, enabled = true, description = "33 Verify that changes made by director on 'Test Plan' popup does not get saved, after clicking 'Close' button")
     public void verify_TestPlan_ChangesSaved() throws InterruptedException {
         AppointmentsPage appointment = new AppointmentsPage();
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
@@ -256,7 +256,7 @@ public class DirectorTest extends BaseTest {
 
     }
 
-    @Test(priority = 18, enabled = false, description = "36 Verify that 'Collect Payment' popup opens up after clicking 'Payment' button")
+    @Test(priority = 18, enabled = true, description = "36 Verify that 'Collect Payment' popup opens up after clicking 'Payment' button")
     public void verify_CollectPayment_PopupOpenUp() throws InterruptedException {
         AppointmentsPage appointment = new AppointmentsPage();
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
@@ -270,7 +270,7 @@ public class DirectorTest extends BaseTest {
 
     }
 
-    @Test(priority = 19, enabled = false, description = "37 Verify that 'Test Fee Adjustment' field accepts positive amount and that positive amount gets added to 'Assessment Amount' and 'Amount Due' values, on 'Collect Payment' pop up")
+    @Test(priority = 19, enabled = true, description = "37 Verify that 'Test Fee Adjustment' field accepts positive amount and that positive amount gets added to 'Assessment Amount' and 'Amount Due' values, on 'Collect Payment' pop up")
     public void verify_TestFeeAdjustment() throws InterruptedException {
         AppointmentsPage appointment = new AppointmentsPage();
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
@@ -286,7 +286,7 @@ public class DirectorTest extends BaseTest {
         payment.click_CloseBtn_PopUp();
     }
 
-    @Test(priority = 20, enabled = false, description = "Verify that validation message appears after entering negative amount in 'Enter Amount' field, on 'Payment' popup")
+    @Test(priority = 20, enabled = true, description = "Verify that validation message appears after entering negative amount in 'Enter Amount' field, on 'Payment' popup")
     public void verify_NegativeValue_ValMsg() throws InterruptedException {
         AppointmentsPage appointment = new AppointmentsPage();
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
@@ -302,7 +302,7 @@ public class DirectorTest extends BaseTest {
 
     }
 
-    @Test(priority = 21, enabled = false, description = "Verify that validation message appears after entering negative amount in 'Enter Amount' field, on 'Payment' popup")
+    @Test(priority = 21, enabled = true, description = "Verify that validation message appears after entering negative amount in 'Enter Amount' field, on 'Payment' popup")
     public void verify_CollectButtonEnabled() throws InterruptedException {
         AppointmentsPage appointment = new AppointmentsPage();
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
@@ -320,7 +320,7 @@ public class DirectorTest extends BaseTest {
 
 
 
-    @Test(priority = 22, enabled = false, description = "25 Verify that director gets logged out after clicking 'Log Out' button")
+    @Test(priority = 22, enabled = true, description = "25 Verify that director gets logged out after clicking 'Log Out' button")
     public void verify_DirectorLogOut() throws InterruptedException {
         DirectorPage director = new DirectorPage();
         director.click_LogOutLink();
