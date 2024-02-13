@@ -863,11 +863,7 @@ public class AdminPage extends BasePage {
         sendKeys_withClear(searchField, clientText);
     }
 
-    public void filter_ForTestReady()
-    {
-        String clientText="Test Ready";
-        sendKeys_withClear(searchField, clientText);
-    }
+
 
     public void click_Re_AssigDropDown() {
         waitUntilVisible(diag);
@@ -1043,19 +1039,10 @@ public class AdminPage extends BasePage {
         click_custom(uploadDocumentButton);
     }
 
-    public void click_UploadButtons() {
+    public void click_UploadButtons()
+    {
         click_custom(uploadButton);
     }
-
-
-
-
-
-
-
-
-
-
 
 
     public void click_OnRescheduleBtn()

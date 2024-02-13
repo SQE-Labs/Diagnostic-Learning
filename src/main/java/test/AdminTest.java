@@ -414,7 +414,7 @@ public class AdminTest extends BaseTest {
         for (WebElement i : dateSet) {
             String date = i.getText();
             LocalDate inputDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("MMM dd, yyyy"));
-            System.out.println(inputDate);
+
 
             if (!(DateGenerator.isDateWithinRange(fromDateLocal, toDateLocal, inputDate))) {
                 result = false;
@@ -469,7 +469,7 @@ public class AdminTest extends BaseTest {
             validate_text(director.edit_SuccMsg, "Director details updated successfully.");
         }
 
-        @Test(priority = 28, enabled = false, description = "verify filter button on hold appointment page.")
+        @Test(priority = 28, enabled = true, description = "verify filter button on hold appointment page.")
         public void verify_HoldFilterButton () {
             AdminPage hold = new AdminPage();
             hold.click_HoldFilterBtn();
@@ -518,12 +518,6 @@ public class AdminTest extends BaseTest {
                 String secondWord = words[1];
                 expectedTitleText = firstWord + " " + secondWord;
 
-                // Print the result
-                System.out.println("First word: " + firstWord);
-                System.out.println("Second word: " + secondWord);
-            } else {
-                // Handle the case where there are not enough words
-                System.out.println("The input string does not contain at least two words.");
             }
 
             validate_AttText(actualText, expectedTitleText);
@@ -566,13 +560,6 @@ public class AdminTest extends BaseTest {
                 String secondWord = words[1];
                 expectedTitleText = firstWord + " " + secondWord;
 
-                // Print the result
-                System.out.println(expectedTitleText);
-                System.out.println("First word: " + firstWord);
-                System.out.println("Second word: " + secondWord);
-            } else {
-                // Handle the case where there are not enough words
-                System.out.println("The input string does not contain at least two words.");
             }
 
             validate_AttText(actualText, expectedTitleText);
@@ -595,14 +582,6 @@ public class AdminTest extends BaseTest {
                 String firstWord = words[0];
                 String secondWord = words[1];
                 expectedTitleText = firstWord + " " + secondWord;
-
-                // Print the result
-                System.out.println(expectedTitleText);
-                System.out.println("First word: " + firstWord);
-                System.out.println("Second word: " + secondWord);
-            } else {
-                // Handle the case where there are not enough words
-                System.out.println("The input string does not contain at least two words.");
             }
             validate_AttText(actualText, expectedTitleText);
         }
@@ -654,14 +633,6 @@ public class AdminTest extends BaseTest {
                 String firstWord = words[0];
                 String secondWord = words[1];
                 expectedTitleText = firstWord + " " + secondWord;
-
-                // Print the result
-                System.out.println(expectedTitleText);
-                System.out.println("First word: " + firstWord);
-                System.out.println("Second word: " + secondWord);
-            } else {
-                // Handle the case where there are not enough words
-                System.out.println("The input string does not contain at least two words.");
             }
             validate_text(admin.clientNameDetail, clientName);
             validate_text(superAdmin.viewStudentObservationButton, expectedTitle);
@@ -697,7 +668,6 @@ public class AdminTest extends BaseTest {
             admin.clickOn_CloseIcon();
             admin.click_BackButton();
 //        String expectedFileName = getText_custom(admin.getTextFromViewDocTwo);
-//        System.out.println("expectedFileName= " + expectedFileName);
 //        validate_text(admin.getTextFromViewDocTwo, expectedFileName);
 
         }
@@ -781,18 +751,8 @@ public class AdminTest extends BaseTest {
                 String firstWord = words[0];
                 String secondWord = words[1];
                 actualText = firstWord + " " + secondWord;
-
-                // Print the result
-                System.out.println("First word: " + firstWord);
-                System.out.println("Second word: " + secondWord);
-            } else {
-                // Handle the case where there are not enough words
-                System.out.println("The input string does not contain at least two words.");
             }
-
             validate_AttText(actualText, expectedResult);
-
-
         }
 
         @Test(priority = 49, enabled = true, description = "Admin is able to click on 'Canceled' button")
@@ -819,7 +779,6 @@ public class AdminTest extends BaseTest {
 
             //Search field
             String actualSearchText = getDriver().findElement(By.xpath("//input[@id='filterSearch']")).getAttribute("placeholder");
-            System.out.println(actualSearchText);
             String expectedSearchText = "Type here to search";
             validate_AttText(actualSearchText, expectedSearchText);
 
@@ -860,7 +819,7 @@ public class AdminTest extends BaseTest {
             } else {
                 String amountDue = getText_custom(payment.amountDue);
                 String actualAmount = amountDue.replace("$", "");
-                payment.viewReceiptButtonNotDisplayed();
+                payment.click_PaymentBtn();
                 payment.send_AmountInEnterAmount(actualAmount);
                 payment.clickOn_CollectBtn();
                 payment.clickOn_CloseBtn();
@@ -897,7 +856,7 @@ public class AdminTest extends BaseTest {
             {
                 String amountDue = getText_custom(payment.amountDue);
                 String actualAmount = amountDue.replace("$", "");
-                payment.viewReceiptButtonNotDisplayed();
+                payment.click_PaymentBtn();
                 payment.send_AmountInEnterAmount(actualAmount);
                 payment.clickOn_CollectBtn();
                 payment.clickOn_CloseBtn();
@@ -1095,8 +1054,7 @@ public class AdminTest extends BaseTest {
             dashPage.enter_ValidData(status);
             director.disable_Director();
             validate_text(director.edit_SuccMsg, "Director details updated successfully.");
-            System.out.println("Successfully Edited the created director");
-        }
+    }
 
         @Test(priority = 66, enabled = true, description = "'Back' button of create Diagnos from admin")
         public void verify_BackBtnDiagons () throws InterruptedException {
@@ -1140,15 +1098,8 @@ public class AdminTest extends BaseTest {
 
                     result.append(words[i]).append(" ");
                 }
-
-
                 actualTitle = result.toString().trim();
-                // Print the result
-                System.out.println("Result: " + result.toString().trim());
-            } else {
-                System.out.println("Input string does not have enough words.");
             }
-
             validate_AttText(actualTitle, expectedTitle);
         }
 
@@ -1172,18 +1123,14 @@ public class AdminTest extends BaseTest {
         admin.click_OnRescheduleBtn();
         Thread.sleep(4000);
         String expectedDateData = admin.getAttributevalue(reschedule.dateField, "value");
-        System.out.println(expectedDateData);
         Thread.sleep(4000);
         String expectedTimeData = admin.getAttributevalue(reschedule.timeField, "value");
-        System.out.println(expectedTimeData);
         reschedule.click_OnDiagonsticianField();
         appointment.selectAppointmentSlot();
         Thread.sleep(4000);
         String actualDateData = admin.getAttributevalue(reschedule.dateField, "value");
-        System.out.println(actualDateData);
         Thread.sleep(4000);
         String actualTimeData = admin.getAttributevalue(reschedule.timeField, "value");
-        System.out.println(actualTimeData);
         Assert.assertFalse(expectedDateData.equals(actualDateData));
         Assert.assertFalse(expectedTimeData.equals(actualTimeData));
 
@@ -1271,8 +1218,8 @@ public class AdminTest extends BaseTest {
     public void verify_ClickOnCloseBtn() throws InterruptedException
 
     {
-        AdminPage admin = new AdminPage();
-        LoginPage login = new LoginPage();
+            AdminPage admin = new AdminPage();
+            LoginPage login = new LoginPage();
             DashboardPage dashPage=new DashboardPage();
             AppointmentsPage appointment=new AppointmentsPage();
         login.adminLogin("allen", "123456");
