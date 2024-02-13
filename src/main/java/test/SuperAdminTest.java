@@ -105,7 +105,7 @@ public class SuperAdminTest extends BaseTest {
     }
 
     @Test(priority = 6, enabled = true, description = "Verify that Superadmin is able to enable the Admin or not")
-    public void verify_Enable_User_In_Admin() {
+    public void verify_Enable_User_In_Admin() throws InterruptedException {
         AdminPage admin = new AdminPage();
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
         admin.enable_Admin();

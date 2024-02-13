@@ -53,16 +53,12 @@ public class DirectorPage extends BasePage {
     public By dontSaveButton = By.xpath("//a[text()='Don’t Save']");
     public By edit_Popup = By.xpath("//h5[text()='Edit User']");
     public By enableUser = By.xpath("//label[text()='Enable User']");
-    public By dashboardPage = By.xpath("//div[@class='page-header d-flex align-items-center']");
-    public By viewAll = By.xpath("(//li[@class='ng-star-inserted'])[1]");
+    public By dashboardPage = By.xpath("(//h3)[1]");
+    public By viewAll = By.xpath("(//li[@class='ng-star-inserted']/a)[1]");
 
-
+    public By yearButton=By.xpath("//span[@class='mbsc-calendar-title mbsc-calendar-year mbsc-ios ng-star-inserted']");
     public By monthHeader = By.xpath("//span[@class='mbsc-calendar-month mbsc-calendar-title mbsc-ios ng-star-inserted']");
     public By yearHeader = By.xpath("//span[@class='mbsc-calendar-title mbsc-calendar-year mbsc-ios ng-star-inserted']");
-    public By dateHeader = By.xpath("//div[@class='mbsc-ios mbsc-ltr mbsc-schedule-header-day mbsc-selected ng-star-inserted']']");
-
-    public By yearsCalender = By.xpath("//mbsc-button[text()=' 2023 - 2034 ']");
-    public By hihglihgtedYear = By.xpath("(//div[@class='mbsc-calendar-cell-text mbsc-calendar-year-text mbsc-ios ng-star-inserted'])[13]");
     public By clickOnBox = By.xpath("(//div[@class='mbsc-flex-1-0 mbsc-ios mbsc-schedule-item ng-star-inserted'])[23]");
     public By clickOnBox1 = By.xpath("(//div[@class='mbsc-flex-1-0 mbsc-ios mbsc-schedule-item ng-star-inserted'])[24]");
     public By clickOnBox2 = By.xpath("(//div[@class='mbsc-flex-1-0 mbsc-ios mbsc-schedule-item ng-star-inserted'])[25]");
@@ -87,13 +83,18 @@ public class DirectorPage extends BasePage {
     public By userNameField = By.xpath("//input[@placeholder='Username']");
     public By PasswordField = By.xpath("//input[@placeholder='Password']");
     public By login = By.id("loginFormSubmit");
+    public By editBtnAfterSearch = By.xpath(" (//tr[not(contains(@style,'display: none;'))])[2]//a");
     public By directorDashBoardPage = By.xpath("//h3[text()='Dashboard']");
     public By validation_Msg = By.xpath("//small[text()='Username or password is incorrect']");
 
+    public By yearsTitle = By.xpath("(//mbsc-button[contains(@class,'mbsc-calendar-button')])[5]");
+
+    public By yearTitleFromText=By.xpath("(//d" +
+            "iv[contains(@class,'mbsc-calendar-year-text')])[13]");
     public By spinner = By.cssSelector("div.ngx-spinner-overlay");
     public By setAvailaibility = By.xpath("//div[@class='page-header d-flex align-items-center']");
-    public By slotSelection = By.xpath("(//div[@class='mbsc-flex-1-0 mbsc-ios mbsc-schedule-item ng-star-inserted'])[34]");
-    public By validateAvailable = By.xpath("//*[@id=\"diagnoSetAvailabilityForm\"]/div[1]/mbsc-eventcalendar/mbsc-calendar-view/mbsc-scheduler/div[3]/div[2]/div/div/div[5]/div/div[1]/mbsc-schedule-event/div[3]/div[1]/div");
+    public By slotSelection = By.xpath("(//div[@class='mbsc-flex-1-0 mbsc-ios mbsc-schedule-item ng-star-inserted'])[1]");
+    public By validateAvailable = By.xpath("//*[@class='ng-star-inserted'][contains( text(), 'Available')]");
     public By avail_SaveButton = By.id("diagnoSetAvailabilitySubmit");
     public By signInToYourAccountTxt = By.xpath("//h3[@class='heading']");
     public By today = By.xpath("//mbsc-button[@aria-label='Today']");
@@ -135,6 +136,8 @@ public class DirectorPage extends BasePage {
         WebdriverWaits.waitForSpinner();
         click_custom(avail_SaveButton);
     }
+
+
 
     public void click_CreateDirectorsButton() {
         WebdriverWaits.waitForSpinner();
@@ -241,6 +244,10 @@ public class DirectorPage extends BasePage {
         click_custom(selectMonth);
 
     }
+    public void clickOn_DontSave() {
+        click_custom(dontSaveButton);
+    }
+
 
     public void off_ToggleButton() {
         WebdriverWaits.waitUntilVisible(toggle);
@@ -295,12 +302,23 @@ public class DirectorPage extends BasePage {
         enter_ConfirmPassword(confirmPasswordFieldText);
         click_createDirectorButton();
     }
+    public void click_On_EditBtnAfterSearch() throws InterruptedException {
+        wait.waitUntilVisible(editBtnAfterSearch);
+        WebdriverWaits.waitForSpinner();
+        click_custom(editBtnAfterSearch);
 
 
-    //**************Search created director*************
+    }
+        //**************Search created director*************
     public void search_CreatedDirector(String UserName) throws InterruptedException {
         click_filterButton();
         enterInSearchField(UserName);
+    }
+    public void disable_Director() throws InterruptedException {
+
+        click_On_EditBtnAfterSearch();
+        off_ToggleButton();
+        click_UpdateButton();
     }
 
     //***********edit created director*************

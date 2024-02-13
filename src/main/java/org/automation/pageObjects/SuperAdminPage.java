@@ -9,6 +9,7 @@ public class SuperAdminPage extends BasePage {
 
     public By viewDocumentsButton=By.xpath("//a[@class='ml-2 theme-button green ng-star-inserted']");
     public By clientObservation=By.xpath("//h4");
+    public By viewDocumentButton=By.xpath("//a[@class='ml-2 theme-button green ng-star-inserted']");
     public By backButton=By.xpath("//a[@class='grey ml-3 theme-button']");
     public By exportCSVButton = By.xpath("//button[text()='Export to CSV']");
 
@@ -20,6 +21,18 @@ public class SuperAdminPage extends BasePage {
     public void click_BackButton(){
         WebdriverWaits.waitUntilVisible(backButton);
         click_custom(backButton);
+    }
+    public void clickOn_ViewObservationBtn()
+    {
+        WebdriverWaits.waitUntilVisible(viewStudentObservationButton);
+        click_custom(viewStudentObservationButton);
+
+    }
+
+    public void clickOn_ViewDocumentBtn()
+    {
+        WebdriverWaits.waitUntilVisible(viewDocumentButton);
+        click_custom(viewDocumentButton);
     }
 
     public void view_ClientObservation_Page(){

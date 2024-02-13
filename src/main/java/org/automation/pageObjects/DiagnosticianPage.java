@@ -185,7 +185,9 @@ public By availableSlots=By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-al
         WebdriverWaits.waitForSpinner();
         click_custom(createDiagnostician);
     }
-
+    public void click_Back_Button() {
+        click_custom(backButton);
+    }
     public void enter_diagnostician_FirstName(String CustomerFirstName) {
         sendKeys_withClear(diagnostician_FirstName, CustomerFirstName);
     }
