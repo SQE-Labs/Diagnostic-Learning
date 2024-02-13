@@ -15,31 +15,20 @@ public class PaymentPage extends BasePage {
     public By cust_Name=By.cssSelector("tr:not([style='display: none;' ]) td:nth-child(1)");
     public By getCust_Name =By.xpath("(//td)[1]");
     public By fromToDateField=By.xpath("//input[@placeholder='%s']");
-    public By testFeeAdjustment = By.xpath("//*[@id=\"paymentModal\"]/div/div/table/tbody/tr[3]/td[2]/input");
-    public By collectButton = By.xpath("//button[text()='Collect']");
-    public By closeButtonPopUp = By.xpath("(//a[text()='Close'])[2]");
-    public By ValMsgAfterNegativeValueTXT = By.xpath("//div[@class='validation-message ng-star-inserted']");
-    public By collectAmountAdjustment = By.xpath("//*[@id='paymentModal']/div/div/table/tbody/tr[4]/td[2]/input");
 
     public By paymentButton=By.xpath("//button[@class='theme-button green m-2 ng-star-inserted']");
     public By amountDue=By.xpath("//p[@class='text-danger']");
     public By enterAmountField=By.xpath("//input[@placeholder='Enter Amount']");
 
     public By closeButton=By.xpath("(//a[text()='Close'])[2]");
+    public By collectButton=By.xpath("//button[@class='theme-button mx-2']");
     public By viewReceiptButton=By.xpath("//button[text()=' View Receipt ']");
 
+    public By testFeeAdjustment = By.xpath("//*[@id=\"paymentModal\"]/div/div/table/tbody/tr[3]/td[2]/input");
 
-    public void click_CollectButton(){
-        WebdriverWaits.waitUntilVisible(collectButton);
-        WebdriverWaits.waitForSpinner();
-        click_custom(collectButton);
-    }
-
-    public void click_CloseBtn_PopUp(){
-        WebdriverWaits.waitUntilVisible(closeButtonPopUp);
-        WebdriverWaits.waitForSpinner();
-        click_custom(closeButtonPopUp);
-    }
+    public By closeButtonPopUp = By.xpath("(//a[text()='Close'])[2]");
+    public By ValMsgAfterNegativeValueTXT = By.xpath("//div[@class='validation-message ng-star-inserted']");
+    public By collectAmountAdjustment = By.xpath("//*[@id='paymentModal']/div/div/table/tbody/tr[4]/td[2]/input");
 
 
     public void click_PaymentTab(){
@@ -47,6 +36,70 @@ public class PaymentPage extends BasePage {
         WebdriverWaits.waitForSpinner();
         click_custom(paymentTab);
     }
+
+    public void click_CollectButton(){
+        WebdriverWaits.waitUntilVisible(collectButton);
+        WebdriverWaits.waitForSpinner();
+        click_custom(collectButton);
+    }
+    public void viewReceiptButtonDisplayed()
+    {
+        WebdriverWaits.waitUntilVisible(viewReceiptButton);
+        WebdriverWaits.waitForSpinner();
+        click_custom(viewReceiptButton);
+
+
+    }
+
+    public void clickOn_CollectBtn()
+    {
+        WebdriverWaits.waitUntilVisible(collectButton);
+        WebdriverWaits.waitForSpinner();
+        click_custom(collectButton);
+    }
+    public void viewReceiptButtonNotDisplayed()
+    {
+        WebdriverWaits.waitUntilVisible(paymentButton);
+        WebdriverWaits.waitForSpinner();
+        click_custom(paymentButton);
+
+    }
+
+    public void send_AmountInEnterAmount(String amount)
+    {
+        WebdriverWaits.waitUntilVisible(enterAmountField);
+        WebdriverWaits.waitForSpinner();
+        sendKeys_withClear(enterAmountField,amount);
+    }
+
+    public void clickOn_CloseBtn()
+    {
+        WebdriverWaits.waitUntilVisible(closeButton);
+        WebdriverWaits.waitForSpinner();
+        click_custom(closeButton);
+    }
+    public void click_filterButton() {
+        WebdriverWaits.waitForSpinner();
+        click_custom(filterButton);
+    }
+    public void scrollUptoVAmountDue()
+    {
+        WebdriverWaits.waitUntilVisible(amountDue);
+        WebdriverWaits.waitForSpinner();
+        scrollIntoView(amountDue);
+    }
+    public void enterInSearchField(String searchFieldText) {
+        WebdriverWaits.waitUntilVisible(searchField);
+        sendKeys_withClear(searchField, searchFieldText);
+    }
+    public void click_CloseBtn_PopUp(){
+        WebdriverWaits.waitUntilVisible(closeButtonPopUp);
+        WebdriverWaits.waitForSpinner();
+        click_custom(closeButtonPopUp);
+    }
+
+
+
 
     public void enter_collectAmountAdjustment(String testFeeAdjustmentTXT){
         WebdriverWaits.waitUntilVisible(collectAmountAdjustment);
@@ -60,66 +113,10 @@ public class PaymentPage extends BasePage {
         sendKeys_withClear(testFeeAdjustment,testFeeAdjustmentTXT);
     }
 
-
-
-    public void click_filterButton() {
-        WebdriverWaits.waitForSpinner();
-        click_custom(filterButton);
-    }
-    public void enterInSearchField(String searchFieldText) {
-        WebdriverWaits.waitUntilVisible(searchField);
-        sendKeys_withClear(searchField, searchFieldText);
-    }
     public void search_CreatedDiagnostician(String UserName)  {
         click_filterButton();
         enterInSearchField(UserName);
-        ActionEngine.GetValueAttribute(searchField,"placeholder");
-    }
-
-    public void viewReceiptButtonDisplayed()
-    {
-        WebdriverWaits.waitUntilVisible(viewReceiptButton);
-        WebdriverWaits.waitForSpinner();
-        click_custom(viewReceiptButton);
-
-
-    }
-
-    public void viewReceiptButtonNotDisplayed()
-    {
-        WebdriverWaits.waitUntilVisible(paymentButton);
-        WebdriverWaits.waitForSpinner();
-        click_custom(paymentButton);
-
-    }
-
-    public void clickOn_CloseBtn()
-    {
-        WebdriverWaits.waitUntilVisible(closeButton);
-        WebdriverWaits.waitForSpinner();
-        click_custom(closeButton);
-    }
-
-    public void clickOn_CollectBtn()
-    {
-        WebdriverWaits.waitUntilVisible(collectButton);
-        WebdriverWaits.waitForSpinner();
-        click_custom(collectButton);
-    }
-
-
-    public void send_AmountInEnterAmount(String amount)
-    {
-        WebdriverWaits.waitUntilVisible(enterAmountField);
-        WebdriverWaits.waitForSpinner();
-        sendKeys_withClear(enterAmountField,amount);
-    }
-
-    public void scrollUptoVAmountDue()
-    {
-        WebdriverWaits.waitUntilVisible(amountDue);
-        WebdriverWaits.waitForSpinner();
-        scrollIntoView(amountDue);
+        ActionEngine.getValueAttribute(searchField,"placeholder");
     }
 
 }

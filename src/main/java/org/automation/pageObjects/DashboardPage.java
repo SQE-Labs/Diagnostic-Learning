@@ -8,7 +8,7 @@ import static org.automation.utilities.WebdriverWaits.moveToElement;
 
 public class DashboardPage extends BasePage {
 
-    public By scheduleAppointment = By.xpath("//li[@id='Schedule Appointment']");
+    public By scheduleAppointment = By.xpath("//a[text()='Schedule Appointment']");
 
     public By clientNameFromBCGForm=By.xpath("(//h6[@class='mb-3 text-purple'])[1]//following-sibling::div//td/a");
 
@@ -18,7 +18,7 @@ public class DashboardPage extends BasePage {
     public void clickScheduleAppointment()  {
         WebdriverWaits.waitUntilVisible(scheduleAppointment);
         WebdriverWaits.waitForSpinner();
-        moveToElement(scheduleAppointment);
+        click_custom(scheduleAppointment);
     }
 
     public void clickOn_ClientNameBackgroundSection()

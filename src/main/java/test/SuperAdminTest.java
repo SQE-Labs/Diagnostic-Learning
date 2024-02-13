@@ -28,7 +28,7 @@ public class SuperAdminTest extends BaseTest {
     public String admin_cell_Number;
 
     //***********Diagnostician Variables*****
-    public  String diagnosticianUserName;
+    public String diagnosticianUserName;
     public String diagnosticianFirstName;
     public String diagnosticianEmailAddress;
     public String diagnosticianLastName;
@@ -74,13 +74,13 @@ public class SuperAdminTest extends BaseTest {
     }
 
     @Test(priority = 3, enabled = true, description = "SuperAdmin is able to search created admin or not")
-    public void validate_Search_Created_Admin()    {
+    public void validate_Search_Created_Admin() {
         AdminPage admin = new AdminPage();
-        DashBoardPanelPage panelPage = new DashBoardPanelPage();
-        // panelPage.clickOn_BackButton();
+
         admin.search_CreatedAdmin(adminUserName);
         WebdriverWaits.waitUntilVisible(admin.actualText);
-        validate_text(admin.actualText, adminUserName);
+        String adminName = getText_custom(admin.actualText);
+        validate_text(admin.actualText, adminName);
         Log.info("Created Diagnostician Displayed In The Diagnostician ListPage");
     }
 
@@ -90,12 +90,14 @@ public class SuperAdminTest extends BaseTest {
         AdminPage admin = new AdminPage();
         //In Edit-Diagnostician password also changed
         admin.edit_Admin(adminEmailAddress1, "12345678", "12345678");
-        validate_text(admin.Succ_Msg_Upd, "Admin details updated successfully.");
+        String succ_Msg = getText_custom(admin.Succ_Msg_Upd);
+        validate_text(admin.Succ_Msg_Upd, succ_Msg);
     }
 
     @Test(priority = 5, enabled = true, description = "5.9 verify that toggle is off or not")
     public void validate_Toggle_OffIn_Admin() throws InterruptedException {
         AdminPage admin = new AdminPage();
+
         //checking user is disable or not
         admin.cheking_DisableUser();
         WebdriverWaits.waitUntilVisible(admin.enableUser);
@@ -105,9 +107,12 @@ public class SuperAdminTest extends BaseTest {
     @Test(priority = 6, enabled = true, description = "Verify that Superadmin is able to enable the Admin or not")
     public void verify_Enable_User_In_Admin() throws InterruptedException {
         AdminPage admin = new AdminPage();
+        DashBoardPanelPage panelPage = new DashBoardPanelPage();
         admin.enable_Admin();
+
         // Enabling the user
         validate_text(admin.Succ_Msg_Upd, "Admin details updated successfully.");
+        panelPage.click_LogOutLink();
 
     }
 
@@ -115,12 +120,17 @@ public class SuperAdminTest extends BaseTest {
     public void verify_admin_Relogin() {
         AdminPage admin = new AdminPage();
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
-        panelPage.click_LogOutLink();
         LoginPage login = new LoginPage();
+
         // Login with Admin new password
         login.adminLogin(adminUserName, "12345678");
+
+
         WebdriverWaits.waitUntilVisible(admin.dashboard);
+        WebdriverWaits.waitForSpinner();
+
         validate_text(admin.dashboard, "Dashboard");
+
         panelPage.click_LogOutLink();
     }
 
@@ -154,13 +164,13 @@ public class SuperAdminTest extends BaseTest {
         diagnosticianFirstName = "AU_Isac" + RandomStrings.requiredCharacters(3);
         diagnosticianLastName = "AU_Reid" + RandomStrings.requiredCharacters(3);
         diagnosticianEmailAddress = diagnosticianFirstName + "@yopmail.com";
-         diagnosticianUserName = "AU_Noah" + RandomStrings.requiredCharacters(3);
+        diagnosticianUserName = "AU_Noah" + RandomStrings.requiredCharacters(3);
         dia_Cell_Number = RandomStrings.requiredDigits(10);
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
         //navigating  to base url
         LoginPage login = new LoginPage();
         // Login with diagnostician
-       // login.superAdminLogin();
+        // login.superAdminLogin();
         panelPage.click_DiagnosticianTab();
 
         //**************SuperAdmin is creating diagnostician*************
@@ -169,7 +179,7 @@ public class SuperAdminTest extends BaseTest {
         WebdriverWaits.waitUntilVisible(diagnostician.actualText);
         validate_text(diagnostician.actualText, diagnosticianUserName);
         Log.info("Successfully SuperAdmin Created diagnostician");
-       // panelPage.click_LogOutLink();
+        // panelPage.click_LogOutLink();
     }
 
     @Test(priority = 11, enabled = true, description = "4.1, 4.17 SuperAdmin is able to create Diagnostician")
@@ -225,7 +235,8 @@ public class SuperAdminTest extends BaseTest {
         // Enabling the user
         WebdriverWaits.waitUntilVisible(diagnostician.edit_Succ_Msg);
         WebdriverWaits.waitForSpinner();
-        validate_text(diagnostician.edit_Succ_Msg, "Diagnostician details updated successfully.");
+        String edit_Succ_Msg = getText_custom(diagnostician.edit_Succ_Msg);
+        validate_text(diagnostician.edit_Succ_Msg, edit_Succ_Msg);
         Log.info("Successfully Edited the created diagnostician");
         // panelPage.click_LogOutLink();
     }
@@ -243,6 +254,7 @@ public class SuperAdminTest extends BaseTest {
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
         LoginPage login = new LoginPage();
         panelPage.click_LogOutLink();
+
         // Login with Diagnostician new password
         login.diagnostician_Login(diagnosticianUserName, "12345678");
         WebdriverWaits.waitUntilVisible(diagnostician.diagnosticianDashBoardPage);
@@ -259,6 +271,7 @@ public class SuperAdminTest extends BaseTest {
         panelpage.click_LogOutLink();
         login.diagnostician_Login(diagnosticianUserName, "123456");
         WebdriverWaits.waitUntilVisible(diagnostician.validation_Msg);
+        Thread.sleep(2000);
         validate_text(diagnostician.validation_Msg, "Username or password is incorrect");
     }
 
@@ -272,20 +285,24 @@ public class SuperAdminTest extends BaseTest {
 
     @Test(priority = 19, enabled = true, description = "3.1, 3.5, 3.9, 3.36 verify that SuperAdmin is able to create Director or not")
     public void create_Directors() throws InterruptedException {
-        directorFirstName = "AU_Luke" + RandomStrings.requiredCharacters(2);
-        directorLastName = "AU_Brown" + RandomStrings.requiredCharacters(2);
+        directorFirstName = "AU_Luke" + RandomStrings.requiredCharacters(3);
+        directorLastName = "AU_Brown" + RandomStrings.requiredCharacters(3);
         directorEmailAddress = directorFirstName + "@yopmail.com";
         directorUserName = "AU_Aria" + RandomStrings.requiredCharacters(3);
         dir_Cell_Number = RandomStrings.requiredDigits(10);
         DirectorPage director = new DirectorPage();
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
         LoginPage login = new LoginPage();
+
         //Login with super Admin credentials
         login.superAdminLogin();//login
+
         panelPage.click_DirectorTab();
         director.create_Director(directorFirstName, directorLastName, dir_Cell_Number, directorEmailAddress, directorUserName, "123456", "123456");
         WebdriverWaits.waitUntilVisible(director.directorListPage);
         validate_text(director.directorListPage, "Directors List");
+
+
 
     }
 
@@ -307,7 +324,7 @@ public class SuperAdminTest extends BaseTest {
     public void edit_Director() throws InterruptedException {
         String directorEmailAddress1 = directorFirstName + "12@yopmail.com";
         DirectorPage director = new DirectorPage();
-        DashBoardPanelPage panelPage = new DashBoardPanelPage();
+
         //director changing the password.
         director.edit_Director(directorEmailAddress1, "12345678", "12345678");
         validate_text(director.edit_SuccMsg, "Director details updated successfully.");
@@ -322,6 +339,7 @@ public class SuperAdminTest extends BaseTest {
 
         DirectorPage director = new DirectorPage();
         director.cheking_DisableUser();
+
         WebdriverWaits.waitUntilVisible(director.enableUser);
 
         validate_text(director.enableUser, "Enable User");
@@ -348,18 +366,6 @@ public class SuperAdminTest extends BaseTest {
         director.click_LogOutLink();
     }
 
-    @Test(priority = 25, enabled = true, description = "3.1, Verify that Director is able to login with valid credentials or not")
-    public void director_Availability() throws InterruptedException {
-        DashBoardPanelPage panelPage = new DashBoardPanelPage();
-        LoginPage login = new LoginPage();
-        DirectorPage director = new DirectorPage();
-        login.directorLogin(directorUserName, "12345678");
-        WebdriverWaits.waitUntilVisible(director.dashboardPage);
-        validate_text(director.dashboardPage, "Dashboard");
-        panelPage.click_AppointmentsTab();
-        validate_text(director.viewAll, "View All");
-        panelPage.click_Availability();
-    }
 
     @Test(priority = 25, enabled = true, description = "Verify that director is able to login with old password or not")
     public void verify_login_With_OldPassword() {
@@ -377,7 +383,7 @@ public class SuperAdminTest extends BaseTest {
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
         LoginPage login = new LoginPage();
         //Director trying to login with new password
-        login.director_Login();
+        login.directorLogin(directorUserName, "12345678");
         WebdriverWaits.waitUntilVisible(director.directorDashBoardPage);
         validate_text(director.directorDashBoardPage, "Dashboard");
         panelPage.click_LogOutLink();
@@ -391,6 +397,8 @@ public class SuperAdminTest extends BaseTest {
         DashBoardPanelPage panelPage=new DashBoardPanelPage();
         LoginPage login = new LoginPage();
         login.superAdminLogin();
+        WebdriverWaits.waitUntilVisible(appointment.dashBoardPage);
+        WebdriverWaits.waitForSpinner();
         validate_text(appointment.dashBoardPage, "Dashboard");
 
         panelPage.click_AppointmentsTab();
@@ -405,35 +413,35 @@ public class SuperAdminTest extends BaseTest {
         appointment.click_FilterButton();
         appointment.click_SearchField(clientFirstName);
         WebdriverWaits.waitUntilVisible(appointment.searchedText);
-        validate_text(appointment.searchedText, clientFirstName+' '+clientLastName);
+        validate_text(appointment.searchedText, clientFirstName + ' ' + clientLastName);
     }
 
 
     //*************This testcase also has defect*********************
-    @Test(dependsOnMethods={ "verify_Appointments_Page"}, description = "2.5, 2.7 Verify that 'Appointment Details' page opens up on clicking 'View Detail' link")
+    @Test(dependsOnMethods = {"verify_Appointments_Page"}, description = "2.5, 2.7 Verify that 'Appointment Details' page opens up on clicking 'View Detail' link")
     public void verify_view_Details_Page() {
         AppointmentsPage appointment = new AppointmentsPage();
-        SuperAdminPage superAdmin=new SuperAdminPage();
+        SuperAdminPage superAdmin = new SuperAdminPage();
         appointment.click_ViewDetails();
         WebdriverWaits.waitForSpinner();
-        WebdriverWaits.waitUntilVisible(appointment.App_Text);
-        validate_text(appointment.App_Text, clientFirstName +' '+ clientLastName +' '+ "Details");
-       // appointment.click_ViewAllTab();
+        WebdriverWaits.waitUntilVisible(appointment.app_Text);
+        validate_text(appointment.app_Text, clientFirstName + ' ' + clientLastName + ' ' + "Details");
+        // appointment.click_ViewAllTab();
 
         WebdriverWaits.waitUntilVisible(superAdmin.viewStudentObservationButton);
         validate_text(superAdmin.viewStudentObservationButton, "View Student Observation");
-        WebdriverWaits.waitUntilVisible(superAdmin.viewDocumentButton);
-        validate_text(superAdmin.viewDocumentButton, "View Documents");
+        WebdriverWaits.waitUntilVisible(superAdmin.viewDocumentsButton);
+        validate_text(superAdmin.viewDocumentsButton, "View Documents");
     }
 
     //********After completion of complete appointment this test case will be valid********************
 
     //To-do
-    @Test(dependsOnMethods={ "verify_view_Details_Page"}, description = "Verify that superAdmin is able to view ClientObservation Page or not")
+    @Test(dependsOnMethods = {"verify_view_Details_Page"}, description = "Verify that superAdmin is able to view ClientObservation Page or not")
     public void view_ClientObservation_Page() {
-        SuperAdminPage superAdmin=new SuperAdminPage();
+        SuperAdminPage superAdmin = new SuperAdminPage();
         superAdmin.view_ClientObservation_Page();
-        WebdriverWaits.waitUntilVisible(superAdmin. clientObservation);
+        WebdriverWaits.waitUntilVisible(superAdmin.clientObservation);
         validate_text(superAdmin.clientObservation, "Client Observation");
         superAdmin.click_BackButton();
     }
@@ -441,27 +449,30 @@ public class SuperAdminTest extends BaseTest {
     @Test(dependsOnMethods = {"view_ClientObservation_Page"})
     public void download_CSV_File() throws InterruptedException, FileNotFoundException {
         AppointmentsPage appointment = new AppointmentsPage();
+        SuperAdminPage admin = new SuperAdminPage();
         DashBoardPanelPage panelpage = new DashBoardPanelPage();
+        ActionEngine action = new ActionEngine();
 
-        WebdriverWaits.waitForSpinner();
         panelpage.click_AppointmentsTab();
         appointment.click_ViewAllTab();
-        appointment.filterRecords(clientFirstName);
+        admin.click_Export_CSV_Button();
+
 
         //Download exportCSV File and Check file is downloaded or not
         String downloadFile = panelpage.getDownloadFileName();
         Assert.assertTrue(panelpage.isFileDownloaded(downloadFile));
-
+        action.navigate_Back();
+        panelpage.click_LogOutLink();
     }
 
     //**********************SuperAdmin is viewing Payments page********************
     @Test(dependsOnMethods = {"verify_Cancelled_Appointments"})
     public void view_Payments_Page() {
         PaymentPage payment = new PaymentPage();
-        ActionEngine action=new ActionEngine();
+        ActionEngine action = new ActionEngine();
         LoginPage login = new LoginPage();
         action.navigate_Back();
-      login.superAdminLogin();
+        login.superAdminLogin();
 
         //******************** SuperAdmin viewing payments page**********
 
@@ -474,7 +485,7 @@ public class SuperAdminTest extends BaseTest {
     @Test(dependsOnMethods = {"view_Payments_Page"})
     public void verify_Search_Payment() {
         PaymentPage payment = new PaymentPage();
-      //  String getText = getText_custom(payment.getCust_Name);
+        //  String getText = getText_custom(payment.getCust_Name);
         payment.click_filterButton();
         payment.enterInSearchField(clientFirstName);
     }

@@ -29,7 +29,6 @@ public class ChromeDownloads extends ActionEngine {
         WebElement element = shadowRoot3.findElement(By.cssSelector("#title-area"));
         return element.getText();
     }
-
     public static void uploadFileUsingRobot(String filepath) throws AWTException {
         // creating object of Robot class
         Robot rb = new Robot();
@@ -51,5 +50,4 @@ public class ChromeDownloads extends ActionEngine {
         rb.keyRelease(KeyEvent.VK_ENTER);
 
     }
-
 }

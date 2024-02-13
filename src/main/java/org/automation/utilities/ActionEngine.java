@@ -108,6 +108,7 @@ public class ActionEngine extends BaseTest {
             throw new RuntimeException(e);
 
         }
+
     }
 
 
@@ -141,19 +142,6 @@ public class ActionEngine extends BaseTest {
         }
     }
 
-    public void doubleClick_Custom(By element, String fieldName) {
-        try {
-            JavascriptExecutor executor = (JavascriptExecutor) getDriver();
-            executor.executeScript("arguments[0].scrollIntoView(true);", element);
-            Actions actions = new Actions(getDriver());
-            actions.doubleClick(getDriver().findElement(element)).build().perform();
-            extentTest.log(PASS, fieldName + "==> Double Clicked Successfully! ");
-            Thread.sleep(1000);
-        } catch (Exception e) {
-            extentTest.log(FAIL, "Not able to double Clicked Successfully: " + fieldName + " due to exception: " + e);
-            throw new RuntimeException(e);
-        }
-    }
 
     //check if element is Present
     public boolean isElementPresent_custom(WebElement element, String fieldName) {
@@ -350,7 +338,7 @@ public class ActionEngine extends BaseTest {
         String fieldName = "";
         try {
             fieldName = label.length > 0 ? label[0] : path.toString();
-            List<WebElement> elements = getDriver().findElements(path);
+             List <WebElement> elements =getDriver().findElements(path);
 
             //  log success message in exgent report
             extentTest.log(PASS, fieldName + "==>Locate webElements!");
@@ -371,26 +359,25 @@ public class ActionEngine extends BaseTest {
     public void navigate_Back() {
         getDriver().navigate().back();
     }
-
-    public void navigate_to_baseUrl() {
+    public void navigate_to_baseUrl(){
         getDriver().get(PropertiesUtil.getPropertyValue("url"));
     }
-
     public static String getText(By element) {
-        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
+         WebDriverWait wait = new WebDriverWait(getDriver() , Duration.ofSeconds(10));
         wait.until(ExpectedConditions.visibilityOfElementLocated(element));
-        WebElement ele = getDriver().findElement(element);
+        WebElement ele = getDriver() .findElement(element);
         String text = ele.getText();
         return text;
     }
 
-    public static String GetValueAttribute(By element, String attributeName) {
+    public static String getValueAttribute(By element, String attributeName) {
         try {
-            String text = getDriver().findElement(element).getAttribute(attributeName);
+            String text=getDriver().findElement(element).getAttribute(attributeName);
             return text;
         } catch (Exception e) {
             return attributeName;
         }
 
     }
+
 }

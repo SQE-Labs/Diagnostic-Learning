@@ -26,6 +26,7 @@ public class LoginPage extends BasePage {
 
 
     public void superAdminLogin()   {
+        WebdriverWaits.waitUntilVisible(userNameField);
         sendKeys_withClear(userNameField, PropertiesUtil.getPropertyValue("super_userName"));
         sendKeys_withClear(PasswordField, PropertiesUtil.getPropertyValue("super_password"));
         clickBtn_custom(login);

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite name="My Suite" verbose="2"  parallel="classes" thread-count="10">
-<test name="Diagnostic Learning" parallel="none" >
+<test name="Diagnostician Test Cases" parallel="none" >
     <classes>
         <class name="test.SuperAdminTest"/>
         <class name="test.AdminTest"/>
         <class name="test.DiagnosticianTest"/>
+        <class name="test.DirectorTest"></class>
     </classes>
 </test>
 </suite>

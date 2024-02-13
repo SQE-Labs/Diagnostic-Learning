@@ -24,6 +24,7 @@ public class AppointmentsPage extends BasePage {
     public By paymentButton = By.xpath("//button[@class='theme-button green m-2 ng-star-inserted']");
 
     public By upcomingTab=By.xpath("//a[text()='Upcoming']");
+    public By app_Text = By.xpath("//h3");
     public By searchedText=By.cssSelector("tr:not([style='display: none;' ]) td:nth-child(1)");
     public By viewDetailsLink=By.cssSelector("tr:not([style='display: none;' ]) td:nth-child(7)");
     public By clickSlotSaveBtn= By.xpath("//mbsc-button[text()=' Save ']");
@@ -323,6 +324,8 @@ public class AppointmentsPage extends BasePage {
         List<WebElement> list = getWebElements(slots, "AppointmentSlots");
         System.out.println(list.size());
         for (WebElement slot : list) {
+            Thread.sleep(1000);
+            click_custom(slot);
             Thread.sleep(2000);
             moveToEleByWE(slot);
 
@@ -436,6 +439,7 @@ public void newEventText()
         validate_text(actualText, "Appointment Scheduled!!");
         clickOnViewDetailsButton();
         WebdriverWaits.waitForSpinner();
+        Thread.sleep(5000);
     }
 
     public void click_AppointmentTab() {
@@ -447,8 +451,10 @@ public void newEventText()
     public void click_ViewAllTab() {
         WebdriverWaits.waitUntilVisible(viewAllTab);
         WebdriverWaits.waitForSpinner();
-        click_custom(viewAllTab);
+        moveToElement(viewAllTab);
     }
+
+
 
     public void click_FilterButton() {
         click_custom(filterButton);
@@ -503,10 +509,8 @@ public void newEventText()
 
 
 
-    public void enterClientNameInSearchField()
+    public void enterClientNameInSearchField(String nameOfClient)
     {
-
-        String nameOfClient=getText_custom(nameOfTestReadyCard);
         WebdriverWaits.waitUntilVisible(appointmentsTab);
         click_custom(appointmentsTab);
         click_custom(viewAllTab);
@@ -548,7 +552,7 @@ public void newEventText()
 
     }
 
-    public void clickOn_CompletedTab()
+    public void click_CompletedTab()
     {
         WebdriverWaits.waitUntilVisible(appointmentsTab);
         WebdriverWaits.waitForSpinner();
@@ -600,4 +604,5 @@ public void newEventText()
         click_custom(viewAllTab);
 
     }
+
 }

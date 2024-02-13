@@ -77,12 +77,13 @@ public class DirectorPage extends BasePage {
     public By selectYear = By.xpath("//div[text()=' 2023 ']");
     public By selectMonth = By.xpath("(//div[text()=' Dec '])[2]");
 
-    public By editBtnAfterSearch = By.xpath(" (//tr[not(contains(@style,'display: none;'))])[2]//a");
+
     //**************relogin with new password***********
 
     public By userNameField = By.xpath("//input[@placeholder='Username']");
     public By PasswordField = By.xpath("//input[@placeholder='Password']");
     public By login = By.id("loginFormSubmit");
+    public By editBtnAfterSearch = By.xpath(" (//tr[not(contains(@style,'display: none;'))])[2]//a");
     public By directorDashBoardPage = By.xpath("//h3[text()='Dashboard']");
     public By validation_Msg = By.xpath("//small[text()='Username or password is incorrect']");
 
@@ -103,7 +104,7 @@ public class DirectorPage extends BasePage {
 
 
     public void click_AvailaibleSlot() {
-        WebdriverWaits.waitUntilVisible(slotSelection);
+        WebdriverWaits.waitUntilVisible(spinner);
         WebdriverWaits.waitForSpinner();
         click_custom(slotSelection);
 
@@ -135,6 +136,8 @@ public class DirectorPage extends BasePage {
         WebdriverWaits.waitForSpinner();
         click_custom(avail_SaveButton);
     }
+
+
 
     public void click_CreateDirectorsButton() {
         WebdriverWaits.waitForSpinner();
@@ -178,13 +181,11 @@ public class DirectorPage extends BasePage {
         sendKeys_withClear(password_Field, password_FieldText);
     }
 
-    public void click_confirmPasswordField(String confirmPasswordFieldText)
-    {
+    public void click_confirmPasswordField(String confirmPasswordFieldText) {
         sendKeys_withClear(confirm_PasswordField, confirmPasswordFieldText);
     }
-
-    public void enter_ConfirmPassword(String rePassword) {
-        sendKeys_withClear(confirmPasswordField, rePassword);
+    public void enter_ConfirmPassword(String rePassword){
+        sendKeys_withClear(confirmPasswordField,rePassword);
     }
 
     public void click_createDirectorButton() {
@@ -279,15 +280,8 @@ public class DirectorPage extends BasePage {
     public void click_Login_Button() {
         click_custom(login);
     }
-    public void clickOn_availableBox() {
-        click_custom(clickOnBox);
-        click_custom(clickOnBox1);
-        click_custom(clickOnBox2);
-        click_custom(clickOnBox3);
-        click_custom(clickOnBox4);
-        click_custom(clickOnBox5);
-        click_custom(clickOnBox6);
-    }
+
+
 
 //    public void click_LogOutLink() {
 //        WebdriverWaits.waitUntilVisible(logOutLink);
@@ -308,25 +302,25 @@ public class DirectorPage extends BasePage {
         enter_ConfirmPassword(confirmPasswordFieldText);
         click_createDirectorButton();
     }
+    public void click_On_EditBtnAfterSearch() throws InterruptedException {
+        wait.waitUntilVisible(editBtnAfterSearch);
+        WebdriverWaits.waitForSpinner();
+        click_custom(editBtnAfterSearch);
 
 
-    //**************Search created director*************
+    }
+        //**************Search created director*************
     public void search_CreatedDirector(String UserName) throws InterruptedException {
         click_filterButton();
         enterInSearchField(UserName);
     }
-    public void click_On_EditBtnAfterSearch() {
-        wait.waitUntilVisible(editBtnAfterSearch);
-        WebdriverWaits.waitForSpinner();
-        click_custom(editBtnAfterSearch);
-    }
-
-    public void disable_Director() {
+    public void disable_Director() throws InterruptedException {
 
         click_On_EditBtnAfterSearch();
         off_ToggleButton();
         click_UpdateButton();
     }
+
     //***********edit created director*************
     public void edit_Director(String EmailAddress1, String passwordTextFieldText, String confirmPasswordFieldText) throws InterruptedException {
         click_EditButton();
@@ -342,6 +336,12 @@ public class DirectorPage extends BasePage {
 
     //********Cheking toggole off of directore*************
 
+    public void cheking_DisableUser() {
+        click_EditButton();
+        click_DontSave();
+        click_EditButton();
+        click_DontSave();
+    }
 
     //********Enable user of director************
     public void enable_Director() {
@@ -376,27 +376,15 @@ public class DirectorPage extends BasePage {
         click_Login_PasswordField(PasswordFieldText);
         click_Login_Button();
     }
-    public void click_On_EditButton() {
-        wait.waitUntilVisible(editButton);
-        WebdriverWaits.waitForSpinner();
-        click_custom(editButton);
-    }
-    public void cheking_DisableUser() {
-        click_On_EditButton();
-        clickOn_DontSave();
-        click_On_EditButton();
-        clickOn_DontSave();
-    }
+
     public void director_Availability() throws InterruptedException {
         Thread.sleep(9000);
         List<WebElement> list = getDriver().findElements(By.xpath("//div[@class='mbsc-flex-1-0 mbsc-ios mbsc-schedule-item ng-star-inserted']"));
         System.out.println(list.size());
         for (WebElement box : list) {
             Thread.sleep(2000);
-
-            moveToEleByWE(box);
-            if (getDriver().findElements(By.xpath("//div[@class='ng-star-inserted']")).size() > 2) {
-
+             moveToEleByWE(box);
+            if(getDriver().findElements(By.xpath("//div[@class='ng-star-inserted']")).size()>2){
                 if (getDriver().findElement(By.xpath("//div[@class='ng-star-inserted']")).getText().equals("Available")) {
                     break;
                 }
@@ -406,3 +394,8 @@ public class DirectorPage extends BasePage {
         click_SaveButton();
     }
 }
+
+
+
+
+
