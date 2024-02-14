@@ -34,7 +34,7 @@ public class DiagnosticianTest extends BaseTest {
     public void verify_diagnostician_Login() {
         LoginPage login = new LoginPage();
 
-        login.diagnosticianLogin(diagnosticianUserName, "12345678");
+        login.diagnostician_Login(diagnosticianUserName, "12345678");
         DiagnosticianPage diagnostician = new DiagnosticianPage();
         WebdriverWaits.waitUntilVisible(diagnostician.dashboard);
         validate_text(diagnostician.dashboard, "Dashboard");

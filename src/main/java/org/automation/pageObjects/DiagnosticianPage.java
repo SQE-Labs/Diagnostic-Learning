@@ -47,8 +47,7 @@ public class DiagnosticianPage extends BasePage {
     //**************Search created diagnostician*************
 
     public By filterButton = By.xpath("//a[@class='theme-button grey ml-auto mr-3']");
-    public By searchField = By.xpath("//input[@placeholder='Type here to search']");
-
+    public By searchField = By.xpath("//input[@aria-controls='DataTables_Table_0']");
     public By viewClientDetailLink = By.xpath("(//td)[6]");
     public By clientDetailText = By.xpath("//div[contains(@class,'page-header align-items-lg-center')]");
     public By clientNameText = By.cssSelector("tr:not([style='display: none;' ]) td:nth-child(1)");
@@ -129,7 +128,7 @@ public By availableSlots=By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-al
 
     public By availability = By.xpath("//a[text()='Availability']");
 
-    public List<WebElement> totalSlots=getWebElements(By.xpath("//div[@class='ng-star-inserted']"));
+    public By totalSlots=By.xpath("//div[@class='ng-star-inserted']");
     public By slot7 = By.xpath("(//div[@class='mbsc-flex-1-1 mbsc-ios mbsc-ltr mbsc-timeline-column ng-star-inserted'])[8]");
 
     public By slot11 = By.xpath("(//div[@class='mbsc-flex-1-1 mbsc-ios mbsc-ltr mbsc-timeline-column ng-star-inserted'])[12]");
@@ -244,9 +243,6 @@ public By availableSlots=By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-al
         WebdriverWaits.waitUntilVisible(filterButton);
         WebdriverWaits.waitForSpinner();
         click_custom(filterButton);
-        String AttText = getDriver().findElement(By.xpath("//input[@id='filterSearch']")).getAttribute("placeholder");
-        System.out.println(AttText);
-        validate_AttText(AttText, "Type here to search");
 
         String fromDateText = getDriver().findElement(By.xpath("//input[@placeholder='From Date']")).getAttribute("placeholder");
         getAttributevalue(fromDate, "placeholder");
@@ -356,6 +352,9 @@ public By availableSlots=By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-al
     public void cheking_DisableUser() throws InterruptedException {
         click_EditButton();
         click_DontSave();
+        WebdriverWaits.waitUntilVisible( enableUser);
+        WebdriverWaits.waitForSpinner();
+        validate_text(enableUser, "Enable User");
         click_EditButton();
         click_DontSave();
     }
@@ -465,7 +464,7 @@ public By availableSlots=By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-al
       //  validate_text(disableButton, "Save");
     }
 
-    public void click_Slot() throws InterruptedException {
+    public void click_Slot(int count) throws InterruptedException {
         // use logic??
 
         Thread.sleep(5000);
@@ -474,7 +473,7 @@ public By availableSlots=By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-al
         for (WebElement slot : slots) {
             Thread.sleep(2000);
             moveToEleByWE(slot);
-            if (totalSlots.size() > 3) {
+            if (getWebElements(totalSlots).size() > count) {
                 break;
             }
         }
@@ -492,7 +491,7 @@ public By availableSlots=By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-al
 
     public void set_Availability() throws InterruptedException {
         click_Availablity();
-        click_Slot();
+        click_Slot(3);
     }
 
     //**************Diagnostician Started Assessment***************
@@ -583,8 +582,6 @@ public By availableSlots=By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-al
         click_custom(yesCompleteAssButton);
     }
 
-
-
     //************diagnostician verifying complete assessment*************
 
     public void click_CompleteAssTab() {
@@ -615,8 +612,8 @@ public By availableSlots=By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-al
         for (WebElement slot : slots) {
             Thread.sleep(2000);
             moveToEleByWE(slot);
-            WebElement cancelSlot = getDriver().findElement(By.xpath("//div[@class='mbsc-ios mbsc-popup-header mbsc-popup-header-center ng-star-inserted']"));
-            if (cancelSlot.isDisplayed()) {
+            WebElement deleteSlot = getDriver().findElement(By.xpath("//div[@class='mbsc-ios mbsc-popup-header mbsc-popup-header-center ng-star-inserted']"));
+            if (deleteSlot.isDisplayed()) {
                 Thread.sleep(4000);
                 String getText = getText_custom(shiftText);
                 WebdriverWaits.waitUntilVisible(shiftText);

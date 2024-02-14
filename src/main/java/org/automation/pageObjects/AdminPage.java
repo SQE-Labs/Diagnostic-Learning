@@ -46,7 +46,8 @@ public class AdminPage extends BasePage {
     //**************Search created Admin*************
 
     public By filterButton = By.xpath("//a[@class='theme-button grey ml-auto mr-3']");
-    public By searchField = By.xpath("//input[@id='filterSearch']");
+    public By searchField = By.xpath("//input[@aria-controls='appointmentTable']");
+    public By adminSearchField=By.xpath("//input[@placeholder='Type here to search']");
     public By actualText = By.xpath("(//td)[2]");
     public By viewStudentObservationButton= By.xpath("//a[@class='theme-button green ml-2 ng-star-inserted']");
 
@@ -144,7 +145,8 @@ public class AdminPage extends BasePage {
     public By holdtab = By.xpath("//a[text()='Hold']");
     public By holdAppointmentText = By.xpath("//h3[text()='Hold Appointments']");
     public By holdfilterButton = By.xpath("//a[text()='Filter']");
-    public By searchTextBox = By.id("filterSearch");
+    public By searchTextBox = By.xpath("//input[@aria-controls='appointmentTable']");
+    public By searchAttribute=By.xpath("(//label)[2]");
     public By toDateText = By.xpath("//input[@formcontrolname='toDate']");
     public By fromDateText = By.xpath("//input[@formcontrolname='fromDate']");
     public By validateHoldClient = By.cssSelector("tr:not([style='display: none;' ]) td:nth-child(3)");
@@ -195,6 +197,8 @@ public class AdminPage extends BasePage {
 
     public By getTitleOfAttachedDocument = By.xpath("//h5[@class='text-center mb-4']");
     public By testReadyTab = By.xpath("//a[text()='Test Ready']");
+    public By todaysTab = By.xpath("(//li[@class='ng-star-inserted']//a)[4]");
+
 
 
     public By getTextFromViewDoc = By.xpath("//a[@class='d-block px-3 py-2 small text-dark']");
@@ -314,7 +318,12 @@ public class AdminPage extends BasePage {
 
     public void enterInSearchField(String searchFieldText) {
         WebdriverWaits.waitUntilVisible(searchField);
+        WebdriverWaits.waitForSpinner();
         sendKeys_withClear(searchField, searchFieldText);
+    }
+    public void enterTxt_InSearchField(String searchFieldText) {
+        WebdriverWaits.waitUntilVisible(adminSearchField);
+        sendKeys_withClear(adminSearchField, searchFieldText);
     }
 
     public void click_SearchButton() {
@@ -407,9 +416,9 @@ public class AdminPage extends BasePage {
     }
 
     public void verifySearchTextBox() {
-        WebdriverWaits.waitUntilVisible(filterButton);
-        WebdriverWaits.waitForSpinner();
-        click_custom(filterButton);
+//        WebdriverWaits.waitUntilVisible(filterButton);
+//        WebdriverWaits.waitForSpinner();
+//        click_custom(filterButton);
         String AttText = getDriver().findElement(By.xpath("//input[@id='filterSearch']")).getAttribute("placeholder");
         System.out.println(AttText);
         validate_AttText(AttText, "Type here to search");
@@ -433,7 +442,7 @@ public class AdminPage extends BasePage {
 
     public void search_CreatedAdmin(String UserName) {
         click_filterButton();
-        enterInSearchField(UserName);
+        enterTxt_InSearchField(UserName);
     }
 
     //******************EDIT ADMIN****************
@@ -831,14 +840,13 @@ public class AdminPage extends BasePage {
 
     public void verify_CancelledApp(String clientName) {
         click_CancelTab();
-        verifySearchTextBox();
         enterInSearchField(clientName);
     }
 
     public void clickOn_TodayTab() {
-        WebdriverWaits.waitUntilVisible(appointment.todayTab);
+        WebdriverWaits.waitUntilVisible( todaysTab);
         WebdriverWaits.waitForSpinner();
-        click_custom(appointment.todayTab);
+        click_custom( todaysTab);
     }
 
     public void clickOn_TestReadyTab() {
@@ -857,8 +865,12 @@ public class AdminPage extends BasePage {
         click_custom(card);
     }
 
-    public void enterClientNameInSearchField(String nameOfClients) {
+    public void clickFilterBtn() {
         click_custom(filterButton);
+
+    }
+
+    public void enterSearchField(String nameOfClients) {
         sendKeys_withClear(searchTextBox, nameOfClients);
     }
 
@@ -939,8 +951,6 @@ public class AdminPage extends BasePage {
         WebdriverWaits.waitForSpinner();
         scrollIntoView(payment.amountDue);
     }
-    public void view_AllAppointmentPage() {
-        enterClientNameInSearchField(clientFirstName);
-    }
+
 }
 

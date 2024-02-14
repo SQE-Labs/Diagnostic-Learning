@@ -13,6 +13,7 @@ public class AppointmentsPage extends BasePage {
     public By appointmentsTab = By.xpath("//a[@class='collapsed']");
     public By upcomingTab=By.xpath("//a[text()='Upcoming']");
     public By viewAllTab = By.xpath("//a[text()='View All']");
+    public By paymentButton = By.xpath("//button[@class='theme-button green m-2 ng-star-inserted']");
     public By dashBoardPage = By.xpath("//h3[text()='Dashboard']");
     public By allAppointmentsPage = By.xpath("//h3");
     public By searchedText = By.cssSelector("tr:not([style='display: none;' ]) td:nth-child(1)");
@@ -35,7 +36,7 @@ public class AppointmentsPage extends BasePage {
     public By newEventText = By.xpath("//div[text()='New Event']");
     public By dateElements = By.xpath("//tr/td[4]");
     public By dateElement = By.xpath("(//tr/td[5])[1]");
-    public By dateEle=By.xpath("((//tr[not(contains(@style,'display: none;'))])[2]//td)[3]");
+    public By dateEle=By.xpath("((//tr[not(contains(@style,'display: none;'))])[2]//td)[4]");
     public By chooseTestingLocation = By.id("testingLocation");
     public By clientFirstName = By.xpath("//input[@placeholder='Client First Name']");
     public By clientLastName = By.xpath("//input[@placeholder='Client Last Name']");
@@ -67,7 +68,23 @@ public class AppointmentsPage extends BasePage {
     public By directorTab=By.xpath("//a[text()='Directors']");
     public By diagnosticianTab=By.xpath("//a[text()='Diagnosticians']");
 
-    public List<WebElement> totalSlots=getWebElements(By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-background ng-star-inserted']"));
+    public By collectPaymentTXT = By.xpath("(//h4[@class='text-center'])[1]");
+    public By upcomingCard = By.xpath("//a[text()='Upcoming']");
+    public By upcomingAppointmentTXT = By.xpath("//h3[@class='mb-4 mb-md-0']");
+    public By directorFilter = By.xpath("//a[text()='Filter']");
+    public By toDateText = By.xpath("//input[@formcontrolname='toDate']");
+    public By fromDateText = By.xpath("//input[@formcontrolname='fromDate']");
+    public By searchTextBox = By.id("filterSearch");
+    public By afterClickFromDate = By.xpath("//*[@id=\"filterShow\"]/div/div[2]/input");
+    public By appointmentsToday = By.xpath("//*[@id=\"Appointments\"]/li[2]/a");
+    public By firstSearchedRecord = By.xpath("(//td[@class='tablewidth'])[4]");
+    public By getAppointmentDetails = By.xpath("(//h5[@class='mb-0 text-purple'])[1]");
+    public By editTestPlanButton = By.xpath("(//button[@class='theme-button m-2 ng-star-inserted'])[1]");
+    public By selectWISC = By.xpath("(//div[@class='col-md-3 ng-star-inserted'])[6]");
+    public By saveBtnEditPlan = By.xpath("//button[@class='theme-button green mr-2']");
+    public By otherComment = By.xpath("//textarea[@name='testSurveyComment']");
+    public By todaysAppointmentTXT = By.xpath("//div[@class='align-items-md-center d-flex flex-column flex-md-row page-header']");
+    public By totalSlots= By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-background ng-star-inserted']");
 
 
 
@@ -101,6 +118,31 @@ public class AppointmentsPage extends BasePage {
          click_custom(cellNumber);
         sendKeys_withClear(cellNumber, cellNumberText);
     }
+    public void click_UpcomingCard(){
+        WebdriverWaits.waitUntilVisible(upcomingCard);
+        clickBtn_custom(upcomingCard);
+    }
+    public void click_Filter(){
+        WebdriverWaits.waitUntilVisible(directorFilter);
+        clickBtn_custom(directorFilter);
+    }
+    public void click_FromDate() throws InterruptedException {
+        WebdriverWaits.waitUntilVisible(fromDateText);
+        clickBtn_custom(fromDateText);
+        WebdriverWaits.waitUntilVisible(afterClickFromDate);
+        clickBtn_custom(afterClickFromDate);
+    }
+    public void click_ToDate(){
+        WebdriverWaits.waitUntilVisible(toDateText);
+        clickBtn_custom(toDateText);
+
+    }
+    public void enterSearchText(String searchText){
+        WebdriverWaits.waitUntilVisible(searchTextBox);
+        sendKeys_withClear(searchTextBox,searchText);
+    }
+
+
 
     public void enterEmialAddress(String emailAddressText) {
         sendKeys_withClear(emailAddress, emailAddressText);
@@ -127,6 +169,10 @@ public class AppointmentsPage extends BasePage {
         WebdriverWaits.waitUntilVisible(testAmount);
         sendKeys_withClear(testAmount, testAmountText);
     }
+    public void click_Today_AppointmentCard(){
+        WebdriverWaits.waitUntilVisible(appointmentsToday);
+        click_custom(appointmentsToday);
+    }
 
     public void clickContinueToDepositButton() {
         click_custom(continueToDeposit);
@@ -143,6 +189,37 @@ public class AppointmentsPage extends BasePage {
         clickBtn_custom(chooseTestingLocation, "ChooseLocation");
         selectDropDownByVisibleText_custom(chooseTestingLocation, chooseLocationText, "ChooseLocation");
     }
+    public void click_ViewAll(){
+        WebdriverWaits.waitUntilVisible(viewAllTab);
+        clickBtn_custom(viewAllTab);
+    }
+    public void click_PaymentButton() {
+        WebdriverWaits.waitUntilVisible(paymentButton);
+        scrollIntoView(paymentButton);
+        clickBtn_custom(paymentButton);
+    }
+
+    public void click_ViewDetailLink(){
+        WebdriverWaits.waitUntilVisible(viewDetailsLink);
+        clickBtn_custom(viewDetailsLink);
+    }
+    public void click_EditTestPlan(){
+        WebdriverWaits.waitUntilVisible(editTestPlanButton);
+        scrollIntoView(editTestPlanButton);
+        clickBtn_custom(editTestPlanButton);
+
+    }
+    public void enter_OtherComments(String otherCommentText) {
+        scrollIntoView(editTestPlanButton);
+        WebdriverWaits.waitUntilVisible(otherComment);
+        sendKeys_withClear(otherComment,otherCommentText);
+    }
+
+    public void click_SaveButton() {
+        WebdriverWaits.waitUntilVisible(saveBtnEditPlan);
+        scrollIntoView(saveBtnEditPlan);
+        clickBtn_custom(saveBtnEditPlan);
+    }
 
 
 
@@ -151,6 +228,11 @@ public class AppointmentsPage extends BasePage {
         WebdriverWaits.waitUntilVisible(enterAmountField);
         click_custom(enterAmountField);
         sendKeys_withClear(enterAmountField, enterAmountText);
+    }
+    public void select_Checkbox() {
+        WebdriverWaits.waitForSpinner();
+        WebdriverWaits.waitUntilVisible(selectWISC);
+        clickBtn_custom(selectWISC);
     }
 
     public void clickCollectDepositButton() {
@@ -162,6 +244,11 @@ public class AppointmentsPage extends BasePage {
         WebdriverWaits.waitForSpinner();
         click_custom(viewDetails);
     }
+    public void click_CloseButton() {
+        WebdriverWaits.waitUntilVisible(saveBtnEditPlan);
+        scrollIntoView(saveBtnEditPlan);
+        clickBtn_custom(saveBtnEditPlan);
+    }
 
 
     public int getColumnCount() {
@@ -169,7 +256,7 @@ public class AppointmentsPage extends BasePage {
         return list.size();
     }
 
-    public void getTotalColumnCount() throws InterruptedException {
+    public void getTotalColumnCount(int count) throws InterruptedException {
         int colCount = getColumnCount();
         int expLocatorPos = (colCount - 1) * 7 + 1;
         System.out.println(expLocatorPos);
@@ -180,7 +267,7 @@ public class AppointmentsPage extends BasePage {
         for (WebElement slot : list) {
             Thread.sleep(1000);
             click_custom(slot);
-            if (totalSlots.size() > 0) {
+            if (getWebElements(totalSlots).size() > count) {
                 break;
             }
         }
@@ -200,7 +287,7 @@ public class AppointmentsPage extends BasePage {
         WebdriverWaits.waitUntilVisible(clickSlotSaveBtn);
         click_custom(clickSlotSaveBtn);
     }
-    public void clickCalSaveButton() {
+    public void clickSaveButton() {
         click_custom(clickCalSaveBtn);
     }
     public void click_AssessmentDate() {
@@ -211,14 +298,14 @@ public class AppointmentsPage extends BasePage {
 
     public void selectAppointmentSlot() throws InterruptedException {
         click_AssessmentDate();
-        getTotalColumnCount();
+        getTotalColumnCount(0);
         WebdriverWaits.waitUntilVisible(newEventText);
         validate_text(newEventText, "New Event");
 
         clickSlotSaveButton();
         WebdriverWaits.waitUntilVisible(newSlotText);
         validate_text(newSlotText, "New event");
-        clickCalSaveButton();
+        clickSaveButton();
     }
 
     public void selectAssesmentType(String assestmentTypeTexts) {
