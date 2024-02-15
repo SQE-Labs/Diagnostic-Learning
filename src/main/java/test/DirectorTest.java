@@ -330,17 +330,17 @@ public class DirectorTest extends BaseTest {
             validate_text(director.signInToYourAccountTxt,"Sign in to your account");
 
      */  // }
-    @Test(priority = 23, enabled = true, description = "'Test Fee Adjustment' field accepts negative value")
+    @Test(priority = 23, enabled = true, description = "67. 'Test Fee Adjustment' field accepts negative value")
     public void verify_EnterNegativeValueInTestFeeAdjustmentFee() throws InterruptedException
     {
         AppointmentsPage appointment = new AppointmentsPage();
         DashboardPage dashPage=new DashboardPage();
         PaymentPage payment=new PaymentPage();
         login.director_Login();
-        appointment.clickOn_AppoinptmentTab();
+        appointment.click_AppoinptmentTab();
         appointment.click_OnViewAllTab();
         String status = "Test Ready";
-        dashPage.enter_ValidData(status);
+        dashPage.enter_DataSearhTextBox(status);
         appointment.clickOn_ViewDetails();
         Float beforeAssementAmount=payment.retrieveAmount(payment.assessmentAmountInDisplay);
         Float beforeAmountDue=payment.retrieveAmount(payment.amountDue);
@@ -358,17 +358,17 @@ public class DirectorTest extends BaseTest {
 
     }
 
-    @Test(priority = 24, enabled = true, description = "'Test Fee Adjustment' field accepts negative value")
+    @Test(priority = 24, enabled = true, description = "68. 'Test Fee Adjustment' field accepts negative value")
     public void verify_EnterPositiveValueInTestFeeAdjustmentFee() throws InterruptedException
     {
         AppointmentsPage appointment = new AppointmentsPage();
         DashboardPage dashPage=new DashboardPage();
         PaymentPage payment=new PaymentPage();
         login.director_Login();
-        appointment.clickOn_AppoinptmentTab();
+        appointment.click_AppoinptmentTab();
         appointment.click_OnViewAllTab();
         String status = "Test Ready";
-        dashPage.enter_ValidData(status);
+        dashPage.enter_DataSearhTextBox(status);
         appointment.clickOn_ViewDetails();
         Float beforeReceviedAmount=payment.retrieveAmount(payment.receivedAmountOnDisplay);
         Float beforeAmountDue=payment.retrieveAmount(payment.amountDue);
@@ -386,7 +386,7 @@ public class DirectorTest extends BaseTest {
 
     }
 
-    @Test(priority = 25, enabled = true, description = "User is redirected to  'Marchant login' page")
+    @Test(priority = 25, enabled = true, description = "72. User is redirected to  'Marchant login' page")
     public void verify_MarchantLogin() throws InterruptedException
     {
         AppointmentsPage appointment = new AppointmentsPage();
@@ -394,16 +394,16 @@ public class DirectorTest extends BaseTest {
         PaymentPage payment=new PaymentPage();
         DirectorPage director=new DirectorPage();
         login.director_Login();
-        appointment.clickOn_UpcomingTab();
+        appointment.click_UpcomingTab();
         String status = "Test Ready";
-        dashPage.enter_ValidData(status);
+        dashPage.enter_DataSearhTextBox(status);
         director.click_On_EditBtnAfterSearch();
         payment.clickOn_PaymentBtn();
         payment.click_PaymentLinkButton();
         validate_text(payment.usernamePaymentMerchant, "Username");
 
     }
-    @Test(priority = 26, enabled = true, description = "User is able to click on 'Cancel' button.")
+    @Test(priority = 26, enabled = true, description = "73. User is able to click on 'Cancel' button.")
     public void verify_ClickOnCanceBtn() throws InterruptedException
     {
         AppointmentsPage appointment = new AppointmentsPage();
@@ -412,9 +412,9 @@ public class DirectorTest extends BaseTest {
         PaymentPage payment=new PaymentPage();
         DirectorPage director=new DirectorPage();
         login.director_Login();
-        appointment.clickOn_UpcomingTab();
+        appointment.click_UpcomingTab();
         String status = "Test Ready";
-        dashPage.enter_ValidData(status);
+        dashPage.enter_DataSearhTextBox(status);
         director.click_On_EditBtnAfterSearch();
         String expecetedClientName=getText_custom(admin.title);
         payment.clickOn_PaymentBtn();
@@ -423,7 +423,7 @@ public class DirectorTest extends BaseTest {
         validate_text(admin.title, expecetedClientName);
     }
 
-    @Test(priority = 27, enabled = true, description = "User is able to click on 'Cancel' button.")
+    @Test(priority = 27, enabled = true, description = "User is able to click on 'Upcoming' subtab.")
     public void verify_ClickOnUpcomingSubtab() throws InterruptedException
     {
         AppointmentsPage appointment = new AppointmentsPage();
@@ -432,10 +432,10 @@ public class DirectorTest extends BaseTest {
         PaymentPage payment=new PaymentPage();
         DirectorPage director=new DirectorPage();
         login.director_Login();
-        appointment.clickOn_UpcomingTab();
+        appointment.click_UpcomingTab();
         validate_text(admin.titleOfUpcomingPage, "Upcoming Appointments");
         String status = "Upcoming";
-        dashPage.enter_ValidData(status);
+        dashPage.enter_DataSearhTextBox(status);
         director.click_OnViewDetailsBtn();
         String expecetedClientName=getText_custom(admin.title);
         payment.clickOn_PaymentBtn();
@@ -453,10 +453,10 @@ public class DirectorTest extends BaseTest {
         PaymentPage payment=new PaymentPage();
         DirectorPage director=new DirectorPage();
         login.director_Login();
-        appointment.clickOn_UpcomingTab();
+        appointment.click_UpcomingTab();
         validate_text(admin.titleOfUpcomingPage, "Upcoming Appointments");
         String status = "Upcoming";
-        dashPage.enter_ValidData(status);
+        dashPage.enter_DataSearhTextBox(status);
         director.click_OnViewDetailsBtn();
 
     }

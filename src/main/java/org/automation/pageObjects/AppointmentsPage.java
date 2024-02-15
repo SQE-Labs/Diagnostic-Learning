@@ -103,7 +103,7 @@ public class AppointmentsPage extends BasePage {
     public By closeBtn=By.xpath("//button[@class='theme-button grey float-right']");
     //******************Verifying cancelled appointments*****************
 
-    public void clickOn_TodayTab()
+    public void click_TodayTab()
     {
         WebdriverWaits.waitUntilVisible(appointmentsTab);
         click_custom(appointmentsTab);
@@ -111,13 +111,13 @@ public class AppointmentsPage extends BasePage {
         click_custom(todayTab);
     }
 
-    public void clickOn_AppoinptmentTab()
+    public void click_AppoinptmentTab()
     {
         WebdriverWaits.waitUntilVisible(appointmentsTab);
         click_custom(appointmentsTab);
 
     }
-    public void clickOn_TestReadyTab()
+    public void click_TestReadyTab()
     {
         WebdriverWaits.waitUntilVisible(appointmentsTab);
         click_custom(appointmentsTab);
@@ -125,7 +125,7 @@ public class AppointmentsPage extends BasePage {
         click_custom(testReadyTab);
     }
 
-    public void clickOn_UpcomingTab()
+    public void click_UpcomingTab()
     {
         WebdriverWaits.waitUntilVisible(appointmentsTab);
         click_custom(appointmentsTab);
@@ -173,10 +173,7 @@ public class AppointmentsPage extends BasePage {
         clickBtn_custom(directorFilter);
 
     }
-    public void enterSearchText(String searchText){
-        WebdriverWaits.waitUntilVisible(searchTextBox);
-        sendKeys_withClear(searchTextBox,searchText);
-    }
+
     public void selectGradeType(int gradeType) {
         selectDropDownByIndex_custom(grade, gradeType);
     }
@@ -229,10 +226,7 @@ public class AppointmentsPage extends BasePage {
         WebdriverWaits.waitForSpinner();
         click_custom(logOutLink);
     }
-    public void click_UpcomingCard() {
-        WebdriverWaits.waitUntilVisible(upcomingCard);
-        clickBtn_custom(upcomingCard);
-    }
+
 
 
 
@@ -242,7 +236,7 @@ public class AppointmentsPage extends BasePage {
         sendKeys_withClear(testAmount, testAmountText);
     }
 
-    public void clickOnContinueToDepositButton()
+    public void click_ContinueToDepositButton()
     {
         click_custom(continueToDeposit);
     }
@@ -254,11 +248,7 @@ public class AppointmentsPage extends BasePage {
         sendKeys_withClear(dateOfBirth, dateOfBirthText);
     }
 
-    public void clickOnSaveButton()
-    {
-        //  click_custom(afternoonToggleButton);
-        click_custom(saveButton);
-    }
+
     public void clickOnAppSaveButton()
     {
         WebdriverWaits.waitUntilVisible(appointmentSaveButtonButton);
@@ -442,7 +432,7 @@ public void newEventText()
         enterEmialAddress(EmailAddress);
         reasonForCallDropDown(reasonForCallText);
         enterTestAmount(testAmountText);
-        clickOnContinueToDepositButton();
+        click_ContinueToDepositButton();
         WebdriverWaits.waitForSpinner();
         enterAmount(enterAmountText);
         WebdriverWaits.waitForSpinner();

@@ -37,7 +37,7 @@ public class DashboardPage extends BasePage {
 
     }
 
-    public void enter_ValidData(String text)
+    public void enter_DataSearhTextBox(String text)
     {
         WebdriverWaits.waitUntilVisible(clientNameFromFollowup);
         WebdriverWaits.waitForSpinner();

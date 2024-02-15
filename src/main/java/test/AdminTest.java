@@ -527,7 +527,7 @@ public class AdminTest extends BaseTest {
         public void verify_UpcomingTab () {
             AdminPage admin = new AdminPage();
             AppointmentsPage appointment=new AppointmentsPage();
-            appointment.clickOn_UpcomingTab();
+            appointment.click_UpcomingTab();
             WebdriverWaits.waitUntilVisible(admin.titleOfUpcomingPage);
             WebdriverWaits.waitForSpinner();
             validate_text(admin.titleOfUpcomingPage, "Upcoming Appointments");
@@ -539,7 +539,7 @@ public class AdminTest extends BaseTest {
         public void verify_TestReadyTab () {
             AdminPage admin = new AdminPage();
             AppointmentsPage appointment=new AppointmentsPage();
-            appointment.clickOn_TestReadyTab();
+            appointment.click_TestReadyTab();
             validate_text(admin.getTestReadyTitle, "Test Ready Appointments");
         }
 
@@ -547,7 +547,7 @@ public class AdminTest extends BaseTest {
         public void verify_ClientPageTestReady () {
             AdminPage admin = new AdminPage();
             AppointmentsPage appointment=new AppointmentsPage();
-            appointment.clickOn_TestReadyTab();
+            appointment.click_TestReadyTab();
             String actualText = getText_custom(admin.nameOnCard);
             admin.clickOn_Card();
             String clientName = getText_custom(admin.clientNameDetail);
@@ -569,7 +569,7 @@ public class AdminTest extends BaseTest {
         public void click_OnViewDetailsButton () {
             AdminPage admin = new AdminPage();
             AppointmentsPage appointment=new AppointmentsPage();
-            appointment.clickOn_UpcomingTab();
+            appointment.click_UpcomingTab();
             admin.filter_ForUpcoming(clientLastName);
             String actualText = getText_custom(admin.getNameOfClient);
             admin.clickOn_ViewDetailsBtn();
@@ -893,7 +893,7 @@ public class AdminTest extends BaseTest {
             LoginPage login = new LoginPage();
             AppointmentsPage appointment=new AppointmentsPage();
             login.adminLogin("allen", "123456");
-            appointment.clickOn_UpcomingTab();
+            appointment.click_UpcomingTab();
             String expectedText = "Upcoming Appointments";
             validate_text(admin.title, expectedText);
         }
@@ -1035,7 +1035,7 @@ public class AdminTest extends BaseTest {
             appointment.clickOn_DirectorTab();
             admin.clickOn_FilterBtn();
             String expectedName = getText_custom(admin.directorName);
-            dashPage.enter_ValidData(expectedName);
+            dashPage.enter_DataSearhTextBox(expectedName);
             validate_text(admin.directorName, expectedName);
         }
 
@@ -1051,7 +1051,7 @@ public class AdminTest extends BaseTest {
             appointment.clickOn_DirectorTab();
             admin.clickOn_FilterBtn();
             String status = "Active";
-            dashPage.enter_ValidData(status);
+            dashPage.enter_DataSearhTextBox(status);
             director.disable_Director();
             validate_text(director.edit_SuccMsg, "Director details updated successfully.");
     }
@@ -1082,7 +1082,7 @@ public class AdminTest extends BaseTest {
             appointment.click_OnViewAllTab();
             admin.clickOn_FilterBtn();
             String status = "Test Ready";
-            dashPage.enter_ValidData(status);
+            dashPage.enter_DataSearhTextBox(status);
             admin.clickOn_ViewDetailsBtn();
             admin.click_OnRescheduleBtn();
             String expectedTitle = "Reschedule Appointment";
@@ -1118,7 +1118,7 @@ public class AdminTest extends BaseTest {
         appointment.click_OnViewAllTab();
         admin.clickOn_FilterBtn();
         String status = "Test Ready";
-        dashPage.enter_ValidData(status);
+        dashPage.enter_DataSearhTextBox(status);
         admin.clickOn_ViewDetailsBtn();
         admin.click_OnRescheduleBtn();
         Thread.sleep(4000);
@@ -1151,7 +1151,7 @@ public class AdminTest extends BaseTest {
         appointment.click_OnViewAllTab();
         admin.clickOn_FilterBtn();
         String status = "Test Ready";
-        dashPage.enter_ValidData(status);
+        dashPage.enter_DataSearhTextBox(status);
         admin.clickOn_ViewDetailsBtn();
         admin.click_OnEditBtn();
         String expectedClassName = "border-danger";
@@ -1177,7 +1177,7 @@ public class AdminTest extends BaseTest {
         appointment.click_OnViewAllTab();
         admin.clickOn_FilterBtn();
         String status = "Test Ready";
-        dashPage.enter_ValidData(status);
+        dashPage.enter_DataSearhTextBox(status);
         admin.clickOn_ViewDetailsBtn();
         String expectedName = getText_custom(admin.title);
         admin.click_OnCancelBtn();
@@ -1201,14 +1201,14 @@ public class AdminTest extends BaseTest {
         appointment.click_OnViewAllTab();
         admin.clickOn_FilterBtn();
         String status = "Test Ready";
-        dashPage.enter_ValidData(status);
+        dashPage.enter_DataSearhTextBox(status);
         admin.clickOn_ViewDetailsBtn();
         String nameOfClient = getText_custom(admin.nameOfClientDetailsPage);
         String expectedName = "Appointment is Canceled";
         admin.click_OnCancelBtn();
         admin.clickOn_CancelRadioBtn();
         admin.clickOn_FilterBtn();
-        dashPage.enter_ValidData(nameOfClient);
+        dashPage.enter_DataSearhTextBox(nameOfClient);
         admin.clickOn_ViewDetailsBtn();
         String actualName = getText_custom(admin.cancelAppointmentValMsg);
         validate_AttText(actualName, expectedName);
@@ -1227,7 +1227,7 @@ public class AdminTest extends BaseTest {
         appointment.click_OnViewAllTab();
         admin.clickOn_FilterBtn();
         String status = "Test Ready";
-        dashPage.enter_ValidData(status);
+        dashPage.enter_DataSearhTextBox(status);
         admin.clickOn_ViewDetailsBtn();
         String expectedTitle = getText_custom(admin.title);
         admin.click_CreateFollowUpBtn();
@@ -1249,7 +1249,7 @@ public class AdminTest extends BaseTest {
         appointment.click_OnViewAllTab();
         admin.clickOn_FilterBtn();
         String status = "Test Ready";
-        dashPage.enter_ValidData(status);
+        dashPage.enter_DataSearhTextBox(status);
         admin.clickOn_ViewDetailsBtn();
         admin.click_CreateFollowUpBtn();
         admin.click_FollowUpSlot();
