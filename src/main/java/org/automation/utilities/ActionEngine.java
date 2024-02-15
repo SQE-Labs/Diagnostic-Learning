@@ -144,7 +144,7 @@ public class ActionEngine extends BaseTest {
 
 
     //check if element is Present
-    public boolean isElementPresent_custom(WebElement element, String fieldName) {
+    public boolean isElementDisplay_custom(WebElement element, String fieldName) {
         boolean flag = false;
         try {
             flag = element.isDisplayed();

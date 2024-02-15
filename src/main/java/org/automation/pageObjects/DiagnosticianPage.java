@@ -89,6 +89,8 @@ public By availableSlots=By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-al
 
 //*****************Set Availability for diagnostician ****************
 
+    WebElement deleteSlot = getDriver().findElement(By.xpath("//div[@class='mbsc-ios mbsc-popup-header mbsc-popup-header-center ng-star-inserted']"));
+
     public By chooseTestingLocation = By.id("testingLocation");
     public By assessmentDate = By.xpath("//input[@placeholder='Assessment Date']");
 
@@ -614,8 +616,8 @@ public By availableSlots=By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-al
         for (WebElement slot : slots) {
             Thread.sleep(2000);
             moveToEleByWE(slot);
-            WebElement deleteSlot = getDriver().findElement(By.xpath("//div[@class='mbsc-ios mbsc-popup-header mbsc-popup-header-center ng-star-inserted']"));
-            if (deleteSlot.isDisplayed()) {
+
+            if (isElementDisplay_custom(deleteSlot,"Slots Name")) {
                 Thread.sleep(4000);
                 String getText = getText_custom(shiftText);
                 WebdriverWaits.waitUntilVisible(shiftText);
