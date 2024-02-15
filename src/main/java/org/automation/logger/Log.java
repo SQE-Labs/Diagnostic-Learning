@@ -25,6 +25,7 @@ public final class Log {
     public static void error(String message, Throwable error) {
         LogConfig.getLogger().error(message, error);
         //Reporter.log(message + "<br />");
+
     }
 
     /**

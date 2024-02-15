@@ -1,5 +1,3 @@
-
-
 package org.automation.utilities;
 
 import java.text.DateFormat;
@@ -7,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.TimeZone;
 
 public class DateGenerator {
 
@@ -24,6 +23,14 @@ public class DateGenerator {
         return date1;
     }
 
+    public static  String getCurrentDateFromSystem()
+    {
+        LocalDate currentDate = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy");
+        String formattedDate = currentDate.format(formatter);
+        System.out.println("generated Date is ======   " + formattedDate);
+        return formattedDate;
+    }
     public static String getDateWithDays(String format, int dayToAdd) {
 
         LocalDate todayDate = LocalDate.now();
@@ -46,6 +53,20 @@ public class DateGenerator {
         LocalDate currentDate = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM");
         return currentDate.format(formatter);
+    }
+
+    public static String getCurrentDateTime(String format) {
+
+
+        Date date = new Date();
+        DateFormat pstFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+        TimeZone timeZone = TimeZone.getTimeZone("Australia/Canberra");
+        pstFormat.setTimeZone(timeZone);
+        String current_date_time = pstFormat.format(date);
+        System.out.println("Australia/Canberra-" + current_date_time);
+        return current_date_time;
+
+
     }
 
 

@@ -16,28 +16,23 @@ import static org.automation.utilities.WebdriverWaits.moveToElement;
 
 public class DashBoardPanelPage extends BasePage {
     public By logOutLink = By.xpath("//a[text()='Log Out']");
-    public By directorsTab = By.xpath("//li[@id='Directors']");
+    public By directorsTab = By.xpath("//a[text()='Directors']");
     public By diagnosticianLink = By.xpath("//a[text()='Diagnosticians']");
     public By adminButton = By.xpath("//a[text()='Admins']");
-    public By paymentButton = By.xpath("//a[text()='Payments']");
     public By backButton = By.xpath("//button[text()='Back']");
     public By exportCSVButton = By.xpath("//button[text()='Export to CSV']");
     public By AppointmentsTab = By.xpath("//a[text()=' Appointments ']");
     public By availabilityTab = By.xpath("//a[text()='Availability']");
-    public By editButton = By.xpath("(//a[text()='Edit'])[1]");
     public By viewAllTab = By.xpath("//a[text()='View All']");
-    public By spinner = By.cssSelector("div.ngx-spinner-overlay");
-    public By viewDetailLink = By.xpath("tr:not([style='display: none;' ]) td:nth-child(1)");
-    public By filterButton = By.xpath("//a[text()='Filter']");
-    public By searchField = By.xpath("//input[@id='filterSearch']");
+    public By completedTab=By.xpath("//a[text()='Completed ']");
 
 
 
     public void click_LogOutLink() {
         WebdriverWaits.waitUntilVisible(logOutLink);
+        WebdriverWaits.waitForSpinner();
         click_custom(logOutLink);
     }
-
 
     public void click_ViewAllTab() {
         WebdriverWaits.waitUntilVisible(viewAllTab);
@@ -45,9 +40,10 @@ public class DashBoardPanelPage extends BasePage {
         moveToElement(viewAllTab);
     }
 
-    public void click_DirectorTab() {
+    public void click_DirectorTab() throws InterruptedException {
         WebdriverWaits.waitUntilVisible(directorsTab);
         WebdriverWaits.waitForSpinner();
+        Thread.sleep(4000);
         click_custom(directorsTab);
     }
 
@@ -63,15 +59,6 @@ public class DashBoardPanelPage extends BasePage {
         WebdriverWaits.waitForSpinner();
         Thread.sleep(5000);
         click_custom(adminButton);
-    }
-
-    public void click_On_PaymentTab() {
-        WebdriverWaits.waitUntilInvisible(spinner);
-        click_custom(paymentButton);
-    }
-
-    public void edit_Director() {
-        click_custom(editButton);
     }
 
     public void click_BackButton() {
@@ -96,9 +83,6 @@ public class DashBoardPanelPage extends BasePage {
         }
     }
 
-
-
-
     public String getDownloadFileName() {
 
         ChromeDownloads download = new ChromeDownloads();
@@ -110,16 +94,29 @@ public class DashBoardPanelPage extends BasePage {
         click_custom(exportCSVButton);
     }
 
-    public void click_AppointmentsTab() {
-        WebdriverWaits.waitUntilVisible(AppointmentsTab);
+    public void click_AppointmentsTab(){
+
         WebdriverWaits.waitForSpinner();
         click_custom(AppointmentsTab);
+    }
+
+    public void click_AppointmentsTab2(){
+        WebdriverWaits.waitUntilInvisible(availabilityTab);
+        WebdriverWaits.waitForSpinner();
+        click_custom(availabilityTab);
     }
 
     public void click_Availability() {
         WebdriverWaits.waitUntilVisible(availabilityTab);
         WebdriverWaits.waitForSpinner();
         click_custom(availabilityTab);
+        WebdriverWaits.waitForSpinner();
+    }
+    public void click_CompletedTab() throws InterruptedException {
+        Thread.sleep(4000);
+        WebdriverWaits.waitUntilVisible(completedTab);
+        WebdriverWaits.waitForSpinner();
+        moveToElement(completedTab);
     }
 
         public static void readCSVFile() throws IOException, CsvException {

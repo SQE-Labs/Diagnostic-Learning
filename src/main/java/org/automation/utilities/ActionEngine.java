@@ -286,6 +286,17 @@ public class ActionEngine extends BaseTest {
             return flag;
         }
     }
+    public boolean isElementNotPresent_custom(By path, String fieldName) {
+        boolean flag = false;
+        try {
+            Element element = new Element(fieldName, path);
+            flag = element.isInvisible();
+            return flag;
+        } catch (Exception e) {
+            extentTest.log(FAIL, "****Checking for presence of element : " + fieldName + " not tested due to exception: " + e);
+            return flag;
+        }
+    }
 
     public boolean isExceptionOrErrorPresent() {
         boolean flag = false;

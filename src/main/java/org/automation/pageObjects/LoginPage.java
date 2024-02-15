@@ -26,13 +26,23 @@ public class LoginPage extends BasePage {
 
 
     public void superAdminLogin()   {
+        WebdriverWaits.waitUntilVisible(userNameField);
         sendKeys_withClear(userNameField, PropertiesUtil.getPropertyValue("super_userName"));
         sendKeys_withClear(PasswordField, PropertiesUtil.getPropertyValue("super_password"));
         clickBtn_custom(login);
         WebdriverWaits.waitForSpinner();
 
     }
-    public void diagnosticianLogin( String getText_Dia,String PasswordFieldText )   {
+
+    public void director_Login()   {
+        sendKeys_withClear(userNameField, PropertiesUtil.getPropertyValue("director_userName"));
+        sendKeys_withClear(PasswordField, PropertiesUtil.getPropertyValue("director_password"));
+        clickBtn_custom(login);
+        WebdriverWaits.waitForSpinner();
+
+    }
+
+    public void diagnostician_Login( String getText_Dia,String PasswordFieldText )   {
         sendKeys_withClear(userNameField,getText_Dia );
         enterPassword(PasswordFieldText);
         click_custom(login);

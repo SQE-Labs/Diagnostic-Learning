@@ -16,7 +16,7 @@ public class LoginTest extends BaseTest {
         LoginPage login = new LoginPage();
 //        login.enterUsername(PropertiesUtil.getPropertyValue("userName"));
 //        login.enterPassword(PropertiesUtil.getPropertyValue("password"));
-//        login.clickLoginBtn();
+ //   login.clickLoginBtn();
     }
     @Test(priority = 0, enabled = true, description = "To verify login functionality")
     public void s() throws InterruptedException {

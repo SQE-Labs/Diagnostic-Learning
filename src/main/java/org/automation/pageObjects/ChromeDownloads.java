@@ -15,6 +15,9 @@ import java.time.Duration;
 import static org.automation.base.BaseTest.getDriver;
 
 public class ChromeDownloads extends ActionEngine {
+    public By fileLink = By.cssSelector("a[id='file-link']");
+    public By shadowRoot = By.cssSelector("#shadow-root");
+
 
     public String getFileName() {
         getDriver().navigate().to("chrome://downloads/");
