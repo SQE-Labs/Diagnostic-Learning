@@ -47,7 +47,7 @@ public class DiagnosticianPage extends BasePage {
     //**************Search created diagnostician*************
 
     public By filterButton = By.xpath("//a[@class='theme-button grey ml-auto mr-3']");
-    public By searchField = By.xpath("//input[@aria-controls='DataTables_Table_0']");
+    public By searchField = By.xpath("//input[@placeholder='Type here to search']");
     public By viewClientDetailLink = By.xpath("(//td)[6]");
     public By clientDetailText = By.xpath("//div[contains(@class,'page-header align-items-lg-center')]");
     public By clientNameText = By.cssSelector("tr:not([style='display: none;' ]) td:nth-child(1)");
@@ -184,7 +184,9 @@ public By availableSlots=By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-al
         WebdriverWaits.waitForSpinner();
         click_custom(createDiagnostician);
     }
-
+    public void click_Back_Button() {
+        click_custom(backButton);
+    }
     public void enter_diagnostician_FirstName(String CustomerFirstName) {
         sendKeys_withClear(diagnostician_FirstName, CustomerFirstName);
     }
