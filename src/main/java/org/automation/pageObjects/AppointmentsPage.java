@@ -110,6 +110,13 @@ public class AppointmentsPage extends BasePage {
         WebdriverWaits.waitUntilVisible(todayTab);
         click_custom(todayTab);
     }
+
+    public void clickOn_AppoinptmentTab()
+    {
+        WebdriverWaits.waitUntilVisible(appointmentsTab);
+        click_custom(appointmentsTab);
+
+    }
     public void clickOn_TestReadyTab()
     {
         WebdriverWaits.waitUntilVisible(appointmentsTab);
@@ -308,7 +315,12 @@ public class AppointmentsPage extends BasePage {
         click_custom(viewDetails);
     }
 
+ public void clickOnViewAllSubtab()
+ {
+     WebdriverWaits.waitUntilVisible(viewDetails);
+     click_custom(viewDetails);
 
+ }
     public int getColumnCount()
     {
         List<WebElement> list = getWebElements(headerResource, "Heders");
@@ -484,6 +496,7 @@ public void newEventText()
     public void clickOn_ViewDetails() {
         WebdriverWaits.waitUntilVisible(viewDetailsLink);
         click_custom(viewDetailsLink);
+        WebdriverWaits.waitForSpinner();
     }
 
 

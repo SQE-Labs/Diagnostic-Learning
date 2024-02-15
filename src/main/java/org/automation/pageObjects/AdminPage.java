@@ -401,6 +401,13 @@ public class AdminPage extends BasePage {
         click_custom(dontSaveButton);
     }
 
+    public void scrollToTitle()
+    {
+       scrollIntoView(title);
+        waitUntilVisible(title);
+        WebdriverWaits.waitForSpinner();
+    }
+
     public void clickOn_CancelTab() {
         waitUntilVisible(cancelTab);
         WebdriverWaits.waitForSpinner();

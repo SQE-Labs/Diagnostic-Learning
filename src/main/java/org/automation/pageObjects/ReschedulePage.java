@@ -20,12 +20,6 @@ public class ReschedulePage extends BasePage
         click_custom(diagonsticianField);
     }
 
-    public void dateField()
-    {
-        WebdriverWaits.waitUntilVisible(diagonsticianField);
-        WebdriverWaits.waitForSpinner();
-
-    }
 
 
 

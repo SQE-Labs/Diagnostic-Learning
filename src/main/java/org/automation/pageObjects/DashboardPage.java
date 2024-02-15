@@ -14,7 +14,7 @@ public class DashboardPage extends BasePage {
 
     public By clientNameFromFollowup=By.xpath("(//h6[@class='mb-3 text-purple'])[4]//following-sibling::div//td/a");
 
-    public By searchTextBox = By.id("filterSearch");
+    public By searchTextBox = By.xpath("//input[@type='search']");
     public void clickScheduleAppointment()  {
         WebdriverWaits.waitUntilVisible(scheduleAppointment);
         WebdriverWaits.waitForSpinner();
