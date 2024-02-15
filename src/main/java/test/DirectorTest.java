@@ -45,7 +45,7 @@ public class DirectorTest extends BaseTest {
         validate_text(director.yearHeader, currentDate.split(" ")[1]);
 
         String expectedText = getText_custom(director.yearButton);
-        director.clickOn_MonthHeader();
+        director.click_MonthHeader();
         String yearTitleText = getText_custom(director.yearsTitle);
 
         // Split the string into words
@@ -66,6 +66,7 @@ public class DirectorTest extends BaseTest {
         AdminPage admin = new AdminPage();
         verify_Login_Director();
         panelPage.click_Availability();
+        //todo
         director.director_AvailabilityWithoutSaveBtn();
         validate_text(director.validateAvailable, "Available");
         director.click_SaveButton();
@@ -331,92 +332,89 @@ public class DirectorTest extends BaseTest {
 
      */  // }
     @Test(priority = 23, enabled = true, description = "67. 'Test Fee Adjustment' field accepts negative value")
-    public void verify_EnterNegativeValueInTestFeeAdjustmentFee() throws InterruptedException
-    {
+    public void verify_EnterNegativeValueInTestFeeAdjustmentFee() throws InterruptedException {
         AppointmentsPage appointment = new AppointmentsPage();
-        DashboardPage dashPage=new DashboardPage();
-        PaymentPage payment=new PaymentPage();
+        DashboardPage dashPage = new DashboardPage();
+        PaymentPage payment = new PaymentPage();
         login.director_Login();
         appointment.click_AppoinptmentTab();
         appointment.click_OnViewAllTab();
         String status = "Test Ready";
         dashPage.enter_DataSearhTextBox(status);
         appointment.clickOn_ViewDetails();
-        Float beforeAssementAmount=payment.retrieveAmount(payment.assessmentAmountInDisplay);
-        Float beforeAmountDue=payment.retrieveAmount(payment.amountDue);
+        Float beforeAssementAmount = payment.retrieveAmount(payment.assessmentAmountInDisplay);
+        Float beforeAmountDue = payment.retrieveAmount(payment.amountDue);
         payment.clickOn_PaymentBtn();
-        String expectedValue="-200.00";
+        String expectedValue = "-200.00";
         payment.enter_TestFeeAdjustment(expectedValue);
         payment.click_OnCollectAmountBtn();
         payment.click_CloseBtn();
-        Float afterAssementAmount=payment.retrieveAmount(payment.assessmentAmountInDisplay);
-        Float afterAmountDue=payment.retrieveAmount(payment.amountDue);
-        Float actualValueAssementAmount=afterAssementAmount-beforeAssementAmount;
-        Float actualValueAmountdue= afterAmountDue-beforeAmountDue;
-        boolean comparision=(actualValueAssementAmount.equals(expectedValue)) && (actualValueAmountdue.equals(expectedValue));
+        Float afterAssementAmount = payment.retrieveAmount(payment.assessmentAmountInDisplay);
+        Float afterAmountDue = payment.retrieveAmount(payment.amountDue);
+        Float actualValueAssementAmount = afterAssementAmount - beforeAssementAmount;
+        Float actualValueAmountdue = afterAmountDue - beforeAmountDue;
+        boolean comparision = (actualValueAssementAmount.equals(expectedValue)) && (actualValueAmountdue.equals(expectedValue));
         Assert.assertTrue(comparision);
 
     }
 
     @Test(priority = 24, enabled = true, description = "68. 'Test Fee Adjustment' field accepts negative value")
-    public void verify_EnterPositiveValueInTestFeeAdjustmentFee() throws InterruptedException
-    {
+    public void verify_EnterPositiveValueInTestFeeAdjustmentFee() throws InterruptedException {
         AppointmentsPage appointment = new AppointmentsPage();
-        DashboardPage dashPage=new DashboardPage();
-        PaymentPage payment=new PaymentPage();
+        DashboardPage dashPage = new DashboardPage();
+        PaymentPage payment = new PaymentPage();
         login.director_Login();
         appointment.click_AppoinptmentTab();
         appointment.click_OnViewAllTab();
         String status = "Test Ready";
         dashPage.enter_DataSearhTextBox(status);
         appointment.clickOn_ViewDetails();
-        Float beforeReceviedAmount=payment.retrieveAmount(payment.receivedAmountOnDisplay);
-        Float beforeAmountDue=payment.retrieveAmount(payment.amountDue);
+        Float beforeReceviedAmount = payment.retrieveAmount(payment.receivedAmountOnDisplay);
+        Float beforeAmountDue = payment.retrieveAmount(payment.amountDue);
         payment.clickOn_PaymentBtn();
-        String expectedValue="200.00";
+        String expectedValue = "200.00";
         payment.enter_collectAmountAdjustment(expectedValue);
         payment.click_OnCollectAmountBtn();
         payment.click_CloseBtn();
-        Float afterReceviedAmount=payment.retrieveAmount(payment.receivedAmountOnDisplay);
-        Float afterAmountDue=payment.retrieveAmount(payment.amountDue);
-        Float actualReceviedAmount=afterReceviedAmount-beforeReceviedAmount;
-        Float actualValueAmountdue=beforeAmountDue- afterAmountDue;
-        boolean comparision=(actualReceviedAmount.equals(expectedValue)) && (actualValueAmountdue.equals(expectedValue));
+        Float afterReceviedAmount = payment.retrieveAmount(payment.receivedAmountOnDisplay);
+        Float afterAmountDue = payment.retrieveAmount(payment.amountDue);
+        Float actualReceviedAmount = afterReceviedAmount - beforeReceviedAmount;
+        Float actualValueAmountdue = beforeAmountDue - afterAmountDue;
+        boolean comparision = (actualReceviedAmount.equals(expectedValue)) && (actualValueAmountdue.equals(expectedValue));
         Assert.assertTrue(comparision);
 
     }
 
     @Test(priority = 25, enabled = true, description = "72. User is redirected to  'Marchant login' page")
-    public void verify_MarchantLogin() throws InterruptedException
-    {
+    public void verify_MarchantLogin() throws InterruptedException {
         AppointmentsPage appointment = new AppointmentsPage();
-        DashboardPage dashPage=new DashboardPage();
-        PaymentPage payment=new PaymentPage();
-        DirectorPage director=new DirectorPage();
+        DashboardPage dashPage = new DashboardPage();
+        PaymentPage payment = new PaymentPage();
+        DirectorPage director = new DirectorPage();
         login.director_Login();
         appointment.click_UpcomingTab();
         String status = "Test Ready";
         dashPage.enter_DataSearhTextBox(status);
-        director.click_On_EditBtnAfterSearch();
+        director.click_EditBtnAfterSearch();
         payment.clickOn_PaymentBtn();
         payment.click_PaymentLinkButton();
         validate_text(payment.usernamePaymentMerchant, "Username");
 
     }
+
     @Test(priority = 26, enabled = true, description = "73. User is able to click on 'Cancel' button.")
-    public void verify_ClickOnCanceBtn() throws InterruptedException
-    {
+    public void verify_ClickOnCanceBtn() throws InterruptedException {
         AppointmentsPage appointment = new AppointmentsPage();
-        AdminPage admin=new AdminPage();
-        DashboardPage dashPage=new DashboardPage();
-        PaymentPage payment=new PaymentPage();
-        DirectorPage director=new DirectorPage();
+        AdminPage admin = new AdminPage();
+        DashboardPage dashPage = new DashboardPage();
+        PaymentPage payment = new PaymentPage();
+        DirectorPage director = new DirectorPage();
         login.director_Login();
         appointment.click_UpcomingTab();
         String status = "Test Ready";
         dashPage.enter_DataSearhTextBox(status);
-        director.click_On_EditBtnAfterSearch();
-        String expecetedClientName=getText_custom(admin.title);
+        director.click_EditBtnAfterSearch();
+        String expecetedClientName = getText_custom(admin.title);
         payment.clickOn_PaymentBtn();
         payment.clickOn_CancelBtn();
         admin.scrollToTitle();
@@ -424,20 +422,19 @@ public class DirectorTest extends BaseTest {
     }
 
     @Test(priority = 27, enabled = true, description = "User is able to click on 'Upcoming' subtab.")
-    public void verify_ClickOnUpcomingSubtab() throws InterruptedException
-    {
+    public void verify_ClickOnUpcomingSubtab() throws InterruptedException {
         AppointmentsPage appointment = new AppointmentsPage();
-        AdminPage admin=new AdminPage();
-        DashboardPage dashPage=new DashboardPage();
-        PaymentPage payment=new PaymentPage();
-        DirectorPage director=new DirectorPage();
+        AdminPage admin = new AdminPage();
+        DashboardPage dashPage = new DashboardPage();
+        PaymentPage payment = new PaymentPage();
+        DirectorPage director = new DirectorPage();
         login.director_Login();
         appointment.click_UpcomingTab();
         validate_text(admin.titleOfUpcomingPage, "Upcoming Appointments");
         String status = "Upcoming";
         dashPage.enter_DataSearhTextBox(status);
-        director.click_OnViewDetailsBtn();
-        String expecetedClientName=getText_custom(admin.title);
+        director.click_ViewDetailsBtn();
+        String expecetedClientName = getText_custom(admin.title);
         payment.clickOn_PaymentBtn();
         payment.clickOn_CancelBtn();
         admin.scrollToTitle();
@@ -445,23 +442,20 @@ public class DirectorTest extends BaseTest {
     }
 
     @Test(priority = 28, enabled = true, description = "User is able to click on 'Create Followup' button.")
-    public void verify_ClickOnCreateFollowupBtn() throws InterruptedException
-    {
+    public void verify_ClickOnCreateFollowupBtn() throws InterruptedException {
         AppointmentsPage appointment = new AppointmentsPage();
-        AdminPage admin=new AdminPage();
-        DashboardPage dashPage=new DashboardPage();
-        PaymentPage payment=new PaymentPage();
-        DirectorPage director=new DirectorPage();
+        AdminPage admin = new AdminPage();
+        DashboardPage dashPage = new DashboardPage();
+        PaymentPage payment = new PaymentPage();
+        DirectorPage director = new DirectorPage();
         login.director_Login();
         appointment.click_UpcomingTab();
         validate_text(admin.titleOfUpcomingPage, "Upcoming Appointments");
         String status = "Upcoming";
         dashPage.enter_DataSearhTextBox(status);
-        director.click_OnViewDetailsBtn();
+        director.click_ViewDetailsBtn();
 
     }
-
-
 
 
 }

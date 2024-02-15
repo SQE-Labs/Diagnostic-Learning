@@ -241,7 +241,7 @@ public class DirectorPage extends BasePage {
         click_custom(yearHeader);
     }
 
-    public void clickOn_MonthHeader() {
+    public void click_MonthHeader() {
         WebdriverWaits.waitUntilVisible(monthHeader);
         click_custom(monthHeader);
     }
@@ -316,14 +316,14 @@ public class DirectorPage extends BasePage {
         enter_ConfirmPassword(confirmPasswordFieldText);
         click_createDirectorButton();
     }
-    public void click_On_EditBtnAfterSearch() throws InterruptedException {
+    public void click_EditBtnAfterSearch() throws InterruptedException {
         wait.waitUntilVisible(editBtnAfterSearch);
         WebdriverWaits.waitForSpinner();
         click_custom(editBtnAfterSearch);
 
 
     }
-    public void click_OnViewDetailsBtn() throws InterruptedException {
+    public void click_ViewDetailsBtn() throws InterruptedException {
         wait.waitUntilVisible(viewDetailsBtn);
         WebdriverWaits.waitForSpinner();
         click_custom(viewDetailsBtn);
@@ -337,7 +337,7 @@ public class DirectorPage extends BasePage {
     }
     public void disable_Director() throws InterruptedException {
 
-        click_On_EditBtnAfterSearch();
+        click_EditBtnAfterSearch();
         off_ToggleButton();
         click_UpdateButton();
     }
