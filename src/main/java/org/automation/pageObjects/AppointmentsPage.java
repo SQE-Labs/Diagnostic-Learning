@@ -410,7 +410,12 @@ public void newEventText()
         clickOnCloseBtn();
     }
 
-
+public void click_UpcomingCard()
+{
+    WebdriverWaits.waitUntilVisible(upcomingCard);
+    WebdriverWaits.waitForSpinner();
+    click_custom(upcomingCard);
+}
 
 
 

@@ -99,7 +99,7 @@ public class DirectorTest extends BaseTest {
         validate_text(director.today, "Today");
     }
 
-    /*
+
         @Test(priority = 6, enabled = true, description = "23 Verify that director is able to delete already available marked slot")
         public void verify_DeleteSlots() throws InterruptedException {
             DashBoardPanelPage panelPage = new DashBoardPanelPage();
@@ -154,12 +154,13 @@ public class DirectorTest extends BaseTest {
         public void verify_RelevantRecords() throws InterruptedException {
             AppointmentsPage appointment = new AppointmentsPage();
             DashBoardPanelPage panelPage = new DashBoardPanelPage();
+            DashboardPage dashPage=new DashboardPage();
             LoginPage login = new LoginPage();
             login.director_Login();
             panelPage.click_AppointmentsTab();
             appointment.click_UpcomingCard();
             appointment.click_Filter();
-            appointment.enterSearchText("Mark Henry");
+            dashPage.enter_DataSearhTextBox("Mark Henry");
             validate_text(appointment.firstSearchedRecord, "Mark Henry");
         }
 
@@ -330,7 +331,7 @@ public class DirectorTest extends BaseTest {
             director.click_LogOutLink();
             validate_text(director.signInToYourAccountTxt,"Sign in to your account");
 
-     */  // }
+      }
     @Test(priority = 23, enabled = true, description = "67. 'Test Fee Adjustment' field accepts negative value")
     public void verify_EnterNegativeValueInTestFeeAdjustmentFee() throws InterruptedException {
         AppointmentsPage appointment = new AppointmentsPage();
@@ -345,16 +346,13 @@ public class DirectorTest extends BaseTest {
         Float beforeAssementAmount = payment.retrieveAmount(payment.assessmentAmountInDisplay);
         Float beforeAmountDue = payment.retrieveAmount(payment.amountDue);
         payment.clickOn_PaymentBtn();
-        String expectedValue = "-200.00";
-        payment.enter_TestFeeAdjustment(expectedValue);
+        payment.enter_TestFeeAdjustment("-200.00");
         payment.click_OnCollectAmountBtn();
         payment.click_CloseBtn();
         Float afterAssementAmount = payment.retrieveAmount(payment.assessmentAmountInDisplay);
         Float afterAmountDue = payment.retrieveAmount(payment.amountDue);
-        Float actualValueAssementAmount = afterAssementAmount - beforeAssementAmount;
-        Float actualValueAmountdue = afterAmountDue - beforeAmountDue;
-        boolean comparision = (actualValueAssementAmount.equals(expectedValue)) && (actualValueAmountdue.equals(expectedValue));
-        Assert.assertTrue(comparision);
+        Assert.assertEquals((afterAssementAmount - beforeAssementAmount),"-200.00");
+        Assert.assertEquals((afterAmountDue - beforeAmountDue),"-200.00");
 
     }
 
@@ -372,16 +370,13 @@ public class DirectorTest extends BaseTest {
         Float beforeReceviedAmount = payment.retrieveAmount(payment.receivedAmountOnDisplay);
         Float beforeAmountDue = payment.retrieveAmount(payment.amountDue);
         payment.clickOn_PaymentBtn();
-        String expectedValue = "200.00";
-        payment.enter_collectAmountAdjustment(expectedValue);
+        payment.enter_collectAmountAdjustment("200.00");
         payment.click_OnCollectAmountBtn();
         payment.click_CloseBtn();
         Float afterReceviedAmount = payment.retrieveAmount(payment.receivedAmountOnDisplay);
         Float afterAmountDue = payment.retrieveAmount(payment.amountDue);
-        Float actualReceviedAmount = afterReceviedAmount - beforeReceviedAmount;
-        Float actualValueAmountdue = beforeAmountDue - afterAmountDue;
-        boolean comparision = (actualReceviedAmount.equals(expectedValue)) && (actualValueAmountdue.equals(expectedValue));
-        Assert.assertTrue(comparision);
+        Assert.assertEquals(( afterReceviedAmount - beforeReceviedAmount),"200.00");
+        Assert.assertEquals(( beforeAmountDue - afterAmountDue),"200.00");
 
     }
 
