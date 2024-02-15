@@ -3,6 +3,7 @@ package test;
 import org.automation.base.BaseTest;
 import org.automation.pageObjects.*;
 import org.automation.utilities.WebdriverWaits;
+import org.bson.assertions.Assertions;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -72,7 +73,7 @@ public class DirectorTest extends BaseTest {
         verify_Login_Director();
         panelPage.click_Availability();
        // director.click_AvailaibleSlot();
-        director.director_Availability();
+        director.director_Availability(2);
         WebdriverWaits.waitUntilVisible(director.validateAvailable);
         validate_text(director.validateAvailable, "Available");
         WebdriverWaits.waitUntilVisible(director.avail_SaveButton);

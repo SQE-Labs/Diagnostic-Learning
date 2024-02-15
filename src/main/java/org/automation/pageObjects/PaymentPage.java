@@ -11,7 +11,7 @@ public class PaymentPage extends BasePage {
     public By paymentTab= By.xpath("//a[text()='Payments']");
     public By paymentListPage=By.xpath("//h3[text()='Payments']");
     public By filterButton = By.xpath("//a[text()='Filter']");
-    public By searchField = By.xpath("//input[@id='filterSearch']");
+    public By searchField = By.xpath("//input[@aria-controls='paymentTable']");
     public By cust_Name=By.cssSelector("tr:not([style='display: none;' ]) td:nth-child(1)");
     public By getCust_Name =By.xpath("(//td)[1]");
     public By fromToDateField=By.xpath("//input[@placeholder='%s']");
@@ -64,6 +64,12 @@ public class PaymentPage extends BasePage {
         click_custom(paymentButton);
 
     }
+    public void viewReceiptButtonNotDisplayed() {
+        WebdriverWaits.waitUntilVisible( paymentButton);
+        WebdriverWaits.waitForSpinner();
+        click_custom( paymentButton);
+    }
+
 
     public void send_AmountInEnterAmount(String amount)
     {
