@@ -89,7 +89,7 @@ public By availableSlots=By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-al
 
 //*****************Set Availability for diagnostician ****************
 
-    WebElement deleteSlot = getDriver().findElement(By.xpath("//div[@class='mbsc-ios mbsc-popup-header mbsc-popup-header-center ng-star-inserted']"));
+    public By deleteSlot = By.xpath("//div[@class='mbsc-ios mbsc-popup-header mbsc-popup-header-center ng-star-inserted']");
 
     public By chooseTestingLocation = By.id("testingLocation");
     public By assessmentDate = By.xpath("//input[@placeholder='Assessment Date']");
@@ -181,11 +181,7 @@ public By availableSlots=By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-al
 
     DashBoardPanelPage panelPage = new DashBoardPanelPage();
 
-    public void click_createDiagnosticianButton() {
-        WebdriverWaits.waitUntilVisible(createDiagnostician);
-        WebdriverWaits.waitForSpinner();
-        click_custom(createDiagnostician);
-    }
+
     public void click_Back_Button() {
         click_custom(backButton);
     }
@@ -209,6 +205,11 @@ public By availableSlots=By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-al
     public void click_AssignLocation() {
         click_custom(assignLocation);
         click_custom(locationName);
+    }
+    public void click_createDiagnosticianButton() {
+        WebdriverWaits.waitUntilVisible(createDiagnostician);
+        WebdriverWaits.waitForSpinner();
+        click_custom(createDiagnostician);
     }
 
     public void userNameField(String userNameText) {
@@ -331,7 +332,8 @@ public By availableSlots=By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-al
         click_createDiagnosticianButton();
     }
 
-    public void search_CreatedDiagnostician(String UserName) {
+    public void search_CreatedDiagnostician(String UserName)
+    {
         click_FilterButton();
         enterInSearchField(UserName);
     }
