@@ -89,7 +89,7 @@ public By availableSlots=By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-al
 
 //*****************Set Availability for diagnostician ****************
 
-    public By deleteSlot = By.xpath("//div[@class='mbsc-ios mbsc-popup-header mbsc-popup-header-center ng-star-inserted']"));
+    public By deleteSlot = By.xpath("//div[@class='mbsc-ios mbsc-popup-header mbsc-popup-header-center ng-star-inserted']");
 
     public By chooseTestingLocation = By.id("testingLocation");
     public By assessmentDate = By.xpath("//input[@placeholder='Assessment Date']");
