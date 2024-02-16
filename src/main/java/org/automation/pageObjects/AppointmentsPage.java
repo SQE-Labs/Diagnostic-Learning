@@ -120,20 +120,7 @@ public class AppointmentsPage extends BasePage {
     public By closeBtn=By.xpath("//button[@class='theme-button grey float-right']");
     //******************Verifying cancelled appointments*****************
 
-    public void click_TodayTab()
-    {
-        WebdriverWaits.waitUntilVisible(appointmentsTab);
-        click_custom(appointmentsTab);
-        WebdriverWaits.waitUntilVisible(todayTab);
-        click_custom(todayTab);
-    }
 
-    public void clickOn_DirectorTab()
-    {
-        WebdriverWaits.waitUntilVisible(directorTab);
-        WebdriverWaits.waitForSpinner();
-        click_custom(directorTab);
-    }
     public void clickOnCancelButton() {
         click_custom(popupCancelBtn);
     }
@@ -190,10 +177,7 @@ public class AppointmentsPage extends BasePage {
         scrollIntoView(saveBtnEditPlan);
         clickBtn_custom(saveBtnEditPlan);
     }
-    public void click_ViewDetails() {
-        WebdriverWaits.waitUntilVisible(viewDetailsLink);
-        click_custom(viewDetailsLink);
-    }
+
     public void click_ToDate() {
         WebdriverWaits.waitUntilVisible(toDateText);
         clickBtn_custom(toDateText);
@@ -279,16 +263,6 @@ public class AppointmentsPage extends BasePage {
         sendKeys_withClear(dateOfBirth, dateOfBirthText);
     }
 
-
-
-
-
-    public void clickOnAssesmentType(int assestmentTypeTexts) {
-        WebdriverWaits.waitUntilVisible(assestmentType);
-        click_custom(assestmentType);
-        selectDropDownByIndex_custom(assestmentType, assestmentTypeTexts);
-    }
-
     public void selectTestinglocation(String chooseLocationText) {
         WebdriverWaits.waitUntilVisible(chooseTestingLocation);
         clickBtn_custom(chooseTestingLocation, "ChooseLocation");
@@ -329,13 +303,6 @@ public class AppointmentsPage extends BasePage {
         click_custom(viewDetails);
     }
 
- public void clickOnViewAllSubtab()
- {
-     WebdriverWaits.waitUntilVisible(viewDetails);
-     click_custom(viewDetails);
-
-
- }
 
 
     public int getColumnCount() {
@@ -395,16 +362,7 @@ public class AppointmentsPage extends BasePage {
         WebdriverWaits.waitForSpinner();
         click_custom(assessmentDate);
     }
-public void newEventText()
-{
-    WebdriverWaits.waitUntilVisible(newEventText);
-}
-    public void clickOn_DiagonsticiansTab()
-    {
-        WebdriverWaits.waitUntilVisible(diagnosticianTab);
-        WebdriverWaits.waitForSpinner();
-        click_custom(diagnosticianTab);
-    }
+
     public void click_EditTestPlan(){
         WebdriverWaits.waitUntilVisible(editTestPlanButton);
         scrollIntoView(editTestPlanButton);
@@ -529,7 +487,7 @@ public void click_UpcomingCard()
     }
 
 
-    public void clickOn_ViewDetails()
+    public void click_ViewDetails()
     {
         WebdriverWaits.waitUntilVisible(viewDetailsLink);
         click_custom(viewDetailsLink);
@@ -546,55 +504,20 @@ public void click_UpcomingCard()
 
 
 
-    public void filterRecords(String clientFirstName)
-    {
-        click_FilterButton();
-         click_SearchField(clientFirstName);
-        exportCSV_Button();
-    }
 
-    public void enterClientNameInSearchField(String nameOfClient)
-    {
-        WebdriverWaits.waitUntilVisible(appointmentsTab);
-        click_custom(appointmentsTab);
-        click_custom(viewAllTab);
-        click_custom(filterButton);
-        sendKeys_withClear(searchTextBox,nameOfClient);
 
-    }
-    public void ClickOn_FilterBtn()
-    {
-        WebdriverWaits.waitUntilVisible(appointmentsTab);
-        click_custom(appointmentsTab);
-        click_custom(upcomingTab);
-        click_custom(filterButton);
 
-    }
 
-    public void clickOn_ExportCSVBtn()
-    {
-        WebdriverWaits.waitUntilVisible(appointmentsTab);
-        click_custom(appointmentsTab);
-        click_custom(upcomingTab);
-        click_custom(exportCSVButton);
 
-    }
 
-    public void clickOn_AppointmentsTab()
+
+    public void click_AppointmentsTab()
     {
         WebdriverWaits.waitUntilVisible(appointmentsTab);
         click_custom(appointmentsTab);
 
     }
 
-    public void clickOn_TestCompleteTab()
-    {
-        WebdriverWaits.waitUntilVisible(appointmentsTab);
-        click_custom(appointmentsTab);
-        WebdriverWaits.waitUntilVisible(testCompleteTab);
-        click_custom(testCompleteTab);
-
-    }
 
     public void click_CompletedTab()
     {
@@ -606,7 +529,7 @@ public void click_UpcomingCard()
         click_custom(completedTab);
     }
 
-    public void clickOn_CanceledTab()
+    public void click_CanceledTab()
     {
         WebdriverWaits.waitUntilVisible(appointmentsTab);
         WebdriverWaits.waitForSpinner();
@@ -616,7 +539,7 @@ public void click_UpcomingCard()
         click_custom(canceledTab);
     }
 
-    public void clickOn_HoldTab()
+    public void click_HoldTab()
     {
         WebdriverWaits.waitUntilVisible(appointmentsTab);
         WebdriverWaits.waitForSpinner();

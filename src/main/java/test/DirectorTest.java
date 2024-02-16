@@ -342,7 +342,7 @@ public class DirectorTest extends BaseTest {
         appointment.click_ViewAllTab();
         String status = "Test Ready";
         dashPage.enter_DataSearhTextBox(status);
-        appointment.clickOn_ViewDetails();
+        appointment.click_ViewDetails();
         Float beforeAssementAmount = payment.retrieveAmount(payment.assessmentAmountInDisplay);
         Float beforeAmountDue = payment.retrieveAmount(payment.amountDue);
         payment.clickOn_PaymentBtn();
@@ -366,7 +366,7 @@ public class DirectorTest extends BaseTest {
         appointment.click_ViewAllTab();
         String status = "Test Ready";
         dashPage.enter_DataSearhTextBox(status);
-        appointment.clickOn_ViewDetails();
+        appointment.click_ViewDetails();
         Float beforeReceviedAmount = payment.retrieveAmount(payment.receivedAmountOnDisplay);
         Float beforeAmountDue = payment.retrieveAmount(payment.amountDue);
         payment.clickOn_PaymentBtn();
