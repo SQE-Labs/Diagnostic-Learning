@@ -186,6 +186,7 @@ public class AdminPage extends BasePage {
     public By card = By.xpath("(//td[@class='d-block ng-star-inserted'])[1]");
     public By nameOnCard = By.xpath("(//p[@class='text-purple mb-0'])[1]");
 
+
     public By nameOnClientDetails = By.xpath("//div[@class='page-header align-items-lg-center d-flex flex-column flex-md-row']/h3");
 
     public By todayDateOnCard = By.xpath("//span[@class='text-grey']");
@@ -266,6 +267,14 @@ public class AdminPage extends BasePage {
         waitUntilVisible(cancelBtnOfTimeSlotPopup);
         WebdriverWaits.waitForSpinner();
         click_custom(cancelBtnOfTimeSlotPopup);
+    }
+
+    public void click_HoldBtn()
+    {
+        waitUntilVisible(holdButton);
+        WebdriverWaits.waitForSpinner();
+        click_custom(holdButton);
+
     }
 
 
@@ -872,11 +881,7 @@ public class AdminPage extends BasePage {
         WebdriverWaits.waitForSpinner();
         click_custom(testCompleteTab);
     }
-    public void clickOnAppointmentTab() {
-        WebdriverWaits.waitUntilVisible(appointmentTab);
-        WebdriverWaits.waitForSpinner();
-        click_custom(appointmentTab);
-    }
+
 
     public void filter_ForUpcoming() {
         waitUntilVisible(filterButton);
@@ -900,7 +905,7 @@ public class AdminPage extends BasePage {
         sendKeys_withClear(searchField, clientText);
     }
 
-    public void clickOn_ViewDetailLink() {
+    public void click_ViewDetailLink() {
         click_custom(clientDetailLink);
         WebdriverWaits.waitUntilVisible(paymentButton);
         WebdriverWaits.waitForSpinner();
@@ -914,7 +919,7 @@ public class AdminPage extends BasePage {
         sendKeys_withClear(amountField, Inr);
     }
 
-    public void clickOn_CollectButton() {
+    public void click_CollectButton() {
         click_custom(collectButton);
     }
 
@@ -953,9 +958,9 @@ public class AdminPage extends BasePage {
         clickOn_AppointmentTab();
         enter_ClientName(clientText);
         Thread.sleep(2000);
-        clickOn_ViewDetailLink();
+        click_ViewDetailLink();
         enter_ValidAmount();
-        clickOn_CollectButton();
+        click_CollectButton();
         clickOn_CancelButton();
     }
 
@@ -964,7 +969,7 @@ public class AdminPage extends BasePage {
         enterInSearchField(clientName);
     }
 
-    public void clickOn_Card() {
+    public void click_Card() {
         waitUntilVisible(card);
         click_custom(card);
     }
@@ -974,25 +979,18 @@ public class AdminPage extends BasePage {
     }
 
 
-    public void clickOn_ViewDetailsBtn() {
+    public void click_ViewDetailsBtn() {
         waitUntilVisible(getViewDetails);
         click_custom(getViewDetails);
     }
 
-    public void scrollUptoVAmountDue() {
-        WebdriverWaits.waitUntilVisible(amountDue);
-        WebdriverWaits.waitForSpinner();
-        scrollIntoView(amountDue);
-    }
+
     public void click_ViewDocumentsButton() {
         WebdriverWaits.waitUntilVisible(viewDocumentsButton);
         click_custom(viewDocumentsButton);
     }
 
-    public void clickOn_BackBtn() {
-        WebdriverWaits.waitUntilVisible(backButton);
-        click_custom(backButton);
-    }
+
 
 
     public void click_ViewObservationBtn() {
@@ -1000,15 +998,9 @@ public class AdminPage extends BasePage {
         click_custom(viewStudentObservationButton);
     }
 
-    public void click_ViewDocumentButton() {
-        WebdriverWaits.waitUntilVisible(viewDocumentBtn);
-        WebdriverWaits.waitForSpinner();
-        click_custom(viewDocumentBtn);
-    }
 
-    public void clickOn_UploadButtons() {
-        click_custom(uploadButton);
-    }
+
+
 
     public void clickOn_CloseIcon() {
         WebdriverWaits.waitUntilVisible(closeIcon);
@@ -1032,7 +1024,7 @@ public class AdminPage extends BasePage {
     }
 
 
-    public void clickOn_UnHoldBtn() {
+    public void click_UnHoldBtn() {
         waitUntilVisible(unHoldBtn);
         WebdriverWaits.waitForSpinner();
         click_custom(unHoldBtn);
@@ -1040,7 +1032,7 @@ public class AdminPage extends BasePage {
 
     }
 
-    public void clickOn_UnholdBackBtn() {
+    public void click_UnholdBackBtn() {
         waitUntilVisible(unoldBackBtn);
         WebdriverWaits.waitForSpinner();
         click_custom(unoldBackBtn);
@@ -1061,14 +1053,14 @@ public class AdminPage extends BasePage {
     }
 
 
-    public void click_OnRescheduleBtn() {
+    public void click_RescheduleBtn() {
         waitUntilVisible(rescheduleAppointmentBtn);
         WebdriverWaits.waitForSpinner();
         click_custom(rescheduleAppointmentBtn);
 
     }
 
-    public void click_OnEditBtn() {
+    public void click_EditBtn() {
         waitUntilVisible(editClientBtn);
         WebdriverWaits.waitForSpinner();
         click_custom(editClientBtn);
@@ -1084,27 +1076,22 @@ public class AdminPage extends BasePage {
         sendKeys_withClear(editEmail, email);
     }
 
-    public void enter_DataInEmailSecField(String email) {
-        waitUntilVisible(editEmail2);
-        WebdriverWaits.waitForSpinner();
-        click_custom(editEmail2);
-        sendKeys_withClear(editEmail2, email);
-    }
 
-    public void click_OnCancelBtn() {
+
+    public void click_CancelBtn() {
         waitUntilVisible(cancelAppointmentBtn);
         WebdriverWaits.waitForSpinner();
         click_custom(cancelAppointmentBtn);
 
     }
 
-    public void clickOn_backBtnCancelPopup() {
+    public void click_backBtnCancelPopup() {
         waitUntilVisible(backBtnCancelPopup);
         WebdriverWaits.waitForSpinner();
         click_custom(backBtnCancelPopup);
     }
 
-    public void clickOn_CancelRadioBtn() {
+    public void click_CancelRadioBtn() {
         waitUntilVisible(cancelRadioBtn);
         WebdriverWaits.waitForSpinner();
         click_custom(cancelRadioBtn);
@@ -1112,12 +1099,7 @@ public class AdminPage extends BasePage {
         WebdriverWaits.waitForSpinner();
     }
 
-    public void clickOn_CancelBtnNewSlotPopup() {
-        waitUntilVisible(cancelBtnOfTimeSlotPopup);
-        WebdriverWaits.waitForSpinner();
-        click_custom(cancelBtnOfTimeSlotPopup);
 
-    }
 
     public void upload_FileAttachment() throws InterruptedException, AWTException, AWTException {
         click_UploadButton();

@@ -342,7 +342,7 @@ public class DirectorTest extends BaseTest {
         appointment.click_ViewAllTab();
         String status = "Test Ready";
         dashPage.enter_DataSearhTextBox(status);
-        appointment.clickOn_ViewDetails();
+        appointment.click_ViewDetails();
         Float beforeAssementAmount = payment.retrieveAmount(payment.assessmentAmountInDisplay);
         Float beforeAmountDue = payment.retrieveAmount(payment.amountDue);
         payment.clickOn_PaymentBtn();
@@ -366,7 +366,7 @@ public class DirectorTest extends BaseTest {
         appointment.click_ViewAllTab();
         String status = "Test Ready";
         dashPage.enter_DataSearhTextBox(status);
-        appointment.clickOn_ViewDetails();
+        appointment.click_ViewDetails();
         Float beforeReceviedAmount = payment.retrieveAmount(payment.receivedAmountOnDisplay);
         Float beforeAmountDue = payment.retrieveAmount(payment.amountDue);
         payment.clickOn_PaymentBtn();
@@ -434,7 +434,7 @@ public class DirectorTest extends BaseTest {
         validate_text(admin.title, expecetedClientName);
     }
 
-    @Test(priority = 28, enabled = true, description = "User is able to click on 'Create Followup' button.")
+    @Test(priority = 28, enabled = true, description = "45., 52., 60., 62. & 63. User is able to click on 'Create Followup' button.")
     public void verify_ClickOnCreateFollowupBtn() throws InterruptedException {
         AppointmentsPage appointment = new AppointmentsPage();
         AdminPage admin = new AdminPage();
