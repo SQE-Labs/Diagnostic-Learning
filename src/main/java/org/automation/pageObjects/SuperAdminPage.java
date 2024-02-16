@@ -6,7 +6,6 @@ import org.openqa.selenium.By;
 
 public class SuperAdminPage extends BasePage {
     public By viewStudentObservationButton= By.xpath("//a[@class='theme-button green ml-2 ng-star-inserted']");
-
     public By viewDocumentsButton=By.xpath("//a[@class='ml-2 theme-button green ng-star-inserted']");
     public By clientObservation=By.xpath("//h4");
     public By viewDocumentButton=By.xpath("//a[@class='ml-2 theme-button green ng-star-inserted']");
@@ -29,7 +28,7 @@ public class SuperAdminPage extends BasePage {
 
     }
 
-    public void clickOn_ViewDocumentBtn()
+    public void click_ViewDocumentBtn()
     {
         WebdriverWaits.waitUntilVisible(viewDocumentButton);
         click_custom(viewDocumentButton);

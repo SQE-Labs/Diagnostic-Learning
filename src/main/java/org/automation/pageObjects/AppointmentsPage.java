@@ -46,7 +46,7 @@ public class AppointmentsPage extends BasePage {
     public By todaysAppointmentTXT = By.xpath("//div[@class='align-items-md-center d-flex flex-column flex-md-row page-header']");
     public By upcomingCard = By.xpath("//a[text()='Upcoming']");
     public By filterButton = By.xpath("//a[text()='Filter']");
-    public By searchField = By.xpath("//input[@id='filterSearch']");
+    public By searchField = By.xpath("//input[@aria-controls='appointmentTable']");
     public By dateFrom = By.xpath("//input[@placeholder='From Date']");
     public By toDate = By.xpath("//input[@placeholder='To Date']");
     public By exportCSVButton = By.xpath("//button[text()='Export to CSV']");
@@ -115,7 +115,7 @@ public class AppointmentsPage extends BasePage {
     public By closeBtn=By.xpath("//button[@class='theme-button grey float-right']");
     //******************Verifying cancelled appointments*****************
 
-    public void clickOn_TodayTab()
+    public void click_TodayTab()
     {
         WebdriverWaits.waitUntilVisible(appointmentsTab);
         click_custom(appointmentsTab);
@@ -128,18 +128,12 @@ public class AppointmentsPage extends BasePage {
         WebdriverWaits.waitForSpinner();
         click_custom( testCompleteTab);
     }
-    public void clickOn_TestReadyTab()
-    {
-        WebdriverWaits.waitUntilVisible(appointmentsTab);
-        click_custom(appointmentsTab);
+    public void click_TestReadyTab() {
         WebdriverWaits.waitUntilVisible(testReadyTab);
         click_custom(testReadyTab);
     }
 
-    public void clickOn_UpcomingTab()
-    {
-        WebdriverWaits.waitUntilVisible(appointmentsTab);
-        click_custom(appointmentsTab);
+    public void click_UpcomingTab() {
         WebdriverWaits.waitUntilVisible(upcomingTab);
         click_custom(upcomingTab);
     }
@@ -217,9 +211,7 @@ public class AppointmentsPage extends BasePage {
         click_custom(exportCSVButton);
     }
 
-    public void click_LogOutLink()
-    {
-        refresh_Page();
+    public void click_LogOutLink() {
         WebdriverWaits.waitUntilVisible(logOutLink);
         WebdriverWaits.waitForSpinner();
         click_custom(logOutLink);
@@ -251,7 +243,7 @@ public class AppointmentsPage extends BasePage {
 
 
 
-    public void clickOnAssesmentType(int assestmentTypeTexts) {
+    public void click_AssesmentType(int assestmentTypeTexts) {
         WebdriverWaits.waitUntilVisible(assestmentType);
         click_custom(assestmentType);
         selectDropDownByIndex_custom(assestmentType, assestmentTypeTexts);
@@ -336,7 +328,7 @@ public class AppointmentsPage extends BasePage {
         click_custom(clickCalSaveBtn);
     }
 
-    public void clickOnCloseBtn() {
+    public void click_CloseBtn() {
         click_custom(closeBtn);
     }
 
@@ -383,7 +375,7 @@ public void newEventText()
         clickSlotSaveButton();
         //  WebdriverWaits.waitUntilVisible(newSlotText);
         //validate_text(newSlotText, "New event");
-        clickOnCloseBtn();
+        click_CloseBtn();
     }
 
     public void selectAssesmentType(String assestmentTypeTexts) {
@@ -475,7 +467,7 @@ public void newEventText()
         sendKeys_withClear(searchTextBox,nameOfClient);
 
     }
-    public void ClickOn_FilterBtn()
+    public void Click_FilterBtn()
     {
         WebdriverWaits.waitUntilVisible(appointmentsTab);
         click_custom(appointmentsTab);
@@ -484,29 +476,18 @@ public void newEventText()
 
     }
 
-    public void clickOn_ExportCSVBtn()
+    public void click_ExportCSVBtn()
     {
         WebdriverWaits.waitUntilVisible(appointmentsTab);
         click_custom(appointmentsTab);
         click_custom(upcomingTab);
         click_custom(exportCSVButton);
-
     }
 
-    public void clickOn_AppointmentsTab()
+    public void click_AppointmentsTab()
     {
         WebdriverWaits.waitUntilVisible(appointmentsTab);
         click_custom(appointmentsTab);
-
-    }
-
-    public void clickOn_TestCompleteTab()
-    {
-        WebdriverWaits.waitUntilVisible(appointmentsTab);
-        click_custom(appointmentsTab);
-        WebdriverWaits.waitUntilVisible(testCompleteTab);
-        click_custom(testCompleteTab);
-
     }
 
     public void click_CompletedTab()
@@ -519,7 +500,7 @@ public void newEventText()
         click_custom(completedTab);
     }
 
-    public void clickOn_CanceledTab()
+    public void click_CanceledTab()
     {
         WebdriverWaits.waitUntilVisible(appointmentsTab);
         WebdriverWaits.waitForSpinner();
@@ -529,7 +510,7 @@ public void newEventText()
         click_custom(canceledTab);
     }
 
-    public void clickOn_HoldTab()
+    public void click_HoldTab()
     {
         WebdriverWaits.waitUntilVisible(appointmentsTab);
         WebdriverWaits.waitForSpinner();
@@ -539,11 +520,4 @@ public void newEventText()
         click_custom(holdtab);
 
     }
-
-
-
-
-
-
-
 }

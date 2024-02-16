@@ -34,122 +34,120 @@ import static java.util.stream.Collectors.toList;
 //@Listeners({ TestRunListener.class, TestReporter.class })
 public class BaseTest {
 
-	public static ExtentReports extent;
-	public static ExtentTest extentTest;
-	public static ThreadLocal<WebDriver> driver = new ThreadLocal<WebDriver>();
+    public static ExtentReports extent;
+    public static ExtentTest extentTest;
+    public static ThreadLocal<WebDriver> driver = new ThreadLocal<WebDriver>();
 
-	public static WebDriver getDriver() {
-		return driver.get();
-	}
+    public static WebDriver getDriver() {
+        return driver.get();
+    }
 
-	public static void closeDriver() {
-		getDriver().close();
-		// driver.remove();
-	}
-
-
-@BeforeSuite
-	public void setExtent() throws InterruptedException, IOException {
-		extent = new ExtentReports(System.getProperty("user.dir") + "/test-report/ExtentReportResult.html", true);
-		extent.addSystemInfo("Environment", "QA");
-		extent.loadConfig(new File(System.getProperty("user.dir") + "/extent-config.xml"));
-	}
-
-	@BeforeClass(alwaysRun = true)
-	public void beforeClass() throws MalformedURLException {
-		String browser = PropertiesUtil.getPropertyValue("browser");
-		String url = PropertiesUtil.getPropertyValue("url");
-
-		switch (browser) {
-			case "chrome":
-				ChromeOptions chromeOptions = new ChromeOptions();
-				chromeOptions.setBrowserVersion("121");
-				//WebDriverManager.chromedriver().setup();
-				driver.set(new ChromeDriver(chromeOptions));
-				//WebDriverManager.chromedriver().setup();
-				 //driver = new ChromeDriver(chromeOptions();
-				//driver.set(new ChromeDriver());
-				break;
-
-			case "Edge":
-				driver .set(new EdgeDriver());
-				break;
-
-			case "FireFox":
-				driver .set(new FirefoxDriver());
-				break;
-
-			default:
-				throw new IllegalStateException("Unexpected value: " + browser);
-		}
-		// driver.set(Objects.requireNonNull(driver));
+    public static void closeDriver() {
+        getDriver().close();
+        // driver.remove();
+    }
 
 
+    @BeforeSuite
+    public void setExtent() throws InterruptedException, IOException {
+        extent = new ExtentReports(System.getProperty("user.dir") + "/test-report/ExtentReportResult.html", true);
+        extent.addSystemInfo("Environment", "QA");
+        extent.loadConfig(new File(System.getProperty("user.dir") + "/extent-config.xml"));
+    }
 
-		getDriver().manage().window().maximize();
-		getDriver().navigate().to(url);
-		validLoginBaseTest();
-	}
+    @BeforeClass(alwaysRun = true)
+    public void beforeClass() throws MalformedURLException {
+        String browser = PropertiesUtil.getPropertyValue("browser");
+        String url = PropertiesUtil.getPropertyValue("url");
 
-	/**
-	 * Method to execute at the end of each test method execution.
-	 */
+        switch (browser) {
+            case "chrome":
+                ChromeOptions chromeOptions = new ChromeOptions();
+                chromeOptions.setBrowserVersion("121");
+                //WebDriverManager.chromedriver().setup();
+                driver.set(new ChromeDriver(chromeOptions));
+                //WebDriverManager.chromedriver().setup();
+                //driver = new ChromeDriver(chromeOptions();
+                //driver.set(new ChromeDriver());
+                break;
 
-	@BeforeMethod
-	public void beforeMethod(Method method) {
-		Test test = method.getAnnotation(Test.class);
-		extentTest = extent.startTest(method.getName());
-		extentTest.setDescription(test.description());
-	}
+            case "Edge":
+                driver.set(new EdgeDriver());
+                break;
 
-	@AfterMethod
-	public void tearDown(ITestResult result) throws IOException {
+            case "FireFox":
+                driver.set(new FirefoxDriver());
+                break;
 
-		if (result.getStatus() == ITestResult.FAILURE) {
-			String screenshotPath = Screenshot.getScreenshot(getDriver(), result.getName());
-			extentTest.log(LogStatus.FAIL, extentTest.addScreenCapture(screenshotPath));
+            default:
+                throw new IllegalStateException("Unexpected value: " + browser);
+        }
+        // driver.set(Objects.requireNonNull(driver));
 
-		} else if (result.getStatus() == ITestResult.SUCCESS) {
-			String screenshotPath = Screenshot.getScreenshot(getDriver(), result.getName());
-			extentTest.log(LogStatus.PASS, extentTest.addScreenCapture(screenshotPath));
 
-		}
-		extent.endTest(extentTest);
-		extent.flush();
-		//getDriver().navigate().refresh();
-	}
+        getDriver().manage().window().maximize();
+        getDriver().navigate().to(url);
+        validLoginBaseTest();
+    }
 
-	public void validLoginBaseTest() {
-		try {
-			Element username = new Element("var", By.xpath("//input[@name='j_username']"));
-			username.getWebElement().sendKeys(PropertiesUtil.getPropertyValue("userName"));
-			Element password = new Element("var", By.xpath("//input[@name='predigpass']"));
-			password.getWebElement().sendKeys(PropertiesUtil.getPropertyValue("password"));
-			Element button = new Element("var", By.xpath("//*[@name='submit']"));
-			button.getWebElement().click();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+    /**
+     * Method to execute at the end of each test method execution.
+     */
 
-	/**
-	 * Method to execute at the end of the suite execution
-	 */
+    @BeforeMethod
+    public void beforeMethod(Method method) {
+        Test test = method.getAnnotation(Test.class);
+        extentTest = extent.startTest(method.getName());
+        extentTest.setDescription(test.description());
+    }
+
+    @AfterMethod
+    public void tearDown(ITestResult result) throws IOException {
+
+        if (result.getStatus() == ITestResult.FAILURE) {
+            String screenshotPath = Screenshot.getScreenshot(getDriver(), result.getName());
+            extentTest.log(LogStatus.FAIL, extentTest.addScreenCapture(screenshotPath));
+
+        } else if (result.getStatus() == ITestResult.SUCCESS) {
+            String screenshotPath = Screenshot.getScreenshot(getDriver(), result.getName());
+            extentTest.log(LogStatus.PASS, extentTest.addScreenCapture(screenshotPath));
+
+        }
+        extent.endTest(extentTest);
+        extent.flush();
+        //getDriver().navigate().refresh();
+    }
+
+    public void validLoginBaseTest() {
+        try {
+            Element username = new Element("var", By.xpath("//input[@name='j_username']"));
+            username.getWebElement().sendKeys(PropertiesUtil.getPropertyValue("userName"));
+            Element password = new Element("var", By.xpath("//input[@name='predigpass']"));
+            password.getWebElement().sendKeys(PropertiesUtil.getPropertyValue("password"));
+            Element button = new Element("var", By.xpath("//*[@name='submit']"));
+            button.getWebElement().click();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Method to execute at the end of the suite execution
+     */
 //	@AfterClass(alwaysRun = true)
 //	public void afterClass() {
 //		closeDriver();
 //	}
+    @AfterSuite(alwaysRun = true)
+    public void afterSuite() {
+    }
 
-	@AfterSuite(alwaysRun = true)
-	public void afterSuite() {
-	}
-
-	/**
-	 * Data Provider method to get data from Excel file.
-	 *
-	 * @param method test method executed
-	 * @return excel data
-	 */
+    /**
+     * Data Provider method to get data from Excel file.
+     *
+     * @param method test method executed
+     * @return excel data
+     */
 //	@DataProvider(name = "ExcelDataProvider")
 //	public Iterator<Object[]> provideData(Method method) {
 //		List<Object[]> excelData = new ArrayList<Object[]>();
@@ -180,36 +178,36 @@ public class BaseTest {
 //		return excelData.iterator();
 //	}
 
-	/**
-	 * Data Provider method to get data from CSV file.
-	 *
-	 * @param method test method executed
-	 * @return CSV data
-	 */
-	@DataProvider(name = "CsvDataProvider")
-	public Iterator<Object[]> getCsvData(Method method) {
-		List<Object[]> csvData = new ArrayList<Object[]>();
-		String csvRegex = ",(?=([^\"]*\"[^\"]*\")*[^\"]*$)";
-		String pathName = "src" + separator + "test" + separator + "resources" + separator + "CsvData.csv";
-		try {
-			String[] keys = lines(get(pathName)).findFirst().orElseThrow(IOException::new).split(csvRegex);
-			List<String[]> dataLines = lines(get(pathName)).filter(
-							line -> line.startsWith(method.getDeclaringClass().getSimpleName() + "." + method.getName()))
-					.map(line -> line.split(csvRegex)).collect(toList());
-			for (String[] values : dataLines) {
-				Map<String, String> data = new HashMap<String, String>();
-				for (int i = 1; i < keys.length; i++) {
-					if (!values[i].isEmpty()) {
-						data.put(keys[i], values[i]);
-					}
-				}
-				csvData.add(new Object[] { data });
-			}
-		} catch (IOException e) {
-			//error("Unable to get data from Csv", e);
-			throw new RuntimeException("Could not read " + pathName + " file.\n" + e.getStackTrace().toString());
-		}
-		return csvData.iterator();
-	}
+    /**
+     * Data Provider method to get data from CSV file.
+     *
+     * @param method test method executed
+     * @return CSV data
+     */
+    @DataProvider(name = "CsvDataProvider")
+    public Iterator<Object[]> getCsvData(Method method) {
+        List<Object[]> csvData = new ArrayList<Object[]>();
+        String csvRegex = ",(?=([^\"]*\"[^\"]*\")*[^\"]*$)";
+        String pathName = "src" + separator + "test" + separator + "resources" + separator + "CsvData.csv";
+        try {
+            String[] keys = lines(get(pathName)).findFirst().orElseThrow(IOException::new).split(csvRegex);
+            List<String[]> dataLines = lines(get(pathName)).filter(
+                            line -> line.startsWith(method.getDeclaringClass().getSimpleName() + "." + method.getName()))
+                    .map(line -> line.split(csvRegex)).collect(toList());
+            for (String[] values : dataLines) {
+                Map<String, String> data = new HashMap<String, String>();
+                for (int i = 1; i < keys.length; i++) {
+                    if (!values[i].isEmpty()) {
+                        data.put(keys[i], values[i]);
+                    }
+                }
+                csvData.add(new Object[]{data});
+            }
+        } catch (IOException e) {
+            //error("Unable to get data from Csv", e);
+            throw new RuntimeException("Could not read " + pathName + " file.\n" + e.getStackTrace().toString());
+        }
+        return csvData.iterator();
+    }
 
 }

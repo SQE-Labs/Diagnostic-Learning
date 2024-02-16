@@ -218,11 +218,11 @@ public class DirectorPage extends BasePage {
         click_custom(updateButton);
     }
 
-    public void clickOn_YearHeader() {
+    public void click_YearHeader() {
         click_custom(yearHeader);
     }
 
-    public void clickOn_MonthHeader() {
+    public void click_MonthHeader() {
         WebdriverWaits.waitUntilVisible(monthHeader);
         click_custom(monthHeader);
     }

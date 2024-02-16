@@ -51,7 +51,7 @@ public class PaymentPage extends BasePage {
 
     }
 
-    public void clickOn_CollectBtn()
+    public void click_CollectBtn()
     {
         WebdriverWaits.waitUntilVisible(collectButton);
         WebdriverWaits.waitForSpinner();
@@ -78,7 +78,7 @@ public class PaymentPage extends BasePage {
         sendKeys_withClear(enterAmountField,amount);
     }
 
-    public void clickOn_CloseBtn()
+    public void click_CloseBtn()
     {
         WebdriverWaits.waitUntilVisible(closeButton);
         WebdriverWaits.waitForSpinner();

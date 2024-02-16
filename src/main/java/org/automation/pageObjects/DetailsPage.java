@@ -29,7 +29,7 @@ public class DetailsPage extends BasePage
     public By clickCloseButton= By.xpath("(//a[text()='Close'])[2]");
 
 
-    public void click_OnPaymentButton()
+    public void click_PaymentButton()
     {
         click_custom(paymentButton);
     }

@@ -13,7 +13,7 @@ public class ReschedulePage extends BasePage
 
 
 
-    public void click_OnDiagonsticianField()
+    public void click_DiagonsticianField()
     {
         WebdriverWaits.waitUntilVisible(diagonsticianField);
         WebdriverWaits.waitForSpinner();

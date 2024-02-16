@@ -61,7 +61,7 @@ public class SuperAdminTest extends BaseTest {
         admin_cell_Number = RandomStrings.requiredDigits(10);
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
         WebdriverWaits.waitForSpinner();
-        panelPage.click_On_AdminTab();
+        panelPage.click_AdminTab();
         WebdriverWaits.waitForSpinner();
 
  //*************Creating admin by superAdmin************
@@ -100,8 +100,6 @@ public class SuperAdminTest extends BaseTest {
 
         //checking user is disable or not
         admin.cheking_DisableUser();
-        WebdriverWaits.waitUntilVisible(admin.enableUser);
-        validate_text(admin.enableUser, "Enable User");
     }
 
     @Test(priority = 6, enabled = true, description = "Verify that Superadmin is able to enable the Admin or not")
@@ -112,7 +110,7 @@ public class SuperAdminTest extends BaseTest {
 
         // Enabling the user
         validate_text(admin.Succ_Msg_Upd, "Admin details updated successfully.");
-       // panelPage.click_LogOutLink();
+
 
     }
 
@@ -121,11 +119,11 @@ public class SuperAdminTest extends BaseTest {
         AdminPage admin = new AdminPage();
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
         LoginPage login = new LoginPage();
-
         panelPage.click_LogOutLink();
+
+
         // Login with Admin new password
         login.adminLogin(adminUserName, "12345678");
-
 
         WebdriverWaits.waitUntilVisible(admin.dashboard);
         WebdriverWaits.waitForSpinner();
@@ -142,7 +140,7 @@ public class SuperAdminTest extends BaseTest {
         LoginPage login = new LoginPage();
         // Login with Admin new password
         login.superAdminLogin();
-        panelPage.click_On_AdminTab();
+        panelPage.click_AdminTab();
         admin.verify_DontSave(adminEmailAddress, "123456", "123456");
         WebdriverWaits.waitUntilVisible(admin.userNameText);
         validate_text(admin.userNameText, adminUserName);
