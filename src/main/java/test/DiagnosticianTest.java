@@ -52,6 +52,7 @@ public class DiagnosticianTest extends BaseTest {
     @Test(priority = 3, enabled = true, description = "32 Verify diagnostian client details page")
     public void verify_ClientDetailsPage() {
         DiagnosticianPage diagnostician = new DiagnosticianPage();
+        diagnostician.click_FilterButton();
         diagnostician.view_ClientDetail(clientFirstName);
         WebdriverWaits.waitUntilVisible(diagnostician.clientDetailText);
         WebdriverWaits.waitForSpinner();

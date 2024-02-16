@@ -3,6 +3,7 @@ package test;
 import org.automation.base.BaseTest;
 import org.automation.pageObjects.*;
 import org.automation.utilities.WebdriverWaits;
+import org.bson.assertions.Assertions;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -44,7 +45,7 @@ public class DirectorTest extends BaseTest {
         validate_text(director.yearHeader, currentDate.split(" ")[1]);
 
         String expectedText=getText_custom(director.yearButton);
-        director.clickOn_MonthHeader();
+        director.click_MonthHeader();
         String yearTitleText=getText_custom(director.yearsTitle);
 
         // Split the string into words
@@ -55,12 +56,6 @@ public class DirectorTest extends BaseTest {
         System.out.println(actualText);
         validate_AttText(actualText, expectedText);
         validate_text(director.yearTitleFromText, currentDate.split(" ")[1]);
-
-
-
-
-
-
     }
 
     @Test(priority = 4, enabled = true, description = "20 and 21 Verify that 'Available' card appears and click on Save button.")
@@ -72,7 +67,7 @@ public class DirectorTest extends BaseTest {
         verify_Login_Director();
         panelPage.click_Availability();
        // director.click_AvailaibleSlot();
-        director.director_Availability();
+        director.director_Availability(2);
         WebdriverWaits.waitUntilVisible(director.validateAvailable);
         validate_text(director.validateAvailable, "Available");
         WebdriverWaits.waitUntilVisible(director.avail_SaveButton);

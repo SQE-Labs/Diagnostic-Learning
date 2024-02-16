@@ -144,9 +144,10 @@ public class ActionEngine extends BaseTest {
 
 
     //check if element is Present
-    public boolean isElementPresent_custom(WebElement element, String fieldName) {
+    public boolean isElementDisplay_custom(By elements, String fieldName) {
         boolean flag = false;
         try {
+            WebElement element = getDriver().findElement(elements);
             flag = element.isDisplayed();
             extentTest.log(PASS, "Is  " + fieldName + " element present => " + flag);
             return flag;

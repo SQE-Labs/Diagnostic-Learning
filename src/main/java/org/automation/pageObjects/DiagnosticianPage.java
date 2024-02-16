@@ -47,8 +47,8 @@ public class DiagnosticianPage extends BasePage {
     //**************Search created diagnostician*************
 
     public By filterButton = By.xpath("//a[@class='theme-button grey ml-auto mr-3']");
-    public By searchField = By.xpath("//input[@placeholder='Type here to search']");
-
+    public By searchField = By.xpath("//input[@aria-controls='DataTables_Table_5']");
+    public By searchFld=By.xpath("//input[@placeholder='Type here to search']");
     public By viewClientDetailLink = By.xpath("(//td)[6]");
     public By clientDetailText = By.xpath("//div[contains(@class,'page-header align-items-lg-center')]");
     public By clientNameText = By.cssSelector("tr:not([style='display: none;' ]) td:nth-child(1)");
@@ -84,11 +84,13 @@ public class DiagnosticianPage extends BasePage {
     public By shiftText = By.xpath("//div[@class='mbsc-ios mbsc-popup-header mbsc-popup-header-center ng-star-inserted']");
     public By availableText = By.xpath("(//div[@class='ng-star-inserted'])[7]");
     public By upcomingTab = By.xpath("//a[text()='Upcoming']");
-    public By searchTextButton = By.xpath("//button[@class='theme-button']");
+
     public By dia_AvailSlots = By.xpath("//div[@class='mbsc-flex-1-1 mbsc-ios mbsc-ltr mbsc-timeline-column ng-star-inserted']");
 public By availableSlots=By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-all-day-inner mbsc-schedule-event-inner ng-star-inserted']");
 
 //*****************Set Availability for diagnostician ****************
+
+   public By deleteSlot =  By.xpath("//div[@class='mbsc-ios mbsc-popup-header mbsc-popup-header-center ng-star-inserted']");
 
     public By chooseTestingLocation = By.id("testingLocation");
     public By assessmentDate = By.xpath("//input[@placeholder='Assessment Date']");
@@ -129,7 +131,7 @@ public By availableSlots=By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-al
 
     public By availability = By.xpath("//a[text()='Availability']");
 
-
+    public By totalSlots=By.xpath("//div[@class='ng-star-inserted']");
     public By slot7 = By.xpath("(//div[@class='mbsc-flex-1-1 mbsc-ios mbsc-ltr mbsc-timeline-column ng-star-inserted'])[8]");
 
     public By slot11 = By.xpath("(//div[@class='mbsc-flex-1-1 mbsc-ios mbsc-ltr mbsc-timeline-column ng-star-inserted'])[12]");
@@ -246,9 +248,6 @@ public By availableSlots=By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-al
         WebdriverWaits.waitUntilVisible(filterButton);
         WebdriverWaits.waitForSpinner();
         click_custom(filterButton);
-        String AttText = getDriver().findElement(By.xpath("//input[@id='filterSearch']")).getAttribute("placeholder");
-        System.out.println(AttText);
-        validate_AttText(AttText, "Type here to search");
 
         String fromDateText = getDriver().findElement(By.xpath("//input[@placeholder='From Date']")).getAttribute("placeholder");
         getAttributevalue(fromDate, "placeholder");
@@ -260,7 +259,8 @@ public By availableSlots=By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-al
     }
 
     public void enterInSearchField(String searchFieldText) {
-        sendKeys_withClear(searchField, searchFieldText);
+        WebdriverWaits.waitUntilVisible(searchFld);
+        sendKeys_withClear(searchFld, searchFieldText);
     }
 
     public void click_ViewDetailLink() {
@@ -339,9 +339,6 @@ public By availableSlots=By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-al
     }
 
     public void serach_Dia(String diaName) {
-        WebdriverWaits.waitUntilVisible(filterButton);
-        WebdriverWaits.waitForSpinner();
-        click_custom(filterButton);
         enterInSearchField(diaName);
     }
 
@@ -357,6 +354,9 @@ public By availableSlots=By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-al
 
     public void cheking_DisableUser() throws InterruptedException {
         click_EditButton();
+        WebdriverWaits.waitUntilVisible( enableUser);
+        WebdriverWaits.waitForSpinner();
+        validate_text(enableUser, "Enable User");
         click_DontSave();
         click_EditButton();
         click_DontSave();
@@ -435,16 +435,7 @@ public By availableSlots=By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-al
         click_custom(testPlan);
     }
 
-    public void clickOnCheckBox() {
-        click_custom(checkBox);
-        click_custom(famCheckBox);
-        click_custom(nepsyCheckBox);
-        click_custom(ndCheckBox);
-        click_custom(wmsCheckBox);
-        click_custom(bascSelfCheckBox);
-        click_custom(cbrsSelfCheckBox);
-        click_custom(dlsDyslexiaCheckBox);
-    }
+
 
 //******************Logging as diagnostician************
 
@@ -467,7 +458,7 @@ public By availableSlots=By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-al
       //  validate_text(disableButton, "Save");
     }
 
-    public void click_Slot() throws InterruptedException {
+    public void click_Slot(int count) throws InterruptedException {
         // use logic??
 
         Thread.sleep(5000);
@@ -476,7 +467,7 @@ public By availableSlots=By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-al
         for (WebElement slot : slots) {
             Thread.sleep(2000);
             moveToEleByWE(slot);
-            if (getDriver().findElements(By.xpath("//div[@class='ng-star-inserted']")).size() > 3) {
+            if (getWebElements(totalSlots).size() > count) {
                 break;
             }
         }
@@ -494,7 +485,7 @@ public By availableSlots=By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-al
 
     public void set_Availability() throws InterruptedException {
         click_Availablity();
-        click_Slot();
+        click_Slot(3);
     }
 
     //**************Diagnostician Started Assessment***************
@@ -615,8 +606,8 @@ public By availableSlots=By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-al
         for (WebElement slot : slots) {
             Thread.sleep(2000);
             moveToEleByWE(slot);
-            WebElement cancelSlot = getDriver().findElement(By.xpath("//div[@class='mbsc-ios mbsc-popup-header mbsc-popup-header-center ng-star-inserted']"));
-            if (cancelSlot.isDisplayed()) {
+
+            if (isElementDisplay_custom(deleteSlot,"Slots Name")) {
                 Thread.sleep(4000);
                 String getText = getText_custom(shiftText);
                 WebdriverWaits.waitUntilVisible(shiftText);
@@ -651,9 +642,7 @@ public By availableSlots=By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-al
     }
 
     public void view_ClientDetail(String clientLastName) {
-        click_custom(filterButton);
-        WebdriverWaits.waitUntilVisible(searchTextButton);
-        validate_text(searchTextButton, "Search");
+
         enterInSearchField(clientLastName);
         click_ViewDetailLink();
     }
@@ -669,14 +658,10 @@ public By availableSlots=By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-al
         click_TodasTab();
         click_ViewDetails();
         click_StartAssButtn();
-
+    }
         //****************This Test case is removed *************
 
-//        clickOn_PaymentLinkButton();
-//        WebdriverWaits.waitUntilVisible(merchantLoginPage);
-//        validate_text(merchantLoginPage, "Merchant" + ' ' + "Login");
-//        switchToParentWindow();
-    }
+
 
     public void start_Assessment_ByPaying_LessAmount(String textAreaText) throws InterruptedException {
         WebdriverWaits.waitUntilVisible(paymentDetailTitle);

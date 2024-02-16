@@ -53,7 +53,7 @@ public class DashBoardPanelPage extends BasePage {
         click_custom(diagnosticianLink);
     }
 
-    public void click_On_AdminTab() throws InterruptedException {
+    public void click_AdminTab() throws InterruptedException {
 
         WebdriverWaits.waitUntilVisible(adminButton);
         WebdriverWaits.waitForSpinner();
@@ -95,17 +95,10 @@ public class DashBoardPanelPage extends BasePage {
     }
 
     public void click_AppointmentsTab(){
-
+        WebdriverWaits.waitUntilInvisible(AppointmentsTab);
         WebdriverWaits.waitForSpinner();
         click_custom(AppointmentsTab);
     }
-
-    public void click_AppointmentsTab2(){
-        WebdriverWaits.waitUntilInvisible(availabilityTab);
-        WebdriverWaits.waitForSpinner();
-        click_custom(availabilityTab);
-    }
-
     public void click_Availability() {
         WebdriverWaits.waitUntilVisible(availabilityTab);
         WebdriverWaits.waitForSpinner();

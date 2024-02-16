@@ -99,6 +99,7 @@ public class WebdriverWaits extends BaseTest {
   }
 
 
+
     public String getText_custom(By path) {
         String text = "";
         try {
@@ -208,6 +209,7 @@ public class WebdriverWaits extends BaseTest {
         } catch (WebDriverException e) {
         }
     }
+
 
     }
 

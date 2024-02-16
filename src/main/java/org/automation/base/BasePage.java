@@ -66,10 +66,10 @@ public class BasePage extends ActionEngine {
     /**
      * Switch to the newly opened window.
      * <p>
-     *  * @param description description of the new window
+     * * @param description description of the new window
      */
     public void switchToWindow(String description) {
-         Log.info("Switch to window [" + description + "]");
+        Log.info("Switch to window [" + description + "]");
         parentWindow = getDriver().getWindowHandle();
         for (String windowHandle : getDriver().getWindowHandles())
             if (!windowHandle.equals(parentWindow))
@@ -109,7 +109,7 @@ public class BasePage extends ActionEngine {
     /**
      * Switch to the Main window.
      * <p>
-     *  * @param description description of the main window
+     * * @param description description of the main window
      */
     public void switchToParentWindow(String description) {
         Log.info("Switch to parent window [" + description + "]");
@@ -184,6 +184,7 @@ public class BasePage extends ActionEngine {
             throw new RuntimeException(e);
         }
     }
+
     public void scrolltoHorizontal() {
         JavascriptExecutor jse = (JavascriptExecutor) getDriver();
         try {

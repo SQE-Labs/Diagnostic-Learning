@@ -21,7 +21,7 @@ public class DashboardPage extends BasePage {
         click_custom(scheduleAppointment);
     }
 
-    public void clickOn_ClientNameBackgroundSection()
+    public void click_ClientNameBackgroundSection()
     {
         WebdriverWaits.waitUntilVisible(clientNameFromBCGForm);
         WebdriverWaits.waitForSpinner();
@@ -29,7 +29,7 @@ public class DashboardPage extends BasePage {
 
     }
 
-    public void clickOn_ClientNameFollowupSection()
+    public void click_ClientNameFollowupSection()
     {
         WebdriverWaits.waitUntilVisible(clientNameFromFollowup);
         WebdriverWaits.waitForSpinner();
