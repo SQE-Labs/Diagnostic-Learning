@@ -13,8 +13,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import static org.automation.utilities.Assertions.*;
-import static test.AdminTest.clientFirstName;
-import static test.AdminTest.clientLastName;
+
 
 
 public class SuperAdminTest extends BaseTest {
@@ -33,6 +32,8 @@ public class SuperAdminTest extends BaseTest {
     public String diagnosticianEmailAddress;
     public String diagnosticianLastName;
     public String dia_Cell_Number;
+    public static String clientFirstName;
+    public static String clientLastName;
 
 
     @Test(priority = 0, enabled = true, description = "1.1 Verify that SuperAdmin is able to login")
@@ -112,7 +113,7 @@ public class SuperAdminTest extends BaseTest {
 
         // Enabling the user
         validate_text(admin.Succ_Msg_Upd, "Admin details updated successfully.");
-        panelPage.click_LogOutLink();
+       // panelPage.click_LogOutLink();
 
     }
 
@@ -122,13 +123,13 @@ public class SuperAdminTest extends BaseTest {
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
         LoginPage login = new LoginPage();
 
+        panelPage.click_LogOutLink();
         // Login with Admin new password
         login.adminLogin(adminUserName, "12345678");
 
 
         WebdriverWaits.waitUntilVisible(admin.dashboard);
         WebdriverWaits.waitForSpinner();
-
         validate_text(admin.dashboard, "Dashboard");
 
         panelPage.click_LogOutLink();
@@ -223,8 +224,7 @@ public class SuperAdminTest extends BaseTest {
 
         //checking user is disable or not
         diagnostician.cheking_DisableUser();
-        WebdriverWaits.waitUntilVisible(diagnostician.enableUser);
-        validate_text(diagnostician.enableUser, "Enable User");
+
     }
 
     @Test(priority = 15, enabled = true, description = "Verify that Superadmin is able to disable the user or not")

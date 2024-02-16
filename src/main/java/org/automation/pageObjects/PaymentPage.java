@@ -18,7 +18,7 @@ public class PaymentPage extends BasePage {
 
     public By receivedAmountOnDisplay=By.xpath("//label[text()='Received Amount']//following-sibling::p");
     public By filterButton = By.xpath("//a[text()='Filter']");
-    public By searchField = By.xpath("//input[@id='filterSearch']");
+    public By searchField = By.xpath("//input[@aria-controls='paymentTable']");
     public By cust_Name=By.cssSelector("tr:not([style='display: none;' ]) td:nth-child(1)");
     public By getCust_Name =By.xpath("(//td)[1]");
     public By paymentLinkButton=By.xpath("//a[text()='Payment Link']");
@@ -82,6 +82,12 @@ public class PaymentPage extends BasePage {
         click_custom(paymentButton);
 
     }
+    public void viewReceiptButtonNotDisplayed() {
+        WebdriverWaits.waitUntilVisible( paymentButton);
+        WebdriverWaits.waitForSpinner();
+        click_custom( paymentButton);
+    }
+
 
     public void send_AmountInEnterAmount(String amount)
     {

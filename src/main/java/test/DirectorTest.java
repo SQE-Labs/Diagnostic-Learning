@@ -339,7 +339,7 @@ public class DirectorTest extends BaseTest {
         PaymentPage payment = new PaymentPage();
         login.director_Login();
         appointment.click_AppoinptmentTab();
-        appointment.click_OnViewAllTab();
+        appointment.click_ViewAllTab();
         String status = "Test Ready";
         dashPage.enter_DataSearhTextBox(status);
         appointment.clickOn_ViewDetails();
@@ -363,7 +363,7 @@ public class DirectorTest extends BaseTest {
         PaymentPage payment = new PaymentPage();
         login.director_Login();
         appointment.click_AppoinptmentTab();
-        appointment.click_OnViewAllTab();
+        appointment.click_ViewAllTab();
         String status = "Test Ready";
         dashPage.enter_DataSearhTextBox(status);
         appointment.clickOn_ViewDetails();
@@ -412,7 +412,6 @@ public class DirectorTest extends BaseTest {
         String expecetedClientName = getText_custom(admin.title);
         payment.clickOn_PaymentBtn();
         payment.clickOn_CancelBtn();
-        admin.scrollToTitle();
         validate_text(admin.title, expecetedClientName);
     }
 
@@ -432,7 +431,6 @@ public class DirectorTest extends BaseTest {
         String expecetedClientName = getText_custom(admin.title);
         payment.clickOn_PaymentBtn();
         payment.clickOn_CancelBtn();
-        admin.scrollToTitle();
         validate_text(admin.title, expecetedClientName);
     }
 
@@ -446,11 +444,14 @@ public class DirectorTest extends BaseTest {
         login.director_Login();
         appointment.click_UpcomingTab();
         validate_text(admin.titleOfUpcomingPage, "Upcoming Appointments");
-        String status = "Upcoming";
-        dashPage.enter_DataSearhTextBox(status);
+        dashPage.enter_DataSearhTextBox("Upcoming");
         director.click_ViewDetailsBtn();
+        admin.create_FollowUp(0);
+        WebdriverWaits.waitUntilVisible(admin.validateScheduledFollowUp);
+        WebdriverWaits.waitForSpinner();
+        validate_text(admin.validateScheduledFollowUp, "Follow Up Scheduled!!");
+        admin.click_BackBtn();
+
 
     }
-
-
 }
