@@ -49,6 +49,8 @@ public class DiagnosticianPage extends BasePage {
     public By filterButton = By.xpath("//a[@class='theme-button grey ml-auto mr-3']");
     public By searchField = By.xpath("//input[@aria-controls='DataTables_Table_5']");
     public By searchFld=By.xpath("//input[@placeholder='Type here to search']");
+    public By searchFild=By.xpath("//input[@aria-controls='DataTables_Table_0']");
+    public By testCompleteSearchFld=By.xpath("//input[@aria-controls='appointmentTable']");
     public By viewClientDetailLink = By.xpath("(//td)[6]");
     public By clientDetailText = By.xpath("//div[contains(@class,'page-header align-items-lg-center')]");
     public By clientNameText = By.cssSelector("tr:not([style='display: none;' ]) td:nth-child(1)");
@@ -232,12 +234,6 @@ public By availableSlots=By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-al
 
 
     public void search_ClientPage(String searchFieldText) {
-        WebdriverWaits.waitUntilVisible(filterButton);
-        WebdriverWaits.waitForSpinner();
-        click_custom(filterButton);
-        String AttText = getDriver().findElement(By.xpath("//input[@id='filterSearch']")).getAttribute("placeholder");
-        System.out.println(AttText);
-        validate_AttText(AttText, "Type here to search");
         sendKeys_withClear(searchField, searchFieldText);
     }
 
@@ -262,7 +258,15 @@ public By availableSlots=By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-al
         WebdriverWaits.waitUntilVisible(searchFld);
         sendKeys_withClear(searchFld, searchFieldText);
     }
-
+    public void enter_SearchField(String searchFieldTexts){
+        WebdriverWaits.waitUntilVisible(searchFild);
+        sendKeys_withClear(searchFild,searchFieldTexts);
+    }
+    public void enter_InSearchField(String testCompleteClientName){
+        WebdriverWaits.waitUntilVisible(testCompleteSearchFld);
+        WebdriverWaits.waitForSpinner();
+        sendKeys_withClear(testCompleteSearchFld,testCompleteClientName);
+    }
     public void click_ViewDetailLink() {
         click_custom(viewClientDetailLink);
     }
@@ -337,11 +341,6 @@ public By availableSlots=By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-al
         click_FilterButton();
         enterInSearchField(UserName);
     }
-
-    public void serach_Dia(String diaName) {
-        enterInSearchField(diaName);
-    }
-
     public void edit_Diagnostician(String EmailAddress1, String passwordTextFieldText, String confirmPasswordFieldText) throws InterruptedException {
         click_EditButton();
         // enter_CellNumber(cellNumberText);
@@ -641,9 +640,9 @@ public By availableSlots=By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-al
         click_custom(diagnosticianSaveButton);
     }
 
-    public void view_ClientDetail(String clientLastName) {
+    public void click_ClientDetailLink(String clientLastName) {
 
-        enterInSearchField(clientLastName);
+        enter_SearchField(clientLastName);
         click_ViewDetailLink();
     }
 

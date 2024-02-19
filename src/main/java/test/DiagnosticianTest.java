@@ -52,8 +52,8 @@ public class DiagnosticianTest extends BaseTest {
     @Test(priority = 3, enabled = true, description = "32 Verify diagnostian client details page")
     public void verify_ClientDetailsPage() {
         DiagnosticianPage diagnostician = new DiagnosticianPage();
-        diagnostician.click_FilterButton();
-        diagnostician.view_ClientDetail(clientFirstName);
+
+        diagnostician.click_ClientDetailLink(clientFirstName);
         WebdriverWaits.waitUntilVisible(diagnostician.clientDetailText);
         WebdriverWaits.waitForSpinner();
         validate_text(diagnostician.clientDetailText, clientFirstName + ' ' + clientLastName + ' ' + "Details");
@@ -148,7 +148,7 @@ public class DiagnosticianTest extends BaseTest {
         DiagnosticianPage diagnostician = new DiagnosticianPage();
         DashBoardPanelPage panelpage = new DashBoardPanelPage();
         diagnostician.click_CancelTab();
-        diagnostician.search_ClientPage(clientLastName);
+        diagnostician.enter_InSearchField(clientLastName);
         WebdriverWaits.waitUntilVisible(diagnostician.clientNameText);
         validate_text(diagnostician.clientNameText, clientFirstName +' '+ clientLastName);
          panelpage.click_LogOutLink();

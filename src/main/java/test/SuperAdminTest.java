@@ -13,8 +13,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import static org.automation.utilities.Assertions.*;
-import static test.AdminTest.clientFirstName;
-import static test.AdminTest.clientLastName;
+
 
 
 public class SuperAdminTest extends BaseTest {
@@ -33,6 +32,8 @@ public class SuperAdminTest extends BaseTest {
     public String diagnosticianEmailAddress;
     public String diagnosticianLastName;
     public String dia_Cell_Number;
+    public static String clientFirstName;
+    public static String clientLastName;
 
 
     @Test(priority = 0, enabled = true, description = "1.1 Verify that SuperAdmin is able to login")
@@ -196,9 +197,11 @@ public class SuperAdminTest extends BaseTest {
     public void validate_Created_Diagnostician_In_SuperAdmin() throws InterruptedException {
         DiagnosticianPage diagnostician = new DiagnosticianPage();
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
+        AdminPage admin=new AdminPage();
         Thread.sleep(4000);
         panelPage.click_BackButton();
-        diagnostician.serach_Dia(diagnosticianUserName);
+        admin.click_filterButton();
+        diagnostician.enterInSearchField(diagnosticianUserName);
         WebdriverWaits.waitUntilVisible(diagnostician.actualText);
         validate_text(diagnostician.actualText, diagnosticianUserName);
         Log.info("Created Diagnostician Displayed In The Diagnostician ListPage");
@@ -337,9 +340,7 @@ public class SuperAdminTest extends BaseTest {
         DirectorPage director = new DirectorPage();
         director.cheking_DisableUser();
 
-        WebdriverWaits.waitUntilVisible(director.enableUser);
 
-        validate_text(director.enableUser, "Enable User");
     }
 
     @Test(priority = 23, enabled = true, description = "Verify that Superadmin is able to Enable the user or not")

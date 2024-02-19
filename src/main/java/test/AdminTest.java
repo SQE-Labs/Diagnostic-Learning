@@ -28,18 +28,19 @@ import java.util.List;
 import static org.automation.utilities.Assertions.validate_text;
 import static org.automation.utilities.Assertions.*;
 import static org.automation.utilities.WebdriverWaits.*;
-import static test.SuperAdminTest.adminUserName;
+import static test.SuperAdminTest.*;
 
 public class AdminTest extends BaseTest {
 
     public static String clientLastName;
+    public static String clientFirstName;
     public static String diagnosticianUserName;
     String directorFirstName;
     String directorUserName;
     String dirCellNumber;
     String directorEmailAddress;
     String directorLastName;
-    public static String clientFirstName;
+
     String clientEmail;
     String clientEmail2;
     String clientCellNumber;
@@ -369,8 +370,6 @@ public class AdminTest extends BaseTest {
         WebdriverWaits.waitUntilVisible(appPage.viewAllActualText);
         WebdriverWaits.waitForSpinner();
         validate_text(appPage.viewAllActualText, "All Appointments");
-        admin.click_filterButton();
-
     }
 
     @Test(priority = 28, enabled = true, description = "Verify filter button and serarchtextbox textbox")
@@ -380,6 +379,7 @@ public class AdminTest extends BaseTest {
         admin.enterSearchField(clientFirstName);
         WebdriverWaits.waitUntilVisible(admin.getStatus);
         validate_text(admin.getStatus, "Test Ready");
+
     }
 
     @Test(priority = 29, enabled = true, description = "Verify search fromDate and toDate")
@@ -389,7 +389,9 @@ public class AdminTest extends BaseTest {
         ActionEngine engine;
         engine = new ActionEngine();
         String toDate = DateGenerator.getCurrentDate();
+
         String FromDate = DateGenerator.getDateWithDays("dd-MM-yyyy", -2);
+        admin.click_filterButton();
         appPage.enter_Dates(FromDate, toDate);
         admin.click_SearchButton();
         WebdriverWaits.waitUntilVisible(appPage.dateEle);
@@ -458,10 +460,16 @@ public class AdminTest extends BaseTest {
             director.edit_Director(directorEmailAddress, "12345678", "12345678");
             validate_text(director.edit_SuccMsg, "Director details updated successfully.");
         }
+    @Test(priority = 35, enabled = true, description = "Verify that admin is able to Enable the user or not")
+    public void verify_director_enable_User() {
+        DirectorPage director = new DirectorPage();
 
+        director.enable_Director();
+        WebdriverWaits.waitUntilVisible(director.edit_SuccMsg);
+        validate_text(director.edit_SuccMsg, "Director details updated successfully.");
+    }
 
-
-        @Test(priority = 35, enabled = true, description = "4.14 verify that director is able to edit or not after clicking dont save button")
+        @Test(priority = 36, enabled = true, description = "4.14 verify that director is able to edit or not after clicking dont save button")
         public void Verify_DntSave_Button () throws InterruptedException {
             DirectorPage director = new DirectorPage();
             String directorEmailAddressUpdated = directorFirstName + "101@yopmail.com";
@@ -470,12 +478,13 @@ public class AdminTest extends BaseTest {
             validate_text(director.UserNameGetText, directorUserName);
         }
 
-        @Test(priority = 36, enabled = true, description = "Admin is directed to 'Today's Appointment' page")
-        public void verify_TodayAppointmentTab () {
+        @Test(priority = 37, enabled = true, description = "Admin is directed to 'Today's Appointment' page")
+        public void verify_TodayAppointmentTab () throws InterruptedException {
             AdminPage admin = new AdminPage();
             DateGenerator datePage = new DateGenerator();
             DashBoardPanelPage dashboard=new DashBoardPanelPage();
             dashboard.click_AppointmentsTab();
+            Thread.sleep(5000);
             admin.click_TodayTab();
             validate_text(admin.todayAppointmentTitle, "Today's Appointments");
             String expectedDate = datePage.getCurrentDateFromSystem();
@@ -484,7 +493,7 @@ public class AdminTest extends BaseTest {
     }
 
     //***********TO DO *********************
-        @Test(priority = 37, enabled = true, description = "Admin is directed to 'Client Details' page of Today's appointment card")
+        @Test(priority = 38, enabled = true, description = "Admin is directed to 'Client Details' page of Today's appointment card")
         public void verify_ClientDetailsPage () {
             AdminPage admin = new AdminPage();
             String actualText = getText_custom(admin.nameOnCard);
@@ -502,7 +511,7 @@ public class AdminTest extends BaseTest {
             validate_AttText(actualText, expectedTitleText);
         }
 
-        @Test(priority = 38, enabled = true, description = "1.13, Admin is directed to 'Upcoming Appointment' page")
+        @Test(priority = 39, enabled = true, description = "1.13, Admin is directed to 'Upcoming Appointment' page")
         public void verify_UpcomingTab () {
             AdminPage admin = new AdminPage();
             AppointmentsPage appointment=new AppointmentsPage();
@@ -514,7 +523,7 @@ public class AdminTest extends BaseTest {
             validate_text(admin.getStatus, "Upcoming");
         }
 
-        @Test(priority = 39, enabled = true, description = "Admin is directed to 'Test Ready Appointment' page")
+        @Test(priority = 40, enabled = true, description = "Admin is directed to 'Test Ready Appointment' page")
         public void verify_TestReadyTab () {
             AdminPage admin = new AdminPage();
             AppointmentsPage appointment=new AppointmentsPage();
@@ -522,7 +531,7 @@ public class AdminTest extends BaseTest {
             validate_text(admin.getTestReadyTitle, "Test Ready Appointments");
         }
 
-        @Test(priority = 40, enabled = true, description = "Admin is directed to 'Client Details' page of Test ready card")
+        @Test(priority = 41, enabled = true, description = "Admin is directed to 'Client Details' page of Test ready card")
         public void verify_ClientPageTestReady () {
             AdminPage admin = new AdminPage();
             AppointmentsPage appointment=new AppointmentsPage();
@@ -538,13 +547,16 @@ public class AdminTest extends BaseTest {
                 String firstWord = words[0];
                 String secondWord = words[1];
                 expectedTitleText = firstWord + " " + secondWord;
+
+
+
         } else {
 
         }
         validate_AttText(actualText, expectedTitleText);
     }
 
-        @Test(priority = 41, enabled = true, description = "Admin is able to click client detail page after clicking on 'View Details' button")
+        @Test(priority = 42, enabled = true, description = "Admin is able to click client detail page after clicking on 'View Details' button")
         public void click_OnViewDetailsButton () {
             AdminPage admin = new AdminPage();
             AppointmentsPage appointment=new AppointmentsPage();
@@ -672,6 +684,7 @@ public class AdminTest extends BaseTest {
         @Test(dependsOnMethods = {"Verify_ClickOnCompletedTab"}, description = "Admin is able to click on 'Filter' button")
         public void verify_ClickOnFilterBtnOfCompletedTab () {
             AdminPage admin = new AdminPage();
+
             admin.click_FilterBtn();
 
             //Search field
@@ -786,7 +799,7 @@ public class AdminTest extends BaseTest {
     //************************ Edit Diagnostician *********************//
 
     //******************** Logout button **************//
-    @Test(priority = 49, enabled = true, description = "Verify login button for admin.")
+    @Test(priority = 43, enabled = true, description = "Verify login button for admin.")
     public void verify_Admin_LogOut() {
         DashBoardPanelPage panelpage = new DashBoardPanelPage();
         panelpage.click_LogOutLink();
