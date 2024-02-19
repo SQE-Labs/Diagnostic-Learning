@@ -93,6 +93,7 @@ public class AdminPage extends BasePage {
     public By dlsDyslexiaCheckBox = By.xpath("//label[text()='DLS Dyslexia']/..");
     public By testPlanSaveButton = By.xpath("//button[text()='Save']");
     public By actualEditTest = By.xpath("//p[text()=' WRAML ']");
+    public By directorName = By.xpath("((//tr[not(contains(@style,'display: none;'))])[2]//td)[1]");
     public By closeButton = By.xpath("//a[text()='Close']");
 
     public By docgList = By.xpath("//span[text()='Active']/../../td[5][text()='Plano']/../td[1]");
@@ -107,7 +108,7 @@ public class AdminPage extends BasePage {
     public By editEmail = By.xpath(" //input[@formcontrolname='emailAddress']");
     public By editEmail2 = By.xpath(" //input[@formcontrolname='secondaryEmailAddress']");
     public By editGrade = By.id("schoolType");
-    public By todaysTab = By.xpath("(//li[@class='ng-star-inserted']/a)[3]");
+    public By todaysTab = By.xpath("(//li[@class='ng-star-inserted']/a)[4]");
 
     public By editSchoolType = By.xpath(" //input[@formcontrolname='schoolType']");
     public By editDistrict = By.xpath(" //input[@formcontrolname='school']");
@@ -180,14 +181,8 @@ public class AdminPage extends BasePage {
     public By todayAppointmentTitle = By.xpath("//div[@class='align-items-md-center d-flex flex-column flex-md-row page-header']/h3");
 
 
-    public By todayTab = By.xpath("//a[contains(text(),'Today')]");
-
-
     public By card = By.xpath("(//td[@class='d-block ng-star-inserted'])[1]");
     public By nameOnCard = By.xpath("(//p[@class='text-purple mb-0'])[1]");
-
-    public By nameOnClientDetails = By.xpath("//div[@class='page-header align-items-lg-center d-flex flex-column flex-md-row']/h3");
-
     public By todayDateOnCard = By.xpath("(//span[@class='text-grey'])[1]");
 
     public By getTestReadyTitle = By.xpath("//div[@class='align-items-md-center d-flex flex-column flex-md-row page-header']/h3");
@@ -195,7 +190,6 @@ public class AdminPage extends BasePage {
 
     public By titleOfUpcomingPage = By.xpath("//div[@class='page-header align-items-lg-center d-flex flex-column flex-md-row']/h3");
 
-    public By nameOfTestReadyCard = By.xpath("(//div[@class='client-diagno d-flex align-items-center justify-content-between']/p)[1]");
 
     public By getStatus = By.xpath("(//tr[not(contains(@style,'display: none;'))])[2]//span");
 
@@ -301,6 +295,7 @@ public class AdminPage extends BasePage {
         sendKeys_withClear(userName, userNameText);
     }
 
+
     public void enterSearchField(String nameOfClients) {
         sendKeys_withClear(searchTextBox, nameOfClients);
     }
@@ -312,6 +307,12 @@ public class AdminPage extends BasePage {
 
     public void confirm_PasswordField(String confirmPasswordText) {
         sendKeys_withClear(confirm_PasswordField, confirmPasswordText);
+    }
+
+    public void click_TodayTab() {
+        WebdriverWaits.waitUntilVisible(todaysTab);
+        WebdriverWaits.waitForSpinner();
+        moveToElement(todaysTab);
     }
 
     public List<WebElement> get_diagList(By Path) {
@@ -467,14 +468,13 @@ public class AdminPage extends BasePage {
     }
     //************Checking toggle of or not*************
 
-    public void cheking_DisableUser() throws InterruptedException {
+    public void cheking_DisableUser()  {
         click_EditButton();
-        click_DontSave();
-        WebdriverWaits.waitUntilVisible( enableUser);
-        validate_text( enableUser, "Enable User");
+        WebdriverWaits.waitUntilVisible(enableUser);
+        validate_text(enableUser, "Enable User");
 
-        click_EditButton();
         click_DontSave();
+
     }
 
     //**********Enable user In Admin************
@@ -627,7 +627,7 @@ public class AdminPage extends BasePage {
         sendKeys_withClear(editDistrict, district);
     }
 
-    public void click_TodayTab() {
+    public void clickOn_TodayTab() {
         waitUntilVisible(todaysTab);
         WebdriverWaits.waitForSpinner();
         moveToElement(todaysTab);
@@ -719,6 +719,9 @@ public class AdminPage extends BasePage {
     }
 
     public void filter_ForUpcoming(String clientText) {
+        WebdriverWaits.waitUntilVisible(filterButton);
+        WebdriverWaits.waitForSpinner();
+        click_custom(filterButton);
         sendKeys_withClear(searchField, clientText);
     }
 
@@ -850,7 +853,6 @@ public class AdminPage extends BasePage {
         WebdriverWaits.waitForSpinner();
         click_custom(testCompleteTab);
     }
-
 
 
     public void filter_ForUpcoming() {
@@ -1037,14 +1039,14 @@ public class AdminPage extends BasePage {
     }
 
 
-    public void click_OnRescheduleBtn() {
+    public void click_RescheduleBtn() {
         waitUntilVisible(rescheduleAppointmentBtn);
         WebdriverWaits.waitForSpinner();
         click_custom(rescheduleAppointmentBtn);
 
     }
 
-    public void click_OnEditBtn() {
+    public void click_EditBtn() {
         waitUntilVisible(editClientBtn);
         WebdriverWaits.waitForSpinner();
         click_custom(editClientBtn);
@@ -1066,20 +1068,21 @@ public class AdminPage extends BasePage {
         sendKeys_withClear(editEmail2, email);
     }
 
-    public void click_OnCancelBtn() {
+
+    public void click_CancelBtn() {
         waitUntilVisible(cancelAppointmentBtn);
         WebdriverWaits.waitForSpinner();
         click_custom(cancelAppointmentBtn);
 
     }
 
-    public void clickOn_backBtnCancelPopup() {
+    public void click_backBtnCancelPopup() {
         waitUntilVisible(backBtnCancelPopup);
         WebdriverWaits.waitForSpinner();
         click_custom(backBtnCancelPopup);
     }
 
-    public void clickOn_CancelRadioBtn() {
+    public void click_CancelRadioBtn() {
         waitUntilVisible(cancelRadioBtn);
         WebdriverWaits.waitForSpinner();
         click_custom(cancelRadioBtn);
