@@ -477,7 +477,8 @@ public class AdminTest extends BaseTest {
             DashBoardPanelPage dashboard=new DashBoardPanelPage();
             dashboard.click_AppointmentsTab();
             admin.click_TodayTab();
-            validate_text(admin.todayAppointmentTitle, "Today's Appointments");
+            validate_text(admin.
+                    todayAppointmentTitle, "Today's Appointments");
             String expectedDate = datePage.getCurrentDateFromSystem();
             validate_text(admin.todayDateOnCard, expectedDate);
 

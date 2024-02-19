@@ -208,37 +208,14 @@ public class DirectorPage extends BasePage {
         WebdriverWaits.waitUntilVisible(editButton);
         click_custom(editButton);
     }
-
-    public void enter_CellNumber(String cellNumberText) {
-        WebdriverWaits.waitUntilVisible(cellNumber);
-        sendKeys_withClear(cellNumber, cellNumberText);
-    }
-
     public void click_UpdateButton() {
         click_custom(updateButton);
-    }
-
-    public void click_YearHeader() {
-        click_custom(yearHeader);
     }
 
     public void click_MonthHeader() {
         WebdriverWaits.waitUntilVisible(monthHeader);
         click_custom(monthHeader);
     }
-
-    public void select_Year() {
-        WebdriverWaits.waitUntilVisible(selectYear);
-        click_custom(selectYear);
-
-    }
-
-    public void select_Month() {
-        WebdriverWaits.waitUntilVisible(selectMonth);
-        click_custom(selectMonth);
-
-    }
-
     public void off_ToggleButton() {
         WebdriverWaits.waitUntilVisible(toggle);
         click_custom(toggle);

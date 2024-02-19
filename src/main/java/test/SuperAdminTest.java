@@ -198,7 +198,7 @@ public class SuperAdminTest extends BaseTest {
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
         Thread.sleep(4000);
         panelPage.click_BackButton();
-        diagnostician.serach_Dia(diagnosticianUserName);
+        diagnostician.enterInSearchField(diagnosticianUserName);
         WebdriverWaits.waitUntilVisible(diagnostician.actualText);
         validate_text(diagnostician.actualText, diagnosticianUserName);
         Log.info("Created Diagnostician Displayed In The Diagnostician ListPage");
