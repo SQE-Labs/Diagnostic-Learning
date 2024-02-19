@@ -140,7 +140,8 @@ public class DirectorPage extends BasePage {
 
     public void click_ConfirmFollowUpBtn() {
         WebdriverWaits.waitUntilVisible(confirmZoomRadioBtn);
-        moveToElement(confirmZoomRadioBtn);
+        moveToElement(
+                confirmZoomRadioBtn);
         WebdriverWaits.waitUntilVisible(confirmBtn);
         click_custom(confirmBtn);
     }

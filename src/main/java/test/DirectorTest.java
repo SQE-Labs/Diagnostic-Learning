@@ -501,6 +501,7 @@ public class DirectorTest extends BaseTest {
 
         //End to End Flow
         director.click_FollowUpSaveBtn();
+        director.click_ConfirmFollowUpBtn();
         WebdriverWaits.waitUntilVisible(admin.validateScheduledFollowUp);
         WebdriverWaits.waitForSpinner();
         validate_text(admin.validateScheduledFollowUp, "Follow Up Scheduled!!");
