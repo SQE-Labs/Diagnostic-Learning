@@ -137,7 +137,6 @@ public class AdminPage extends BasePage {
     public By collectFeeAmt = By.xpath("(//input[contains(@class,'custom-input my-1')])[2]");
     public By enterAmt = By.id("bookingDeposit");
     public By collectPayBtn = By.xpath("//button[@class='theme-button mx-2']");
-    public By payRecievedActualText = By.xpath("//h4[text()='Payment Received!!']");
     public By closebtn = By.xpath("(//a[text()='Close'])[2]");
     public By amountDue = By.xpath("//label[text()='Amount Due']//following-sibling::p");
     public By assessmentAmount = By.xpath("//label[text()='Assessment Amount']//following-sibling::p");
@@ -796,6 +795,7 @@ public class AdminPage extends BasePage {
 
 
     public void create_FollowUp(int count) {
+
         click_CreateFollowUpBtn();
         click_FollowUpSlot(count);
         click_FollowUpSlotSaveBtn();

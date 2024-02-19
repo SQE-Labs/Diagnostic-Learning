@@ -9,7 +9,7 @@ import org.openqa.selenium.WebElement;
 import java.util.List;
 
 import static org.automation.utilities.Assertions.validate_text;
-import static org.automation.utilities.WebdriverWaits.moveToEleByWE;
+import static org.automation.utilities.WebdriverWaits.*;
 
 
 public class DirectorPage extends BasePage {
@@ -17,9 +17,18 @@ public class DirectorPage extends BasePage {
     WebdriverWaits wait = new WebdriverWaits();
 
     public By logOutLink = By.xpath("//a[text()='Log Out']");
-    public By directorsTab = By.xpath("//a[text()='Directors']");
-    public By diagnosticianSaveButton = By.xpath("//button[text()='Save']");
+    public By followUpSlot = By.xpath("(//div[@class='ng-star-inserted'])[2]");
+    public By followUpSaveBtn = By.xpath("//a[text()='Save']");
+    public By changeBtn = By.xpath("//a[text()='Change']");
 
+    public By closeBtn = By.xpath("//button[text()=' Close ']");
+
+
+
+    public By diagnosticianSaveButton = By.xpath("//button[text()='Save']");
+    public By slotSaveBtn = By.xpath("//mbsc-button[text()=' Save ']");
+
+    public By createFollowupBtn=By.xpath("//button[text()=' Create Follow Up ']");
     public By createDirectorButton = By.xpath("//button[text()='Create Director']");
     public By delete = By.xpath("//mbsc-button[text()=' Delete ']");
     public By directorActualText = By.xpath("//h3[text()='Directors List']");
@@ -61,19 +70,15 @@ public class DirectorPage extends BasePage {
     public By enableUser = By.xpath("//label[text()='Enable User']");
     public By dashboardPage = By.xpath("(//h3)[1]");
     public By viewAll = By.xpath("(//li[@class='ng-star-inserted']/a)[1]");
+    public By followUpSlots = By.xpath("//div[@class='mbsc-flex-1-0 mbsc-ios mbsc-schedule-item ng-star-inserted']");
+    public By followUp = By.xpath("//button[text()=' Create Follow Up ']");
+
 
     public By yearButton=By.xpath("//span[@class='mbsc-calendar-title mbsc-calendar-year mbsc-ios ng-star-inserted']");
     public By monthHeader = By.xpath("//span[@class='mbsc-calendar-month mbsc-calendar-title mbsc-ios ng-star-inserted']");
     public By yearHeader = By.xpath("//span[@class='mbsc-calendar-title mbsc-calendar-year mbsc-ios ng-star-inserted']");
-    public By clickOnBox = By.xpath("(//div[@class='mbsc-flex-1-0 mbsc-ios mbsc-schedule-item ng-star-inserted'])[23]");
-    public By clickOnBox1 = By.xpath("(//div[@class='mbsc-flex-1-0 mbsc-ios mbsc-schedule-item ng-star-inserted'])[24]");
-    public By clickOnBox2 = By.xpath("(//div[@class='mbsc-flex-1-0 mbsc-ios mbsc-schedule-item ng-star-inserted'])[25]");
-    public By clickOnBox3 = By.xpath("(//div[@class='mbsc-flex-1-0 mbsc-ios mbsc-schedule-item ng-star-inserted'])[26]");
-    public By clickOnBox4 = By.xpath("(//div[@class='mbsc-flex-1-0 mbsc-ios mbsc-schedule-item ng-star-inserted'])[27]");
-    public By clickOnBox5 = By.xpath("(//div[@class='mbsc-flex-1-0 mbsc-ios mbsc-schedule-item ng-star-inserted'])[28]");
-    public By clickOnBox6 = By.xpath("(//div[@class='mbsc-flex-1-0 mbsc-ios mbsc-schedule-item ng-star-inserted'])[29]");
-    // public By clickOnBox6=By.xpath("(//div[@class='mbsc-flex-1-0 mbsc-ios mbsc-schedule-item ng-star-inserted'])[21]");
-    public By availableText = By.xpath("//div[text()='Available']");
+
+    public By confirmBtn = By.xpath("//a[text()='Confirm']");
     public By saveButton = By.xpath("//button[text()='Save']");
     public By validationMsg = By.xpath("//div[@class='alert alert-danger ng-star-inserted']");
     public By deleteSlot = By.xpath("//*[@id=\"diagnoSetAvailabilityForm\"]/div[1]/mbsc-eventcalendar/mbsc-calendar-view/mbsc-scheduler/div[3]/div[2]/div/div/div[5]/div/div[1]/mbsc-schedule-event/div[3]");
@@ -82,6 +87,10 @@ public class DirectorPage extends BasePage {
 
     public By selectYear = By.xpath("//div[text()=' 2023 ']");
     public By selectMonth = By.xpath("(//div[text()=' Dec '])[2]");
+
+    public By cancel = By.xpath("//mbsc-button[text()=' Cancel ']");
+    public By nameOfClient = By.xpath("//h3");
+
 
 
     //**************relogin with new password***********
@@ -97,6 +106,8 @@ public class DirectorPage extends BasePage {
 
     public By yearsTitle = By.xpath("(//mbsc-button[contains(@class,'mbsc-calendar-button')])[5]");
 
+    public By validateScheduledFollowUp = By.xpath("//h4[text()='Follow Up Scheduled!!']");
+
     public By yearTitleFromText=By.xpath("(//d" +
             "iv[contains(@class,'mbsc-calendar-year-text')])[13]");
     public By spinner = By.cssSelector("div.ngx-spinner-overlay");
@@ -106,6 +117,9 @@ public class DirectorPage extends BasePage {
     public By avail_SaveButton = By.id("diagnoSetAvailabilitySubmit");
     public By signInToYourAccountTxt = By.xpath("//h3[@class='heading']");
     public By today = By.xpath("//mbsc-button[@aria-label='Today']");
+    public By followupCancelBtn = By.xpath("//mbsc-button[contains(@class,'mbsc-popup-button-close')]");
+    public By resetBtn = By.xpath("//button[contains(@class,'float-right')]");
+    public By confirmZoomRadioBtn = By.xpath("//label[text()='Online Follow Up (Zoom)']");
 
 
     //*****************Paying full payment*****************
@@ -124,15 +138,106 @@ public class DirectorPage extends BasePage {
         click_custom(logOutLink);
     }
 
+    public void click_ConfirmFollowUpBtn() {
+        WebdriverWaits.waitUntilVisible(confirmZoomRadioBtn);
+        moveToElement(confirmZoomRadioBtn);
+        WebdriverWaits.waitUntilVisible(confirmBtn);
+        click_custom(confirmBtn);
+    }
+
+
     public void click_CancelButton() {
         WebdriverWaits.waitForSpinner();
         click_custom(cancelButton);
+    }
+    public void click_FollowUpSlot(int count) {
+        WebdriverWaits.waitUntilVisible(followUpSlots);
+        WebdriverWaits.waitForSpinner();
+        List<WebElement> slots = getWebElements(followUpSlots, "followUpSlots");
+        System.out.println(slots.size());
+        for (WebElement slot : slots) {
+            click_custom(slot);
+
+            if (getWebElements(followUpSlot).size() > count) {
+                break;
+            }
+        }
+        
+
+
+    }
+
+    public void CancelFollowupSlot(int count) {
+        WebdriverWaits.waitUntilVisible(followUpSlots);
+        WebdriverWaits.waitForSpinner();
+        List<WebElement> slots = getWebElements(followUpSlots, "followUpSlots");
+        System.out.println(slots.size());
+        for (WebElement slot : slots) {
+            click_custom(slot);
+
+            if (getWebElements(followUpSlot).size() > count) {
+                click_custom(followupCancelBtn);
+                break;
+            }
+        }
+
+
+
     }
 
     public void click_DeleteSlot() {
         WebdriverWaits.waitForSpinner();
         click_custom(deleteSlot);
     }
+    public void click_ChangeBtn() {
+        WebdriverWaits.waitForSpinner();
+        click_custom(changeBtn);
+    }
+
+
+
+    public void click_ResetBtnSlot() {
+        WebdriverWaits.waitUntilVisible(resetBtn);
+        WebdriverWaits.waitForSpinner();
+        click_custom(resetBtn);
+    }
+
+    public void click_CreateFollowUpBtn() {
+
+        WebdriverWaits.waitUntilVisible(followUp);
+        WebdriverWaits.waitForSpinner();
+        scrollIntoView(followUp);
+        click_custom(followUp);
+
+    }
+    public void click_CloseBtn()
+    {
+        WebdriverWaits.waitForSpinner();
+        click_custom(closeBtn);
+
+    }
+
+    public void create_FollowUp(int count) {
+
+
+        click_CreateFollowUpBtn();
+        click_CloseBtn();
+
+
+        click_CreateFollowUpBtn();
+     //   CancelFollowupSlot(count);
+        click_FollowUpSlot(count);
+        click_FollowUpSlotSaveBtn();
+      //  click_ResetBtnSlot();
+       // click_FollowUpSlot(count);
+       // click_FollowUpSlotSaveBtn();
+        click_FollowUpSaveBtn();
+     //   click_ChangeBtn();
+      //click_FollowUpSlotSaveBtn();
+        click_ConfirmFollowUpBtn();
+        validate_text(validateScheduledFollowUp, "Follow Up Scheduled!!");
+    }
+
 
     public void click_DeleteButton() {
         WebdriverWaits.waitForSpinner();
@@ -184,9 +289,18 @@ public class DirectorPage extends BasePage {
         click_custom(directorsLocationName);
     }
 
+    public void click_FollowUpSaveBtn() {
+        WebdriverWaits.waitUntilVisible(followUpSaveBtn);
+        click_custom(followUpSaveBtn);
+    }
+
     public void click_directorsUserNameField(String directorsUserNameText) {
         WebdriverWaits.waitUntilVisible(directorsUserName);
         sendKeys_withClear(directorsUserName, directorsUserNameText);
+    }
+    public void click_FollowUpSlotSaveBtn() {
+        WebdriverWaits.waitUntilVisible(slotSaveBtn);
+        click_custom(slotSaveBtn);
     }
 
     public void click_passwordField(String password_FieldText) {
@@ -474,10 +588,6 @@ public class DirectorPage extends BasePage {
     }*/
 
 
-    public void enter_NegativeValueInTestFeeAdjustmentFee()
-    {
-
-    }
 }
 
 

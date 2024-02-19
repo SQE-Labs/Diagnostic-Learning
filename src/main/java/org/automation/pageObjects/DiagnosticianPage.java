@@ -85,7 +85,7 @@ public class DiagnosticianPage extends BasePage {
     public By upcomingTab = By.xpath("//a[text()='Upcoming']");
     public By searchTextButton = By.xpath("//button[@class='theme-button']");
     public By dia_AvailSlots = By.xpath("//div[@class='mbsc-flex-1-1 mbsc-ios mbsc-ltr mbsc-timeline-column ng-star-inserted']");
-public By availableSlots=By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-all-day-inner mbsc-schedule-event-inner ng-star-inserted']");
+   public By availableSlots=By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-all-day-inner mbsc-schedule-event-inner ng-star-inserted']");
 
 //*****************Set Availability for diagnostician ****************
 
@@ -531,6 +531,8 @@ public By availableSlots=By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-al
         sendKeys_withClear(amountField, Inr);
     }
 
+
+
     public void enter_HighAmount() throws InterruptedException {
         String Inr = getText_custom(inr).replace("$", "");
         double amount = parseDouble(Inr);
@@ -706,11 +708,13 @@ public By availableSlots=By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-al
         click_CompleteAssTab();
     }
 
-    public void click_CancelTab() {
+    public void click_CancelTab()
+    {
         WebdriverWaits.waitUntilVisible(cancelTab);
         WebdriverWaits.waitForSpinner();
         moveToElement(cancelTab);
     }
+
 
 
 }

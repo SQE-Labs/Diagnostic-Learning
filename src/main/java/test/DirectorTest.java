@@ -1,5 +1,6 @@
 package test;
 
+import com.beust.jcommander.converters.CommaParameterSplitter;
 import org.automation.base.BaseTest;
 import org.automation.pageObjects.*;
 import org.automation.utilities.WebdriverWaits;
@@ -439,6 +440,7 @@ public class DirectorTest extends BaseTest {
         AppointmentsPage appointment = new AppointmentsPage();
         AdminPage admin = new AdminPage();
         DashboardPage dashPage = new DashboardPage();
+        AppointmentsPage appPage = new AppointmentsPage();
         PaymentPage payment = new PaymentPage();
         DirectorPage director = new DirectorPage();
         login.director_Login();
@@ -446,12 +448,65 @@ public class DirectorTest extends BaseTest {
         validate_text(admin.titleOfUpcomingPage, "Upcoming Appointments");
         dashPage.enter_DataSearhTextBox("Upcoming");
         director.click_ViewDetailsBtn();
-        admin.create_FollowUp(0);
+
+        //Clicked on 'Close' button.
+        String expectedName=getText_custom(director.nameOfClient);
+        director. click_CreateFollowUpBtn();
+        director.click_CloseBtn();
+        String actualName=getText_custom(director.nameOfClient);
+        validate_AttText(actualName, expectedName);
+
+        //Clicked on 'Cancel' button.
+        director.click_CreateFollowUpBtn();
+        director.CancelFollowupSlot(0);
+        List<WebElement> allSlots = appPage.getWebElements(appPage.slots);
+        boolean result = true;
+        for (int i = 0; i < allSlots.size(); i++)
+        {
+            String slotsClass = allSlots.get(i).getAttribute("class");
+            if (!slotsClass.contains("mbsc-ios mbsc-schedule-event-background ng-star-inserted"))
+            {
+                result = false;
+
+            }
+        }
+
+        Assert.assertFalse(result);
+
+        //Clicked on 'Reset' button
+        director.click_FollowUpSlot(0);
+        director.click_FollowUpSlotSaveBtn();
+        director.click_ResetBtnSlot();
+        List<WebElement> allSlotsAfterReset = appPage.getWebElements(appPage.slots);
+        boolean resultForReset = true;
+        for (int i = 0; i < allSlotsAfterReset.size(); i++)
+        {
+            String slotsClass = allSlotsAfterReset.get(i).getAttribute("class");
+            if (!slotsClass.contains("mbsc-ios mbsc-schedule-event-background ng-star-inserted"))
+            {
+                resultForReset = false;
+
+            }
+        }
+
+        Assert.assertFalse(resultForReset);
+
+         //Clicked on  'Change' button
+        director.click_FollowUpSlot(0);
+        director.click_FollowUpSlotSaveBtn();
+        director.click_FollowUpSaveBtn();
+        director.click_ChangeBtn();
+        String currentDate = getMonthAndYear();
+        validate_text(director.monthHeader, currentDate.split(" ")[0]);
+
+        //End to End Flow
+        director.click_FollowUpSaveBtn();
         WebdriverWaits.waitUntilVisible(admin.validateScheduledFollowUp);
         WebdriverWaits.waitForSpinner();
         validate_text(admin.validateScheduledFollowUp, "Follow Up Scheduled!!");
         admin.click_BackBtn();
 
-
     }
+
+
 }
