@@ -35,7 +35,6 @@ public class SuperAdminTest extends BaseTest {
     public String dia_Cell_Number;
 
 
-
     @Test(priority = 0, enabled = true, description = "1.1 Verify that SuperAdmin is able to login")
     public void verify_Superadmin_login() {
         LoginPage login = new LoginPage();
@@ -65,7 +64,7 @@ public class SuperAdminTest extends BaseTest {
         panelPage.click_AdminTab();
         WebdriverWaits.waitForSpinner();
 
- //*************Creating admin by superAdmin************
+        //*************Creating admin by superAdmin************
 
         admin.create_Admin(adminFirstName, adminLastName, admin_cell_Number, adminEmailAddress, adminUserName, "123456", "123456");
         WebdriverWaits.waitUntilVisible(admin.succ_Msg);
@@ -197,7 +196,7 @@ public class SuperAdminTest extends BaseTest {
     public void validate_Created_Diagnostician_In_SuperAdmin() throws InterruptedException {
         DiagnosticianPage diagnostician = new DiagnosticianPage();
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
-        AdminPage admin=new AdminPage();
+        AdminPage admin = new AdminPage();
         Thread.sleep(4000);
         panelPage.click_BackButton();
         admin.click_filterButton();
@@ -303,14 +302,12 @@ public class SuperAdminTest extends BaseTest {
         validate_text(director.directorListPage, "Directors List");
 
 
-
     }
 
     @Test(priority = 20, enabled = true, description = "3.1, 3.5, 3.9, 3.36 verify that duplicate Director throws error")
     public void create_duplicate_Directors() throws InterruptedException {
         DirectorPage director = new DirectorPage();
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
-
 
 
         director.create_Director(directorFirstName, directorLastName, dir_Cell_Number, directorEmailAddress, directorUserName, "123456", "123456");
@@ -330,8 +327,6 @@ public class SuperAdminTest extends BaseTest {
         validate_text(director.edit_SuccMsg, "Director details updated successfully.");
         Log.info("Successfully Edited the created director");
     }
-
-
 
 
     @Test(priority = 22, enabled = true, description = "3.19, 3.20 verify that superadmin is able to enable Director")
@@ -388,10 +383,10 @@ public class SuperAdminTest extends BaseTest {
 
     //************Appointments page******************
 
-    @Test( dependsOnMethods={ "verify_Full_Payment"})
-    public void verify_Appointments_Page()   {
+    @Test(dependsOnMethods = {"verify_Full_Payment"})
+    public void verify_Appointments_Page() {
         AppointmentsPage appointment = new AppointmentsPage();
-        DashBoardPanelPage panelPage=new DashBoardPanelPage();
+        DashBoardPanelPage panelPage = new DashBoardPanelPage();
         LoginPage login = new LoginPage();
         login.superAdminLogin();
         WebdriverWaits.waitUntilVisible(appointment.dashBoardPage);
@@ -407,9 +402,9 @@ public class SuperAdminTest extends BaseTest {
         WebdriverWaits.waitForSpinner();
         validate_text(appointment.allAppointmentsPage, "All Appointments");
 
-         appointment.click_SearchField(clientFirstName);
+        appointment.click_SearchField(clientFirstName);
         WebdriverWaits.waitUntilVisible(appointment.searchedText);
-        validate_text(appointment.searchedText, clientFirstName +' '+ clientLastName);
+        validate_text(appointment.searchedText, clientFirstName + ' ' + clientLastName);
     }
 
 
@@ -442,7 +437,7 @@ public class SuperAdminTest extends BaseTest {
         superAdmin.click_BackButton();
     }
 
-    @Test(dependsOnMethods = {"view_ClientObservation_Page"})
+    @Test(dependsOnMethods = {"view_ClientObservation_Page"}, description = "SuperAdmin is able to download CSV File or not")
     public void download_CSV_File() throws InterruptedException, FileNotFoundException {
         AppointmentsPage appointment = new AppointmentsPage();
         SuperAdminPage admin = new SuperAdminPage();
@@ -481,7 +476,7 @@ public class SuperAdminTest extends BaseTest {
     public void verify_Search_Payment() {
         PaymentPage payment = new PaymentPage();
         //  String getText = getText_custom(payment.getCust_Name);
-      //  payment.click_filterButton();
+        //  payment.click_filterButton();
         payment.enterInSearchField(clientFirstName);
     }
 

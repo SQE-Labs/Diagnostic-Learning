@@ -9,13 +9,17 @@ import org.automation.pageObjects.PaymentPage;
 import org.automation.utilities.WebdriverWaits;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
+
 import java.awt.*;
 import java.io.FileNotFoundException;
+
 import org.testng.annotations.Test;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.List;
+
 import static org.automation.utilities.Assertions.validate_text;
 import static org.automation.utilities.Assertions.*;
 import static org.automation.utilities.WebdriverWaits.*;
@@ -675,7 +679,7 @@ public class AdminTest extends BaseTest {
         AdminPage admin = new AdminPage();
 
         admin.enterClientNameInSearchFieldCompleted(clientFirstName);
-        validate_text(admin.clientName, clientFirstName +' '+ clientLastName);
+        validate_text(admin.clientName, clientFirstName + ' ' + clientLastName);
     }
 
     @Test(dependsOnMethods = {"verify_SearchFiled"}, description = "Admin is able to click on 'Export CSV' button")
