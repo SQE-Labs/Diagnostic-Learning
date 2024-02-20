@@ -3,6 +3,7 @@ package test;
 import com.beust.jcommander.converters.CommaParameterSplitter;
 import org.automation.base.BaseTest;
 import org.automation.pageObjects.*;
+import org.automation.utilities.DateGenerator;
 import org.automation.utilities.WebdriverWaits;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -435,13 +436,13 @@ public class DirectorTest extends BaseTest {
         validate_text(admin.title, expecetedClientName);
     }
 
-    @Test(priority = 28, enabled = true, description = "45., 52., 60., 62. & 63. User is able to click on 'Create Followup' button.")
+    @Test(priority = 28, enabled = true, description = "45., 52., 58., 59., 60., 61., 62., 63., 64. & 65. User is able to click on 'Create Followup' button.")
     public void verify_ClickOnCreateFollowupBtn() throws InterruptedException {
         AppointmentsPage appointment = new AppointmentsPage();
         AdminPage admin = new AdminPage();
         DashboardPage dashPage = new DashboardPage();
         AppointmentsPage appPage = new AppointmentsPage();
-        PaymentPage payment = new PaymentPage();
+
         DirectorPage director = new DirectorPage();
         login.director_Login();
         appointment.click_UpcomingTab();
@@ -507,6 +508,128 @@ public class DirectorTest extends BaseTest {
         validate_text(admin.validateScheduledFollowUp, "Follow Up Scheduled!!");
         admin.click_BackBtn();
 
+    }
+
+    @Test(priority = 29, enabled = true, description = "2. User is able to click on 'View All' subtab.")
+    public void verify_ClickOnViewAllSubtab() throws InterruptedException
+
+    {
+        AdminPage admin = new AdminPage();
+        DashboardPage dashPage = new DashboardPage();
+        AppointmentsPage appPage = new AppointmentsPage();
+        PaymentPage payment = new PaymentPage();
+        DirectorPage director = new DirectorPage();
+        login.director_Login();
+        appPage.click_AppointmentsTab();
+        appPage.click_ViewAllTab();
+        validate_text(admin.allAppointmentsPage, "All Appointments");
+        String expectedRecord=getText_custom(director.getNameOfClient);
+        dashPage.enter_DataSearhTextBox(expectedRecord);
+        validate_text(director.clientName,expectedRecord);
+
+    }
+
+    @Test(priority = 30, enabled = true, description = "3. User is able to click on Today's subtab.")
+    public void verify_ClickOnTodaySubtab() throws InterruptedException
+
+    {
+        AdminPage admin = new AdminPage();
+        DateGenerator datePage = new DateGenerator();
+        AppointmentsPage appPage = new AppointmentsPage();
+        login.director_Login();
+        appPage.click_AppointmentsTab();
+        admin.clickOn_TodayTab();
+        validate_text(admin.todayAppointmentTitle, "Today's Appointments");
+        String expectedDate = datePage.getCurrentDateFromSystem();
+        validate_text(admin.todayDateOnCard, expectedDate);
+
+    }
+
+    @Test(priority = 31, enabled = true, description = "4. User is able to click on 'Test Ready' subtab.")
+    public void verify_ClickOnTestReadySubtab() throws InterruptedException
+
+    {
+        AdminPage admin = new AdminPage();
+        AppointmentsPage appointment=new AppointmentsPage();
+        login.director_Login();
+        appointment.click_TestReadyTab();
+        validate_text(admin.getTestReadyTitle, "Test Ready Appointments");
+        String actualText = getText_custom(admin.nameOnCard);
+        admin.click_Card();
+        String clientName = getText_custom(admin.clientNameDetail);
+
+        String[] words = clientName.split(" ");
+        String expectedTitleText = null;
+        if (words.length >= 2) {
+            // Fetch the first two words
+            String firstWord = words[0];
+            String secondWord = words[1];
+            expectedTitleText = firstWord + " " + secondWord;
+        }
+        validate_AttText(actualText, expectedTitleText);
+
+    }
+
+
+
+    @Test(priority = 32, enabled = true, description = "6., 20. & 35. User is able to click on 'Test complete' subtab.")
+    public void verify_ClickOnTestCompleteSubtab() throws InterruptedException, FileNotFoundException
+
+    {
+        AdminPage admin = new AdminPage();
+        AppointmentsPage appointment=new AppointmentsPage();
+        DashBoardPanelPage dashboard = new DashBoardPanelPage();
+        login.director_Login();
+        dashboard.click_AppointmentsTab();
+        appointment.click_TestCompleteTab();
+        WebdriverWaits.waitUntilVisible(admin.getTitleOfTestComplete);
+        validate_text(admin.getTitleOfTestComplete, "Test Complete Appointments");
+
+        // Click on Filter Btn
+        admin.click_FilterBtn();
+
+        //Search field
+        String searchPlaceHolder = admin.getAttributevalue(admin.searchTextBox, "placeholder");
+        String fromDateplaceholder = admin.getAttributevalue(admin.fromDateText, "placeholder");
+        String toDatePlaceholder = admin.getAttributevalue(admin.toDateText, "placeholder");
+        Assert.assertEquals(fromDateplaceholder, "From Date");
+        Assert.assertEquals(toDatePlaceholder, "To Date");
+        Assert.assertEquals(searchPlaceHolder, "Type here to search");
+
+        //Click on Export CSV Btn
+        dashboard.click_ExportCSVButton();
+        String downloadFile = dashboard.getDownloadFileName();
+        Assert.assertTrue(dashboard.isFileDownloaded(downloadFile));
+
+
+    }
+    @Test(priority = 33, enabled = true, description = "7. User is able to click on 'Completed' subtab.")
+    public void verify_ClickOnCompletedSubtab() throws InterruptedException
+
+    {
+        AdminPage admin = new AdminPage();
+        AppointmentsPage appointment=new AppointmentsPage();
+        login.director_Login();
+        DashBoardPanelPage dashboard = new DashBoardPanelPage();
+        dashboard.click_AppointmentsTab();
+        dashboard.click_CompletedTab();
+        WebdriverWaits.waitForSpinner();
+        String expectedTitle = "Completed Appointments";
+        validate_text(admin.title, expectedTitle);
+    }
+
+    @Test(priority = 34, enabled = true, description = "8. User is able to click on 'Canceled' subtab.")
+    public void verify_ClickOnCanceledSubtab() throws InterruptedException
+
+    {
+        AdminPage admin = new AdminPage();
+        AppointmentsPage appointment=new AppointmentsPage();
+        DashBoardPanelPage dashboard = new DashBoardPanelPage();
+        login.director_Login();;
+        appointment.click_CanceledTab();
+        validate_text(admin.title, "Canceled Appointments");
+        admin.filter_ForCancel();
+        validate_text(admin.getStatus, "Cancel");
     }
 
 

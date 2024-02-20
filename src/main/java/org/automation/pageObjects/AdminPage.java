@@ -107,7 +107,7 @@ public class AdminPage extends BasePage {
     public By editEmail = By.xpath(" //input[@formcontrolname='emailAddress']");
     public By editEmail2 = By.xpath(" //input[@formcontrolname='secondaryEmailAddress']");
     public By editGrade = By.id("schoolType");
-    public By todaysTab = By.xpath("//a[text()='Today']");
+    public By todaysTab = By.xpath("//a[text()=\"Today's\"]");
 
     public By editSchoolType = By.xpath(" //input[@formcontrolname='schoolType']");
     public By editDistrict = By.xpath(" //input[@formcontrolname='school']");
@@ -150,7 +150,7 @@ public class AdminPage extends BasePage {
     public By holdtab = By.xpath("//a[text()='Hold']");
     public By holdAppointmentText = By.xpath("//h3[text()='Hold Appointments']");
     public By holdfilterButton = By.xpath("//a[text()='Filter']");
-    public By searchTextBox = By.xpath("//input[@aria-controls='appointmentTable']");
+    public By searchTextBox = By.xpath("//input[@id='filterSearch']");
     public By toDateText = By.xpath("//input[@formcontrolname='toDate']");
     public By fromDateText = By.xpath("//input[@formcontrolname='fromDate']");
     public By validateHoldClient = By.cssSelector("tr:not([style='display: none;' ]) td:nth-child(1)");
@@ -197,7 +197,7 @@ public class AdminPage extends BasePage {
 
     public By nameOfTestReadyCard = By.xpath("(//div[@class='client-diagno d-flex align-items-center justify-content-between']/p)[1]");
 
-    public By getStatus = By.xpath("(//tr[not(contains(@style,'display: none;'))])[2]//span");
+    public By getStatus = By.xpath("((//tr[not(contains(@style,'display: none;'))])[2]//td)[7]");
 
     public By getViewDetails = By.xpath("(//tr[not(contains(@style,'display: none;'))])[2]//a");
 

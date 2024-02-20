@@ -91,11 +91,13 @@ public class DashBoardPanelPage extends BasePage {
     }
 
     public void click_ExportCSVButton() {
+        WebdriverWaits.waitUntilInvisible(exportCSVButton);
+        WebdriverWaits.waitForSpinner();
         click_custom(exportCSVButton);
     }
 
     public void click_AppointmentsTab(){
-
+        WebdriverWaits.waitUntilInvisible(AppointmentsTab);
         WebdriverWaits.waitForSpinner();
         click_custom(AppointmentsTab);
     }

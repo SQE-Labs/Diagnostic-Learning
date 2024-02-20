@@ -329,16 +329,17 @@ public class AdminTest extends BaseTest {
     }
 
     @Test(priority = 24, enabled = true, description = "verify yes hold button on hold appointment popup.")
-    public void verify_HoldAppointment()   {
+    public void verify_HoldAppointment()
+    {
         AdminPage admin = new AdminPage();
-
         admin.click_HoldTab();
         validate_text(admin.holdAppointmentText, "Hold Appointments");
 
     }
 
     @Test(priority = 25, enabled = true, description = "verify filter button on hold appointment page.")
-    public void verify_holdfilterButton() {
+    public void verify_holdfilterButton()
+    {
         AdminPage admin = new AdminPage();
         admin.click_HoldFilterBtn();
        // String searchPlaceHolder = admin.getAttributevalue(admin.searchAttribute, "placeholder");
@@ -350,7 +351,8 @@ public class AdminTest extends BaseTest {
     }
 
     @Test(priority = 26, enabled = true, description = "verify holded appointment .")
-    public void verify_holdedAppointment() throws InterruptedException {
+    public void verify_holdedAppointment() throws InterruptedException
+    {
         AdminPage admin = new AdminPage();
         admin.send_TextHoldSearchBox(clientFirstName);
         validate_text(admin.validateHoldClient, clientFirstName + "@yopmail.com");
@@ -372,7 +374,6 @@ public class AdminTest extends BaseTest {
         admin.click_filterButton();
         admin.enterSearchField(clientFirstName);
         WebdriverWaits.waitUntilVisible(admin.getStatus);
-
         validate_text(admin.getStatus, "Test Ready");
     }
 
@@ -563,11 +564,6 @@ public class AdminTest extends BaseTest {
                 String firstWord = words[0];
                 String secondWord = words[1];
                 expectedTitleText = firstWord + " " + secondWord;
-
-
-
-        } else {
-
         }
         validate_AttText(actualText, expectedTitleText);
     }

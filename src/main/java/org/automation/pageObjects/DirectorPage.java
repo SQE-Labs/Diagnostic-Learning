@@ -47,6 +47,9 @@ public class DirectorPage extends BasePage {
 
     //**************Search created director***************
     public By filterButton = By.xpath("//a[text()='Filter']");
+    public By getNameOfClient = By.xpath("(//td[@class='tablewidth'])[1]");
+
+    public By clientName = By.xpath("((//tr[not(contains(@style,'display: none;'))])[2]//td)[2]");
     public By searchField = By.xpath("//input[@id='filterSearch']");
 
 

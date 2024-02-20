@@ -22,7 +22,7 @@ public class AppointmentsPage extends BasePage {
     public By upcomingTab=By.xpath("//a[text()='Upcoming']");
     public  By todayTab=By.xpath("//a[contains(text(),'Today')]");
     public By testCompleteTab=By.xpath("//a[text()='Test complete']");
-    public By canceledTab=By.xpath( "//li[@class='ng-star-inserted active']/a");
+    public By canceledTab=By.xpath( "//a[text()='Canceled']");
     public By completedTab=By.xpath("//a[text()='Completed ']");
     public By viewAllTab = By.xpath("//a[text()='View All']");
     public By paymentButton = By.xpath("//button[@class='theme-button green m-2 ng-star-inserted']");
