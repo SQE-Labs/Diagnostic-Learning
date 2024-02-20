@@ -24,20 +24,13 @@ public class DashBoardPanelPage extends BasePage {
     public By AppointmentsTab = By.xpath("//a[text()=' Appointments ']");
     public By availabilityTab = By.xpath("//a[text()='Availability']");
     public By viewAllTab = By.xpath("//a[text()='View All']");
-    public By completedTab=By.xpath("//a[text()='Completed ']");
-
+    public By completedTab = By.xpath("//a[text()='Completed ']");
 
 
     public void click_LogOutLink() {
         WebdriverWaits.waitUntilVisible(logOutLink);
         WebdriverWaits.waitForSpinner();
         click_custom(logOutLink);
-    }
-
-    public void click_ViewAllTab() {
-        WebdriverWaits.waitUntilVisible(viewAllTab);
-        WebdriverWaits.waitForSpinner();
-        moveToElement(viewAllTab);
     }
 
     public void click_DirectorTab() throws InterruptedException {
@@ -53,8 +46,7 @@ public class DashBoardPanelPage extends BasePage {
         click_custom(diagnosticianLink);
     }
 
-    public void click_On_AdminTab() throws InterruptedException {
-
+    public void click_AdminTab() throws InterruptedException {
         WebdriverWaits.waitUntilVisible(adminButton);
         WebdriverWaits.waitForSpinner();
         Thread.sleep(5000);
@@ -71,7 +63,7 @@ public class DashBoardPanelPage extends BasePage {
         String home = System.getProperty("user.home");
         String file_with_location = home + "/Downloads/" + fileName;
         File file = new File(file_with_location.trim());
-      //  String fileTest = file.getName();
+        //  String fileTest = file.getName();
         if (file.exists() && file.length() != 0) {
             System.out.println(file_with_location + " is present with size greater than 0 ");
             extentTest.log(PASS, file_with_location + " is present  with size greater than 0");
@@ -94,16 +86,10 @@ public class DashBoardPanelPage extends BasePage {
         click_custom(exportCSVButton);
     }
 
-    public void click_AppointmentsTab(){
-
+    public void click_AppointmentsTab() {
+        WebdriverWaits.waitUntilVisible(AppointmentsTab);
         WebdriverWaits.waitForSpinner();
         click_custom(AppointmentsTab);
-    }
-
-    public void click_AppointmentsTab2(){
-        WebdriverWaits.waitUntilInvisible(availabilityTab);
-        WebdriverWaits.waitForSpinner();
-        click_custom(availabilityTab);
     }
 
     public void click_Availability() {
@@ -112,6 +98,7 @@ public class DashBoardPanelPage extends BasePage {
         click_custom(availabilityTab);
         WebdriverWaits.waitForSpinner();
     }
+
     public void click_CompletedTab() throws InterruptedException {
         Thread.sleep(4000);
         WebdriverWaits.waitUntilVisible(completedTab);
@@ -119,18 +106,18 @@ public class DashBoardPanelPage extends BasePage {
         moveToElement(completedTab);
     }
 
-        public static void readCSVFile() throws IOException, CsvException {
+    public static void readCSVFile() throws IOException, CsvException {
         String path = "C:\\Users\\SQE Labs\\Downloads\\.csv(10)";
-            Reader reader = new FileReader(path);
-            CSVReader csvreader = new CSVReader(reader);
-            List<String[]> data = csvreader.readAll();
-            for(String[] d : data){
-                for(String c : d ){
-                    System.out.println(c);
-                }
+        Reader reader = new FileReader(path);
+        CSVReader csvreader = new CSVReader(reader);
+        List<String[]> data = csvreader.readAll();
+        for (String[] d : data) {
+            for (String c : d) {
+                System.out.println(c);
             }
-
         }
 
     }
+
+}
 

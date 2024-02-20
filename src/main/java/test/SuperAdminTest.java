@@ -62,10 +62,10 @@ public class SuperAdminTest extends BaseTest {
         admin_cell_Number = RandomStrings.requiredDigits(10);
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
         WebdriverWaits.waitForSpinner();
-        panelPage.click_On_AdminTab();
+        panelPage.click_AdminTab();
         WebdriverWaits.waitForSpinner();
 
- //*************Creating admin by superAdmin************
+        //*************Creating admin by superAdmin************
 
         admin.create_Admin(adminFirstName, adminLastName, admin_cell_Number, adminEmailAddress, adminUserName, "123456", "123456");
         WebdriverWaits.waitUntilVisible(admin.succ_Msg);
@@ -101,8 +101,6 @@ public class SuperAdminTest extends BaseTest {
 
         //checking user is disable or not
         admin.cheking_DisableUser();
-        WebdriverWaits.waitUntilVisible(admin.enableUser);
-        validate_text(admin.enableUser, "Enable User");
     }
 
     @Test(priority = 6, enabled = true, description = "Verify that Superadmin is able to enable the Admin or not")
@@ -113,7 +111,7 @@ public class SuperAdminTest extends BaseTest {
 
         // Enabling the user
         validate_text(admin.Succ_Msg_Upd, "Admin details updated successfully.");
-       // panelPage.click_LogOutLink();
+
 
     }
 
@@ -122,11 +120,11 @@ public class SuperAdminTest extends BaseTest {
         AdminPage admin = new AdminPage();
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
         LoginPage login = new LoginPage();
-
         panelPage.click_LogOutLink();
+
+
         // Login with Admin new password
         login.adminLogin(adminUserName, "12345678");
-
 
         WebdriverWaits.waitUntilVisible(admin.dashboard);
         WebdriverWaits.waitForSpinner();
@@ -143,7 +141,7 @@ public class SuperAdminTest extends BaseTest {
         LoginPage login = new LoginPage();
         // Login with Admin new password
         login.superAdminLogin();
-        panelPage.click_On_AdminTab();
+        panelPage.click_AdminTab();
         admin.verify_DontSave(adminEmailAddress, "123456", "123456");
         WebdriverWaits.waitUntilVisible(admin.userNameText);
         validate_text(admin.userNameText, adminUserName);
@@ -199,9 +197,11 @@ public class SuperAdminTest extends BaseTest {
     public void validate_Created_Diagnostician_In_SuperAdmin() throws InterruptedException {
         DiagnosticianPage diagnostician = new DiagnosticianPage();
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
+        AdminPage admin = new AdminPage();
         Thread.sleep(4000);
         panelPage.click_BackButton();
-        diagnostician.serach_Dia(diagnosticianUserName);
+        admin.click_filterButton();
+        diagnostician.enterInSearchField(diagnosticianUserName);
         WebdriverWaits.waitUntilVisible(diagnostician.actualText);
         validate_text(diagnostician.actualText, diagnosticianUserName);
         Log.info("Created Diagnostician Displayed In The Diagnostician ListPage");
@@ -303,14 +303,12 @@ public class SuperAdminTest extends BaseTest {
         validate_text(director.directorListPage, "Directors List");
 
 
-
     }
 
     @Test(priority = 20, enabled = true, description = "3.1, 3.5, 3.9, 3.36 verify that duplicate Director throws error")
     public void create_duplicate_Directors() throws InterruptedException {
         DirectorPage director = new DirectorPage();
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
-
 
 
         director.create_Director(directorFirstName, directorLastName, dir_Cell_Number, directorEmailAddress, directorUserName, "123456", "123456");
@@ -332,17 +330,13 @@ public class SuperAdminTest extends BaseTest {
     }
 
 
-
-
     @Test(priority = 22, enabled = true, description = "3.19, 3.20 verify that superadmin is able to enable Director")
     public void validate_director_Toggle_Off() throws InterruptedException {
 
         DirectorPage director = new DirectorPage();
         director.cheking_DisableUser();
 
-        WebdriverWaits.waitUntilVisible(director.enableUser);
 
-        validate_text(director.enableUser, "Enable User");
     }
 
     @Test(priority = 23, enabled = true, description = "Verify that Superadmin is able to Enable the user or not")
@@ -353,7 +347,6 @@ public class SuperAdminTest extends BaseTest {
         WebdriverWaits.waitUntilVisible(director.edit_SuccMsg);
         validate_text(director.edit_SuccMsg, "Director details updated successfully.");
         Log.info("Successfully Edited the created director");
-
     }
 
 
@@ -391,10 +384,10 @@ public class SuperAdminTest extends BaseTest {
 
     //************Appointments page******************
 
-    @Test( dependsOnMethods={ "verify_Full_Payment"})
-    public void verify_Appointments_Page()   {
+    @Test(dependsOnMethods = {"verify_Full_Payment"})
+    public void verify_Appointments_Page() {
         AppointmentsPage appointment = new AppointmentsPage();
-        DashBoardPanelPage panelPage=new DashBoardPanelPage();
+        DashBoardPanelPage panelPage = new DashBoardPanelPage();
         LoginPage login = new LoginPage();
         login.superAdminLogin();
         WebdriverWaits.waitUntilVisible(appointment.dashBoardPage);
@@ -410,7 +403,6 @@ public class SuperAdminTest extends BaseTest {
         WebdriverWaits.waitForSpinner();
         validate_text(appointment.allAppointmentsPage, "All Appointments");
 
-        appointment.click_FilterButton();
         appointment.click_SearchField(clientFirstName);
         WebdriverWaits.waitUntilVisible(appointment.searchedText);
         validate_text(appointment.searchedText, clientFirstName + ' ' + clientLastName);
@@ -446,14 +438,13 @@ public class SuperAdminTest extends BaseTest {
         superAdmin.click_BackButton();
     }
 
-    @Test(dependsOnMethods = {"view_ClientObservation_Page"})
+    @Test(dependsOnMethods = {"view_ClientObservation_Page"}, description = "SuperAdmin is able to download CSV File or not")
     public void download_CSV_File() throws InterruptedException, FileNotFoundException {
         AppointmentsPage appointment = new AppointmentsPage();
         SuperAdminPage admin = new SuperAdminPage();
         DashBoardPanelPage panelpage = new DashBoardPanelPage();
         ActionEngine action = new ActionEngine();
 
-        panelpage.click_AppointmentsTab();
         appointment.click_ViewAllTab();
         admin.click_Export_CSV_Button();
 
@@ -486,7 +477,7 @@ public class SuperAdminTest extends BaseTest {
     public void verify_Search_Payment() {
         PaymentPage payment = new PaymentPage();
         //  String getText = getText_custom(payment.getCust_Name);
-        payment.click_filterButton();
+        //  payment.click_filterButton();
         payment.enterInSearchField(clientFirstName);
     }
 

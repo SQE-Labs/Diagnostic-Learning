@@ -52,7 +52,8 @@ public class DiagnosticianTest extends BaseTest {
     @Test(priority = 3, enabled = true, description = "32 Verify diagnostian client details page")
     public void verify_ClientDetailsPage() {
         DiagnosticianPage diagnostician = new DiagnosticianPage();
-        diagnostician.view_ClientDetail(clientFirstName);
+
+        diagnostician.click_ClientDetailLink(clientFirstName);
         WebdriverWaits.waitUntilVisible(diagnostician.clientDetailText);
         WebdriverWaits.waitForSpinner();
         validate_text(diagnostician.clientDetailText, clientFirstName + ' ' + clientLastName + ' ' + "Details");
@@ -129,17 +130,17 @@ public class DiagnosticianTest extends BaseTest {
         diagnostician.click_filterButton();
         diagnostician.enter_ClientDetail(clientFirstName);
         WebdriverWaits.waitUntilVisible(diagnostician.clientText);
-        validate_text(diagnostician.clientText, clientFirstName +' '+clientLastName+' '+ "Details");
+        validate_text(diagnostician.clientText, clientFirstName + ' ' + clientLastName + ' ' + "Details");
 
     }
 
     @Test(priority = 8, enabled = true, description = "24, 86, 88 Verify diagnostician is able to download csv file or not after completing the assessment")
-    public void verify_completeAss()   {
+    public void verify_completeAss() {
         DiagnosticianPage diagnostician = new DiagnosticianPage();
         diagnostician.verify_CompleteAss();
         diagnostician.search_CreatedDiagnostician(clientFirstName);
         WebdriverWaits.waitUntilVisible(diagnostician.clientNameText);
-        validate_text(diagnostician.clientNameText, clientFirstName +' '+ clientLastName);
+        validate_text(diagnostician.clientNameText, clientFirstName + ' ' + clientLastName);
     }
 
     @Test(priority = 9, enabled = true, description = "89, 90  Verify diagnostician is able to download csv file or not after completing the assessment")
@@ -147,10 +148,10 @@ public class DiagnosticianTest extends BaseTest {
         DiagnosticianPage diagnostician = new DiagnosticianPage();
         DashBoardPanelPage panelpage = new DashBoardPanelPage();
         diagnostician.click_CancelTab();
-        diagnostician.search_ClientPage(clientLastName);
+        diagnostician.enter_InSearchField(clientLastName);
         WebdriverWaits.waitUntilVisible(diagnostician.clientNameText);
-        validate_text(diagnostician.clientNameText, clientFirstName +' '+ clientLastName);
-         panelpage.click_LogOutLink();
+        validate_text(diagnostician.clientNameText, clientFirstName + ' ' + clientLastName);
+        panelpage.click_LogOutLink();
     }
 }
 

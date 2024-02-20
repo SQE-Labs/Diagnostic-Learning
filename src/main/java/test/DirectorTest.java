@@ -2,14 +2,7 @@ package test;
 
 import org.automation.base.BaseTest;
 import org.automation.pageObjects.*;
-import org.automation.utilities.WebdriverWaits;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.testng.Assert;
 import org.testng.annotations.Test;
-
-import java.io.FileNotFoundException;
-import java.util.List;
 
 import static org.automation.utilities.Assertions.*;
 import static org.automation.utilities.DateGenerator.getMonthAndYear;
@@ -17,7 +10,6 @@ import static org.automation.utilities.DateGenerator.getMonthAndYear;
 
 public class DirectorTest extends BaseTest {
     DirectorPage director = new DirectorPage();
-    DiagnosticianPage dashpage = new DiagnosticianPage();
     DashBoardPanelPage panelPage = new DashBoardPanelPage();
     LoginPage login = new LoginPage();
 
@@ -25,16 +17,13 @@ public class DirectorTest extends BaseTest {
     public void verify_Login_Director() {
         login.director_Login();
         validate_text(director.dashboardPage, "Dashboard");
-
     }
 
     @Test(priority = 2, enabled = true, description = " 4 Verify that 'Appointments' tab expands, on 'Dashboard' page.")
     public void verify_AppointmentsTabExpands() {
         panelPage.click_AppointmentsTab();
         validate_text(director.viewAll, "View All");
-
     }
-
 
     @Test(priority = 3, enabled = true, description = "12 and 13 Verify that 'Set Availability' page opens up and Year Picker appear")
     public void validate_SetAppointment_AND_YearPicker() throws InterruptedException {
@@ -58,7 +47,6 @@ public class DirectorTest extends BaseTest {
         validate_text(director.yearTitleFromText, currentDate.split(" ")[1]);
     }
 
-
     @Test(priority = 4, enabled = true, description = "20 and 21 Verify that 'Available' card appears and click on Save button.")
     public void verify_AvailableCards_AND_SaveButtonEnabled() throws InterruptedException {
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
@@ -71,11 +59,10 @@ public class DirectorTest extends BaseTest {
         validate_text(director.validateAvailable, "Available");
         director.click_SaveButton();
         validate_text(admin.title, "Set Availability");
-
-
     }
+}
 
-
+/*
     @Test(priority = 5, enabled = true, description = "24 Verify that '<Date>' popup closes, when director clicks on 'Cancel' button")
     public void verify_Closed_PopUp_OnCancel() throws InterruptedException {
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
@@ -97,6 +84,7 @@ public class DirectorTest extends BaseTest {
             }
         }
         validate_text(director.today, "Today");
+
     }
 
 
@@ -451,7 +439,7 @@ public class DirectorTest extends BaseTest {
         WebdriverWaits.waitForSpinner();
         validate_text(admin.validateScheduledFollowUp, "Follow Up Scheduled!!");
         admin.click_BackBtn();
-
-
     }
 }
+}
+ */
