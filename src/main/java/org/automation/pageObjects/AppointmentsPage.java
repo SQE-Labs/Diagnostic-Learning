@@ -28,7 +28,7 @@ public class AppointmentsPage extends BasePage {
     public By paymentButton = By.xpath("//button[@class='theme-button green m-2 ng-star-inserted']");
     public By dashBoardPage = By.xpath("//h3[text()='Dashboard']");
     public By allAppointmentsPage = By.xpath("//h3");
-    public By searchedText = By.cssSelector("tr:not([style='display: none;' ]) td:nth-child(1)");
+    public By searchedText = By.cssSelector("tr:not([style='display: none;' ]) td:nth-child(2)");
     public By viewDetailsLink = By.xpath("(//tr[not(contains(@style,'display: none;'))])[2]//a");
     public By clickSlotSaveBtn = By.xpath("//mbsc-button[text()=' Save ']");
 

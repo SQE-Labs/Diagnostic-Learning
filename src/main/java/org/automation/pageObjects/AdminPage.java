@@ -13,14 +13,15 @@ import java.util.List;
 import static org.automation.utilities.Assertions.*;
 import static org.automation.utilities.WebdriverWaits.moveToElement;
 import static org.automation.utilities.WebdriverWaits.waitUntilVisible;
+import static org.openqa.selenium.By.cssSelector;
 import static test.AdminTest.clientFirstName;
 
 public class AdminPage extends BasePage {
 
-    public By adminTab = By.xpath("//a[text()='Admins']");
+
     public By adminDashboardText = By.xpath("//h3[text()='Dashboard']");
     public By createAdminButton = By.xpath("//button[@class='theme-button']");
-    public By loginLoading = By.cssSelector("div.ngx-spinner-overlay");
+
     public By admin_FirstName = By.xpath("//input[@placeholder='First Name']");
     public By admin_LastName = By.xpath("//input[@placeholder='Last Name']");
     public By admin_MobileNumber = By.xpath("//input[@placeholder='Cell Number']");
@@ -34,7 +35,7 @@ public class AdminPage extends BasePage {
     public By dashboardPage = By.xpath("//h3");
     public By searchButton = By.xpath("//button[@class='theme-button']");
 
-    //**************Search created Admin*************
+    //****************Search Created Admin****************
 
     public By filterButton = By.xpath("//a[@class='theme-button grey ml-auto mr-3']");
     public By searchField = By.xpath("//input[@aria-controls='appointmentTable']");
@@ -48,18 +49,18 @@ public class AdminPage extends BasePage {
 
     public By emailField = By.xpath("//input[@formcontrolname='email']");
     public By updateButton = By.xpath("//button[text()='Update']");
-    public By enableToggle = By.xpath("//label[text()='Enable User']");
+
 
     public By passwordTextField = By.xpath("//input[@formcontrolname='password']");
     public By confirmPasswordField = By.xpath("(//input[@type='password'])[2]");
     public By Succ_Msg_Upd = By.xpath("//div[text()=' Admin details updated successfully. ']");
-    public By UserNameGetText = By.xpath("(//td)[2]");
+
     public By enableUser = By.xpath("//label[@class='small ng-star-inserted']");
     public By toggle = By.xpath("//span[@class='slider round']");
     public By dontSaveButton = By.xpath("(//a[@class='theme-button grey'])[1]");
     public By editUserPop_Up = By.xpath("//h5[text()='Edit User']");
     public By userNameText = By.xpath("(//td[2])[1]");
-    public By Error_Msg = By.cssSelector(".alert.alert-danger.ng-star-inserted");
+    public By Error_Msg = cssSelector(".alert.alert-danger.ng-star-inserted");
 
     //***********DASH BOARD PAGE**********
     public By dashboard = By.xpath("(//h3)[1]");
@@ -69,12 +70,12 @@ public class AdminPage extends BasePage {
     public By assestmentType = By.xpath("//select[@id='assesmentType']");
     public By updateBtn = By.xpath("//button[@class='theme-button mr-3']");
     public By clientAsses = By.xpath("//p[text()=' IQ']");
-    public By dontSaveAsses = By.xpath("//a[text()='Don’t Save']");
+
 
     //***********Re-assign appointment************//
     public By reAssignbtn = By.xpath("(//a[contains(@class,'ml-auto mr-3 px-3 py-2 badge')])[1]");
     public By diag = By.id("diag");
-    public By diagLoc = By.id("testingLocation");
+
     public By rebtn = By.xpath("//button[@class='theme-button green']");
 
     //****************Edit Client**************//
@@ -93,10 +94,10 @@ public class AdminPage extends BasePage {
     public By dlsDyslexiaCheckBox = By.xpath("//label[text()='DLS Dyslexia']/..");
     public By testPlanSaveButton = By.xpath("//button[text()='Save']");
     public By actualEditTest = By.xpath("//p[text()=' WRAML ']");
-    public By directorName = By.xpath("((//tr[not(contains(@style,'display: none;'))])[2]//td)[1]");
+
     public By closeButton = By.xpath("//a[text()='Close']");
 
-    public By docgList = By.xpath("//span[text()='Active']/../../td[5][text()='Plano']/../td[1]");
+
     public By editClientBtn = By.xpath("//a[text()='Edit Client']");
     public By editCllientActualText = By.xpath("//h5[text()='Edit Client Info']");
     public By editFirstName = By.xpath(" //input[@formcontrolname='studentFirstName']");
@@ -116,7 +117,7 @@ public class AdminPage extends BasePage {
     public By editAddress1 = By.xpath(" //input[@formcontrolname='address1']");
     public By editAddress2 = By.xpath(" //input[@formcontrolname='address2']");
     public By editCity = By.xpath(" //input[@formcontrolname='city']");
-    public By editState = By.xpath(" //input[@formcontrolname='state']");
+
     public By editZipCode = By.xpath(" //input[@formcontrolname='zipCode']");
     public By editAdditionalComment = By.xpath(" //input[@formcontrolname='appointmentComments']");
     public By editUpdateBtn = By.id("intakeFormSubmit");
@@ -138,15 +139,15 @@ public class AdminPage extends BasePage {
     public By collectFeeAmt = By.xpath("(//input[contains(@class,'custom-input my-1')])[2]");
     public By enterAmt = By.id("bookingDeposit");
     public By collectPayBtn = By.xpath("//button[@class='theme-button mx-2']");
-    public By payRecievedActualText = By.xpath("//h4[text()='Payment Received!!']");
+
     public By closebtn = By.xpath("(//a[text()='Close'])[2]");
     public By amountDue = By.xpath("//label[text()='Amount Due']//following-sibling::p");
     public By assessmentAmount = By.xpath("//label[text()='Assessment Amount']//following-sibling::p");
     public By receivedAmount = By.xpath("//label[text()='Received Amount']//following-sibling::p");
-    public By fullPayActualText = By.xpath("//span[@class='badge bg-warning float-right ng-star-inserted']");
+
     public By holdButton = By.xpath("//button[text()=' Hold Appointment ']");
     public By holdActualText = By.xpath("(//h6[@class='mb-4 text-center'])[2]");
-    public By fullName = By.xpath("(//p)[9]");
+
     public By allAppointmentsPage = By.xpath("//h3[text()='All Appointments']");
     public By holdAppointmentBtn = By.xpath("//button[text()='Yes, Hold']");
     public By holdtab = By.xpath("//a[text()='Hold']");
@@ -155,28 +156,24 @@ public class AdminPage extends BasePage {
     public By searchTextBox = By.xpath("//input[@aria-controls='appointmentTable']");
     public By toDateText = By.xpath("//input[@formcontrolname='toDate']");
     public By fromDateText = By.xpath("//input[@formcontrolname='fromDate']");
-    public By validateHoldClient = By.cssSelector("tr:not([style='display: none;' ]) td:nth-child(3)");
-    public By unHoldBtn = By.cssSelector("tr:not([style='display: none;' ]) td:nth-child(7)");
+    public By validateHoldClient = cssSelector("tr:not([style='display: none;' ]) td:nth-child(3)");
+    public By unHoldBtn = cssSelector("tr:not([style='display: none;' ]) td:nth-child(7)");
     public By yesUnholdButton = By.xpath("//button[@class='theme-button danger mx-2']");
 
     //*******************Paying full payment by client****************
 
     public By appointmentTab = By.xpath("//a[text()=' Appointments ']");
     public By testCompleteTab = By.xpath("//a[text()='Test complete']");
-    public By clientDetailLink = By.cssSelector("tr:not([style='display: none;' ]) td:nth-child(7)");
+    public By clientDetailLink = cssSelector("tr:not([style='display: none;' ]) td:nth-child(7)");
     public By paymentButton = By.xpath("//button[@class='theme-button green m-2 ng-star-inserted']");
     public By inr = By.xpath("(//td)[10]");
-
     public By amountField = By.xpath("//input[@id='bookingDeposit']");
     public By collectButton = By.xpath("//button[@class='theme-button mx-2']");
     public By cancelButton = By.xpath("(//a[@class='theme-button grey'])[4]");
     public By clientNameDetail = By.xpath("//h3");
-
     public By cancelAppointmentBtn = By.xpath("//button[text()=' Cancel Appointment ']");
-
-
     public By cancelTab = By.xpath("//a[text()='Canceled']");
-    public By clientName = By.cssSelector("tr:not([style='display: none;' ]) td:nth-child(1)");
+    public By clientName =By.cssSelector("tr:not([style='display: none;' ]) td:nth-child(1)");
 
     public By todayAppointmentTitle = By.xpath("//div[@class='align-items-md-center d-flex flex-column flex-md-row page-header']/h3");
 
@@ -221,8 +218,6 @@ public class AdminPage extends BasePage {
 
 
     public By rescheduleAppointmentBtn = By.xpath("//a[text()='Reschedule Appointment']");
-
-
     public By cancelRadioBtn = By.xpath("(//div[@class='custom-control custom-radio custom-control-inline'])[1]");
     public By yesBtn = By.xpath("(//button[@type='submit'])[1]");
 
@@ -945,12 +940,15 @@ public class AdminPage extends BasePage {
     }
 
     public void enterClientNameInSearchFieldCompleted(String nameOfClient) {
+        WebdriverWaits.waitUntilVisible(searchTextBox);
+        WebdriverWaits.waitForSpinner();
         sendKeys_withClear(searchTextBox, nameOfClient);
     }
 
 
     public void click_ViewDetailsBtn() {
-        waitUntilVisible(getViewDetails);
+        WebdriverWaits.waitUntilVisible(getViewDetails);
+        WebdriverWaits.waitForSpinner();
         click_custom(getViewDetails);
     }
 

@@ -6,6 +6,7 @@ import org.automation.utilities.Assertions;
 import org.automation.utilities.WebdriverWaits;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+
 import java.util.List;
 
 import static org.automation.utilities.Assertions.validate_text;
@@ -34,7 +35,7 @@ public class DirectorPage extends BasePage {
     public By password_Field = By.xpath("//input[@placeholder='Create Password']");
     public By confirm_PasswordField = By.xpath("//input[@class='ng-untouched ng-pristine ng-valid border border-danger']");
     public By createDirectorsButton = By.xpath("//button[text()='Create Director']");
-    public By availableSlots=By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-all-day-inner mbsc-schedule-event-inner ng-star-inserted']");
+    public By availableSlots = By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-all-day-inner mbsc-schedule-event-inner ng-star-inserted']");
 
     //**************Search created director***************
     public By filterButton = By.xpath("//a[text()='Filter']");
@@ -62,7 +63,7 @@ public class DirectorPage extends BasePage {
     public By dashboardPage = By.xpath("(//h3)[1]");
     public By viewAll = By.xpath("(//li[@class='ng-star-inserted']/a)[1]");
 
-    public By yearButton=By.xpath("//span[@class='mbsc-calendar-title mbsc-calendar-year mbsc-ios ng-star-inserted']");
+    public By yearButton = By.xpath("//span[@class='mbsc-calendar-title mbsc-calendar-year mbsc-ios ng-star-inserted']");
     public By monthHeader = By.xpath("//span[@class='mbsc-calendar-month mbsc-calendar-title mbsc-ios ng-star-inserted']");
     public By yearHeader = By.xpath("//span[@class='mbsc-calendar-title mbsc-calendar-year mbsc-ios ng-star-inserted']");
     public By clickOnBox = By.xpath("(//div[@class='mbsc-flex-1-0 mbsc-ios mbsc-schedule-item ng-star-inserted'])[23]");
@@ -100,7 +101,7 @@ public class DirectorPage extends BasePage {
 
     public By yearsTitle = By.xpath("(//mbsc-button[contains(@class,'mbsc-calendar-button')])[5]");
 
-    public By yearTitleFromText=By.xpath("(//d" +
+    public By yearTitleFromText = By.xpath("(//d" +
             "iv[contains(@class,'mbsc-calendar-year-text')])[13]");
     public By spinner = By.cssSelector("div.ngx-spinner-overlay");
     public By setAvailaibility = By.xpath("//div[@class='page-header d-flex align-items-center']");
@@ -148,11 +149,9 @@ public class DirectorPage extends BasePage {
         click_custom(avail_SaveButton);
     }
 
-    public void click_Delete()
-    {
+    public void click_Delete() {
         click_custom(delete);
     }
-
 
 
     public void click_CreateDirectorsButton() {
@@ -201,8 +200,9 @@ public class DirectorPage extends BasePage {
     public void click_confirmPasswordField(String confirmPasswordFieldText) {
         sendKeys_withClear(confirm_PasswordField, confirmPasswordFieldText);
     }
-    public void enter_ConfirmPassword(String rePassword){
-        sendKeys_withClear(confirmPasswordField,rePassword);
+
+    public void enter_ConfirmPassword(String rePassword) {
+        sendKeys_withClear(confirmPasswordField, rePassword);
     }
 
     public void click_createDirectorButton() {
@@ -250,8 +250,7 @@ public class DirectorPage extends BasePage {
         click_custom(monthHeader);
     }
 
-    public void select_Year()
-    {
+    public void select_Year() {
         WebdriverWaits.waitUntilVisible(selectYear);
         click_custom(selectYear);
 
@@ -262,6 +261,7 @@ public class DirectorPage extends BasePage {
         click_custom(selectMonth);
 
     }
+
     public void clickOn_DontSave() {
         click_custom(dontSaveButton);
     }
@@ -300,9 +300,6 @@ public class DirectorPage extends BasePage {
     }
 
 
-
-
-
     //*********Create director**************
     public void create_Director(String directorsFirstNameText, String directorsLastNameText, String directorsMobileNumberText, String directorsEmailText, String directorsUserNameText, String password_FieldText, String confirmPasswordFieldText) throws InterruptedException {
         click_CreateDirectorsButton();
@@ -316,6 +313,7 @@ public class DirectorPage extends BasePage {
         enter_ConfirmPassword(confirmPasswordFieldText);
         click_createDirectorButton();
     }
+
     public void click_EditBtnAfterSearch() throws InterruptedException {
         wait.waitUntilVisible(editBtnAfterSearch);
         WebdriverWaits.waitForSpinner();
@@ -323,6 +321,7 @@ public class DirectorPage extends BasePage {
 
 
     }
+
     public void click_ViewDetailsBtn() throws InterruptedException {
         wait.waitUntilVisible(viewDetailsBtn);
         WebdriverWaits.waitForSpinner();
@@ -330,11 +329,13 @@ public class DirectorPage extends BasePage {
 
 
     }
-        //**************Search created director*************
+
+    //**************Search created director*************
     public void search_CreatedDirector(String UserName) throws InterruptedException {
         click_filterButton();
         enterInSearchField(UserName);
     }
+
     public void disable_Director() throws InterruptedException {
 
         click_EditBtnAfterSearch();
@@ -451,26 +452,26 @@ public class DirectorPage extends BasePage {
         click_custom(diagnosticianSaveButton);
     }
 
-   /* public void cancel_Availability() throws InterruptedException {
-        Thread.sleep(5000);
-        List<WebElement> slots = getWebElements(availableSlots, "Diagnostician Available slots");
-        System.out.println(slots.size());
-        for (WebElement slot : slots) {
-            Thread.sleep(2000);
-            moveToEleByWE(slot);
-            WebElement cancelSlot=getDriver().findElement(By.xpath("//div[@class='mbsc-ios mbsc-popup-header mbsc-popup-header-center ng-star-inserted']"));
-            if (cancelSlot.isDisplayed()) {
-                Thread.sleep(4000);
-                String getText = getText_custom(shiftText);
-                WebdriverWaits.waitUntilVisible(shiftText);
-                validate_text(shiftText, getText);
-                WebdriverWaits.waitUntilVisible(cancel);
-                click_custom(cancel);
-                break;
-            }
-        }
-        click_custom(diagnosticianSaveButton);
-    }*/
+//    public void cancel_Availability() throws InterruptedException {
+//        Thread.sleep(5000);
+//        List<WebElement> slots = getWebElements(availableSlots, "Diagnostician Available slots");
+//        System.out.println(slots.size());
+//        for (WebElement slot : slots) {
+//            Thread.sleep(2000);
+//            moveToEleByWE(slot);
+//            WebElement cancelSlot=getDriver().findElement(By.xpath("//div[@class='mbsc-ios mbsc-popup-header mbsc-popup-header-center ng-star-inserted']"));
+//            if (cancelSlot.isDisplayed()) {
+//                Thread.sleep(4000);
+//                String getText = getText_custom(shiftText);
+//                WebdriverWaits.waitUntilVisible(shiftText);
+//                validate_text(shiftText, getText);
+//                WebdriverWaits.waitUntilVisible(cancel);
+//                click_custom(cancel);
+//                break;
+//            }
+//        }
+//        click_custom(diagnosticianSaveButton);
+//    }
 
 }
 

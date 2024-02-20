@@ -3,6 +3,7 @@ package test;
 import org.automation.base.BaseTest;
 import org.automation.pageObjects.*;
 import org.testng.annotations.Test;
+
 import static org.automation.utilities.Assertions.*;
 import static org.automation.utilities.DateGenerator.getMonthAndYear;
 
@@ -63,7 +64,7 @@ public class DirectorTest extends BaseTest {
         validate_text(admin.title, "Set Availability");
 
     }
-    }
+}
 
 /*
     @Test(priority = 5, enabled = true, description = "24 Verify that '<Date>' popup closes, when director clicks on 'Cancel' button")

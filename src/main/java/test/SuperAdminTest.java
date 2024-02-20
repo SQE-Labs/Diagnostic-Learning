@@ -13,7 +13,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import static org.automation.utilities.Assertions.*;
-
+import static test.AdminTest.clientFirstName;
+import static test.AdminTest.clientLastName;
 
 
 public class SuperAdminTest extends BaseTest {
@@ -32,8 +33,7 @@ public class SuperAdminTest extends BaseTest {
     public String diagnosticianEmailAddress;
     public String diagnosticianLastName;
     public String dia_Cell_Number;
-    public static String clientFirstName;
-    public static String clientLastName;
+
 
 
     @Test(priority = 0, enabled = true, description = "1.1 Verify that SuperAdmin is able to login")
@@ -351,7 +351,6 @@ public class SuperAdminTest extends BaseTest {
         WebdriverWaits.waitUntilVisible(director.edit_SuccMsg);
         validate_text(director.edit_SuccMsg, "Director details updated successfully.");
         Log.info("Successfully Edited the created director");
-
     }
 
 
@@ -408,10 +407,9 @@ public class SuperAdminTest extends BaseTest {
         WebdriverWaits.waitForSpinner();
         validate_text(appointment.allAppointmentsPage, "All Appointments");
 
-        appointment.click_FilterButton();
-        appointment.click_SearchField(clientFirstName);
+         appointment.click_SearchField(clientFirstName);
         WebdriverWaits.waitUntilVisible(appointment.searchedText);
-        validate_text(appointment.searchedText, clientFirstName + ' ' + clientLastName);
+        validate_text(appointment.searchedText, clientFirstName +' '+ clientLastName);
     }
 
 
@@ -451,7 +449,6 @@ public class SuperAdminTest extends BaseTest {
         DashBoardPanelPage panelpage = new DashBoardPanelPage();
         ActionEngine action = new ActionEngine();
 
-        panelpage.click_AppointmentsTab();
         appointment.click_ViewAllTab();
         admin.click_Export_CSV_Button();
 
@@ -484,7 +481,7 @@ public class SuperAdminTest extends BaseTest {
     public void verify_Search_Payment() {
         PaymentPage payment = new PaymentPage();
         //  String getText = getText_custom(payment.getCust_Name);
-        payment.click_filterButton();
+      //  payment.click_filterButton();
         payment.enterInSearchField(clientFirstName);
     }
 

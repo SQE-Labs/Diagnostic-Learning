@@ -33,12 +33,6 @@ public class DashBoardPanelPage extends BasePage {
         click_custom(logOutLink);
     }
 
-    public void click_ViewAllTab() {
-        WebdriverWaits.waitUntilVisible(viewAllTab);
-        WebdriverWaits.waitForSpinner();
-        moveToElement(viewAllTab);
-    }
-
     public void click_DirectorTab() throws InterruptedException {
         WebdriverWaits.waitUntilVisible(directorsTab);
         WebdriverWaits.waitForSpinner();
@@ -53,7 +47,6 @@ public class DashBoardPanelPage extends BasePage {
     }
 
     public void click_AdminTab() throws InterruptedException {
-
         WebdriverWaits.waitUntilVisible(adminButton);
         WebdriverWaits.waitForSpinner();
         Thread.sleep(5000);
@@ -94,7 +87,7 @@ public class DashBoardPanelPage extends BasePage {
     }
 
     public void click_AppointmentsTab() {
-        WebdriverWaits.waitUntilInvisible(AppointmentsTab);
+        WebdriverWaits.waitUntilVisible(AppointmentsTab);
         WebdriverWaits.waitForSpinner();
         click_custom(AppointmentsTab);
     }

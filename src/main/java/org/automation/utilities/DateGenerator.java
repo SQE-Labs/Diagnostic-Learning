@@ -15,7 +15,8 @@ public class DateGenerator {
         String date1 = dateFormat.format(date);
         return date1;
     }
-    public static  String dateTimeGenerator(String format) {
+
+    public static String dateTimeGenerator(String format) {
         DateFormat dateFormat = new SimpleDateFormat(format);
         Date date = new Date();
         String date1 = dateFormat.format(date);
@@ -23,14 +24,14 @@ public class DateGenerator {
         return date1;
     }
 
-    public static  String getCurrentDateFromSystem()
-    {
+    public static String getCurrentDateFromSystem() {
         LocalDate currentDate = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy");
         String formattedDate = currentDate.format(formatter);
         System.out.println("generated Date is ======   " + formattedDate);
         return formattedDate;
     }
+
     public static String getDateWithDays(String format, int dayToAdd) {
 
         LocalDate todayDate = LocalDate.now();
@@ -40,15 +41,18 @@ public class DateGenerator {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
         return formatter.format(date2);
     }
+
     public static boolean isDateWithinRange(LocalDate startDate, LocalDate endDate, LocalDate dateToCheck) {
         return (dateToCheck.isAfter(startDate) || dateToCheck.isBefore(endDate));
     }
-   public static String  getMonthAndYear(){
-       LocalDate currentDate = LocalDate.now();
-       DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM yyyy");
-       return currentDate.format(formatter);
 
-   }
+    public static String getMonthAndYear() {
+        LocalDate currentDate = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM yyyy");
+        return currentDate.format(formatter);
+
+    }
+
     public static String getCurrentMonthFormat() {
         LocalDate currentDate = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM");

@@ -1,8 +1,7 @@
 package org.automation.utilities;
 
 public class RandomStrings {
-    public static String requiredString(int n)
-    {
+    public static String requiredString(int n) {
         String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "0123456789" + "abcdefghijklmnopqrstuvxyz" + "               ";
         StringBuilder s = new StringBuilder(n);
         int y;
@@ -13,9 +12,8 @@ public class RandomStrings {
         return s.toString();
     }
 
-    public static String requiredCharacters(int n)
-    {
-        String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +  "abcdefghijklmnopqrstuvxyz";
+    public static String requiredCharacters(int n) {
+        String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "abcdefghijklmnopqrstuvxyz";
         StringBuilder s = new StringBuilder(n);
         int y;
         for (y = 0; y < n; y++) {
@@ -25,8 +23,7 @@ public class RandomStrings {
         return s.toString();
     }
 
-    public static String requiredDigits(int n)
-    {
+    public static String requiredDigits(int n) {
         String AlphaNumericString = "1234567890";
         StringBuilder s = new StringBuilder(n);
         int y;
