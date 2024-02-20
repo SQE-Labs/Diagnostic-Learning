@@ -12,10 +12,8 @@ import org.openqa.selenium.interactions.Actions;
 
 import java.time.Duration;
 import java.util.List;
-
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import static com.relevantcodes.extentreports.LogStatus.FAIL;
 import static com.relevantcodes.extentreports.LogStatus.PASS;
 
@@ -289,7 +287,6 @@ public class ActionEngine extends BaseTest {
             return flag;
         }
     }
-
     public boolean isElementNotPresent_custom(By path, String fieldName) {
         boolean flag = false;
         try {
@@ -342,7 +339,7 @@ public class ActionEngine extends BaseTest {
         String fieldName = "";
         try {
             fieldName = label.length > 0 ? label[0] : path.toString();
-            List<WebElement> elements = getDriver().findElements(path);
+             List <WebElement> elements =getDriver().findElements(path);
 
             //  log success message in exgent report
             extentTest.log(PASS, fieldName + "==>Locate webElements!");
@@ -363,22 +360,20 @@ public class ActionEngine extends BaseTest {
     public void navigate_Back() {
         getDriver().navigate().back();
     }
-
-    public void navigate_to_baseUrl() {
+    public void navigate_to_baseUrl(){
         getDriver().get(PropertiesUtil.getPropertyValue("url"));
     }
-
     public static String getText(By element) {
-        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
+         WebDriverWait wait = new WebDriverWait(getDriver() , Duration.ofSeconds(10));
         wait.until(ExpectedConditions.visibilityOfElementLocated(element));
-        WebElement ele = getDriver().findElement(element);
+        WebElement ele = getDriver() .findElement(element);
         String text = ele.getText();
         return text;
     }
 
     public static String getValueAttribute(By element, String attributeName) {
         try {
-            String text = getDriver().findElement(element).getAttribute(attributeName);
+            String text=getDriver().findElement(element).getAttribute(attributeName);
             return text;
         } catch (Exception e) {
             return attributeName;
