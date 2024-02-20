@@ -15,7 +15,6 @@ import java.io.IOException;
 import static org.automation.utilities.Assertions.*;
 
 
-
 public class SuperAdminTest extends BaseTest {
 
 
@@ -65,7 +64,7 @@ public class SuperAdminTest extends BaseTest {
         panelPage.click_On_AdminTab();
         WebdriverWaits.waitForSpinner();
 
- //*************Creating admin by superAdmin************
+        //*************Creating admin by superAdmin************
 
         admin.create_Admin(adminFirstName, adminLastName, admin_cell_Number, adminEmailAddress, adminUserName, "123456", "123456");
         WebdriverWaits.waitUntilVisible(admin.succ_Msg);
@@ -113,7 +112,7 @@ public class SuperAdminTest extends BaseTest {
 
         // Enabling the user
         validate_text(admin.Succ_Msg_Upd, "Admin details updated successfully.");
-       // panelPage.click_LogOutLink();
+        // panelPage.click_LogOutLink();
 
     }
 
@@ -303,14 +302,12 @@ public class SuperAdminTest extends BaseTest {
         validate_text(director.directorListPage, "Directors List");
 
 
-
     }
 
     @Test(priority = 20, enabled = true, description = "3.1, 3.5, 3.9, 3.36 verify that duplicate Director throws error")
     public void create_duplicate_Directors() throws InterruptedException {
         DirectorPage director = new DirectorPage();
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
-
 
 
         director.create_Director(directorFirstName, directorLastName, dir_Cell_Number, directorEmailAddress, directorUserName, "123456", "123456");
@@ -330,8 +327,6 @@ public class SuperAdminTest extends BaseTest {
         validate_text(director.edit_SuccMsg, "Director details updated successfully.");
         Log.info("Successfully Edited the created director");
     }
-
-
 
 
     @Test(priority = 22, enabled = true, description = "3.19, 3.20 verify that superadmin is able to enable Director")
@@ -391,10 +386,10 @@ public class SuperAdminTest extends BaseTest {
 
     //************Appointments page******************
 
-    @Test( dependsOnMethods={ "verify_Full_Payment"})
-    public void verify_Appointments_Page()   {
+    @Test(dependsOnMethods = {"verify_Full_Payment"})
+    public void verify_Appointments_Page() {
         AppointmentsPage appointment = new AppointmentsPage();
-        DashBoardPanelPage panelPage=new DashBoardPanelPage();
+        DashBoardPanelPage panelPage = new DashBoardPanelPage();
         LoginPage login = new LoginPage();
         login.superAdminLogin();
         WebdriverWaits.waitUntilVisible(appointment.dashBoardPage);
