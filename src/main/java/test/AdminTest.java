@@ -1,29 +1,24 @@
 package test;
 
 import org.automation.base.BaseTest;
-import org.automation.logger.Log;
 import org.automation.pageObjects.*;
 import org.automation.utilities.ActionEngine;
 import org.automation.utilities.DateGenerator;
 import org.automation.utilities.RandomStrings;
 import org.automation.pageObjects.PaymentPage;
-
-
-
-import org.openqa.selenium.By;
 import org.automation.utilities.WebdriverWaits;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
+
 import java.awt.*;
 import java.io.FileNotFoundException;
+
 import org.testng.annotations.Test;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.List;
-
-
-
 
 import static org.automation.utilities.Assertions.validate_text;
 import static org.automation.utilities.Assertions.*;
@@ -51,9 +46,8 @@ public class AdminTest extends BaseTest {
     List<WebElement> diagList;
 
 
-
     @Test(priority = 0, enabled = true, description = "1.1 Verify admin is able to login with valid credentials")
-    public void admin_login()  {
+    public void admin_login() {
         LoginPage login = new LoginPage();
 
         //Login by using superAdmin credentials
@@ -122,6 +116,7 @@ public class AdminTest extends BaseTest {
         director.create_Director(directorFirstName, directorLastName, dirCellNumber, directorEmailAddress, directorUserName, "123456", "123456");
         panelpage.click_LogOutLink();
     }
+
     @Test(priority = 4, enabled = true, description = "Set availability for director by admin.")
     public void director_Availability() throws InterruptedException {
         LoginPage login = new LoginPage();
@@ -199,7 +194,7 @@ public class AdminTest extends BaseTest {
         admin.click_BackBtn();
     }
 
-    @Test(priority = 11, enabled = false, description = "Re-Assign Appointment for client by admin")
+    @Test(priority = 11, enabled = true, description = "Re-Assign Appointment for client by admin")
     public void re_AssignAppointment() {
         AdminPage reAssign = new AdminPage();
         reAssign.click_ReAssignBn();
@@ -254,7 +249,7 @@ public class AdminTest extends BaseTest {
     }
 
     @Test(priority = 17, enabled = true, description = "Verify save Test plan button on <Client> details page.")
-    public void verify_EditTestPlan()   {
+    public void verify_EditTestPlan() {
         AdminPage testPlan = new AdminPage();
         testPlan.edit_TestPlan();
         validate_text(testPlan.actualEditTest, "WRAML");
@@ -330,7 +325,7 @@ public class AdminTest extends BaseTest {
     }
 
     @Test(priority = 24, enabled = true, description = "verify yes hold button on hold appointment popup.")
-    public void verify_HoldAppointment()   {
+    public void verify_HoldAppointment() {
         AdminPage admin = new AdminPage();
 
         admin.click_HoldTab();
@@ -342,12 +337,12 @@ public class AdminTest extends BaseTest {
     public void verify_holdfilterButton() {
         AdminPage admin = new AdminPage();
         admin.click_HoldFilterBtn();
-       // String searchPlaceHolder = admin.getAttributevalue(admin.searchAttribute, "placeholder");
+        // String searchPlaceHolder = admin.getAttributevalue(admin.searchAttribute, "placeholder");
         String fromDateplaceholder = admin.getAttributevalue(admin.fromDateText, "placeholder");
         String toDatePlaceholder = admin.getAttributevalue(admin.toDateText, "placeholder");
         Assert.assertEquals(fromDateplaceholder, "From Date");
         Assert.assertEquals(toDatePlaceholder, "To Date");
-      //  Assert.assertEquals(searchPlaceHolder, "type");
+        //  Assert.assertEquals(searchPlaceHolder, "type");
     }
 
     @Test(priority = 26, enabled = true, description = "verify holded appointment .")
@@ -362,10 +357,7 @@ public class AdminTest extends BaseTest {
     @Test(priority = 27, enabled = true, description = "Verify All Appointment page.")
     public void verify_AllAppointmentsPage() {
         AppointmentsPage appPage = new AppointmentsPage();
-        DashBoardPanelPage panelPage = new DashBoardPanelPage();
-        AdminPage admin = new AdminPage();
-        panelPage.click_ViewAllTab();
-
+        appPage.click_ViewAllTab();
         WebdriverWaits.waitForSpinner();
         WebdriverWaits.waitUntilVisible(appPage.viewAllActualText);
         WebdriverWaits.waitForSpinner();
@@ -448,18 +440,19 @@ public class AdminTest extends BaseTest {
     }
 
 
-        //******************* Edit Director ***************//
+    //******************* Edit Director ***************//
 
 
-        @Test(priority = 34, enabled = true, description = "3.9, 3.10 Creating Director from admin")
-        public void verify_Edit_Director () throws InterruptedException {
-            DirectorPage director = new DirectorPage();
-            DashBoardPanelPage clickDirectorTab = new DashBoardPanelPage();
-            clickDirectorTab.click_DirectorTab();
-            directorEmailAddress = directorFirstName + "010@yopmail.com";
-            director.edit_Director(directorEmailAddress, "12345678", "12345678");
-            validate_text(director.edit_SuccMsg, "Director details updated successfully.");
-        }
+    @Test(priority = 34, enabled = true, description = "3.9, 3.10 Creating Director from admin")
+    public void verify_Edit_Director() throws InterruptedException {
+        DirectorPage director = new DirectorPage();
+        DashBoardPanelPage clickDirectorTab = new DashBoardPanelPage();
+        clickDirectorTab.click_DirectorTab();
+        directorEmailAddress = directorFirstName + "010@yopmail.com";
+        director.edit_Director(directorEmailAddress, "12345678", "12345678");
+        validate_text(director.edit_SuccMsg, "Director details updated successfully.");
+    }
+
     @Test(priority = 35, enabled = true, description = "Verify that admin is able to Enable the user or not")
     public void verify_director_enable_User() {
         DirectorPage director = new DirectorPage();
@@ -469,85 +462,84 @@ public class AdminTest extends BaseTest {
         validate_text(director.edit_SuccMsg, "Director details updated successfully.");
     }
 
-        @Test(priority = 36, enabled = true, description = "4.14 verify that director is able to edit or not after clicking dont save button")
-        public void Verify_DntSave_Button () throws InterruptedException {
-            DirectorPage director = new DirectorPage();
-            String directorEmailAddressUpdated = directorFirstName + "101@yopmail.com";
-            director.not_Edit_Director(directorEmailAddressUpdated, "123456", "123456");
-            WebdriverWaits.waitUntilVisible(director.UserNameGetText);
-            validate_text(director.UserNameGetText, directorUserName);
-        }
+    @Test(priority = 36, enabled = true, description = "4.14 verify that director is able to edit or not after clicking dont save button")
+    public void Verify_DntSave_Button() throws InterruptedException {
+        DirectorPage director = new DirectorPage();
+        String directorEmailAddressUpdated = directorFirstName + "101@yopmail.com";
+        director.not_Edit_Director(directorEmailAddressUpdated, "123456", "123456");
+        WebdriverWaits.waitUntilVisible(director.UserNameGetText);
+        validate_text(director.UserNameGetText, directorUserName);
+    }
 
-        @Test(priority = 37, enabled = true, description = "Admin is directed to 'Today's Appointment' page")
-        public void verify_TodayAppointmentTab () throws InterruptedException {
-            AdminPage admin = new AdminPage();
-            DateGenerator datePage = new DateGenerator();
-            DashBoardPanelPage dashboard=new DashBoardPanelPage();
-            dashboard.click_AppointmentsTab();
-            Thread.sleep(5000);
-            admin.click_TodayTab();
-            validate_text(admin.todayAppointmentTitle, "Today's Appointments");
-            String expectedDate = datePage.getCurrentDateFromSystem();
-            validate_text(admin.todayDateOnCard, expectedDate);
+    @Test(priority = 37, enabled = true, description = "Admin is directed to 'Today's Appointment' page")
+    public void verify_TodayAppointmentTab() throws InterruptedException {
+        AdminPage admin = new AdminPage();
+        DateGenerator datePage = new DateGenerator();
+        DashBoardPanelPage dashboard = new DashBoardPanelPage();
+        dashboard.click_AppointmentsTab();
+        Thread.sleep(5000);
+        admin.click_TodayTab();
+        validate_text(admin.todayAppointmentTitle, "Today's Appointments");
+        String expectedDate = datePage.getCurrentDateFromSystem();
+        validate_text(admin.todayDateOnCard, expectedDate);
 
     }
 
     //***********TO DO *********************
-        @Test(priority = 38, enabled = true, description = "Admin is directed to 'Client Details' page of Today's appointment card")
-        public void verify_ClientDetailsPage () {
-            AdminPage admin = new AdminPage();
-            String actualText = getText_custom(admin.nameOnCard);
-            admin.click_Card();
-            String clientName = getText_custom(admin.clientNameDetail);
+    @Test(priority = 38, enabled = true, description = "Admin is directed to 'Client Details' page of Today's appointment card")
+    public void verify_ClientDetailsPage() {
+        AdminPage admin = new AdminPage();
+        String actualText = getText_custom(admin.nameOnCard);
+        admin.click_Card();
+        String clientName = getText_custom(admin.clientNameDetail);
 
-            String[] words = clientName.split(" ");
-            String expectedTitleText = null;
-            if (words.length >= 2) {
-                // Fetch the first two words
-                String firstWord = words[0];
-                String secondWord = words[1];
-                expectedTitleText = firstWord + " " + secondWord;
-            }
-            validate_AttText(actualText, expectedTitleText);
+        String[] words = clientName.split(" ");
+        String expectedTitleText = null;
+        if (words.length >= 2) {
+            // Fetch the first two words
+            String firstWord = words[0];
+            String secondWord = words[1];
+            expectedTitleText = firstWord + " " + secondWord;
         }
+        validate_AttText(actualText, expectedTitleText);
+    }
 
-        @Test(priority = 39, enabled = true, description = "1.13, Admin is directed to 'Upcoming Appointment' page")
-        public void verify_UpcomingTab () {
-            AdminPage admin = new AdminPage();
-            AppointmentsPage appointment=new AppointmentsPage();
-            appointment.click_UpcomingTab();
-            WebdriverWaits.waitUntilVisible(admin.titleOfUpcomingPage);
-            WebdriverWaits.waitForSpinner();
-            validate_text(admin.titleOfUpcomingPage, "Upcoming Appointments");
-            admin.filter_ForUpcoming();
-            validate_text(admin.getStatus, "Upcoming");
-        }
+    @Test(priority = 39, enabled = true, description = "1.13, Admin is directed to 'Upcoming Appointment' page")
+    public void verify_UpcomingTab() {
+        AdminPage admin = new AdminPage();
+        AppointmentsPage appointment = new AppointmentsPage();
+        appointment.click_UpcomingTab();
+        WebdriverWaits.waitUntilVisible(admin.titleOfUpcomingPage);
+        WebdriverWaits.waitForSpinner();
+        validate_text(admin.titleOfUpcomingPage, "Upcoming Appointments");
+        admin.filter_ForUpcoming();
+        validate_text(admin.getStatus, "Upcoming");
+    }
 
-        @Test(priority = 40, enabled = true, description = "Admin is directed to 'Test Ready Appointment' page")
-        public void verify_TestReadyTab () {
-            AdminPage admin = new AdminPage();
-            AppointmentsPage appointment=new AppointmentsPage();
-            appointment.click_TestReadyTab();
-            validate_text(admin.getTestReadyTitle, "Test Ready Appointments");
-        }
+    @Test(priority = 40, enabled = true, description = "Admin is directed to 'Test Ready Appointment' page")
+    public void verify_TestReadyTab() {
+        AdminPage admin = new AdminPage();
+        AppointmentsPage appointment = new AppointmentsPage();
+        appointment.click_TestReadyTab();
+        validate_text(admin.getTestReadyTitle, "Test Ready Appointments");
+    }
 
-        @Test(priority = 41, enabled = true, description = "Admin is directed to 'Client Details' page of Test ready card")
-        public void verify_ClientPageTestReady () {
-            AdminPage admin = new AdminPage();
-            AppointmentsPage appointment=new AppointmentsPage();
-            appointment.click_TestReadyTab();
-            String actualText = getText_custom(admin.nameOnCard);
-            admin.click_Card();
-            String clientName = getText_custom(admin.clientNameDetail);
+    @Test(priority = 41, enabled = true, description = "Admin is directed to 'Client Details' page of Test ready card")
+    public void verify_ClientPageTestReady() {
+        AdminPage admin = new AdminPage();
+        AppointmentsPage appointment = new AppointmentsPage();
+        appointment.click_TestReadyTab();
+        String actualText = getText_custom(admin.nameOnCard);
+        admin.click_Card();
+        String clientName = getText_custom(admin.clientNameDetail);
 
-            String[] words = clientName.split(" ");
-            String expectedTitleText = null;
-            if (words.length >= 2) {
-                // Fetch the first two words
-                String firstWord = words[0];
-                String secondWord = words[1];
-                expectedTitleText = firstWord + " " + secondWord;
-
+        String[] words = clientName.split(" ");
+        String expectedTitleText = null;
+        if (words.length >= 2) {
+            // Fetch the first two words
+            String firstWord = words[0];
+            String secondWord = words[1];
+            expectedTitleText = firstWord + " " + secondWord;
 
 
         } else {
@@ -556,215 +548,199 @@ public class AdminTest extends BaseTest {
         validate_AttText(actualText, expectedTitleText);
     }
 
-        @Test(priority = 42, enabled = true, description = "Admin is able to click client detail page after clicking on 'View Details' button")
-        public void click_OnViewDetailsButton () {
-            AdminPage admin = new AdminPage();
-            AppointmentsPage appointment=new AppointmentsPage();
-            appointment.click_UpcomingTab();
-            admin.filter_ForUpcoming(clientLastName);
-            String actualText = getText_custom(admin.getNameOfClient);
-            admin.click_ViewDetailsBtn();
-            String clientName = getText_custom(admin.clientNameDetail);
+    @Test(priority = 42, enabled = true, description = "Admin is able to click client detail page after clicking on 'View Details' button")
+    public void click_OnViewDetailsButton() {
+        AdminPage admin = new AdminPage();
+        AppointmentsPage appointment = new AppointmentsPage();
+        appointment.click_UpcomingTab();
+        admin.filter_ForUpcoming(clientLastName);
+        String actualText = getText_custom(admin.getNameOfClient);
+        admin.click_ViewDetailsBtn();
+        String clientName = getText_custom(admin.clientNameDetail);
 
-            String[] words = clientName.split(" ");
-            String expectedTitleText = null;
-            if (words.length >= 2) {
-                // Fetch the first two words
-                String firstWord = words[0];
-                String secondWord = words[1];
-                expectedTitleText = firstWord + " " + secondWord;
-            }
-            validate_AttText(actualText, expectedTitleText);
+        String[] words = clientName.split(" ");
+        String expectedTitleText = null;
+        if (words.length >= 2) {
+            // Fetch the first two words
+            String firstWord = words[0];
+            String secondWord = words[1];
+            expectedTitleText = firstWord + " " + secondWord;
         }
+        validate_AttText(actualText, expectedTitleText);
+    }
 
-        @Test(dependsOnMethods = {"verify_Full_Payment"}, description = "Admin is able to click on 'Test Ready' subtab")
-        public void verify_TestComplete_AppointmentPage () throws FileNotFoundException, InterruptedException {
-            AdminPage admin = new AdminPage();
-            DashBoardPanelPage dashboard = new DashBoardPanelPage();
-            AppointmentsPage appointment = new AppointmentsPage();
-            LoginPage login = new LoginPage();
-            login.adminLogin(adminUserName, "12345678");
-            dashboard.click_AppointmentsTab();
-            appointment.click_TestCompleteTab();
-            WebdriverWaits.waitUntilVisible(admin.getTitleOfTestComplete);
-            validate_text(admin.getTitleOfTestComplete, "Test Complete Appointments");
-            admin.click_FilterBtn();
-            //Search field
+    @Test(dependsOnMethods = {"download_CSV_File"}, description = "Admin is able to View 'Test Complete' Appointments")
+    public void verify_TestComplete_AppointmentPage() throws FileNotFoundException, InterruptedException {
+        AdminPage admin = new AdminPage();
+        DashBoardPanelPage dashboard = new DashBoardPanelPage();
+        AppointmentsPage appointment = new AppointmentsPage();
+        LoginPage login = new LoginPage();
+        login.adminLogin(adminUserName, "12345678");
+        dashboard.click_AppointmentsTab();
+        appointment.click_TestCompleteTab();
+        WebdriverWaits.waitUntilVisible(admin.getTitleOfTestComplete);
+        validate_text(admin.getTitleOfTestComplete, "Test Complete Appointments");
+        admin.click_FilterBtn();
+        //Search field
 
-            String fromDateplaceholder = admin.getAttributevalue(admin.fromDateText, "placeholder");
-            String toDatePlaceholder = admin.getAttributevalue(admin.toDateText, "placeholder");
-            Assert.assertEquals(fromDateplaceholder, "From Date");
-            Assert.assertEquals(toDatePlaceholder, "To Date");
+        String fromDateplaceholder = admin.getAttributevalue(admin.fromDateText, "placeholder");
+        String toDatePlaceholder = admin.getAttributevalue(admin.toDateText, "placeholder");
+        Assert.assertEquals(fromDateplaceholder, "From Date");
+        Assert.assertEquals(toDatePlaceholder, "To Date");
 
-            admin.enterInSearchField(clientFirstName);
-            dashboard.click_ExportCSVButton();
-            String downloadFile = dashboard.getDownloadFileName();
-            Assert.assertTrue(dashboard.isFileDownloaded(downloadFile));
-        }
+        admin.enterInSearchField(clientFirstName);
+        dashboard.click_ExportCSVButton();
+        String downloadFile = dashboard.getDownloadFileName();
+        Assert.assertTrue(dashboard.isFileDownloaded(downloadFile));
+    }
 
-        @Test(dependsOnMethods = {"verify_TestComplete_AppointmentPage"}, description = "Admin is able to click on 'View Details button of 'Test Complete' subtab")
-        public void click_OnTestCompleteViewBtn () {
-            AdminPage admin = new AdminPage();
-            ActionEngine action = new ActionEngine();
-            SuperAdminPage superAdmin = new SuperAdminPage();
-            AppointmentsPage appointment = new AppointmentsPage();
+    @Test(dependsOnMethods = {"verify_TestComplete_AppointmentPage"}, description = "Admin is able to click on 'View Details button of 'Test Complete' subtab")
+    public void click_OnTestCompleteViewBtn() {
+        AdminPage admin = new AdminPage();
+        ActionEngine action = new ActionEngine();
+        SuperAdminPage superAdmin = new SuperAdminPage();
+        AppointmentsPage appointment = new AppointmentsPage();
 //        login.adminLogin(adminUserName, "12345678");
-            String expectedTitle = "View Student Observation";
-            action.navigate_Back();
-            appointment.click_TestCompleteTab();
-            appointment.click_FilterButton();
-            appointment.click_SearchField(clientFirstName);
-            admin.click_ViewDetailsBtn();
-            String clientName = getText_custom(admin.clientNameDetail);
+        action.navigate_Back();
+        String expectedTitle = "View Student Observation";
 
-            String[] words = clientName.split(" ");
-            String expectedTitleText = null;
-            if (words.length >= 2) {
-                // Fetch the first two words
-                String firstWord = words[0];
-                String secondWord = words[1];
-                expectedTitleText = firstWord + " " + secondWord;
-            }
-            validate_text(admin.clientNameDetail, clientName);
-            validate_text(superAdmin.viewStudentObservationButton, expectedTitle);
+        admin.enterInSearchField(clientFirstName);
+        admin.click_ViewDetailsBtn();
+        String clientName = getText_custom(admin.clientNameDetail);
+
+        String[] words = clientName.split(" ");
+        String expectedTitleText = null;
+        if (words.length >= 2) {
+            // Fetch the first two words
+            String firstWord = words[0];
+            String secondWord = words[1];
+            expectedTitleText = firstWord + " " + secondWord;
         }
+        validate_text(admin.clientNameDetail, clientName);
+        validate_text(superAdmin.viewStudentObservationButton, expectedTitle);
+    }
 
-        @Test(dependsOnMethods = {"click_OnTestCompleteViewBtn"}, description = "Admin is able to click on 'View Observation' button")
-        public void click_OnViewObservationBtn () {
-            AdminPage admin = new AdminPage();
-            SuperAdminPage superAdmin = new SuperAdminPage();
-            DashBoardPanelPage dashboard = new DashBoardPanelPage();
-            AppointmentsPage appointment = new AppointmentsPage();
-            LoginPage login = new LoginPage();
-//        admin.clickOn_TestCompleteTab();
-//        login.adminLogin(adminUserName, "12345678");
-//        dashboard.click_AppointmentsTab();
-//        appointment.click_TestCompleteTab();
-//        appointment.click_FilterButton();
-//        appointment.click_SearchField(clientFirstName);
-//        admin.click_ViewDetailsBtn();
-            admin.click_ViewObservationBtn();
-            String expectedText = "Client Observation";
-            String actualText = getText_custom(superAdmin.clientObservation);
-            validate_AttText(actualText, expectedText);
-        }
+    @Test(dependsOnMethods = {"click_OnTestCompleteViewBtn"}, description = "Admin is able to click on 'View Observation' button")
+    public void click_OnViewObservationBtn() {
+        AdminPage admin = new AdminPage();
+        SuperAdminPage superAdmin = new SuperAdminPage();
 
-        @Test(dependsOnMethods = {"click_OnViewObservationBtn"}, description = "20.4 Admin is able to click on 'View Observation' button")
-        public void click_ViewDocumentBtn () {
-            AdminPage admin = new AdminPage();
+        admin.click_ViewObservationBtn();
+        String expectedText = "Client Observation";
+        String actualText = getText_custom(superAdmin.clientObservation);
+        validate_AttText(actualText, expectedText);
+    }
 
-            admin.click_ViewDocumentsButton();
-            String expectedText = "Attached Documents";
-            validate_text(admin.getTitleOfAttachedDocument, expectedText);
-            admin.clickOn_CloseIcon();
-            admin.click_BackButton();
+    @Test(dependsOnMethods = {"click_OnViewObservationBtn"}, description = "20.4 Admin is able to click on 'View Observation' button")
+    public void click_ViewDocumentBtn() {
+        AdminPage admin = new AdminPage();
+
+        admin.click_ViewDocumentsButton();
+        String expectedText = "Attached Documents";
+        validate_text(admin.getTitleOfAttachedDocument, expectedText);
+        admin.clickOn_CloseIcon();
+        admin.click_BackButton();
 //        String expectedFileName = getText_custom(admin.getTextFromViewDocTwo);
 //        System.out.println("expectedFileName= " + expectedFileName);
 //        validate_text(admin.getTextFromViewDocTwo, expectedFileName);
-
     }
 
-        @Test(dependsOnMethods = {"click_ViewDocumentBtn"}, description = "verify admin is able to send recipt or not")
-        public void send_Recipts () {
-            AdminPage admin = new AdminPage();
-            admin.click_SendReciptButton();
-            WebdriverWaits.waitForSpinner();
+    @Test(dependsOnMethods = {"click_ViewDocumentBtn"}, description = "verify admin is able to send recipt or not")
+    public void send_Recipts() {
+        AdminPage admin = new AdminPage();
+        admin.click_SendReciptButton();
+        WebdriverWaits.waitForSpinner();
+    }
+
+    @Test(dependsOnMethods = {"send_Recipts"}, description = "Admin is able to click on 'Completed' tab")
+    public void Verify_ClickOnCompletedTab() throws InterruptedException {
+        AdminPage admin = new AdminPage();
+        DashBoardPanelPage dashboard = new DashBoardPanelPage();
+        dashboard.click_CompletedTab();
+        WebdriverWaits.waitForSpinner();
+        String expectedTitle = "Completed Appointments";
+        validate_text(admin.title, expectedTitle);
+    }
+
+    @Test(dependsOnMethods = {"Verify_ClickOnCompletedTab"}, description = "Admin is able to click on 'Filter' button")
+    public void verify_ClickOnFilterBtnOfCompletedTab() {
+        AdminPage admin = new AdminPage();
+        admin.click_FilterBtn();
+
+        //Search field
+        String fromDateplaceholder = admin.getAttributevalue(admin.fromDateText, "placeholder");
+        String toDatePlaceholder = admin.getAttributevalue(admin.toDateText, "placeholder");
+        Assert.assertEquals(fromDateplaceholder, "From Date");
+        Assert.assertEquals(toDatePlaceholder, "To Date");
+    }
+
+    @Test(dependsOnMethods = {"verify_ClickOnFilterBtnOfCompletedTab"}, description = "Admin is able to search valid data")
+    public void verify_SearchFiled() {
+        AdminPage admin = new AdminPage();
+
+        admin.enterClientNameInSearchFieldCompleted(clientFirstName);
+        validate_text(admin.clientName, clientFirstName + ' ' + clientLastName);
+    }
+
+    @Test(dependsOnMethods = {"verify_SearchFiled"}, description = "Admin is able to click on 'Export CSV' button")
+    public void verify_ClickOnExportCSVCompleted() throws FileNotFoundException, InterruptedException {
+
+        DashBoardPanelPage dashboard = new DashBoardPanelPage();
+        dashboard.click_ExportCSVButton();
+        String downloadFile = dashboard.getDownloadFileName();
+        Assert.assertTrue(dashboard.isFileDownloaded(downloadFile));
+    }
+
+    @Test(dependsOnMethods = {"verify_ClickOnExportCSVCompleted"}, description = "Admin is able to click on 'View Details' button")
+    public void verify_ClickOnViewDetailsCompleted() {
+        AdminPage admin = new AdminPage();
+        ActionEngine action = new ActionEngine();
+        String expectedResult = getText_custom(admin.clientNameCompleted);
+        action.navigate_Back();
+        admin.enterClientNameInSearchFieldCompleted(clientFirstName);
+        admin.click_ViewDetailsBtn();
+        String clientName = getText_custom(admin.clientNameDetail);
+
+        String[] words = clientName.split(" ");
+        String actualText = null;
+
+        if (words.length >= 2) {
+            // Fetch the first two words
+            String firstWord = words[0];
+            String secondWord = words[1];
+            actualText = firstWord + " " + secondWord;
         }
+        validate_AttText(actualText, expectedResult);
+    }
 
-        @Test(dependsOnMethods = {"send_Recipts"}, description = "Admin is able to click on 'Completed' tab")
-        public void Verify_ClickOnCompletedTab () throws InterruptedException {
-            AdminPage admin = new AdminPage();
-            DashBoardPanelPage dashboard = new DashBoardPanelPage();
-            dashboard.click_CompletedTab();
-            WebdriverWaits.waitForSpinner();
-            String expectedTitle = "Completed Appointments";
-            validate_text(admin.title, expectedTitle);
+
+    @Test(dependsOnMethods = {"verify_ClickOnViewDetailsCompleted"}, description = "Admin is able to click on 'View Receipt' button")
+    public void verify_ClickOnViewReceiptBtn() {
+        AdminPage admin = new AdminPage();
+        AppointmentsPage appointment = new AppointmentsPage();
+        PaymentPage payment = new PaymentPage();
+
+        payment.scrollUptoVAmountDue();
+        String expectedAmountDue = "$0.00";
+        String actualAmountDue = getText_custom(payment.amountDue);
+
+        if (actualAmountDue.equals(expectedAmountDue)) {
+            payment.viewReceiptButtonDisplayed();
+            String expectedText = "View Receipt";
+            validate_text(admin.titleOfViewReceipt, expectedText);
+
+        } else {
+            String amountDue = getText_custom(payment.amountDue);
+            String actualAmount = amountDue.replace("$", "");
+            payment.click_PaymentBtn();
+            payment.send_AmountInEnterAmount(actualAmount);
+            payment.click_CollectBtn();
+            payment.click_CloseBtn();
+            payment.viewReceiptButtonDisplayed();
+            String expectedText = "View Receipt";
+            validate_text(admin.titleOfViewReceipt, expectedText);
         }
-
-        @Test(dependsOnMethods = {"Verify_ClickOnCompletedTab"}, description = "Admin is able to click on 'Filter' button")
-        public void verify_ClickOnFilterBtnOfCompletedTab () {
-            AdminPage admin = new AdminPage();
-
-            admin.click_FilterBtn();
-
-            //Search field
-
-            String fromDateplaceholder = admin.getAttributevalue(admin.fromDateText, "placeholder");
-            String toDatePlaceholder = admin.getAttributevalue(admin.toDateText, "placeholder");
-            Assert.assertEquals(fromDateplaceholder, "From Date");
-            Assert.assertEquals(toDatePlaceholder, "To Date");
-
-
-        }
-
-        @Test(dependsOnMethods = {"verify_ClickOnFilterBtnOfCompletedTab"}, description = "Admin is able to search valid data")
-        public void verify_SearchFiled () {
-            AdminPage admin = new AdminPage();
-            AppointmentsPage appointment=new AppointmentsPage();
-            String expectedResult = getText_custom(admin.clientNameCompleted);
-            admin.enterClientNameInSearchFieldCompleted(clientFirstName);
-            String actualResult = getText_custom(admin.clientNameCompleted);
-            validate_AttText(actualResult, expectedResult);
-        }
-
-        @Test(dependsOnMethods = {"verify_SearchFiled"}, description = "Admin is able to click on 'Export CSV' button")
-        public void verify_ClickOnExportCSVCompleted () throws FileNotFoundException, InterruptedException {
-
-            DashBoardPanelPage dashboard = new DashBoardPanelPage();
-            dashboard.click_ExportCSVButton();
-            String downloadFile = dashboard.getDownloadFileName();
-            Assert.assertTrue(dashboard.isFileDownloaded(downloadFile));
-        }
-
-        @Test(dependsOnMethods = {"verify_ClickOnExportCSVCompleted"}, description = "Admin is able to click on 'View Details' button")
-        public void verify_ClickOnViewDetailsCompleted () {
-            AdminPage admin = new AdminPage();
-            String expectedResult = getText_custom(admin.clientNameCompleted);
-            admin.click_ViewDetailsBtn();
-            String clientName = getText_custom(admin.clientNameDetail);
-
-            String[] words = clientName.split(" ");
-            String actualText = null;
-
-            if (words.length >= 2) {
-                // Fetch the first two words
-                String firstWord = words[0];
-                String secondWord = words[1];
-                actualText = firstWord + " " + secondWord;
-            }
-            validate_AttText(actualText, expectedResult);
-        }
-
-
-        @Test(dependsOnMethods = {"verify_ClickOnViewDetailsCompleted"}, description = "Admin is able to click on 'View Receipt' button")
-        public void verify_ClickOnViewReceiptBtn () {
-            AdminPage admin = new AdminPage();
-            AppointmentsPage appointment=new AppointmentsPage();
-            PaymentPage payment = new PaymentPage();
-
-            payment.scrollUptoVAmountDue();
-            String expectedAmountDue = "$0.00";
-            String actualAmountDue = getText_custom(payment.amountDue);
-
-            if (actualAmountDue.equals(expectedAmountDue)) {
-                payment.viewReceiptButtonDisplayed();
-                String expectedText = "View Receipt";
-                validate_text(admin.titleOfViewReceipt, expectedText);
-
-            } else {
-                String amountDue = getText_custom(payment.amountDue);
-                String actualAmount = amountDue.replace("$", "");
-                payment.click_PaymentBtn();
-                payment.send_AmountInEnterAmount(actualAmount);
-                payment.click_CollectBtn();
-                payment.click_CloseBtn();
-                payment.viewReceiptButtonDisplayed();
-                String expectedText = "View Receipt";
-                validate_text(admin.titleOfViewReceipt, expectedText);
-
-            }
-
-        }
+    }
 
     @Test(dependsOnMethods = {"verify_ClickOnViewReceiptBtn"}, description = "Admin is able to click on 'Close' button")
     public void verify_ClickOnViewReceiptCloseBtn() {
@@ -806,12 +782,11 @@ public class AdminTest extends BaseTest {
     }
 
     @Test(dependsOnMethods = {"verify_Cancelled_Appointments"})
-    // dependsOnMethods={ "download_CSV_File_For_completeAss"}
     public void verify_Full_Payment() throws InterruptedException, AWTException {
         LoginPage login = new LoginPage();
         AdminPage admin = new AdminPage();
         DashBoardPanelPage panelpage = new DashBoardPanelPage();
-        login.adminLogin(adminUserName, "12345678");  //"AU_GillGP"   "Au_Theodc"
+        login.adminLogin(adminUserName, "12345678");
         admin.paying_DueAmount(clientFirstName);
         WebdriverWaits.waitUntilVisible(admin.clientNameDetail);
         validate_text(admin.clientNameDetail, clientFirstName + ' ' + clientLastName + ' ' + "Details");

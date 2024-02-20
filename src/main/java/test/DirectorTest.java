@@ -3,13 +3,13 @@ package test;
 import org.automation.base.BaseTest;
 import org.automation.pageObjects.*;
 import org.testng.annotations.Test;
+
 import static org.automation.utilities.Assertions.*;
 import static org.automation.utilities.DateGenerator.getMonthAndYear;
 
 
 public class DirectorTest extends BaseTest {
     DirectorPage director = new DirectorPage();
-    DiagnosticianPage dashpage = new DiagnosticianPage();
     DashBoardPanelPage panelPage = new DashBoardPanelPage();
     LoginPage login = new LoginPage();
 
@@ -17,14 +17,12 @@ public class DirectorTest extends BaseTest {
     public void verify_Login_Director() {
         login.director_Login();
         validate_text(director.dashboardPage, "Dashboard");
-
     }
 
     @Test(priority = 2, enabled = true, description = " 4 Verify that 'Appointments' tab expands, on 'Dashboard' page.")
     public void verify_AppointmentsTabExpands() {
         panelPage.click_AppointmentsTab();
         validate_text(director.viewAll, "View All");
-
     }
 
     @Test(priority = 3, enabled = true, description = "12 and 13 Verify that 'Set Availability' page opens up and Year Picker appear")
@@ -61,9 +59,8 @@ public class DirectorTest extends BaseTest {
         validate_text(director.validateAvailable, "Available");
         director.click_SaveButton();
         validate_text(admin.title, "Set Availability");
-
     }
-    }
+}
 
 /*
     @Test(priority = 5, enabled = true, description = "24 Verify that '<Date>' popup closes, when director clicks on 'Cancel' button")

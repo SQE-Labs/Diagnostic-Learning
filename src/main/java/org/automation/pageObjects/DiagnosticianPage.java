@@ -39,6 +39,7 @@ public class DiagnosticianPage extends BasePage {
 
 
     public By actualText = By.cssSelector("tr:not([style='display: none;' ]) td:nth-child(2)");
+    public By clientName=By.cssSelector("tr:not([style='display: none;' ]) td:nth-child(1)");
     public By backButton = By.xpath("//button[text()='Back']");
     public By diagnosticianDashBoardPage = By.xpath("(//h3)[1]");
     public By back_Button = By.xpath("//button[@class='theme-button grey float-md-right mr-md-4']");
