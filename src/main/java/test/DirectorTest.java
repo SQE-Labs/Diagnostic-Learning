@@ -1,11 +1,10 @@
 package test;
 
-import com.beust.jcommander.converters.CommaParameterSplitter;
+
 import org.automation.base.BaseTest;
 import org.automation.pageObjects.*;
 import org.automation.utilities.DateGenerator;
 import org.automation.utilities.WebdriverWaits;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -399,7 +398,7 @@ public class DirectorTest extends BaseTest {
         validate_text(admin.title, expecetedClientName);
     }
 
-    @Test(priority = 28, enabled = true, description = "45., 52., 58., 59., 60., 61., 62., 63., 64. & 65. User is able to click on 'Create Followup' for a client.")
+    @Test(priority = 28, enabled = true, description = "45., 52. User is able to click on 'Create Followup' for a client.")
     public void verify_ClickOnCreateFollowupBtn() throws InterruptedException {
         AppointmentsPage appointment = new AppointmentsPage();
         AdminPage admin = new AdminPage();
@@ -418,7 +417,12 @@ public class DirectorTest extends BaseTest {
         director.click_CloseBtn();
         String actualName = getText_custom(director.nameOfClient);
         validate_AttText(actualName, expectedName);
+    }
 
+    @Test(priority = 29, enabled = true, description = "58, 59 verify director is able to change follow up or not")
+    public void verify_CancelFollowUp() {
+        AdminPage admin = new AdminPage();
+        AppointmentsPage appPage = new AppointmentsPage();
         //Clicked on 'Cancel' button.
         director.click_CreateFollowUpBtn();
         director.CancelFollowupSlot(0);
@@ -433,7 +437,12 @@ public class DirectorTest extends BaseTest {
         }
 
         Assert.assertFalse(result);
+    }
 
+    @Test(priority = 30, enabled = true, description = "60, 61, verify director is able to change follow up or not")
+    public void verify_ResetFollowUp() {
+        AdminPage admin = new AdminPage();
+        AppointmentsPage appPage = new AppointmentsPage();
         //Clicked on 'Reset' button
         director.click_FollowUpSlot(0);
         director.click_FollowUpSlotSaveBtn();
@@ -449,7 +458,11 @@ public class DirectorTest extends BaseTest {
         }
 
         Assert.assertFalse(resultForReset);
+    }
 
+    @Test(priority = 31, enabled = true, description = "63., 64. & 65verify director is able to change follow up or not")
+    public void verify_ChangeFollow() {
+        AdminPage admin = new AdminPage();
         //Clicked on  'Change' button
         director.click_FollowUpSlot(0);
         director.click_FollowUpSlotSaveBtn();
@@ -468,7 +481,7 @@ public class DirectorTest extends BaseTest {
 
     }
 
-    @Test(priority = 29, enabled = true, description = "2. User is able to click on 'View All' subtab.")
+    @Test(priority = 32, enabled = true, description = "2. User is able to click on 'View All' subtab.")
     public void verify_ClickOnViewAllSubtab() throws InterruptedException {
         AdminPage admin = new AdminPage();
         DashboardPage dashPage = new DashboardPage();
@@ -483,7 +496,7 @@ public class DirectorTest extends BaseTest {
 
     }
 
-    @Test(priority = 30, enabled = true, description = "3. User is able to click on Today's subtab.")
+    @Test(priority = 33, enabled = true, description = "3. User is able to click on Today's subtab.")
     public void verify_ClickOnTodaySubtab() throws InterruptedException {
         AdminPage admin = new AdminPage();
         DateGenerator datePage = new DateGenerator();
@@ -496,7 +509,7 @@ public class DirectorTest extends BaseTest {
 
     }
 
-    @Test(priority = 31, enabled = true, description = "4. User is able to click on 'Test Ready' subtab.")
+    @Test(priority = 34, enabled = true, description = "4. User is able to click on 'Test Ready' subtab.")
     public void verify_ClickOnTestReadySubtab() throws InterruptedException {
         AdminPage admin = new AdminPage();
         AppointmentsPage appointment = new AppointmentsPage();
@@ -519,7 +532,7 @@ public class DirectorTest extends BaseTest {
     }
 
 
-    @Test(priority = 32, enabled = true, description = "6., 20. & 35. User is able to click on 'Test complete' subtab.")
+    @Test(priority = 35, enabled = true, description = "6., 20. & 35. User is able to click on 'Test complete' subtab.")
     public void verify_ClickOnTestCompleteSubtab() throws InterruptedException, FileNotFoundException {
         AdminPage admin = new AdminPage();
         AppointmentsPage appointment = new AppointmentsPage();
@@ -548,7 +561,7 @@ public class DirectorTest extends BaseTest {
 
     }
 
-    @Test(priority = 33, enabled = true, description = "7. User is able to click on 'Completed' subtab.")
+    @Test(priority = 36, enabled = true, description = "7. User is able to click on 'Completed' subtab.")
     public void verify_ClickOnCompletedSubtab() throws InterruptedException {
         AdminPage admin = new AdminPage();
         AppointmentsPage appointment = new AppointmentsPage();
@@ -560,7 +573,7 @@ public class DirectorTest extends BaseTest {
         validate_text(admin.title, expectedTitle);
     }
 
-    @Test(priority = 34, enabled = true, description = "8. User is able to click on 'Canceled' subtab.")
+    @Test(priority = 37, enabled = true, description = "8. User is able to click on 'Canceled' subtab.")
     public void verify_ClickOnCanceledSubtab() throws InterruptedException {
         AdminPage admin = new AdminPage();
         AppointmentsPage appointment = new AppointmentsPage();

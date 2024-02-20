@@ -221,26 +221,6 @@ public class DirectorPage extends BasePage {
 
     }
 
-    public void create_FollowUp(int count) {
-
-
-        click_CreateFollowUpBtn();
-        click_CloseBtn();
-
-
-        click_CreateFollowUpBtn();
-     //   CancelFollowupSlot(count);
-        click_FollowUpSlot(count);
-        click_FollowUpSlotSaveBtn();
-      //  click_ResetBtnSlot();
-       // click_FollowUpSlot(count);
-       // click_FollowUpSlotSaveBtn();
-        click_FollowUpSaveBtn();
-     //   click_ChangeBtn();
-      //click_FollowUpSlotSaveBtn();
-        click_ConfirmFollowUpBtn();
-        validate_text(validateScheduledFollowUp, "Follow Up Scheduled!!");
-    }
 
 
     public void click_DeleteButton() {
