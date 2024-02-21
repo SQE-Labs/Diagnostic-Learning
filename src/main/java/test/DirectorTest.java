@@ -2,23 +2,24 @@ package test;
 
 import org.automation.base.BaseTest;
 import org.automation.pageObjects.*;
+import org.automation.utilities.WebdriverWaits;
 import org.testng.annotations.Test;
 
 import static org.automation.utilities.Assertions.*;
 import static org.automation.utilities.DateGenerator.getMonthAndYear;
+import static test.SuperAdminTest.directorUserName;
 
 
 public class DirectorTest extends BaseTest {
     DirectorPage director = new DirectorPage();
     DashBoardPanelPage panelPage = new DashBoardPanelPage();
     LoginPage login = new LoginPage();
-
     @Test(priority = 1, enabled = true, description = "1 Verify Director is able to login with valid credentials")
     public void verify_Login_Director() {
-        login.director_Login();
+        login.directorLogin(directorUserName, "12345678");
+        WebdriverWaits.waitUntilVisible(director.dashboardPage);
         validate_text(director.dashboardPage, "Dashboard");
     }
-
     @Test(priority = 2, enabled = true, description = " 4 Verify that 'Appointments' tab expands, on 'Dashboard' page.")
     public void verify_AppointmentsTabExpands() {
         panelPage.click_AppointmentsTab();
@@ -52,7 +53,7 @@ public class DirectorTest extends BaseTest {
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
         DirectorPage director = new DirectorPage();
         AdminPage admin = new AdminPage();
-        verify_Login_Director();
+
         panelPage.click_Availability();
         //todo
         director.director_AvailabilityWithoutSaveBtn();

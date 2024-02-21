@@ -224,48 +224,37 @@ public class AppointmentsPage extends BasePage {
 
 
     public void clickContinueToDepositButton() {
-
         click_custom(continueToDeposit);
     }
-
     public void enterInDateField(String dateOfBirthText) {
         click_custom(dateOfBirth);
         WebdriverWaits.waitUntilVisible(dateOfBirth);
         sendKeys_withClear(dateOfBirth, dateOfBirthText);
     }
-
-
     public void selectTestinglocation(String chooseLocationText) {
         WebdriverWaits.waitUntilVisible(chooseTestingLocation);
         clickBtn_custom(chooseTestingLocation, "ChooseLocation");
         selectDropDownByVisibleText_custom(chooseTestingLocation, chooseLocationText, "ChooseLocation");
     }
-
-
     public void enterAmount(String enterAmountText) throws InterruptedException {
         WebdriverWaits.waitUntilInvisible(enterAmountField);
         WebdriverWaits.waitUntilVisible(enterAmountField);
         click_custom(enterAmountField);
         sendKeys_withClear(enterAmountField, enterAmountText);
     }
-
     public void clickCollectDepositButton() {
         WebdriverWaits.waitUntilVisible(collectDeposit);
         click_custom(collectDeposit);
     }
-
     public void clickViewDetailsButton() {
         WebdriverWaits.waitUntilVisible(viewDetails);
         WebdriverWaits.waitForSpinner();
         click_custom(viewDetails);
     }
-
-
     public int getColumnCount() {
         List<WebElement> list = getWebElements(headerResource, "Heders");
         return list.size();
     }
-
     public void getTotalColumnCount(int count) throws InterruptedException {
         int colCount = getColumnCount();
         int expLocatorPos = (colCount - 1) * 7 + 1;
@@ -283,7 +272,6 @@ public class AppointmentsPage extends BasePage {
             }
         }
     }
-
     public void click_CancelAppointmentButton() throws InterruptedException {
         refresh_Page();
         WebdriverWaits.waitUntilVisible(cancelButton);
@@ -295,67 +283,28 @@ public class AppointmentsPage extends BasePage {
         WebdriverWaits.waitForSpinner();
         Thread.sleep(4000);
     }
-
     public void clickSlotSaveButton() {
         WebdriverWaits.waitUntilVisible(clickSlotSaveBtn);
         click_custom(clickSlotSaveBtn);
     }
-
     public void clickCalSaveButton() {
         click_custom(clickCalSaveBtn);
     }
-
-    public void clickOnCloseBtn() {
-        click_custom(closeBtn);
-    }
-
-
     public void click_AssessmentDate() {
         WebdriverWaits.waitUntilVisible(assessmentDate);
         WebdriverWaits.waitForSpinner();
         click_custom(assessmentDate);
     }
-
-    public void click_EditTestPlan() {
-        WebdriverWaits.waitUntilVisible(editTestPlanButton);
-        scrollIntoView(editTestPlanButton);
-        clickBtn_custom(editTestPlanButton);
-
-    }
-
-    public void click_SaveButton() {
-        WebdriverWaits.waitUntilVisible(saveBtnEditPlan);
-        scrollIntoView(saveBtnEditPlan);
-        clickBtn_custom(saveBtnEditPlan);
-    }
-
     public void selectAppointmentSlot(int count) throws InterruptedException {
         click_AssessmentDate();
         getTotalColumnCount(count);
         WebdriverWaits.waitUntilVisible(newEventText);
         validate_text(newEventText, "New Event");
-
         clickSlotSaveButton();
         WebdriverWaits.waitUntilVisible(newSlotText);
         validate_text(newSlotText, "New event");
         clickCalSaveButton();
     }
-
-    public void click_PaymentButton() {
-        WebdriverWaits.waitUntilVisible(paymentButton);
-        scrollIntoView(paymentButton);
-        clickBtn_custom(paymentButton);
-    }
-
-    public void click_ViewDetailLink() {
-        WebdriverWaits.waitUntilVisible(viewDetailsLink);
-        clickBtn_custom(viewDetailsLink);
-    }
-
-    public void click_ViewAll() {
-        WebdriverWaits.waitUntilVisible(viewAllTab);
-    }
-
     public void selectAssesmentType(String assestmentTypeTexts) {
         WebdriverWaits.waitUntilVisible(assestmentType);
         WebdriverWaits.waitForSpinner();
@@ -383,19 +332,16 @@ public class AppointmentsPage extends BasePage {
         WebdriverWaits.waitForSpinner();
         Thread.sleep(5000);
     }
-
     public void click_AppointmentTab() {
         WebdriverWaits.waitUntilVisible(appointmentsTab);
         WebdriverWaits.waitForSpinner();
         click_custom(appointmentsTab);
     }
-
     public void click_ViewAllTab() {
         WebdriverWaits.waitUntilVisible(viewAllTab);
         WebdriverWaits.waitForSpinner();
         moveToElement(viewAllTab);
     }
-
     public void click_FilterButton() {
         WebdriverWaits.waitUntilVisible(filterButton);
         WebdriverWaits.waitForSpinner();

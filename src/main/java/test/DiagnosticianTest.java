@@ -119,7 +119,6 @@ public class DiagnosticianTest extends BaseTest {
         WebdriverWaits.waitUntilVisible(diagnostician.upcoming_App);
         WebdriverWaits.waitForSpinner();
         validate_text(diagnostician.upcoming_App, "Upcoming Appointments");
-
     }
 
     @Test(priority = 7, enabled = true, description = "73,74,86 diagnostician is verifying completed assessments")
@@ -131,7 +130,6 @@ public class DiagnosticianTest extends BaseTest {
         diagnostician.enter_ClientDetail(clientFirstName);
         WebdriverWaits.waitUntilVisible(diagnostician.clientText);
         validate_text(diagnostician.clientText, clientFirstName + ' ' + clientLastName + ' ' + "Details");
-
     }
 
     @Test(priority = 8, enabled = true, description = "24, 86, 88 Verify diagnostician is able to download csv file or not after completing the assessment")

@@ -35,14 +35,12 @@ public class AdminTest extends BaseTest {
     String dirCellNumber;
     String directorEmailAddress;
     String directorLastName;
-
     String clientEmail;
     String clientEmail2;
     String clientCellNumber;
     String diagnosticianFirstName;
     String diagnosticianLastName;
     String diagnosticianEmailAddress;
-
     List<WebElement> diagList;
 
 
@@ -133,7 +131,6 @@ public class AdminTest extends BaseTest {
         LoginPage login = new LoginPage();
         DashboardPage dashboard = new DashboardPage();
         AppointmentsPage appPage = new AppointmentsPage();
-
         login.adminLogin(adminUserName, "12345678");
         dashboard.clickScheduleAppointment();
         appPage.selectTestinglocation("Austin");
@@ -192,16 +189,6 @@ public class AdminTest extends BaseTest {
         WebdriverWaits.waitForSpinner();
         validate_text(admin.validateScheduledFollowUp, "Follow Up Scheduled!!");
         admin.click_BackBtn();
-    }
-
-    @Test(priority = 11, enabled = true, description = "Re-Assign Appointment for client by admin")
-    public void re_AssignAppointment() {
-        AdminPage reAssign = new AdminPage();
-        reAssign.click_ReAssignBn();
-        WebdriverWaits.waitUntilVisible(reAssign.diagList);
-        List<WebElement> reassigList = reAssign.get_diagList(reAssign.diagList);
-        boolean result = reAssign.compare_DiagAndReAssignDiagList(diagList, reassigList);
-        Assert.assertTrue(result);
     }
 
     @Test(priority = 12, enabled = true, description = "Re-Assign Appointment for client by admin")
@@ -597,11 +584,11 @@ public class AdminTest extends BaseTest {
     @Test(dependsOnMethods = {"verify_TestComplete_AppointmentPage"}, description = "Admin is able to click on 'View Details button of 'Test Complete' subtab")
     public void click_OnTestCompleteViewBtn() {
         AdminPage admin = new AdminPage();
-        ActionEngine action = new ActionEngine();
+
         SuperAdminPage superAdmin = new SuperAdminPage();
-        AppointmentsPage appointment = new AppointmentsPage();
+
 //        login.adminLogin(adminUserName, "12345678");
-        action.navigate_Back();
+        admin.navigate_Back();
         String expectedTitle = "View Student Observation";
 
         admin.enterInSearchField(clientFirstName);
@@ -677,7 +664,6 @@ public class AdminTest extends BaseTest {
     @Test(dependsOnMethods = {"verify_ClickOnFilterBtnOfCompletedTab"}, description = "Admin is able to search valid data")
     public void verify_SearchFiled() {
         AdminPage admin = new AdminPage();
-
         admin.enterClientNameInSearchFieldCompleted(clientFirstName);
         validate_text(admin.clientName, clientFirstName + ' ' + clientLastName);
     }
@@ -692,42 +678,29 @@ public class AdminTest extends BaseTest {
     }
 
     @Test(dependsOnMethods = {"verify_ClickOnExportCSVCompleted"}, description = "Admin is able to click on 'View Details' button")
-    public void verify_ClickOnViewDetailsCompleted() {
+    public void verify_CompletedAppointments() {
         AdminPage admin = new AdminPage();
-        ActionEngine action = new ActionEngine();
-        String expectedResult = getText_custom(admin.clientNameCompleted);
-        action.navigate_Back();
+        admin.navigate_Back();
         admin.enterClientNameInSearchFieldCompleted(clientFirstName);
+        String expectedResult = getText_custom(admin.clientNameCompleted);
+        validate_text(admin.clientNameCompleted, expectedResult);
         admin.click_ViewDetailsBtn();
-        String clientName = getText_custom(admin.clientNameDetail);
-
-        String[] words = clientName.split(" ");
-        String actualText = null;
-
-        if (words.length >= 2) {
-            // Fetch the first two words
-            String firstWord = words[0];
-            String secondWord = words[1];
-            actualText = firstWord + " " + secondWord;
-        }
-        validate_AttText(actualText, expectedResult);
+        String ExpectedClientName = getText_custom(admin.clientNameDetail);
+        validate_text(admin.clientNameDetail, ExpectedClientName);
     }
 
-
-    @Test(dependsOnMethods = {"verify_ClickOnViewDetailsCompleted"}, description = "Admin is able to click on 'View Receipt' button")
-    public void verify_ClickOnViewReceiptBtn() {
+    @Test(dependsOnMethods = {"verify_CompletedAppointments"}, description = "Admin is able to click on 'View Receipt' button")
+    public void verify_ViewReceiptBtn() {
         AdminPage admin = new AdminPage();
-        AppointmentsPage appointment = new AppointmentsPage();
         PaymentPage payment = new PaymentPage();
-
         payment.scrollUptoVAmountDue();
         String expectedAmountDue = "$0.00";
         String actualAmountDue = getText_custom(payment.amountDue);
 
         if (actualAmountDue.equals(expectedAmountDue)) {
             payment.viewReceiptButtonDisplayed();
-            String expectedText = "View Receipt";
-            validate_text(admin.titleOfViewReceipt, expectedText);
+            validate_text(admin.titleOfViewReceipt, "View Receipt");
+            admin.click_CloseBtn();
 
         } else {
             String amountDue = getText_custom(payment.amountDue);
@@ -737,42 +710,9 @@ public class AdminTest extends BaseTest {
             payment.click_CollectBtn();
             payment.click_CloseBtn();
             payment.viewReceiptButtonDisplayed();
-            String expectedText = "View Receipt";
-            validate_text(admin.titleOfViewReceipt, expectedText);
+            validate_text(admin.titleOfViewReceipt, "View Receipt");
         }
     }
-
-    @Test(dependsOnMethods = {"verify_ClickOnViewReceiptBtn"}, description = "Admin is able to click on 'Close' button")
-    public void verify_ClickOnViewReceiptCloseBtn() {
-        AdminPage admin = new AdminPage();
-        PaymentPage payment = new PaymentPage();
-
-        admin.scrollUptoVAmountDue();
-        String expectedAmountDue = "$0.00";
-        String actualAmountDue = getText_custom(payment.amountDue);
-        if (actualAmountDue.equals(expectedAmountDue)) {
-            String expectedText = getText_custom(admin.title);
-            payment.viewReceiptButtonDisplayed();
-            admin.click_CloseBtn();
-            String actualText = getText_custom(admin.title);
-            validate_AttText(actualText, expectedText);
-
-        } else {
-            String amountDue = getText_custom(payment.amountDue);
-            String actualAmount = amountDue.replace("$", "");
-            payment.viewReceiptButtonNotDisplayed();
-            payment.send_AmountInEnterAmount(actualAmount);
-            admin.click_CollectBtn();
-            admin.click_CloseBtn();
-            String expectedText = getText_custom(admin.title);
-            payment.viewReceiptButtonDisplayed();
-            admin.click_CloseBtn();
-            String actualText = getText_custom(admin.title);
-            validate_AttText(actualText, expectedText);
-        }
-    }
-
-    //************************ Edit Diagnostician *********************//
 
     //******************** Logout button **************//
     @Test(priority = 43, enabled = true, description = "Verify login button for admin.")

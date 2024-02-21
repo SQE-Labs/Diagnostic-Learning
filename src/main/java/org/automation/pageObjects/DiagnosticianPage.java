@@ -23,8 +23,6 @@ public class DiagnosticianPage extends BasePage {
 
     public By createDiagnostician = By.xpath("//button[text()='Create Diagnostician']");
     public By diagListPageText = By.xpath("//h3[text()='Diagnosticians List']");
-
-    public By avaActualText = By.xpath("(//div[@class='ng-star-inserted'])[1]");
     public By diagnostician_FirstName = By.xpath("//input[@placeholder='First Name']");
     public By diagnostician_LastName = By.xpath("//input[@placeholder='Last Name']");
     public By diagnostician_MobileNumber = By.xpath("//input[@placeholder='Cell Number']");
@@ -34,28 +32,28 @@ public class DiagnosticianPage extends BasePage {
     public By userName = By.xpath("//input[@placeholder='Username']");
     public By password_Field = By.xpath("//input[@placeholder='Create Password']");
     public By confirm_PasswordField = By.xpath("//input[@placeholder='Confirm Password']");
-    public By createDiagnosticianButton = By.xpath("//button[text()='Create Diagnostician']");
+
     public By validationMsg = By.cssSelector(".alert.alert-danger.ng-star-inserted");
 
 
     public By actualText = By.cssSelector("tr:not([style='display: none;' ]) td:nth-child(2)");
-    public By clientName=By.cssSelector("tr:not([style='display: none;' ]) td:nth-child(1)");
-    public By backButton = By.xpath("//button[text()='Back']");
+
+
     public By diagnosticianDashBoardPage = By.xpath("(//h3)[1]");
-    public By back_Button = By.xpath("//button[@class='theme-button grey float-md-right mr-md-4']");
+
 
 
     //**************Search created diagnostician*************
 
     public By filterButton = By.xpath("//a[@class='theme-button grey ml-auto mr-3']");
-    public By searchField = By.xpath("//input[@aria-controls='DataTables_Table_5']");
-    public By searchFld=By.xpath("//input[@placeholder='Type here to search']");
-    public By searchFild=By.xpath("//input[@aria-controls='DataTables_Table_0']");
-    public By testCompleteSearchFld=By.xpath("//input[@aria-controls='appointmentTable']");
+
+    public By searchFld = By.xpath("//input[@placeholder='Type here to search']");
+    public By searchFild = By.xpath("//input[@aria-controls='DataTables_Table_0']");
+    public By testCompleteSearchFld = By.xpath("//input[@aria-controls='appointmentTable']");
     public By viewClientDetailLink = By.xpath("(//td)[6]");
     public By clientDetailText = By.xpath("//div[contains(@class,'page-header align-items-lg-center')]");
     public By clientNameText = By.cssSelector("tr:not([style='display: none;' ]) td:nth-child(1)");
-    public By clientText=By.xpath("//h3");
+    public By clientText = By.xpath("//h3");
     public By fromDate = By.xpath("//input[@placeholder='From Date']");
     public By toDate = By.xpath("//input[@placeholder='To Date']");
 
@@ -79,72 +77,29 @@ public class DiagnosticianPage extends BasePage {
 
 
     public By appointmentsTab = By.xpath("//a[text()=' Appointments ']");
-    public By viewAllTab = By.xpath("(//a)[3]");
-    public By dashboard = By.xpath("//h3[text()='Dashboard']");
+     public By dashboard = By.xpath("//h3[text()='Dashboard']");
 
-    public By disableButton = By.xpath("//div[@class='actions']/button[@class='theme-button grey pointer-disable float-md-right']");
-    public By enableSaveButton = By.xpath("//button[@class='theme-button float-md-right green']");
+     public By enableSaveButton = By.xpath("//button[@class='theme-button float-md-right green']");
     public By shiftText = By.xpath("//div[@class='mbsc-ios mbsc-popup-header mbsc-popup-header-center ng-star-inserted']");
-    public By availableText = By.xpath("(//div[@class='ng-star-inserted'])[7]");
+
     public By upcomingTab = By.xpath("//a[text()='Upcoming']");
 
     public By dia_AvailSlots = By.xpath("//div[@class='mbsc-flex-1-1 mbsc-ios mbsc-ltr mbsc-timeline-column ng-star-inserted']");
-public By availableSlots=By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-all-day-inner mbsc-schedule-event-inner ng-star-inserted']");
+    public By availableSlots = By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-all-day-inner mbsc-schedule-event-inner ng-star-inserted']");
 
 //*****************Set Availability for diagnostician ****************
 
-   public By deleteSlot =  By.xpath("//div[@class='mbsc-ios mbsc-popup-header mbsc-popup-header-center ng-star-inserted']");
-
-    public By chooseTestingLocation = By.id("testingLocation");
-    public By assessmentDate = By.xpath("//input[@placeholder='Assessment Date']");
-
-    public By assestmentType = By.xpath("//select[@id='assestmentType']");
-
-    public By headerResource = By.xpath("//div[@class='header-resource-name']");
-
-
-    public By clickOnBox = By.xpath("(//div[@class='mbsc-flex-1-0 mbsc-ios mbsc-schedule-item ng-star-inserted'])[29]");
-    public By saveButton = By.xpath("//mbsc-button[text()=' Save ']");
-    public By appointmentSaveButtonButton = By.xpath("//a[text()='Save']");
-
-
+    public By deleteSlot = By.xpath("//div[@class='mbsc-ios mbsc-popup-header mbsc-popup-header-center ng-star-inserted']");
     //****************Adding TestPlan for the appointment****************
-
-    public By testPlan = By.xpath("//button[text()=' Test Plan ']");
-    public By checkBox = By.xpath("//label[text()='WJ Achievement']/..");
-    public By famCheckBox = By.xpath("//label[text()='FAM']/..");
-    public By nepsyCheckBox = By.xpath("//label[text()='NEPSY']/..");
-    public By ndCheckBox = By.xpath("//label[text()='ND']/..");
-    public By wmsCheckBox = By.xpath("//label[text()='WMS']/..");
-
-    public By bascSelfCheckBox = By.xpath("//label[text()='BASC Self']/..");
-    public By cbrsSelfCheckBox = By.xpath("//label[text()='CBRS Self']/..");
-    public By dlsDyslexiaCheckBox = By.xpath("//label[text()='DLS Dyslexia']/..");
-    public By testPlanSaveButton = By.xpath("//button[text()='Save']");
-
-    //+++++++++++++++CREATE DIAGNOSTICS++++++++++++++
-
-
     public By passwordField = By.xpath("//input[@placeholder='Password']");
-
     public By loginButton = By.xpath("//button[text()=' Log In ']");
 
     //********CHECKING AVAILABILITY******************
-
-
     public By availability = By.xpath("//a[text()='Availability']");
-
-    public By totalSlots=By.xpath("//div[@class='ng-star-inserted']");
-    public By slot7 = By.xpath("(//div[@class='mbsc-flex-1-1 mbsc-ios mbsc-ltr mbsc-timeline-column ng-star-inserted'])[8]");
-
-    public By slot11 = By.xpath("(//div[@class='mbsc-flex-1-1 mbsc-ios mbsc-ltr mbsc-timeline-column ng-star-inserted'])[12]");
-
+    public By totalSlots = By.xpath("//div[@class='ng-star-inserted']");
     public By diagnosticianSaveButton = By.xpath("//button[text()='Save']");
-
     public By delete = By.xpath("//mbsc-button[text()=' Delete ']");
     public By cancel = By.xpath("//mbsc-button[text()=' Cancel ']");
-    public static By userNameText = By.xpath("(//td)[2]");
-
     //********************Upcoming appointments********************
     public By upcomingPageTitle = By.xpath("//h3[@class='mb-4 mb-md-0']");
 
@@ -167,10 +122,7 @@ public By availableSlots=By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-al
     public By completeAssButton = By.xpath("(//button[@class='theme-button green mr-3'])[1]");
     public By yesCompleteAssButton = By.xpath("(//button[@class='theme-button green mr-2'])[1]");
     public By paymentDetailTitle = By.xpath("//h4[@class='text-center']");
-    public By paymentLinkButton = By.xpath("//a[@class='theme-button green mx-2']");
-    public By merchantLoginPage = By.xpath("//h1[@class='merch_login']");
     public By pageTitle = By.xpath("//h3");
-    public By highAmount = By.xpath("//button[@class='theme-button mx-2 grey']");
     public By collectButn = By.xpath("//button[@class='theme-button mx-2']");
     public By saveDraftObservationButton = By.xpath("(//button[@class='theme-button green mr-3'])[2]");
     public By completeAssPopUp = By.xpath("(//h6[@class='text-purple mb-3'])[1]");
@@ -178,21 +130,15 @@ public By availableSlots=By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-al
     public By upcoming_App = By.xpath("//h3[@class='mb-4 mb-md-0']");
 
     //****************Complete Assessment*******************
-
     public By testComTab = By.xpath("//a[text()='Test complete']");
     public By cancelTab = By.xpath("//a[text()='Canceled']");
-
-
-    DashBoardPanelPage panelPage = new DashBoardPanelPage();
 
     public void click_createDiagnosticianButton() {
         WebdriverWaits.waitUntilVisible(createDiagnostician);
         WebdriverWaits.waitForSpinner();
         click_custom(createDiagnostician);
     }
-    public void click_Back_Button() {
-        click_custom(backButton);
-    }
+
     public void enter_diagnostician_FirstName(String CustomerFirstName) {
         sendKeys_withClear(diagnostician_FirstName, CustomerFirstName);
     }
@@ -226,26 +172,18 @@ public By availableSlots=By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-al
     public void confirm_PasswordField(String confirmPasswordText) {
         sendKeys_withClear(confirm_PasswordField, confirmPasswordText);
     }
+
     public void click_FilterButton() {
         WebdriverWaits.waitUntilVisible(filterButton);
         WebdriverWaits.waitForSpinner();
         click_custom(filterButton);
-
     }
-
-
-    public void search_ClientPage(String searchFieldText) {
-        sendKeys_withClear(searchField, searchFieldText);
-    }
-
 
     //*************search created diagnostician***************
-
     public void click_filterButton() {
         WebdriverWaits.waitUntilVisible(filterButton);
         WebdriverWaits.waitForSpinner();
         click_custom(filterButton);
-
         String fromDateText = getDriver().findElement(By.xpath("//input[@placeholder='From Date']")).getAttribute("placeholder");
         getAttributevalue(fromDate, "placeholder");
         validate_AttText(fromDateText, "From Date");
@@ -259,24 +197,26 @@ public By availableSlots=By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-al
         WebdriverWaits.waitUntilVisible(searchFld);
         sendKeys_withClear(searchFld, searchFieldText);
     }
-    public void enter_SearchField(String searchFieldTexts){
+
+    public void enter_SearchField(String searchFieldTexts) {
         WebdriverWaits.waitUntilVisible(searchFild);
-        sendKeys_withClear(searchFild,searchFieldTexts);
+        sendKeys_withClear(searchFild, searchFieldTexts);
     }
-    public void enter_InSearchField(String testCompleteClientName){
+
+    public void enter_InSearchField(String testCompleteClientName) {
         WebdriverWaits.waitUntilVisible(testCompleteSearchFld);
         WebdriverWaits.waitForSpinner();
-        sendKeys_withClear(testCompleteSearchFld,testCompleteClientName);
+        sendKeys_withClear(testCompleteSearchFld, testCompleteClientName);
     }
+
     public void click_ViewDetailLink() {
         click_custom(viewClientDetailLink);
     }
 
     //+++++++++++++++++EDIT DIAGNOSTICIAN++++++++++++++
-
     public void click_EditButton() throws InterruptedException {
         WebdriverWaits.waitUntilVisible(editButton);
-        Thread.sleep(3000);
+        WebdriverWaits.waitForSpinner();
         moveToElement(editButton);
     }
 
@@ -288,7 +228,6 @@ public By availableSlots=By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-al
         WebdriverWaits.waitUntilVisible(updateButton);
         click_custom(updateButton);
     }
-
 
     public void off_ToggleButton() throws InterruptedException {
         WebdriverWaits.waitUntilVisible(toggle);
@@ -323,7 +262,6 @@ public By availableSlots=By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-al
         moveToElement(upcomingTab);
     }
 
-
     public void create_Diagnostician(String CustomerFirstName, String CustomerLastName, String diagnostician_MobileNumberText, String EmailAddress, String UserName, String PasswordText, String RePassword) throws InterruptedException {
         WebdriverWaits.waitForSpinner();
         click_createDiagnosticianButton();
@@ -342,6 +280,7 @@ public By availableSlots=By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-al
         click_FilterButton();
         enterInSearchField(UserName);
     }
+
     public void edit_Diagnostician(String EmailAddress1, String passwordTextFieldText, String confirmPasswordFieldText) throws InterruptedException {
         click_EditButton();
         // enter_CellNumber(cellNumberText);
@@ -354,11 +293,9 @@ public By availableSlots=By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-al
 
     public void cheking_DisableUser() throws InterruptedException {
         click_EditButton();
-        WebdriverWaits.waitUntilVisible( enableUser);
+        WebdriverWaits.waitUntilVisible(enableUser);
         WebdriverWaits.waitForSpinner();
         validate_text(enableUser, "Enable User");
-        click_DontSave();
-        click_EditButton();
         click_DontSave();
     }
 
@@ -374,7 +311,6 @@ public By availableSlots=By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-al
         click_EditButton();
         off_ToggleButton();
         click_UpdateButton();
-
     }
 
     public void verify_DontSave(String cellNumberText, String EmailAddress1, String passwordTextFieldText, String confirmPasswordFieldText) throws InterruptedException {
@@ -386,66 +322,16 @@ public By availableSlots=By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-al
         click_DontSave();
     }
 
-
-    //****************Diagnostician is checking todays appointments**************
-
-    public void selectAssessmentDate() {
-        WebdriverWaits.waitUntilVisible(assessmentDate);
-        click_custom(assessmentDate);
-    }
-
-    public void selectTestinglocation(String chooseLocationText) {
-        clickBtn_custom(chooseTestingLocation, "ChooseLocation");
-        selectDropDownByVisibleText_custom(chooseTestingLocation, chooseLocationText);
-    }
-
-    public int getColumnCount() {
-        List<WebElement> list = getWebElements(headerResource, "Heders");
-        return list.size();
-    }
-
-    public void click_SaveButton() {
-        //  click_custom(afternoonToggleButton);
-        click_custom(saveButton);
-    }
-
-    public void click_AppSaveButton() {
-        click_custom(appointmentSaveButtonButton);
-    }
-
-    public void getTotalColumnCount() {
-        int colCount = getColumnCount();
-        int expLocatorPos = (colCount - 1) * 7 + 1;
-        System.out.println(expLocatorPos);
-
-        click_custom(clickOnBox);
-    }
-
-    public void click_AssesmentType(int assestmentTypeTexts) {
-
-        click_custom(assestmentType);
-        selectDropDownByIndex_custom(assestmentType, assestmentTypeTexts);
-    }
-
-    //******************Adding TestPlan for the Appointment**************
-
-    public void click_TestPlanButton() {
-        WebdriverWaits.waitUntilVisible(testPlan);
-        scrollIntoView(testPlan);
-        click_custom(testPlan);
-    }
-
-
-
-//******************Logging as diagnostician************
-
+    //******************Logging as diagnostician************
     public void enter_UserName(String CustomerFirstName) {
         WebdriverWaits.waitUntilVisible(userNameField);
         sendKeys_withClear(userNameField, CustomerFirstName);
     }
+
     public void enter_Password(String PasswordText) {
         sendKeys_withClear(passwordField, PasswordText);
     }
+
     public void click_LoginButton() {
         click_custom(loginButton);
     }
@@ -455,7 +341,6 @@ public By availableSlots=By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-al
         WebdriverWaits.waitUntilVisible(availability);
         WebdriverWaits.waitForSpinner();
         click_custom(availability);
-      //  validate_text(disableButton, "Save");
     }
 
     public void click_Slot(int count) throws InterruptedException {
@@ -575,23 +460,13 @@ public By availableSlots=By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-al
         click_custom(completeAssButton);
         click_custom(yesCompleteAssButton);
     }
-
     //************diagnostician verifying complete assessment*************
 
     public void click_CompleteAssTab() {
         click_custom(testComTab);
     }
 
-
     //================///////////=========================
-
-
-    public void appointmentDateSelecting(int Type) {
-        getTotalColumnCount();
-        click_SaveButton();
-        click_AppSaveButton();
-        click_AssesmentType(Type);
-    }
 
     public void login_As_Diagnostician(String UserName, String PasswordText) {
         enter_UserName(UserName);
@@ -607,7 +482,7 @@ public By availableSlots=By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-al
             Thread.sleep(2000);
             moveToEleByWE(slot);
 
-            if (isElementDisplay_custom(deleteSlot,"Slots Name")) {
+            if (isElementDisplay_custom(deleteSlot, "Slots Name")) {
                 Thread.sleep(4000);
                 String getText = getText_custom(shiftText);
                 WebdriverWaits.waitUntilVisible(shiftText);
@@ -627,7 +502,7 @@ public By availableSlots=By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-al
         for (WebElement slot : slots) {
             Thread.sleep(2000);
             moveToEleByWE(slot);
-            WebElement cancelSlot=getDriver().findElement(By.xpath("//div[@class='mbsc-ios mbsc-popup-header mbsc-popup-header-center ng-star-inserted']"));
+            WebElement cancelSlot = getDriver().findElement(By.xpath("//div[@class='mbsc-ios mbsc-popup-header mbsc-popup-header-center ng-star-inserted']"));
             if (cancelSlot.isDisplayed()) {
                 Thread.sleep(4000);
                 String getText = getText_custom(shiftText);
@@ -652,17 +527,14 @@ public By availableSlots=By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-al
         click_ViewDetailLink();
     }
 
-//**************Diagnostician Started Assessment***************
-
+    //**************Diagnostician Started Assessment***************
     public void payment_NewPage() {
         click_TodasTab();
         click_ViewDetails();
         click_StartAssButtn();
     }
-        //****************This Test case is removed *************
 
-
-
+    //****************This Test case is removed *************
     public void start_Assessment_ByPaying_LessAmount(String textAreaText) throws InterruptedException {
         WebdriverWaits.waitUntilVisible(paymentDetailTitle);
         validate_text(paymentDetailTitle, "Payment Details");

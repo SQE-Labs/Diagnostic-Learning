@@ -5,15 +5,21 @@ import org.automation.base.BaseTest;
 import org.automation.logger.Log;
 import org.automation.pageObjects.*;
 import org.automation.utilities.*;
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.HashSet;
+import java.util.List;
 
 import static org.automation.utilities.Assertions.*;
-
+import static test.AdminTest.clientFirstName;
+import static test.AdminTest.clientLastName;
 
 
 public class SuperAdminTest extends BaseTest {
@@ -32,8 +38,6 @@ public class SuperAdminTest extends BaseTest {
     public String diagnosticianEmailAddress;
     public String diagnosticianLastName;
     public String dia_Cell_Number;
-    public static String clientFirstName;
-    public static String clientLastName;
 
 
     @Test(priority = 0, enabled = true, description = "1.1 Verify that SuperAdmin is able to login")
@@ -115,7 +119,7 @@ public class SuperAdminTest extends BaseTest {
 
     }
 
-    @Test(priority = 7, enabled = true, description = "6 Verify Admin is able to login with new password or not")
+    @Test(priority = 7, enabled = true, description = "5.10 Verify Admin is able to login with new password or not")
     public void verify_admin_Relogin() {
         AdminPage admin = new AdminPage();
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
@@ -147,7 +151,7 @@ public class SuperAdminTest extends BaseTest {
         validate_text(admin.userNameText, adminUserName);
     }
 
-    @Test(priority = 9, enabled = true, description = "6.2 Verify that superadmin is not  able create admin with duplicate username or not")
+    @Test(priority = 9, enabled = true, description = "5.12 Verify that superadmin is not  able create admin with duplicate username or not")
     public void verify_Duplicate_UserName() throws InterruptedException {
         AdminPage admin = new AdminPage();
         admin.create_Admin(adminFirstName, adminLastName, admin_cell_Number, adminEmailAddress, adminUserName, "123456", "123456");
@@ -281,7 +285,7 @@ public class SuperAdminTest extends BaseTest {
     public String dir_Cell_Number;
     public String directorFirstName;
     public String directorEmailAddress;
-    public String directorUserName;
+    public static String directorUserName;
 
     @Test(priority = 19, enabled = true, description = "3.1, 3.5, 3.9, 3.36 verify that SuperAdmin is able to create Director or not")
     public void create_Directors() throws InterruptedException {
@@ -296,23 +300,20 @@ public class SuperAdminTest extends BaseTest {
 
         //Login with super Admin credentials
         login.superAdminLogin();//login
-
         panelPage.click_DirectorTab();
         director.create_Director(directorFirstName, directorLastName, dir_Cell_Number, directorEmailAddress, directorUserName, "123456", "123456");
         WebdriverWaits.waitUntilVisible(director.directorListPage);
         validate_text(director.directorListPage, "Directors List");
-
-
     }
 
-    @Test(priority = 20, enabled = true, description = "3.1, 3.5, 3.9, 3.36 verify that duplicate Director throws error")
+
+
+    @Test(priority = 20, enabled = true, description = "3.1, 3.5, 3.9, 3.8, 3.36 verify that duplicate Director throws error")
     public void create_duplicate_Directors() throws InterruptedException {
         DirectorPage director = new DirectorPage();
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
 
-
         director.create_Director(directorFirstName, directorLastName, dir_Cell_Number, directorEmailAddress, directorUserName, "123456", "123456");
-
         WebdriverWaits.waitUntilVisible(director.validationMsg);
         validate_text(director.validationMsg, "An error occurred while creating the user. Username already exists!");
         panelPage.click_BackButton();
@@ -382,9 +383,10 @@ public class SuperAdminTest extends BaseTest {
         panelPage.click_LogOutLink();
     }
 
+
     //************Appointments page******************
 
-    @Test(dependsOnMethods = {"verify_Full_Payment"})
+    @Test(dependsOnMethods = {"verify_Full_Payment"} ,description="2.1, 2.3, Verify that 'Appointments' accordion expands after clicking on 'Appointment' accordion from left panel, on 'Dashboard' page.")
     public void verify_Appointments_Page() {
         AppointmentsPage appointment = new AppointmentsPage();
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
@@ -406,11 +408,13 @@ public class SuperAdminTest extends BaseTest {
         appointment.click_SearchField(clientFirstName);
         WebdriverWaits.waitUntilVisible(appointment.searchedText);
         validate_text(appointment.searchedText, clientFirstName + ' ' + clientLastName);
+
+        //**********Verifying Todate and from
+
     }
 
-
     //*************This testcase also has defect*********************
-    @Test(dependsOnMethods = {"verify_Appointments_Page"}, description = "2.5, 2.7 Verify that 'Appointment Details' page opens up on clicking 'View Detail' link")
+    @Test(dependsOnMethods = {"verify_Appointments_Page"}, description = "2.5, 2.7,Verify that 'Appointment Details' page opens up on clicking 'View Detail' link")
     public void verify_view_Details_Page() {
         AppointmentsPage appointment = new AppointmentsPage();
         SuperAdminPage superAdmin = new SuperAdminPage();
@@ -438,12 +442,12 @@ public class SuperAdminTest extends BaseTest {
         superAdmin.click_BackButton();
     }
 
-    @Test(dependsOnMethods = {"view_ClientObservation_Page"}, description = "SuperAdmin is able to download CSV File or not")
+    @Test(dependsOnMethods = {"view_ClientObservation_Page"}, description = "2.6, SuperAdmin is able to download CSV File or not")
     public void download_CSV_File() throws InterruptedException, FileNotFoundException {
         AppointmentsPage appointment = new AppointmentsPage();
         SuperAdminPage admin = new SuperAdminPage();
         DashBoardPanelPage panelpage = new DashBoardPanelPage();
-        ActionEngine action = new ActionEngine();
+       
 
         appointment.click_ViewAllTab();
         admin.click_Export_CSV_Button();
@@ -452,17 +456,16 @@ public class SuperAdminTest extends BaseTest {
         //Download exportCSV File and Check file is downloaded or not
         String downloadFile = panelpage.getDownloadFileName();
         Assert.assertTrue(panelpage.isFileDownloaded(downloadFile));
-        action.navigate_Back();
+        panelpage.navigate_Back();
         panelpage.click_LogOutLink();
     }
 
     //**********************SuperAdmin is viewing Payments page********************
-    @Test(dependsOnMethods = {"verify_Cancelled_Appointments"})
+    @Test(dependsOnMethods = {"verify_Cancelled_Appointments"},description="6.1, Verify that list of payments appears after clicking 'Payments' tab, on 'Dashboard' page.")
     public void view_Payments_Page() {
         PaymentPage payment = new PaymentPage();
-        ActionEngine action = new ActionEngine();
         LoginPage login = new LoginPage();
-        action.navigate_Back();
+        login.navigate_Back();
         login.superAdminLogin();
 
         //******************** SuperAdmin viewing payments page**********
@@ -473,7 +476,7 @@ public class SuperAdminTest extends BaseTest {
     }
 
     //****************Admin while do the payment after creating the appointments.
-    @Test(dependsOnMethods = {"view_Payments_Page"})
+    @Test(dependsOnMethods = {"view_Payments_Page"},description="6.2, 6.3Verify that search text box appears after clicking 'Filter' button on 'Payments' page.")
     public void verify_Search_Payment() {
         PaymentPage payment = new PaymentPage();
         //  String getText = getText_custom(payment.getCust_Name);
@@ -481,16 +484,16 @@ public class SuperAdminTest extends BaseTest {
         payment.enterInSearchField(clientFirstName);
     }
 
-    @Test(dependsOnMethods = {"verify_Search_Payment"})
+    @Test(dependsOnMethods = {"verify_Search_Payment"},description="6.5, Verify that CSV file gets downloaded after clicking 'Export to CSV' button, on 'Payments' page")
     public void download_ExportCSV_File() throws InterruptedException, FileNotFoundException {
         DashBoardPanelPage panelpage = new DashBoardPanelPage();
-        ActionEngine action = new ActionEngine();
+       
         panelpage.click_ExportCSVButton();
 
         //Download exportCSV File and Check file is downloaded or not
         String downloadFile = panelpage.getDownloadFileName();
         Assert.assertTrue(panelpage.isFileDownloaded(downloadFile));
-        action.navigate_Back();
+        panelpage.navigate_Back();
         panelpage.click_LogOutLink();
     }
 
