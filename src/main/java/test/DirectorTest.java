@@ -117,7 +117,7 @@ public class DirectorTest extends BaseTest {
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
         AppointmentsPage appointment = new AppointmentsPage();
         panelPage.click_AppointmentsTab2();
-        appointment.click_Today_AppointmentCard();
+       appointment.click_Today_AppointmentCard();
         validate_text(appointment.todaysAppointmentTXT, "Today's Appointments");
 
     }
@@ -629,7 +629,7 @@ public class DirectorTest extends BaseTest {
 
     }
 
-    @Test(priority = 38, enabled = true, description = "9., 10., 11., 14. User is able to click on 'View Observation' button.")
+    @Test(priority = 39, enabled = true, description = "15., 16. User is able to click on 'View Observation' button.")
     public void verify_ClickOnViewObservationBtn() throws InterruptedException, AWTException {
         AppointmentsPage appointment = new AppointmentsPage();
         AdminPage admin = new AdminPage();
@@ -637,9 +637,13 @@ public class DirectorTest extends BaseTest {
         DirectorPage director = new DirectorPage();
         ActionEngine action = new ActionEngine();
         login.director_Login();
-
-
-
+        appointment.click_TestCompleteTab();
+        director.click_ViewDetailBtn();
+        String expectedTitle=getText_custom(admin.title);
+        director.click_ViewObservationBtn();
+        validate_text(director.titleClientObservation,"Client Observation");
+        director.click_BackBtn();
+        validate_text(admin.title,expectedTitle);
     }
 
 }

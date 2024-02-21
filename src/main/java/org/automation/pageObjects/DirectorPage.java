@@ -6,6 +6,7 @@ import org.automation.utilities.Assertions;
 import org.automation.utilities.WebdriverWaits;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+
 import java.util.List;
 
 import static org.automation.utilities.Assertions.validate_text;
@@ -52,10 +53,14 @@ public class DirectorPage extends BasePage {
     public By clientName = By.xpath("((//tr[not(contains(@style,'display: none;'))])[2]//td)[2]");
     public By searchField = By.xpath("//input[@id='filterSearch']");
 
+    public By backBtn= By.xpath( "//a[text()='Back']");
+
 
     //****************edit created director**************
 
     public By editButton = By.xpath("(//a[text()='Edit'])[1]");
+
+    public By titleClientObservation= By.xpath("//h4");
     public By cellNumber = By.xpath("//input[@placeholder='Cell Number']");
     public By emailField = By.xpath("//input[@formcontrolname='email']");
     public By updateButton = By.xpath("//button[text()='Update']");
@@ -102,7 +107,8 @@ public class DirectorPage extends BasePage {
     public By cancel = By.xpath("//mbsc-button[text()=' Cancel ']");
     public By nameOfClient = By.xpath("//h3");
 
-
+    public By totalSlots = By.xpath("//div[@class='ng-star-inserted']");
+    public By totalAvailleSlots = By.xpath("//div[@class='mbsc-flex-1-0 mbsc-ios mbsc-schedule-item ng-star-inserted']");
 
     //**************relogin with new password***********
 
@@ -131,6 +137,8 @@ public class DirectorPage extends BasePage {
     public By followupCancelBtn = By.xpath("//mbsc-button[contains(@class,'mbsc-popup-button-close')]");
     public By resetBtn = By.xpath("//button[contains(@class,'float-right')]");
     public By confirmZoomRadioBtn = By.xpath("//label[text()='Online Follow Up (Zoom)']");
+    public By viewDetailBtn= By.xpath("(//a[text()='View Details'])[1]");
+    public By viewObservationBtn= By.xpath("//a[text()='View Student Observation']");
 
 
     //*****************Paying full payment*****************
@@ -143,11 +151,33 @@ public class DirectorPage extends BasePage {
 
     }
 
+    public void click_ViewDetailBtn() {
+        WebdriverWaits.waitUntilVisible(viewDetailBtn);
+        WebdriverWaits.waitForSpinner();
+        click_custom(viewDetailBtn);
+
+    }
+
+    public void click_ViewObservationBtn() {
+        WebdriverWaits.waitUntilVisible(viewObservationBtn);
+        WebdriverWaits.waitForSpinner();
+        click_custom(viewObservationBtn);
+
+    }
+
     public void click_CancelBtn()
     {
         WebdriverWaits.waitUntilVisible(cancelBtn);
         WebdriverWaits.waitForSpinner();
         click_custom(cancelBtn);
+
+    }
+
+    public void click_BackBtn()
+    {
+        WebdriverWaits.waitUntilVisible(backBtn);
+        WebdriverWaits.waitForSpinner();
+        click_custom(backBtn);
 
     }
 
@@ -172,10 +202,6 @@ public class DirectorPage extends BasePage {
     }
 
 
-    public void click_CancelButton() {
-        WebdriverWaits.waitForSpinner();
-        click_custom(cancelButton);
-    }
     public void click_FollowUpSlot(int count) {
         WebdriverWaits.waitUntilVisible(followUpSlots);
         WebdriverWaits.waitForSpinner();
@@ -188,7 +214,7 @@ public class DirectorPage extends BasePage {
                 break;
             }
         }
-        
+
 
 
     }
@@ -512,22 +538,22 @@ public class DirectorPage extends BasePage {
         click_Login_Button();
     }
 
-    public void director_Availability() throws InterruptedException {
+    public void director_Availability(int count) throws InterruptedException {
         Thread.sleep(9000);
-        List<WebElement> list = getDriver().findElements(By.xpath("//div[@class='mbsc-flex-1-0 mbsc-ios mbsc-schedule-item ng-star-inserted']"));
+        List<WebElement> list = getWebElements(totalAvailleSlots, "Available slots");
         System.out.println(list.size());
         for (WebElement box : list) {
             Thread.sleep(2000);
-             moveToEleByWE(box);
-            if(getDriver().findElements(By.xpath("//div[@class='ng-star-inserted']")).size()>2){
-                if (getDriver().findElement(By.xpath("//div[@class='ng-star-inserted']")).getText().equals("Available")) {
-                    break;
-                }
-            }
+            moveToEleByWE(box);
+            if (getWebElements(totalSlots).size() > count) {
+                //  if (totalSlots.contains("Available")) {
+                break;
 
+            }
         }
         click_SaveButton();
     }
+
 
     public void director_AvailabilityWithoutSaveBtn() throws InterruptedException {
         Thread.sleep(9000);

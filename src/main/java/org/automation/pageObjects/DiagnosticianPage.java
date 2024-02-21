@@ -39,6 +39,7 @@ public class DiagnosticianPage extends BasePage {
 
 
     public By actualText = By.cssSelector("tr:not([style='display: none;' ]) td:nth-child(2)");
+    public By clientName=By.cssSelector("tr:not([style='display: none;' ]) td:nth-child(1)");
     public By backButton = By.xpath("//button[text()='Back']");
     public By diagnosticianDashBoardPage = By.xpath("(//h3)[1]");
     public By back_Button = By.xpath("//button[@class='theme-button grey float-md-right mr-md-4']");
@@ -47,7 +48,10 @@ public class DiagnosticianPage extends BasePage {
     //**************Search created diagnostician*************
 
     public By filterButton = By.xpath("//a[@class='theme-button grey ml-auto mr-3']");
-    public By searchField = By.xpath("//input[@placeholder='Type here to search']");
+    public By searchField = By.xpath("//input[@aria-controls='DataTables_Table_5']");
+    public By searchFld=By.xpath("//input[@placeholder='Type here to search']");
+    public By searchFild=By.xpath("//input[@aria-controls='DataTables_Table_0']");
+    public By testCompleteSearchFld=By.xpath("//input[@aria-controls='appointmentTable']");
     public By viewClientDetailLink = By.xpath("(//td)[6]");
     public By clientDetailText = By.xpath("//div[contains(@class,'page-header align-items-lg-center')]");
     public By clientNameText = By.cssSelector("tr:not([style='display: none;' ]) td:nth-child(1)");
@@ -83,13 +87,13 @@ public class DiagnosticianPage extends BasePage {
     public By shiftText = By.xpath("//div[@class='mbsc-ios mbsc-popup-header mbsc-popup-header-center ng-star-inserted']");
     public By availableText = By.xpath("(//div[@class='ng-star-inserted'])[7]");
     public By upcomingTab = By.xpath("//a[text()='Upcoming']");
-    public By searchTextButton = By.xpath("//button[@class='theme-button']");
+
     public By dia_AvailSlots = By.xpath("//div[@class='mbsc-flex-1-1 mbsc-ios mbsc-ltr mbsc-timeline-column ng-star-inserted']");
    public By availableSlots=By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-all-day-inner mbsc-schedule-event-inner ng-star-inserted']");
 
 //*****************Set Availability for diagnostician ****************
 
-    public By deleteSlot = By.xpath("//div[@class='mbsc-ios mbsc-popup-header mbsc-popup-header-center ng-star-inserted']");
+   public By deleteSlot =  By.xpath("//div[@class='mbsc-ios mbsc-popup-header mbsc-popup-header-center ng-star-inserted']");
 
     public By chooseTestingLocation = By.id("testingLocation");
     public By assessmentDate = By.xpath("//input[@placeholder='Assessment Date']");
@@ -181,7 +185,11 @@ public class DiagnosticianPage extends BasePage {
 
     DashBoardPanelPage panelPage = new DashBoardPanelPage();
 
-
+    public void click_createDiagnosticianButton() {
+        WebdriverWaits.waitUntilVisible(createDiagnostician);
+        WebdriverWaits.waitForSpinner();
+        click_custom(createDiagnostician);
+    }
     public void click_Back_Button() {
         click_custom(backButton);
     }
@@ -206,11 +214,6 @@ public class DiagnosticianPage extends BasePage {
         click_custom(assignLocation);
         click_custom(locationName);
     }
-    public void click_createDiagnosticianButton() {
-        WebdriverWaits.waitUntilVisible(createDiagnostician);
-        WebdriverWaits.waitForSpinner();
-        click_custom(createDiagnostician);
-    }
 
     public void userNameField(String userNameText) {
         sendKeys_withClear(userName, userNameText);
@@ -232,12 +235,6 @@ public class DiagnosticianPage extends BasePage {
 
 
     public void search_ClientPage(String searchFieldText) {
-        WebdriverWaits.waitUntilVisible(filterButton);
-        WebdriverWaits.waitForSpinner();
-        click_custom(filterButton);
-        String AttText = getDriver().findElement(By.xpath("//input[@id='filterSearch']")).getAttribute("placeholder");
-        System.out.println(AttText);
-        validate_AttText(AttText, "Type here to search");
         sendKeys_withClear(searchField, searchFieldText);
     }
 
@@ -259,9 +256,18 @@ public class DiagnosticianPage extends BasePage {
     }
 
     public void enterInSearchField(String searchFieldText) {
-        sendKeys_withClear(searchField, searchFieldText);
+        WebdriverWaits.waitUntilVisible(searchFld);
+        sendKeys_withClear(searchFld, searchFieldText);
     }
-
+    public void enter_SearchField(String searchFieldTexts){
+        WebdriverWaits.waitUntilVisible(searchFild);
+        sendKeys_withClear(searchFild,searchFieldTexts);
+    }
+    public void enter_InSearchField(String testCompleteClientName){
+        WebdriverWaits.waitUntilVisible(testCompleteSearchFld);
+        WebdriverWaits.waitForSpinner();
+        sendKeys_withClear(testCompleteSearchFld,testCompleteClientName);
+    }
     public void click_ViewDetailLink() {
         click_custom(viewClientDetailLink);
     }
@@ -332,19 +338,10 @@ public class DiagnosticianPage extends BasePage {
         click_createDiagnosticianButton();
     }
 
-    public void search_CreatedDiagnostician(String UserName)
-    {
+    public void search_CreatedDiagnostician(String UserName) {
         click_FilterButton();
         enterInSearchField(UserName);
     }
-
-    public void serach_Dia(String diaName) {
-        WebdriverWaits.waitUntilVisible(filterButton);
-        WebdriverWaits.waitForSpinner();
-        click_custom(filterButton);
-        enterInSearchField(diaName);
-    }
-
     public void edit_Diagnostician(String EmailAddress1, String passwordTextFieldText, String confirmPasswordFieldText) throws InterruptedException {
         click_EditButton();
         // enter_CellNumber(cellNumberText);
@@ -357,10 +354,10 @@ public class DiagnosticianPage extends BasePage {
 
     public void cheking_DisableUser() throws InterruptedException {
         click_EditButton();
-        click_DontSave();
         WebdriverWaits.waitUntilVisible( enableUser);
         WebdriverWaits.waitForSpinner();
         validate_text(enableUser, "Enable User");
+        click_DontSave();
         click_EditButton();
         click_DontSave();
     }
@@ -438,16 +435,7 @@ public class DiagnosticianPage extends BasePage {
         click_custom(testPlan);
     }
 
-    public void clickOnCheckBox() {
-        click_custom(checkBox);
-        click_custom(famCheckBox);
-        click_custom(nepsyCheckBox);
-        click_custom(ndCheckBox);
-        click_custom(wmsCheckBox);
-        click_custom(bascSelfCheckBox);
-        click_custom(cbrsSelfCheckBox);
-        click_custom(dlsDyslexiaCheckBox);
-    }
+
 
 //******************Logging as diagnostician************
 
@@ -655,11 +643,9 @@ public class DiagnosticianPage extends BasePage {
         click_custom(diagnosticianSaveButton);
     }
 
-    public void view_ClientDetail(String clientLastName) {
-        click_custom(filterButton);
-        WebdriverWaits.waitUntilVisible(searchTextButton);
-        validate_text(searchTextButton, "Search");
-        enterInSearchField(clientLastName);
+    public void click_ClientDetailLink(String clientLastName) {
+
+        enter_SearchField(clientLastName);
         click_ViewDetailLink();
     }
 
@@ -674,14 +660,10 @@ public class DiagnosticianPage extends BasePage {
         click_TodasTab();
         click_ViewDetails();
         click_StartAssButtn();
-
+    }
         //****************This Test case is removed *************
 
-//        clickOn_PaymentLinkButton();
-//        WebdriverWaits.waitUntilVisible(merchantLoginPage);
-//        validate_text(merchantLoginPage, "Merchant" + ' ' + "Login");
-//        switchToParentWindow();
-    }
+
 
     public void start_Assessment_ByPaying_LessAmount(String textAreaText) throws InterruptedException {
         WebdriverWaits.waitUntilVisible(paymentDetailTitle);

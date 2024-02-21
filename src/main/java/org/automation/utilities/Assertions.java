@@ -35,21 +35,25 @@ public class Assertions {
     }
 
     public static void validate_text(By element, String expected) {
-        WebdriverWaits.waitForSpinner();;
+        WebdriverWaits.waitForSpinner();
+        ;
         SoftAssert softAssert = new SoftAssert();
         String actual = Assertions.getText_custom(element);
         softAssert.assertEquals(actual, expected);
         softAssert.assertAll();
     }
+
     public static void validate_AttText(String actual, String expected) {
-        WebdriverWaits.waitForSpinner();;
+        WebdriverWaits.waitForSpinner();
+        ;
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertEquals(actual, expected);
         softAssert.assertAll();
     }
+
     public static void validate_SelectedOption(By element, String expected) {
         WebdriverWaits.waitUntilVisible(element);
-        Select select= new Select(getDriver().findElement(element));
+        Select select = new Select(getDriver().findElement(element));
         String selectedOption = select.getFirstSelectedOption().getText();
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertEquals(selectedOption, expected);
@@ -58,13 +62,15 @@ public class Assertions {
     }
 
     public static void validate_text_withTrim(By element, String expected) {
-        WebdriverWaits.waitForSpinner();;
+        WebdriverWaits.waitForSpinner();
+        ;
         SoftAssert softAssert = new SoftAssert();
         String actual = Assertions.getText_custom(element);
         softAssert.assertEquals(actual.trim(), expected.trim());
         softAssert.assertAll();
     }
-    public  void validate_SuccessTXTByString(By element, String expected) throws InterruptedException {
+
+    public void validate_SuccessTXTByString(By element, String expected) throws InterruptedException {
 //        SoftAssert softAssert = new SoftAssert();
 //        String actual = Assertions.getText_custom();
 //        softAssert.assertEquals(actual, expected);
@@ -74,10 +80,9 @@ public class Assertions {
         String Actual = strvalue.getText();
         System.out.println(Actual);
 
-        if(expected.equals(Actual)){
+        if (expected.equals(Actual)) {
             System.out.println("Pass");
-        }
-        else {
+        } else {
             System.out.println("Fail");
         }
     }
