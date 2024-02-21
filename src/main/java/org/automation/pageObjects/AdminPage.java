@@ -24,6 +24,9 @@ public class AdminPage extends BasePage {
     public By succ_Msg = By.xpath("//div[@class='alert alert-success ng-star-inserted']");
     public By dashboardPage = By.xpath("//h3");
     public By searchButton = By.xpath("//button[@class='theme-button']");
+    public By editParentName = By.xpath(" //input[@formcontrolname='parentName']");
+    public By editDate = By.xpath(" //input[@formcontrolname='dateOfBirth']");
+    public By editCellNumber = By.xpath(" //input[@placeholder='Cell Number']");
 
     //****************Search Created Admin****************
     public By filterButton = By.xpath("//a[@class='theme-button grey ml-auto mr-3']");
@@ -33,6 +36,14 @@ public class AdminPage extends BasePage {
     public By viewStudentObservationButton = By.xpath("//a[@class='theme-button green ml-2 ng-star-inserted']");
     //*****************Edit Admin with valid credentials****************
     public By editButton = By.xpath("(//a[text()='Edit'])[1]");
+    public By editSchoolType = By.xpath(" //input[@formcontrolname='schoolType']");
+    public By editDistrict = By.xpath(" //input[@formcontrolname='school']");
+    public By editReason = By.id("reasonForCall");
+    public By editAddress2 = By.xpath(" //input[@formcontrolname='address2']");
+    public By editCity = By.xpath(" //input[@formcontrolname='city']");
+
+    public By editZipCode = By.xpath(" //input[@formcontrolname='zipCode']");
+    public By editAdditionalComment = By.xpath(" //input[@formcontrolname='appointmentComments']");
     public By emailField = By.xpath("//input[@formcontrolname='email']");
     public By updateButton = By.xpath("//button[text()='Update']");
     public By passwordTextField = By.xpath("//input[@formcontrolname='password']");
@@ -80,6 +91,7 @@ public class AdminPage extends BasePage {
     public By editFirstName = By.xpath(" //input[@formcontrolname='studentFirstName']");
     public By editLastName = By.xpath(" //input[@formcontrolname='studentLastName']");
     public By editEmail = By.xpath(" //input[@formcontrolname='emailAddress']");
+    public By editPhoneNumber = By.xpath(" //input[@formcontrolname='phoneNumber']");
     public By editEmail2 = By.xpath(" //input[@formcontrolname='secondaryEmailAddress']");
     public By editGrade = By.id("schoolType");
     public By todaysTab = By.xpath("(//li[@class='ng-star-inserted']/a)[4]");
@@ -283,12 +295,86 @@ public class AdminPage extends BasePage {
         WebdriverWaits.waitUntilVisible(searchButton);
         click_custom(searchButton);
     }
+    public void enter_ParentName(String parentName) {
+        waitUntilVisible(editParentName);
+        sendKeys_withClear(editParentName, parentName);
+    }
+
+    public void enter_Date(String birthDate) {
+        waitUntilVisible(editDate);
+        sendKeys_withClear(editDate, birthDate);
+    }
+
+    public void enter_PhoneNumber(String phoneNuber) {
+        waitUntilVisible(editPhoneNumber);
+        sendKeys_withClear(editPhoneNumber, phoneNuber);
+    }
+
+    public void enter_CellNumber(String cellNumber) {
+        waitUntilVisible(editCellNumber);
+        sendKeys_withClear(editCellNumber, cellNumber);
+    }
+
+    public void enter_Email1(String email) {
+        waitUntilVisible(editEmail);
+        sendKeys_withClear(editEmail, email);
+    }
+
+    public void enter_Email2(String email) {
+        waitUntilVisible(editEmail2);
+        sendKeys_withClear(editEmail2, email);
+    }
 
     //+++++++++++++++++EDIT Admin++++++++++++++
     public void click_EditButton() {
         WebdriverWaits.waitUntilVisible(editButton);
         WebdriverWaits.waitForSpinner();
         click_custom(editButton);
+    }
+    public void enter_SchoolType(int schoolType) {
+        waitUntilVisible(editSchoolType);
+        selectDropDownByIndex_custom(editSchoolType, schoolType);
+    }
+
+    public void enter_District(String district) {
+        waitUntilVisible(editDistrict);
+        sendKeys_withClear(editDistrict, district);
+    }
+
+    public void clickOn_TodayTab() {
+        waitUntilVisible(todaysTab);
+        WebdriverWaits.waitForSpinner();
+        moveToElement(todaysTab);
+    }
+
+    public void enter_Reason(String reason) {
+        waitUntilVisible(editReason);
+        selectDropDownByVisibleText_custom(editReason, reason);
+    }
+
+
+    public void enter_Address2(String address) {
+        waitUntilVisible(editAddress2);
+        sendKeys_withClear(editAddress2, address);
+    }
+    public void enter_City(String city) {
+        waitUntilVisible(editCity);
+        sendKeys_withClear(editCity, city);
+    }
+
+    public void enter_State(String state) {
+        waitUntilVisible(editCity);
+        sendKeys_withClear(editCity, state);
+    }
+
+    public void enter_ZipCode(String zipCode) {
+        waitUntilVisible(editZipCode);
+        sendKeys_withClear(editZipCode, zipCode);
+    }
+
+    public void enter_comment(String additionalComment) {
+        waitUntilVisible(editAdditionalComment);
+        sendKeys_custom(editAdditionalComment, additionalComment);
     }
 
     public void enter_Admin_Email1(String diagnostician_EmailText1) {
