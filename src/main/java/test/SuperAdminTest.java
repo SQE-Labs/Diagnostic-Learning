@@ -386,7 +386,7 @@ public class SuperAdminTest extends BaseTest {
 
     //************Appointments page******************
 
-    @Test(dependsOnMethods = {"verify_Full_Payment"})
+    @Test(dependsOnMethods = {"verify_Full_Payment"},description="2.1 Verify that 'Appointments' accordion expands after clicking on 'Appointment' accordion from left panel, on 'Dashboard' page.")
     public void verify_Appointments_Page() {
         AppointmentsPage appointment = new AppointmentsPage();
         DashBoardPanelPage panelPage = new DashBoardPanelPage();

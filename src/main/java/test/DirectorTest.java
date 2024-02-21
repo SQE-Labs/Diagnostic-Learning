@@ -3,13 +3,16 @@ package test;
 
 import org.automation.base.BaseTest;
 import org.automation.pageObjects.*;
+import org.automation.utilities.ActionEngine;
 import org.automation.utilities.DateGenerator;
 import org.automation.utilities.WebdriverWaits;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.awt.*;
 import java.io.FileNotFoundException;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.automation.utilities.Assertions.*;
@@ -398,6 +401,7 @@ public class DirectorTest extends BaseTest {
         validate_text(admin.title, expecetedClientName);
     }
 
+
     @Test(priority = 28, enabled = true, description = "45., 52. User is able to click on 'Create Followup' for a client.")
     public void verify_ClickOnCreateFollowupBtn() throws InterruptedException {
         AppointmentsPage appointment = new AppointmentsPage();
@@ -420,12 +424,21 @@ public class DirectorTest extends BaseTest {
     }
 
     @Test(priority = 29, enabled = true, description = "58, 59 verify director is able to change follow up or not")
-    public void verify_CancelFollowUp() {
+    public void verify_CancelFollowUp() throws InterruptedException {
         AdminPage admin = new AdminPage();
+        AppointmentsPage appointment = new AppointmentsPage();
+        DashboardPage dashPage = new DashboardPage();
         AppointmentsPage appPage = new AppointmentsPage();
+        DirectorPage director = new DirectorPage();
         //Clicked on 'Cancel' button.
+        login.director_Login();
+        appointment.click_UpcomingTab();
+        validate_text(admin.titleOfUpcomingPage, "Upcoming Appointments");
+        dashPage.enter_DataSearhTextBox("Upcoming");
+        director.click_ViewDetailsBtn();
+
         director.click_CreateFollowUpBtn();
-        director.CancelFollowupSlot(0);
+        director.cancelFollowupSlot(0);
         List<WebElement> allSlots = appPage.getWebElements(appPage.slots);
         boolean result = true;
         for (int i = 0; i < allSlots.size(); i++) {
@@ -439,7 +452,7 @@ public class DirectorTest extends BaseTest {
         Assert.assertFalse(result);
     }
 
-    @Test(priority = 30, enabled = true, description = "60, 61, verify director is able to change follow up or not")
+    @Test(priority = 30, enabled = true, description = "60, 61, verify director is able to Reset follow up or not")
     public void verify_ResetFollowUp() {
         AdminPage admin = new AdminPage();
         AppointmentsPage appPage = new AppointmentsPage();
@@ -518,7 +531,6 @@ public class DirectorTest extends BaseTest {
         String actualText = getText_custom(admin.nameOnCard);
         admin.click_Card();
         String clientName = getText_custom(admin.clientNameDetail);
-
         String[] words = clientName.split(" ");
         String expectedTitleText = null;
         if (words.length >= 2) {
@@ -584,5 +596,50 @@ public class DirectorTest extends BaseTest {
         validate_text(admin.getStatus, "Cancel");
     }
 
+    @Test(priority = 38, enabled = true, description = "9., 10., 11., 14. User is able to click on 'Upload Document' button.")
+    public void verify_ClickOnUploadDocBtn() throws InterruptedException, AWTException {
+        AppointmentsPage appointment = new AppointmentsPage();
+        AdminPage admin = new AdminPage();
+        DashboardPage dashPage = new DashboardPage();
+        DirectorPage director = new DirectorPage();
+        ActionEngine action = new ActionEngine();
+        login.director_Login();
+        appointment.click_UpcomingTab();
+        dashPage.enter_DataSearhTextBox("Test Ready");
+        director.click_ViewDetailsBtn();
+        admin.click_UploadButton();
+        director.click_CancelBtn();
+        boolean result = action.isElementDisplay_custom(director.viewDocBtn, "ViewDoc");
+        Assert.assertFalse(result);
+        admin.click_UploadButton();
+        validate_text(director.titleUploadDoc, "Upload Documents");
+        admin.upload_FileAttachment();
+        director.click_ViewDocBtn();
+        String input = getText_custom(director.fileName);
+        String[] words = input.split("\\s+");
+        System.out.println(words);
+        String trimmedString = "";
+        if (words.length > 2) {
+            trimmedString = String.join(" ", Arrays.copyOf(words, words.length - 2));
+        } else {
+            System.out.println("The input string does not have enough words to trim.");
+        }
+        validate_AttText(trimmedString, "file-sample_1MB (1).doc");
+
+
+    }
+
+    @Test(priority = 38, enabled = true, description = "9., 10., 11., 14. User is able to click on 'View Observation' button.")
+    public void verify_ClickOnViewObservationBtn() throws InterruptedException, AWTException {
+        AppointmentsPage appointment = new AppointmentsPage();
+        AdminPage admin = new AdminPage();
+        DashboardPage dashPage = new DashboardPage();
+        DirectorPage director = new DirectorPage();
+        ActionEngine action = new ActionEngine();
+        login.director_Login();
+
+
+
+    }
 
 }

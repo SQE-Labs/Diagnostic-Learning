@@ -149,13 +149,20 @@ public class ActionEngine extends BaseTest {
         try {
             WebElement element=getDriver().findElement(element1);
             flag = element.isDisplayed();
-            extentTest.log(PASS, "Is  " + fieldName + " element present => " + flag);
+            extentTest.log(PASS, "Is  " + fieldName + " ele" +
+                    "ment present => " + flag);
             return flag;
         } catch (Exception e) {
             extentTest.log(FAIL, "Checking for presence of field: " + fieldName + " not tested due to exception: " + e);
             return flag;
 
         }
+    }
+
+    public WebElement webelementConverter(By locator)
+    {
+        WebElement element=getDriver().findElement(locator);
+        return element;
     }
 
 

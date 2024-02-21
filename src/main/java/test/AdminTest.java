@@ -1030,7 +1030,8 @@ public class AdminTest extends BaseTest {
     }
 
     @Test(priority = 65, enabled = true, description = "Disable toggle button Director from admin")
-    public void verify_DirectorDisableUser() throws InterruptedException {
+    public void verify_DirectorDisableUser() throws InterruptedException
+    {
         AdminPage admin = new AdminPage();
         LoginPage login = new LoginPage();
         DirectorPage director = new DirectorPage();
@@ -1148,7 +1149,8 @@ public class AdminTest extends BaseTest {
     }
 
     @Test(priority = 70, enabled = true, description = "'Back' button clicked by Admin")
-    public void verify_ClickOnCancelPopupBackBtn() throws InterruptedException {
+    public void verify_ClickOnCancelPopupBackBtn() throws InterruptedException
+    {
 
         AdminPage admin = new AdminPage();
         DashboardPage dashPage = new DashboardPage();
@@ -1171,7 +1173,8 @@ public class AdminTest extends BaseTest {
     }
 
     @Test(priority = 71, enabled = true, description = "'Cancel' radio button clicked by Admin")
-    public void verify_ClickOnCancelRadioBtn() throws InterruptedException {
+    public void verify_ClickOnCancelRadioBtn() throws InterruptedException
+    {
         AdminPage admin = new AdminPage();
         DashboardPage dashPage = new DashboardPage();
         LoginPage login = new LoginPage();
@@ -1260,6 +1263,7 @@ public class AdminTest extends BaseTest {
         admin.paying_DueAmount(clientFirstName);
         WebdriverWaits.waitUntilVisible(admin.clientNameDetail);
         validate_text(admin.clientNameDetail, clientFirstName + ' ' + clientLastName + ' ' + "Details");
+        admin.click_UploadButton();
         admin.upload_FileAttachment();
         panelpage.click_LogOutLink();
     }

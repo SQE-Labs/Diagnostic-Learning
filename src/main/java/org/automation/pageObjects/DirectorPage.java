@@ -72,6 +72,9 @@ public class DirectorPage extends BasePage {
     public By edit_Popup = By.xpath("//h5[text()='Edit User']");
     public By enableUser = By.xpath("//label[text()='Enable User']");
     public By dashboardPage = By.xpath("(//h3)[1]");
+    public By titleUploadDoc = By.xpath("(//div[contains(@class,'py-4')]/h4)[2]");
+
+    public By fileName = By.xpath("//a[contains(@class,'text-wrap')]");
     public By viewAll = By.xpath("(//li[@class='ng-star-inserted']/a)[1]");
     public By followUpSlots = By.xpath("//div[@class='mbsc-flex-1-0 mbsc-ios mbsc-schedule-item ng-star-inserted']");
     public By followUp = By.xpath("//button[text()=' Create Follow Up ']");
@@ -82,6 +85,11 @@ public class DirectorPage extends BasePage {
     public By yearHeader = By.xpath("//span[@class='mbsc-calendar-title mbsc-calendar-year mbsc-ios ng-star-inserted']");
 
     public By confirmBtn = By.xpath("//a[text()='Confirm']");
+
+    public By cancelBtn = By.xpath("//button[text()='Cancel']");
+    public By viewDocBtn = By.xpath("//a[text()='View Documents']");
+
+    public By uploadDocBtn = By.xpath( "//button[text()=' Upload Documents ']");
     public By saveButton = By.xpath("//button[text()='Save']");
     public By validationMsg = By.xpath("//div[@class='alert alert-danger ng-star-inserted']");
     public By deleteSlot = By.xpath("//*[@id=\"diagnoSetAvailabilityForm\"]/div[1]/mbsc-eventcalendar/mbsc-calendar-view/mbsc-scheduler/div[3]/div[2]/div/div/div[5]/div/div[1]/mbsc-schedule-event/div[3]");
@@ -135,6 +143,20 @@ public class DirectorPage extends BasePage {
 
     }
 
+    public void click_CancelBtn()
+    {
+        WebdriverWaits.waitUntilVisible(cancelBtn);
+        WebdriverWaits.waitForSpinner();
+        click_custom(cancelBtn);
+
+    }
+
+    public void click_ViewDocBtn() {
+        WebdriverWaits.waitUntilVisible(viewDocBtn);
+        WebdriverWaits.waitForSpinner();
+        click_custom(viewDocBtn);
+    }
+
     public void click_LogOutLink() {
         WebdriverWaits.waitUntilVisible(logOutLink);
         WebdriverWaits.waitForSpinner();
@@ -171,11 +193,10 @@ public class DirectorPage extends BasePage {
 
     }
 
-    public void CancelFollowupSlot(int count) {
+    public void cancelFollowupSlot(int count) {
         WebdriverWaits.waitUntilVisible(followUpSlots);
         WebdriverWaits.waitForSpinner();
         List<WebElement> slots = getWebElements(followUpSlots, "followUpSlots");
-        System.out.println(slots.size());
         for (WebElement slot : slots) {
             click_custom(slot);
 
@@ -228,11 +249,6 @@ public class DirectorPage extends BasePage {
         click_custom(deleteButton);
     }
 
-    public void click_SaveBtn() {
-        WebdriverWaits.waitUntilVisible(avail_SaveButton);
-        WebdriverWaits.waitForSpinner();
-        click_custom(avail_SaveButton);
-    }
 
     public void click_Delete()
     {

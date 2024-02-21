@@ -205,7 +205,7 @@ public class AdminPage extends BasePage {
 
     public By getTitleOfTestComplete = By.xpath("//div[@class='page-header align-items-lg-center d-flex flex-column flex-md-row']/h3");
     public By getTitleOfAttachedDocument = By.xpath("//h5[@class='text-center mb-4']");
-    public By uploadDocumentButton = By.xpath("//button[@class='theme-button m-2 ng-star-inserted']");
+    public By uploadDocumentButton = By.xpath("//button[text()=' Upload Documents ']");
 
     public By chooseField = By.xpath("//input[@placeholder='select document to be uploaded']");
 
@@ -1101,11 +1101,11 @@ public class AdminPage extends BasePage {
 
 
 
+
     public void upload_FileAttachment() throws InterruptedException, AWTException, AWTException {
-        click_UploadButton();
         click_ChooseFile();
         Thread.sleep(5000);
-        String filepath = "Downloads\\33200_1911.pdf";
+        String filepath = "C:\\Users\\admin\\Downloads\\file-sample_1MB (1).doc";
         ChromeDownloads.uploadFileUsingRobot(filepath);
         click_UploadButtons();
         click_CloseButton();
