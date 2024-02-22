@@ -1123,6 +1123,15 @@ public class AdminPage extends BasePage {
         click_CloseButton();
     }
 
+    public void upload_FileAttachmentSecondTime() throws InterruptedException, AWTException, AWTException {
+        click_ChooseFile();
+        Thread.sleep(5000);
+        String filepath = "C:\\Users\\admin\\Downloads\\file-sample_500kB.doc";
+        ChromeDownloads.uploadFileUsingRobot(filepath);
+        click_UploadButtons();
+        click_CloseButton();
+    }
+
 
 }
 

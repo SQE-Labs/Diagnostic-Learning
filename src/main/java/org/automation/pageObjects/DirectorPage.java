@@ -18,6 +18,7 @@ public class DirectorPage extends BasePage {
     WebdriverWaits wait = new WebdriverWaits();
 
     public By logOutLink = By.xpath("//a[text()='Log Out']");
+
     public By followUpSlot = By.xpath("(//div[@class='ng-star-inserted'])[2]");
     public By followUpSaveBtn = By.xpath("//a[text()='Save']");
     public By changeBtn = By.xpath("//a[text()='Change']");
@@ -64,6 +65,10 @@ public class DirectorPage extends BasePage {
     public By cellNumber = By.xpath("//input[@placeholder='Cell Number']");
     public By emailField = By.xpath("//input[@formcontrolname='email']");
     public By updateButton = By.xpath("//button[text()='Update']");
+
+    public By nameOnTestCompletePage = By.xpath( "(//td[contains(@class,'tablewidth')])[1]");
+
+    public By nameOnTestCompleteClientPage = By.xpath("//label[text()='Full Name']//following-sibling::p");
 
     public By directorListPage = By.xpath("//h3[text()='Directors List']");
 
@@ -158,6 +163,8 @@ public class DirectorPage extends BasePage {
 
     }
 
+
+
     public void click_ViewObservationBtn() {
         WebdriverWaits.waitUntilVisible(viewObservationBtn);
         WebdriverWaits.waitForSpinner();
@@ -171,6 +178,13 @@ public class DirectorPage extends BasePage {
         WebdriverWaits.waitForSpinner();
         click_custom(cancelBtn);
 
+    }
+
+    public void click_FileLabel()
+    {
+        WebdriverWaits.waitUntilVisible(fileName);
+        WebdriverWaits.waitForSpinner();
+        click_custom(fileName);
     }
 
     public void click_BackBtn()

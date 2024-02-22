@@ -117,7 +117,7 @@ public class DirectorTest extends BaseTest {
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
         AppointmentsPage appointment = new AppointmentsPage();
         panelPage.click_AppointmentsTab2();
-       appointment.click_Today_AppointmentCard();
+        appointment.click_Today_AppointmentCard();
         validate_text(appointment.todaysAppointmentTXT, "Today's Appointments");
 
     }
@@ -585,7 +585,7 @@ public class DirectorTest extends BaseTest {
         validate_text(admin.title, expectedTitle);
     }
 
-    @Test(priority = 37, enabled = true, description = "8. User is able to click on 'Canceled' subtab.")
+    @Test(priority = 37, enabled = true, description = "8. & 53. User is able to click on 'Canceled' subtab.")
     public void verify_ClickOnCanceledSubtab() throws InterruptedException {
         AdminPage admin = new AdminPage();
         AppointmentsPage appointment = new AppointmentsPage();
@@ -594,6 +594,10 @@ public class DirectorTest extends BaseTest {
         validate_text(admin.title, "Canceled Appointments");
         admin.filter_ForCancel();
         validate_text(admin.getStatus, "Cancel");
+        admin.click_FilterBtn();
+        //Search field
+        String searchPlaceHolder = admin.getAttributevalue(admin.searchTextBox, "placeholder");
+        Assert.assertEquals(searchPlaceHolder, "Type here to search");
     }
 
     @Test(priority = 38, enabled = true, description = "9., 10., 11., 14. User is able to click on 'Upload Document' button.")
@@ -637,13 +641,145 @@ public class DirectorTest extends BaseTest {
         DirectorPage director = new DirectorPage();
         ActionEngine action = new ActionEngine();
         login.director_Login();
+        appointment.click_AppointmentsTab();
         appointment.click_TestCompleteTab();
         director.click_ViewDetailBtn();
-        String expectedTitle=getText_custom(admin.title);
+        String expectedTitle = getText_custom(admin.title);
         director.click_ViewObservationBtn();
-        validate_text(director.titleClientObservation,"Client Observation");
+        validate_text(director.titleClientObservation, "Client Observation");
         director.click_BackBtn();
-        validate_text(admin.title,expectedTitle);
+        validate_text(admin.title, expectedTitle);
     }
 
+    @Test(priority = 40, enabled = true, description = "User is able to click on 'Upload Document' button multiple.")
+    public void verify_ClickMultipleTimeUploadDocBtn() throws InterruptedException, AWTException {
+        AppointmentsPage appointment = new AppointmentsPage();
+        AdminPage admin = new AdminPage();
+        DashboardPage dashPage = new DashboardPage();
+        DirectorPage director = new DirectorPage();
+        login.director_Login();
+        appointment.click_AppointmentsTab();
+        appointment.click_UpcomingTab();
+        dashPage.enter_DataSearhTextBox("Test Ready");
+        director.click_ViewDetailsBtn();
+        admin.click_UploadButton();
+        admin.upload_FileAttachment();
+        admin.click_UploadButton();
+        admin.upload_FileAttachmentSecondTime();
+        director.click_ViewDocBtn();
+
+        List<WebElement> noOfFiles = director.getWebElements(director.fileName);
+        boolean resultForReset = false;
+        int count = noOfFiles.size();
+        int standardcount = 2;
+        if (count == standardcount) {
+            resultForReset = true;
+        }
+        Assert.assertTrue(resultForReset);
+    }
+
+    @Test(priority = 41, enabled = true, description = "1.,36. & 16. User is able to download attached files.")
+    public void verify_FileGetDownload() throws InterruptedException, AWTException, FileNotFoundException {
+        AppointmentsPage appointment = new AppointmentsPage();
+        AdminPage admin = new AdminPage();
+        DashBoardPanelPage dashboard = new DashBoardPanelPage();
+        DirectorPage director = new DirectorPage();
+        login.director_Login();
+        appointment.click_AppointmentsTab();
+        appointment.click_TestCompleteTab();
+        String expectedName = getText_custom(director.nameOnTestCompletePage);
+        director.click_ViewDetailBtn();
+        validate_text(director.nameOnTestCompleteClientPage, expectedName);
+        director.click_ViewObservationBtn();
+        director.click_ViewDocBtn();
+        director.click_FileLabel();
+        String downloadFile = dashboard.getDownloadFileName();
+        Assert.assertTrue(dashboard.isFileDownloaded(downloadFile));
+    }
+
+    @Test(priority = 42, enabled = true, description = "18. & 52. User is able to click on 'View Receipt' button.")
+    public void verify_ViewReceiptBtn() throws InterruptedException, AWTException, FileNotFoundException {
+        AppointmentsPage appointment = new AppointmentsPage();
+        AdminPage admin = new AdminPage();
+        PaymentPage payment = new PaymentPage();
+        login.director_Login();
+        appointment.click_CompletedTab();
+        String expectedName = getText_custom(director.nameOnTestCompletePage);
+        director.click_ViewDetailBtn();
+        validate_text(director.nameOnTestCompleteClientPage, expectedName);
+
+        payment.scrollUptoVAmountDue();
+        String expectedAmountDue = "$0.00";
+        String actualAmountDue = getText_custom(payment.amountDue);
+
+        if (actualAmountDue.equals(expectedAmountDue)) {
+            payment.viewReceiptButtonDisplayed();
+            String expectedText = "View Receipt";
+            validate_text(admin.titleOfViewReceipt, expectedText);
+
+        } else {
+            String amountDue = getText_custom(payment.amountDue);
+            String actualAmount = amountDue.replace("$", "");
+            payment.click_PaymentBtn();
+            payment.send_AmountInEnterAmount(actualAmount);
+            payment.click_CollectBtn();
+            payment.click_CloseBtn();
+            payment.viewReceiptButtonDisplayed();
+            String expectedText = "View Receipt";
+            validate_text(admin.titleOfViewReceipt, expectedText);
+        }
+
+    }
+
+    @Test(priority = 43, enabled = true, description = "19. User is able to click on 'Close' button.")
+    public void verify_ClickOnViewReceiptCloseBtn() {
+
+        AppointmentsPage appointment = new AppointmentsPage();
+        AdminPage admin = new AdminPage();
+        PaymentPage payment = new PaymentPage();
+        login.director_Login();
+        appointment.click_CompletedTab();
+        director.click_ViewDetailBtn();
+        admin.scrollUptoVAmountDue();
+        String expectedAmountDue = "$0.00";
+        String actualAmountDue = getText_custom(payment.amountDue);
+        if (actualAmountDue.equals(expectedAmountDue)) {
+            String expectedText = getText_custom(admin.title);
+            payment.viewReceiptButtonDisplayed();
+            admin.click_CloseBtn();
+            String actualText = getText_custom(admin.title);
+            validate_AttText(actualText, expectedText);
+
+        } else {
+            String amountDue = getText_custom(payment.amountDue);
+            String actualAmount = amountDue.replace("$", "");
+            payment.viewReceiptButtonNotDisplayed();
+            payment.send_AmountInEnterAmount(actualAmount);
+            admin.click_CollectBtn();
+            admin.click_CloseBtn();
+            String expectedText = getText_custom(admin.title);
+            payment.viewReceiptButtonDisplayed();
+            admin.click_CloseBtn();
+            String actualText = getText_custom(admin.title);
+            validate_AttText(actualText, expectedText);
+        }
+
+    }
+
+    @Test(priority = 44, enabled = true, description = "37. User is able to click on 'Filter' button.")
+    public void verify_ClickOnFilterCompletedBtn() {
+
+        AppointmentsPage appointment = new AppointmentsPage();
+        AdminPage admin = new AdminPage();
+        PaymentPage payment = new PaymentPage();
+        login.director_Login();
+        appointment.click_CompletedTab();
+        admin.click_FilterBtn();
+        //Search field
+
+        String fromDateplaceholder = admin.getAttributevalue(admin.fromDateText, "placeholder");
+        String toDatePlaceholder = admin.getAttributevalue(admin.toDateText, "placeholder");
+        Assert.assertEquals(fromDateplaceholder, "From Date");
+        Assert.assertEquals(toDatePlaceholder, "To Date");
+    }
 }

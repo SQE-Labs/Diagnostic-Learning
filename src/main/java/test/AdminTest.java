@@ -542,8 +542,6 @@ public class AdminTest extends BaseTest {
             expectedTitleText = firstWord + " " + secondWord;
 
 
-        } else {
-
         }
         validate_AttText(actualText, expectedTitleText);
     }
