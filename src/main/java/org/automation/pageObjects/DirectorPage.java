@@ -98,11 +98,9 @@ public class DirectorPage extends BasePage {
     public By totalSlots = By.xpath("//div[@class='ng-star-inserted']");
     public By totalAvailleSlots = By.xpath("//div[@class='mbsc-flex-1-0 mbsc-ios mbsc-schedule-item ng-star-inserted']");
 
-
     public By yearsTitle = By.xpath("(//mbsc-button[contains(@class,'mbsc-calendar-button')])[5]");
 
-    public By yearTitleFromText = By.xpath("(//d" +
-            "iv[contains(@class,'mbsc-calendar-year-text')])[13]");
+    public By yearTitleFromText = By.xpath("(//div[contains(@class,'mbsc-calendar-year-text')])[13]");
     public By spinner = By.cssSelector("div.ngx-spinner-overlay");
     public By setAvailaibility = By.xpath("//div[@class='page-header d-flex align-items-center']");
     public By slotSelection = By.xpath("(//div[@class='mbsc-flex-1-0 mbsc-ios mbsc-schedule-item ng-star-inserted'])[1]");

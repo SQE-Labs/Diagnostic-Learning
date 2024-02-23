@@ -31,8 +31,6 @@ public class AppointmentsPage extends BasePage {
     public By searchedText = By.cssSelector("tr:not([style='display: none;' ]) td:nth-child(2)");
     public By viewDetailsLink = By.xpath("(//tr[not(contains(@style,'display: none;'))])[2]//a");
     public By clickSlotSaveBtn = By.xpath("//mbsc-button[text()=' Save ']");
-
-
     public By holdtab = By.xpath("//a[text()='Hold']");
 
 
@@ -89,30 +87,22 @@ public class AppointmentsPage extends BasePage {
     public By actualText = By.xpath("//h4[text()='Appointment Scheduled!!']");
     public By cancelButton = By.xpath("//button[@class='theme-button danger m-2 ng-star-inserted']");
     public By radioBox = By.xpath("(//label[@class='custom-control-label'])[1]");
-
     public By nameOfTestReadyCard = By.xpath("(//div[@class='client-diagno d-flex align-items-center justify-content-between']/p)[1]");
-
     public By yesButton = By.xpath("//button[@class='theme-button danger mx-2 ng-star-inserted']");
     public By searchTextBox = By.id("filterSearch");
-
-
     public By directorFilter = By.xpath("//a[text()='Filter']");
 
     //******************************************
     public By firstSearchedRecord = By.xpath("(//td[@class='tablewidth'])[4]");
     public By afterClickFromDate = By.xpath("//*[@id=\"filterShow\"]/div/div[2]/input");
     public By getAppointmentDetails = By.xpath("(//h5[@class='mb-0 text-purple'])[1]");
-
     public By saveBtnEditPlan = By.xpath("//button[@class='theme-button green mr-2']");
     public By otherComment = By.xpath("//textarea[@name='testSurveyComment']");
-
     public By collectPaymentTXT = By.xpath("(//h4[@class='text-center'])[1]");
     public By toDateText = By.xpath("//input[@formcontrolname='toDate']");
     public By fromDateText = By.xpath("//input[@formcontrolname='fromDate']");
     public By emailAddress = By.xpath("//input[@placeholder='Email Address']");
-
     public By saveBtnCalendar = By.xpath("//a[@class='theme-button green float-right mr-2']");
-
     public By closeBtn = By.xpath("//button[@class='theme-button grey float-right']");
     //******************Verifying cancelled appointments*****************
 

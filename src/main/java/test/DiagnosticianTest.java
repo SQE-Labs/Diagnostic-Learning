@@ -39,6 +39,17 @@ public class DiagnosticianTest extends BaseTest {
         WebdriverWaits.waitUntilVisible(diagnostician.dashboard);
         validate_text(diagnostician.dashboard, "Dashboard");
     }
+    @Test(priority = 1, enabled = true, description = "Set availability for diagnostician by admin")
+    public void verify_DiagnosticianAvailability() throws InterruptedException {
+        DiagnosticianPage diagnostician = new DiagnosticianPage();
+        DashBoardPanelPage logout = new DashBoardPanelPage();
+        logout.click_LogOutLink();
+        diagnostician.login_As_Diagnostician(diagnosticianUserName, "123456");
+        diagnostician.set_Availability();
+        // diagnostician.click_Availablity();
+        diagnostician.cancel_Availability();
+        diagnostician.deleting_Availability();
+    }
 
     @Test(priority = 2, enabled = true, description = "31 Diagnostician is Verifying upcoming appointments")
     public void verify_UpcomingAppointments() {

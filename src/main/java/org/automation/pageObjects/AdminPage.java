@@ -1,14 +1,18 @@
 package org.automation.pageObjects;
+
 import org.automation.base.BasePage;
 import org.automation.utilities.WebdriverWaits;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+
 import java.awt.*;
 import java.util.List;
+
 import static org.automation.utilities.Assertions.*;
 import static org.automation.utilities.WebdriverWaits.moveToElement;
 import static org.automation.utilities.WebdriverWaits.waitUntilVisible;
 import static org.openqa.selenium.By.cssSelector;
+
 public class AdminPage extends BasePage {
     public By adminDashboardText = By.xpath("//h3[text()='Dashboard']");
     public By createAdminButton = By.xpath("//button[@class='theme-button']");
@@ -94,7 +98,11 @@ public class AdminPage extends BasePage {
     public By editPhoneNumber = By.xpath(" //input[@formcontrolname='phoneNumber']");
     public By editEmail2 = By.xpath(" //input[@formcontrolname='secondaryEmailAddress']");
     public By editGrade = By.id("schoolType");
-    public By todaysTab = By.xpath("(//li[@class='ng-star-inserted']/a)[4]");
+    public By reAssignbtn = By.xpath("//a[text()='Re-assign Appointment']");
+    public By reAssignDiagList = By.xpath("//select[@id='diag']//option[@class='ng-star-inserted']");
+
+
+    public By todaysTab = By.xpath("//*[@id=\"Appointments\"]/li[2]/a");
     public By editAddress1 = By.xpath(" //input[@formcontrolname='address1']");
     public By editUpdateBtn = By.id("intakeFormSubmit");
     public By actualTextClient = By.xpath("//p[text()=' College']");
@@ -295,6 +303,7 @@ public class AdminPage extends BasePage {
         WebdriverWaits.waitUntilVisible(searchButton);
         click_custom(searchButton);
     }
+
     public void enter_ParentName(String parentName) {
         waitUntilVisible(editParentName);
         sendKeys_withClear(editParentName, parentName);
@@ -331,6 +340,7 @@ public class AdminPage extends BasePage {
         WebdriverWaits.waitForSpinner();
         click_custom(editButton);
     }
+
     public void enter_SchoolType(int schoolType) {
         waitUntilVisible(editSchoolType);
         selectDropDownByIndex_custom(editSchoolType, schoolType);
@@ -346,6 +356,12 @@ public class AdminPage extends BasePage {
         WebdriverWaits.waitForSpinner();
         moveToElement(todaysTab);
     }
+    public void click_ReAssignBn() {
+        WebdriverWaits.waitUntilVisible(reAssignbtn);
+        click_custom(reAssignbtn);
+
+
+    }
 
     public void enter_Reason(String reason) {
         waitUntilVisible(editReason);
@@ -357,6 +373,7 @@ public class AdminPage extends BasePage {
         waitUntilVisible(editAddress2);
         sendKeys_withClear(editAddress2, address);
     }
+
     public void enter_City(String city) {
         waitUntilVisible(editCity);
         sendKeys_withClear(editCity, city);
@@ -399,7 +416,7 @@ public class AdminPage extends BasePage {
         sendKeys_withClear(passwordTextField, passwordTextFieldText);
     }
 
-    public void click_confirmPasswordFieldField(String confirmPasswordFieldText) {
+    public void click_confirmPasswordField(String confirmPasswordFieldText) {
         WebdriverWaits.waitUntilVisible(confirmPasswordField);
         sendKeys_withClear(confirmPasswordField, confirmPasswordFieldText);
     }
@@ -447,7 +464,7 @@ public class AdminPage extends BasePage {
         validate_text(editUserPop_Up, "Edit User");
         enter_Admin_Email1(EmailAddress1);
         click_PasswordField(passwordTextFieldText);
-        click_confirmPasswordFieldField(confirmPasswordFieldText);
+        click_confirmPasswordField(confirmPasswordFieldText);
         off_ToggleButton();
         click_UpdateButton();
     }
@@ -473,7 +490,7 @@ public class AdminPage extends BasePage {
         click_EditButton();
         enter_Diagnostician_Email1(adminEmailAddress);
         click_PasswordField(passwordTextFieldText);
-        click_confirmPasswordFieldField(confirmPasswordFieldText);
+        click_confirmPasswordField(confirmPasswordFieldText);
         click_DontSave();
     }
 
@@ -595,13 +612,6 @@ public class AdminPage extends BasePage {
         enter_Address1(address1);
         enter_grade(grade);
         return fullName;
-    }
-
-    public void filter_ForUpcoming(String clientText) {
-        WebdriverWaits.waitUntilVisible(filterButton);
-        WebdriverWaits.waitForSpinner();
-        click_custom(filterButton);
-        sendKeys_withClear(searchField, clientText);
     }
 
     public void click_BackButton() {
@@ -732,13 +742,10 @@ public class AdminPage extends BasePage {
         WebdriverWaits.waitForSpinner();
         click_custom(testCompleteTab);
     }
-
-
-    public void filter_ForUpcoming() {
+    public void filter_ForUpcoming(String clientText) {
         waitUntilVisible(filterButton);
         WebdriverWaits.waitForSpinner();
         click_custom(filterButton);
-        String clientText = "Upcoming";
         sendKeys_withClear(searchField, clientText);
     }
 
@@ -777,10 +784,7 @@ public class AdminPage extends BasePage {
         click_custom(cancelButton);
     }
 
-
     //*************************send recipt******************
-
-    // ********** to do************
 
     public void click_SendReciptButton() {
         WebdriverWaits.waitForSpinner();
@@ -817,19 +821,15 @@ public class AdminPage extends BasePage {
         click_CancelTab();
         enterInSearchField(clientName);
     }
-
     public void click_Card() {
         waitUntilVisible(card);
         click_custom(card);
     }
-
     public void enterClientNameInSearchFieldCompleted(String nameOfClient) {
         WebdriverWaits.waitUntilVisible(searchTextBox);
         WebdriverWaits.waitForSpinner();
         sendKeys_withClear(searchTextBox, nameOfClient);
     }
-
-
     public void click_ViewDetailsBtn() {
         WebdriverWaits.waitUntilVisible(getViewDetails);
         WebdriverWaits.waitForSpinner();
@@ -841,8 +841,6 @@ public class AdminPage extends BasePage {
         WebdriverWaits.waitForSpinner();
         scrollIntoView(amountDue);
     }
-
-
     public void click_ViewDocumentsButton() {
         WebdriverWaits.waitUntilVisible(viewDocumentsButton);
         click_custom(viewDocumentsButton);
@@ -852,8 +850,6 @@ public class AdminPage extends BasePage {
         waitUntilVisible(backButton);
         click_custom(backButton);
     }
-
-
     public void click_ViewObservationBtn() {
         WebdriverWaits.waitUntilVisible(viewStudentObservationButton);
         click_custom(viewStudentObservationButton);
@@ -864,7 +860,6 @@ public class AdminPage extends BasePage {
         WebdriverWaits.waitForSpinner();
         click_custom(viewDocumentBtn);
     }
-
     public void clickOn_UploadButtons() {
         click_custom(uploadButton);
     }
@@ -874,8 +869,6 @@ public class AdminPage extends BasePage {
         WebdriverWaits.waitForSpinner();
         click_custom(closeIcon);
     }
-
-
     public void filter_ForCancel() {
         waitUntilVisible(filterButton);
         WebdriverWaits.waitForSpinner();
@@ -889,14 +882,10 @@ public class AdminPage extends BasePage {
         WebdriverWaits.waitForSpinner();
         moveToElement(chooseField);
     }
-
-
     public void clickOn_UnHoldBtn() {
         waitUntilVisible(unHoldBtn);
         WebdriverWaits.waitForSpinner();
         click_custom(unHoldBtn);
-
-
     }
 
     public void clickOn_UnholdBackBtn() {

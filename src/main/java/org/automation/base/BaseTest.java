@@ -18,7 +18,6 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 
 import static java.io.File.separator;
 import static java.nio.file.Files.lines;
@@ -29,6 +28,8 @@ import static java.util.stream.Collectors.toList;
 public class BaseTest {
 
     public static ExtentReports extent;
+
+
     public static ExtentTest extentTest;
     public static ThreadLocal<WebDriver> driver = new ThreadLocal<WebDriver>();
 
