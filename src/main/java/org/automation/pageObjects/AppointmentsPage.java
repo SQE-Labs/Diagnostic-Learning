@@ -1,14 +1,16 @@
 package org.automation.pageObjects;
 
 import org.automation.base.BasePage;
+import org.automation.logger.Log;
 import org.automation.utilities.WebdriverWaits;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
-import java.util.List;
+import java.util.*;
 
 import static org.automation.utilities.Assertions.validate_text;
+import static org.automation.utilities.DateGenerator.getMonthAndYear;
 import static org.automation.utilities.WebdriverWaits.moveToEleByWE;
 import static org.automation.utilities.WebdriverWaits.moveToElement;
 
@@ -66,6 +68,8 @@ public class AppointmentsPage extends BasePage {
     public By dateElement = By.xpath("(//tr/td[5])[1]");
     public By dateEle = By.xpath("((//tr[not(contains(@style,'display: none;'))])[2]//td)[4]");
     public By chooseTestingLocation = By.id("testingLocation");
+    public By locationLists=By.xpath("//select[@id='testingLocation']/option");
+    public By titleText=By.xpath("//h3");
 
     public By clientFirstName = By.xpath("//input[@placeholder='Client First Name']");
     public By clientLastName = By.xpath("//input[@placeholder='Client Last Name']");
@@ -91,6 +95,9 @@ public class AppointmentsPage extends BasePage {
     public By yesButton = By.xpath("//button[@class='theme-button danger mx-2 ng-star-inserted']");
     public By searchTextBox = By.id("filterSearch");
     public By directorFilter = By.xpath("//a[text()='Filter']");
+    public By yearButton = By.xpath("//span[@class='mbsc-calendar-title mbsc-calendar-year mbsc-ios ng-star-inserted']");
+    public By monthHeader = By.xpath("//span[@class='mbsc-calendar-month mbsc-calendar-title mbsc-ios ng-star-inserted']");
+    public By yearHeader = By.xpath("//span[@class='mbsc-calendar-title mbsc-calendar-year mbsc-ios ng-star-inserted']");
 
     //******************************************
     public By firstSearchedRecord = By.xpath("(//td[@class='tablewidth'])[4]");
@@ -225,7 +232,18 @@ public class AppointmentsPage extends BasePage {
         WebdriverWaits.waitUntilVisible(chooseTestingLocation);
         clickBtn_custom(chooseTestingLocation, "ChooseLocation");
         selectDropDownByVisibleText_custom(chooseTestingLocation, chooseLocationText, "ChooseLocation");
+
     }
+    public void locationName_Lists(){
+        List<WebElement> locNames=getWebElements(locationLists,"Location List");
+        ArrayList<String> dropdownValues = new ArrayList<>();
+            for (WebElement option : locNames) {
+                dropdownValues.add(option.getText());
+                dropdownValues.remove("Choose Testing Location");
+            }
+        System.out.println(dropdownValues);
+        }
+
     public void enterAmount(String enterAmountText) throws InterruptedException {
         WebdriverWaits.waitUntilInvisible(enterAmountField);
         WebdriverWaits.waitUntilVisible(enterAmountField);
@@ -287,12 +305,18 @@ public class AppointmentsPage extends BasePage {
     }
     public void selectAppointmentSlot(int count) throws InterruptedException {
         click_AssessmentDate();
+        String currentDate = getMonthAndYear();
+        validate_text(monthHeader, currentDate.split(" ")[0]);
+        validate_text(yearHeader, currentDate.split(" ")[1]);
+
         getTotalColumnCount(count);
         WebdriverWaits.waitUntilVisible(newEventText);
         validate_text(newEventText, "New Event");
+
         clickSlotSaveButton();
         WebdriverWaits.waitUntilVisible(newSlotText);
         validate_text(newSlotText, "New event");
+
         clickCalSaveButton();
     }
     public void selectAssesmentType(String assestmentTypeTexts) {

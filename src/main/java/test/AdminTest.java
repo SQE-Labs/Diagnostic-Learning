@@ -54,7 +54,7 @@ public class AdminTest extends BaseTest {
     }
 
     //********* Create Daignostician by admin
-    @Test(priority = 1, enabled = true, description = "6.1,5.7,  Create diagnostician by admin")
+    @Test(priority = 1, enabled = true, description = "6.1,5.7,1.19  Create diagnostician by admin")
     public void verify_CreateDiagnostician() throws InterruptedException {
         DiagnosticianPage diagnostician = new DiagnosticianPage();
 
@@ -126,10 +126,15 @@ public class AdminTest extends BaseTest {
         LoginPage login = new LoginPage();
         DashboardPage dashboard = new DashboardPage();
         AppointmentsPage appPage = new AppointmentsPage();
-        login.adminLogin(adminUserName, "12345678");
+        login.adminLogin("allen", "123456");
         dashboard.clickScheduleAppointment();
+        WebdriverWaits.waitUntilVisible(appPage.titleText);
+        validate_text(appPage.titleText, "Create Appointment");
+
+        appPage.locationName_Lists();
         appPage.selectTestinglocation("Austin");
         appPage.selectAppointmentSlot(0);
+
         appPage.selectAssesmentType("Adult ADHD Only");
         validate_SelectedOption(appPage.assestmentType, "Adult ADHD Only");
     }
@@ -288,7 +293,7 @@ public class AdminTest extends BaseTest {
         validate_text(EditClient.editCllientActualText, "Edit Client Info");
     }
 
-    @Test(priority = 21, enabled = true, description = "9.9, 9.10, 9.11, 9.12, 9.13, 9.16, Verify Edit client details popup client page.")
+    @Test(priority = 21, enabled = true, description = "9.9, 9.10, 9.11, 9.12, 9.13, 9.16,9.17 Verify Edit client details popup client page.")
     public void verify_UpdateBtn() {
         AdminPage editClient = new AdminPage();
         editClient.edit_ClientInfo(clientFirstName, clientLastName, "401 Broadway E eastate g", "College");
@@ -297,7 +302,7 @@ public class AdminTest extends BaseTest {
         validate_text(editClient.actualTextClient, "College");
     }
 
-    @Test(priority = 22, enabled = true, description = "13.1, verify hold appointment button.")
+    @Test(priority = 22, enabled = true, description = "13.1, 23.1 verify hold appointment button.")
     public void verify_HoldAppointmentBtn() {
         AdminPage hold = new AdminPage();
         hold.click_HoldAppointmentBtn();
@@ -324,7 +329,7 @@ public class AdminTest extends BaseTest {
 
     }
 
-    @Test(priority = 25, enabled = true, description = "verify filter button on hold appointment page.")
+    @Test(priority = 25, enabled = true, description = "23.6 verify filter button on hold appointment page.")
     public void verify_holdfilterButton() {
         AdminPage admin = new AdminPage();
         admin.click_HoldFilterBtn();
@@ -335,7 +340,7 @@ public class AdminTest extends BaseTest {
         Assert.assertEquals(toDatePlaceholder, "To Date");
     }
 
-    @Test(priority = 26, enabled = true, description = "verify holded appointment .")
+    @Test(priority = 26, enabled = true, description = "23.7 verify holded appointment .")
     public void verify_holdedAppointment() throws InterruptedException {
         AdminPage admin = new AdminPage();
         admin.send_TextHoldSearchBox(clientFirstName);
@@ -456,7 +461,7 @@ public class AdminTest extends BaseTest {
     }
 
 
-    @Test(priority = 37, enabled = true, description = "17.1, Admin is directed to 'Today's Appointment' page")
+    @Test(priority = 37, enabled = true, description = "17.1, 1.14, Admin is directed to 'Today's Appointment' page")
     public void verify_TodayAppointmentTab() throws InterruptedException {
         AdminPage admin = new AdminPage();
         DateGenerator datePage = new DateGenerator();
@@ -558,7 +563,7 @@ public class AdminTest extends BaseTest {
         validate_AttText(actualText, expectedTitleText);
     }
 
-    @Test(dependsOnMethods = {"download_CSV_File"}, description = "1.14, 20.1, 20.7, 20.22, 7.2, 7.17,14.2  Admin is able to View 'Test Complete' Appointments")
+    @Test(dependsOnMethods = {"download_CSV_File"}, description = " 20.1, 20.7, 20.22, 7.2, 7.17,14.2  Admin is able to View 'Test Complete' Appointments")
     public void verify_TestComplete_AppointmentPage() throws FileNotFoundException, InterruptedException {
         AdminPage admin = new AdminPage();
         DashBoardPanelPage dashboard = new DashBoardPanelPage();

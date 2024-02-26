@@ -351,11 +351,6 @@ public class AdminPage extends BasePage {
         sendKeys_withClear(editDistrict, district);
     }
 
-    public void clickOn_TodayTab() {
-        waitUntilVisible(todaysTab);
-        WebdriverWaits.waitForSpinner();
-        moveToElement(todaysTab);
-    }
     public void click_ReAssignBn() {
         WebdriverWaits.waitUntilVisible(reAssignbtn);
         click_custom(reAssignbtn);
