@@ -643,6 +643,27 @@ public class DiagnosticianPage extends BasePage {
         click_custom(diagnosticianSaveButton);
     }
 
+    public void cancel_AvailabilityDirector() throws InterruptedException {
+        Thread.sleep(5000);
+        List<WebElement> slots = getWebElements(availableSlots, "Diagnostician Available slots");
+        System.out.println(slots.size());
+        for (WebElement slot : slots) {
+            Thread.sleep(2000);
+            moveToEleByWE(slot);
+            WebElement cancelSlot=getDriver().findElement(By.xpath("//div[@class='mbsc-ios mbsc-popup-header mbsc-popup-header-center ng-star-inserted']"));
+            if (cancelSlot.isDisplayed()) {
+                Thread.sleep(4000);
+                String getText = getText_custom(shiftText);
+                WebdriverWaits.waitUntilVisible(shiftText);
+                validate_text(shiftText, getText);
+                WebdriverWaits.waitUntilVisible(cancel);
+                click_custom(cancel);
+                break;
+            }
+        }
+
+    }
+
     public void click_ClientDetailLink(String clientLastName) {
 
         enter_SearchField(clientLastName);

@@ -69,6 +69,7 @@ public class AppointmentsPage extends BasePage {
     public By dateEle = By.xpath("((//tr[not(contains(@style,'display: none;'))])[2]//td)[4]");
     public By chooseTestingLocation = By.id("testingLocation");
 
+
     public By clientFirstName = By.xpath("//input[@placeholder='Client First Name']");
     public By clientLastName = By.xpath("//input[@placeholder='Client Last Name']");
     public By headerResource = By.xpath("//div[@class='header-resource-name']");
@@ -160,6 +161,7 @@ public class AppointmentsPage extends BasePage {
         scrollIntoView(saveBtnEditPlan);
         clickBtn_custom(saveBtnEditPlan);
     }
+
 
     public void click_ToDate() {
         WebdriverWaits.waitUntilVisible(toDateText);
@@ -496,6 +498,7 @@ public class AppointmentsPage extends BasePage {
         WebdriverWaits.waitUntilVisible(completedTab);
         WebdriverWaits.waitForSpinner();
         click_custom(completedTab);
+        WebdriverWaits.waitForSpinner();
     }
 
     public void click_CanceledTab() {

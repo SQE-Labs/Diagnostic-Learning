@@ -365,7 +365,8 @@ public class AdminTest extends BaseTest {
     }
 
     @Test(priority = 28, enabled = true, description = "Verify filter button and serarchtextbox textbox")
-    public void search_CreatedAppointment() {
+    public void search_CreatedAppointment()
+    {
 
         AdminPage admin = new AdminPage();
         admin.enterSearchField(clientFirstName);
@@ -375,7 +376,8 @@ public class AdminTest extends BaseTest {
     }
 
     @Test(priority = 29, enabled = true, description = "Verify search fromDate and toDate")
-    public void verify_FromAndToDate() throws InterruptedException {
+    public void verify_FromAndToDate() throws InterruptedException
+    {
         AppointmentsPage appPage = new AppointmentsPage();
         AdminPage admin = new AdminPage();
         ActionEngine engine;
@@ -444,7 +446,8 @@ public class AdminTest extends BaseTest {
 
 
     @Test(priority = 34, enabled = true, description = "3.9, 3.10 Creating Director from admin")
-    public void verify_Edit_Director() throws InterruptedException {
+    public void verify_Edit_Director() throws InterruptedException
+    {
         DirectorPage director = new DirectorPage();
         DashBoardPanelPage clickDirectorTab = new DashBoardPanelPage();
         clickDirectorTab.click_DirectorTab();
@@ -472,7 +475,8 @@ public class AdminTest extends BaseTest {
     }
 
     @Test(priority = 37, enabled = true, description = "Admin is directed to 'Today's Appointment' page")
-    public void verify_TodayAppointmentTab() throws InterruptedException {
+    public void verify_TodayAppointmentTab() throws InterruptedException
+    {
         AdminPage admin = new AdminPage();
         DateGenerator datePage = new DateGenerator();
         DashBoardPanelPage dashboard = new DashBoardPanelPage();

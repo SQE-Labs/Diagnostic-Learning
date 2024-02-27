@@ -60,7 +60,9 @@ public class DiagnosticianTest extends BaseTest {
     }
 
     @Test(priority = 4, enabled = true, description = "  44 Diagnostician is verifying  that relevant records appear after selecting valid range of date, on 'Upcoming Appointments' page.")
-    public void verify_From_And_Todate() {
+    public void verify_From_And_Todate()
+
+    {
         AppointmentsPage appPage = new AppointmentsPage();
         DiagnosticianPage diagnostician = new DiagnosticianPage();
         diagnostician.click_upcomingTab();
@@ -90,6 +92,7 @@ public class DiagnosticianTest extends BaseTest {
             }
         }
         Assert.assertTrue(result);
+
     }
 
     @Test(priority = 5, enabled = true, description = "31, 32 ,44, 46 Verify diagnostician is able to download csv file or not")
@@ -135,7 +138,8 @@ public class DiagnosticianTest extends BaseTest {
     }
 
     @Test(priority = 8, enabled = true, description = "24, 86, 88 Verify diagnostician is able to download csv file or not after completing the assessment")
-    public void verify_completeAss() {
+    public void verify_completeAss()
+    {
         DiagnosticianPage diagnostician = new DiagnosticianPage();
         diagnostician.verify_CompleteAss();
         diagnostician.search_CreatedDiagnostician(clientFirstName);

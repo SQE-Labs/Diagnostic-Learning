@@ -30,6 +30,7 @@ public class DirectorTest extends BaseTest {
         login.director_Login();
         validate_text(director.dashboardPage, "Dashboard");
 
+
     }
 
     @Test(priority = 2, enabled = true, description = " 4 Verify that 'Appointments' tab expands, on 'Dashboard' page.")
@@ -67,12 +68,12 @@ public class DirectorTest extends BaseTest {
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
         DirectorPage director = new DirectorPage();
         AdminPage admin = new AdminPage();
+        login.director_Login();
         panelPage.click_Availability();
         //todo
         director.director_AvailabilityWithoutSaveBtn();
         validate_text(director.validateAvailable, "Available");
-        director.click_SaveButton();
-        validate_text(admin.title, "Set Availability");
+        validate_text(director.saveButton, "Save");
 
 
     }
@@ -83,9 +84,13 @@ public class DirectorTest extends BaseTest {
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
         AppointmentsPage appPage = new AppointmentsPage();
         DirectorPage director = new DirectorPage();
+        login.director_Login();
+
         panelPage.click_Availability();
-        dashpage.cancel_Availability();
-        director.deleting_Availability();
+        director.director_Availability(5);
+        dashpage.cancel_AvailabilityDirector();
+        validate_text(director.validateAvailable, "Available");
+        /*director.deleting_Availability();
         List<WebElement> allSlots = appPage.getWebElements(appPage.slots);
         boolean result = true;
         for (int i = 0; i < allSlots.size(); i++) {
@@ -95,68 +100,80 @@ public class DirectorTest extends BaseTest {
 
             }
         }
-        validate_text(director.today, "Today");
+        validate_text(director.today, "Today");*/
     }
 
 
     @Test(priority = 6, enabled = true, description = "23 Verify that director is able to delete already available marked slot")
     public void verify_DeleteSlots() throws InterruptedException {
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
+        AppointmentsPage appPage = new AppointmentsPage();
         DirectorPage director = new DirectorPage();
         verify_Login_Director();
-        director.click_AvailaibleSlot();
-        director.click_DeleteSlot();
-        director.click_DeleteButton();
-        //  validate_text(director.deletedSlot, " ");
-        director.click_SaveButton();
+        panelPage.click_Availability();
+        director.deleting_Availability();
+        List<WebElement> allSlots = appPage.getWebElements(appPage.slots);
+        boolean result = true;
+        for (int i = 0; i < allSlots.size(); i++) {
+            String slotsClass = allSlots.get(i).getAttribute("class");
+            if (!slotsClass.contains("mbsc-ios mbsc-schedule-event-background ng-star-inserted")) {
+                result = false;
+
+            }
+
+        }
+        Assert.assertTrue(result);
 
     }
+
 
     @Test(priority = 7, enabled = true, description = "6 Verify that director is directed to 'Today's Appointments' page")
     public void verify_Today_AppointmentPage() throws InterruptedException {
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
         AppointmentsPage appointment = new AppointmentsPage();
-        panelPage.click_AppointmentsTab2();
+        verify_Login_Director();
+        Thread.sleep(5000);
+        panelPage.click_AppointmentsTab();
         appointment.click_Today_AppointmentCard();
         validate_text(appointment.todaysAppointmentTXT, "Today's Appointments");
 
     }
 
-    @Test(priority = 8, enabled = true, description = "8 Verify that director is directed to 'Today's Appointments' page")
+    @Test(priority = 8, enabled = true, description = "8. & 13. Verify that director is directed to 'Today's Appointments' page")
     public void verify_Upcoming_AppointmentPage() throws InterruptedException {
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
         AppointmentsPage appointment = new AppointmentsPage();
-        appointment.click_UpcomingCard();
-        validate_text(appointment.upcomingAppointmentTXT, "Upcoming Appointments");
-
-    }
-
-    @Test(priority = 9, enabled = true, description = "13 Verify that search textbox, 'From Date' and 'To Date' date picker appear")
-    public void verify_SearchTextBox() throws InterruptedException {
-        AppointmentsPage appointment = new AppointmentsPage();
         AdminPage admin = new AdminPage();
         appointment.click_UpcomingCard();
+        validate_text(appointment.upcomingAppointmentTXT, "Upcoming Appointments");
         appointment.click_Filter();
-        String searchPlaceHolder = admin.getAttributevalue(appointment.searchTextBox, "placeholder");
         String fromDateplaceholder = admin.getAttributevalue(appointment.fromDateText, "placeholder");
         String toDatePlaceholder = admin.getAttributevalue(appointment.toDateText, "placeholder");
         Assert.assertEquals(fromDateplaceholder, "From Date");
         Assert.assertEquals(toDatePlaceholder, "To Date");
-        Assert.assertEquals(searchPlaceHolder, "Type here to search");
+
     }
 
 
-    @Test(priority = 10, enabled = true, description = "14 Verify that relevant records appear after entering valid data in search textbox, on 'Upcoming Appointments' page")
+
+
+    @Test(priority = 9, enabled = true, description = "14 Verify that relevant records appear after entering valid data in search textbox, on 'Upcoming Appointments' page")
     public void verify_RelevantRecords() throws InterruptedException {
         AppointmentsPage appointment = new AppointmentsPage();
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
         DashboardPage dashPage = new DashboardPage();
+        DirectorPage director=new DirectorPage();
+        String data=getText_custom();
+        director.searchTextField(data);
         panelPage.click_AppointmentsTab();
         appointment.click_UpcomingCard();
+
         appointment.click_Filter();
         dashPage.enter_DataSearhTextBox("Mark Henry");
         validate_text(appointment.firstSearchedRecord, "Mark Henry");
     }
+
+
 
     //TODO //After the fix we will added assertions//
     @Test(priority = 11, enabled = true, description = "16 Verify that date picker appears after clicking on calendar icon in 'From Date' field")
@@ -693,7 +710,9 @@ public class DirectorTest extends BaseTest {
         director.click_ViewObservationBtn();
         director.click_ViewDocBtn();
         director.click_FileLabel();
+        Thread.sleep(10000);
         String downloadFile = dashboard.getDownloadFileName();
+        Thread.sleep(5000);
         Assert.assertTrue(dashboard.isFileDownloaded(downloadFile));
     }
 

@@ -36,6 +36,8 @@ public class DirectorPage extends BasePage {
     public By directorActualText = By.xpath("//h3[text()='Directors List']");
     public By directorsFirstName = By.xpath("//input[@placeholder='First Name']");
     public By directorsLastName = By.xpath("//input[@placeholder='Last Name']");
+
+    public By searchTextField = By.xpath("//input[@type='search']");
     public By shiftText = By.xpath("//div[@class='mbsc-ios mbsc-popup-header mbsc-popup-header-center ng-star-inserted']");
     public By directorsMobileNumber = By.xpath("//input[@placeholder='Cell Number']");
     public By directorsEmail = By.xpath("//input[@placeholder='Email']");
@@ -84,7 +86,7 @@ public class DirectorPage extends BasePage {
     public By dashboardPage = By.xpath("(//h3)[1]");
     public By titleUploadDoc = By.xpath("(//div[contains(@class,'py-4')]/h4)[2]");
 
-    public By fileName = By.xpath("//a[contains(@class,'text-wrap')]");
+    public By fileName = By.xpath("//div[contains(@class,'d-flex')]/p/a");
     public By viewAll = By.xpath("(//li[@class='ng-star-inserted']/a)[1]");
     public By followUpSlots = By.xpath("//div[@class='mbsc-flex-1-0 mbsc-ios mbsc-schedule-item ng-star-inserted']");
     public By followUp = By.xpath("//button[text()=' Create Follow Up ']");
@@ -153,6 +155,13 @@ public class DirectorPage extends BasePage {
         WebdriverWaits.waitUntilVisible(spinner);
         WebdriverWaits.waitForSpinner();
         click_custom(slotSelection);
+
+    }
+
+    public void searchTextField(String data)
+    {
+        WebdriverWaits.waitUntilVisible(searchTextField);
+        sendKeys_withClear(searchTextField, data);
 
     }
 
@@ -570,13 +579,13 @@ public class DirectorPage extends BasePage {
 
 
     public void director_AvailabilityWithoutSaveBtn() throws InterruptedException {
-        Thread.sleep(9000);
+        Thread.sleep(20000);
         List<WebElement> list = getDriver().findElements(By.xpath("//div[@class='mbsc-flex-1-0 mbsc-ios mbsc-schedule-item ng-star-inserted']"));
         System.out.println(list.size());
         for (WebElement box : list) {
-            Thread.sleep(2000);
+            Thread.sleep(7000);
             moveToEleByWE(box);
-            if (getDriver().findElements(By.xpath("//div[@class='ng-star-inserted']")).size() > 2) {
+            if (getDriver().findElements(By.xpath("//div[@class='ng-star-inserted']")).size() > 6) {
                 if (getDriver().findElement(By.xpath("//div[@class='ng-star-inserted']")).getText().equals("Available")) {
                     break;
                 }
