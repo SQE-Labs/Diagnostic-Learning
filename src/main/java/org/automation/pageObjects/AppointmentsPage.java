@@ -58,7 +58,7 @@ public class AppointmentsPage extends BasePage {
     public By selectWISC = By.xpath("(//div[@class='col-md-3 ng-star-inserted'])[6]");
     public By editTestPlanButton = By.xpath("(//button[@class='theme-button m-2 ng-star-inserted'])[1]");
     public By viewDetails = By.xpath("//a[@class='theme-button grey']");
-    public By App_Text = By.xpath("//h3");
+    public By dashboardTitleText = By.xpath("(//div/h3)[1]");
 
     public By upcomingAppointmentTXT = By.xpath("//h3[@class='mb-4 mb-md-0']");
     public By viewAllActualText = By.xpath("//h3[@class='mb-4 mb-md-0']");
@@ -88,6 +88,7 @@ public class AppointmentsPage extends BasePage {
     public By collectDeposit = By.xpath("//button[text()='Collect Deposit']");
     public By logOutLink = By.xpath("//a[text()='Log Out']");
     public By reasonForCall = By.id("reasonForCall");
+    public By paymentPopUp=By.xpath("(//div/h4)[1]");
     public By actualText = By.xpath("//h4[text()='Appointment Scheduled!!']");
     public By cancelButton = By.xpath("//button[@class='theme-button danger m-2 ng-star-inserted']");
     public By radioBox = By.xpath("(//label[@class='custom-control-label'])[1]");
@@ -110,7 +111,8 @@ public class AppointmentsPage extends BasePage {
     public By fromDateText = By.xpath("//input[@formcontrolname='fromDate']");
     public By emailAddress = By.xpath("//input[@placeholder='Email Address']");
     public By saveBtnCalendar = By.xpath("//a[@class='theme-button green float-right mr-2']");
-    public By closeBtn = By.xpath("//button[@class='theme-button grey float-right']");
+
+    public By goBackBtn=By.xpath("//a[@class='ml-auto grey theme-button']");
     //******************Verifying cancelled appointments*****************
 
     public void clickOn_TodayTab() {
@@ -167,9 +169,15 @@ public class AppointmentsPage extends BasePage {
         sendKeys_withClear(otherComment, otherCommentText);
     }
 
+
     public void click_Filter() {
         WebdriverWaits.waitUntilVisible(directorFilter);
         clickBtn_custom(directorFilter);
+    }
+    public void click_goBackBtn(){
+        WebdriverWaits.waitUntilVisible(goBackBtn);
+        WebdriverWaits.waitForSpinner();
+        click_custom(goBackBtn);
     }
 
     public void selectGradeType(int gradeType) {
@@ -337,7 +345,9 @@ public class AppointmentsPage extends BasePage {
         reasonForCallDropDown(reasonForCallText);
         enterTestAmount(testAmountText);
         clickContinueToDepositButton();
-        WebdriverWaits.waitForSpinner();
+        WebdriverWaits.waitUntilVisible(paymentPopUp);
+        validate_text(paymentPopUp, "Booking Payment");
+
         enterAmount(enterAmountText);
         clickCollectDepositButton();
         WebdriverWaits.waitUntilVisible(actualText);
@@ -449,8 +459,8 @@ public class AppointmentsPage extends BasePage {
         WebdriverWaits.waitUntilVisible(holdtab);
         WebdriverWaits.waitForSpinner();
         click_custom(holdtab);
-
     }
-
-
+    public void navigate_appointmentDashboardPage(){
+        click_goBackBtn();
+      }
 }

@@ -22,6 +22,7 @@ import static test.AdminTest.clientLastName;
 public class DiagnosticianPage extends BasePage {
 
     public By createDiagnostician = By.xpath("//button[text()='Create Diagnostician']");
+    public By createDiagnosticianBtn = By.xpath("//button[@class='theme-button float-md-right']");
     public By diagListPageText = By.xpath("//h3[text()='Diagnosticians List']");
     public By diagnostician_FirstName = By.xpath("//input[@placeholder='First Name']");
     public By diagnostician_LastName = By.xpath("//input[@placeholder='Last Name']");
@@ -40,7 +41,7 @@ public class DiagnosticianPage extends BasePage {
 
 
     public By diagnosticianDashBoardPage = By.xpath("(//h3)[1]");
-
+    public By diagnosticListText = By.xpath("//h3");
 
 
     //**************Search created diagnostician*************
@@ -77,9 +78,9 @@ public class DiagnosticianPage extends BasePage {
 
 
     public By appointmentsTab = By.xpath("//a[text()=' Appointments ']");
-     public By dashboard = By.xpath("//h3[text()='Dashboard']");
+    public By dashboard = By.xpath("//h3[text()='Dashboard']");
 
-     public By enableSaveButton = By.xpath("//button[@class='theme-button float-md-right green']");
+    public By enableSaveButton = By.xpath("//button[@class='theme-button float-md-right green']");
     public By shiftText = By.xpath("//div[@class='mbsc-ios mbsc-popup-header mbsc-popup-header-center ng-star-inserted']");
 
     public By upcomingTab = By.xpath("//a[text()='Upcoming']");
@@ -132,11 +133,21 @@ public class DiagnosticianPage extends BasePage {
     //****************Complete Assessment*******************
     public By testComTab = By.xpath("//a[text()='Test complete']");
     public By cancelTab = By.xpath("//a[text()='Canceled']");
+    public By backBtn = By.xpath("//button[@class='theme-button grey float-md-right mr-md-4']");
 
     public void click_createDiagnosticianButton() {
         WebdriverWaits.waitUntilVisible(createDiagnostician);
         WebdriverWaits.waitForSpinner();
         click_custom(createDiagnostician);
+    }
+
+    public void click_DiagnosticianBtn() {
+        WebdriverWaits.waitUntilVisible(createDiagnosticianBtn);
+        click_custom(createDiagnosticianBtn);
+    }
+
+    public void click_BackBtn() {
+        click_custom(backBtn);
     }
 
     public void enter_diagnostician_FirstName(String CustomerFirstName) {
@@ -264,7 +275,6 @@ public class DiagnosticianPage extends BasePage {
 
     public void create_Diagnostician(String CustomerFirstName, String CustomerLastName, String diagnostician_MobileNumberText, String EmailAddress, String UserName, String PasswordText, String RePassword) throws InterruptedException {
         WebdriverWaits.waitForSpinner();
-        click_createDiagnosticianButton();
         enter_diagnostician_FirstName(CustomerFirstName);
         enter_diagnostician_LastName(CustomerLastName);
         enter_Diagnostician_MobileNumber(diagnostician_MobileNumberText);
@@ -273,7 +283,7 @@ public class DiagnosticianPage extends BasePage {
         userNameField(UserName);
         create_passwordField(PasswordText);
         confirm_PasswordField(RePassword);
-        click_createDiagnosticianButton();
+        click_DiagnosticianBtn();
     }
 
     public void search_CreatedDiagnostician(String UserName) {

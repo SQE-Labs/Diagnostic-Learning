@@ -319,7 +319,7 @@ public class SuperAdminTest extends BaseTest {
         panelPage.click_BackButton();
     }
 
-    @Test(priority = 21, enabled = true, description = "3.2, 3.3, 3.15, 3.17 Super admin is able to edit the created director or not")
+    @Test(priority = 21, enabled = true, description = "3.2, 3.3, 3.15, 3., 4.11 Super admin is able to edit the created director or not")
     public void edit_Director() throws InterruptedException {
         String directorEmailAddress1 = directorFirstName + "12@yopmail.com";
         DirectorPage director = new DirectorPage();

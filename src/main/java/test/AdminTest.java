@@ -1,4 +1,5 @@
 package test;
+
 import org.automation.base.BaseTest;
 import org.automation.pageObjects.*;
 
@@ -8,13 +9,17 @@ import org.automation.pageObjects.PaymentPage;
 import org.automation.utilities.WebdriverWaits;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
+
 import java.awt.*;
 import java.io.FileNotFoundException;
+
 import org.testng.annotations.Test;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.List;
+
 import static org.automation.utilities.Assertions.validate_text;
 import static org.automation.utilities.Assertions.*;
 import static org.automation.utilities.WebdriverWaits.*;
@@ -54,14 +59,15 @@ public class AdminTest extends BaseTest {
     }
 
     //********* Create Daignostician by admin
-    @Test(priority = 1, enabled = true, description = "6.1,5.7,1.19  Create diagnostician by admin")
+    @Test(priority = 1, enabled = true, description = "6.1, 5.7, 1.19, 5.6 Create diagnostician by admin")
     public void verify_CreateDiagnostician() throws InterruptedException {
         DiagnosticianPage diagnostician = new DiagnosticianPage();
 
-        DashBoardPanelPage tab = new DashBoardPanelPage();
+        DashBoardPanelPage panelPage = new DashBoardPanelPage();
         AdminPage reAssign = new AdminPage();
+
         // Click on diagnostician tab from left panel.
-        tab.click_DiagnosticianTab();
+        panelPage.click_DiagnosticianTab();
         WebdriverWaits.waitUntilVisible(diagnostician.diagListPageText);
         validate_text(diagnostician.diagListPageText, "Diagnosticians List");
         //Create Diagnostician.
@@ -71,6 +77,15 @@ public class AdminTest extends BaseTest {
         diagnosticianEmailAddress = diagnosticianFirstName + "10@yopmail.com";
         String diagnosticianPhoneNumber = RandomStrings.requiredDigits(10);
 
+
+        diagnostician.click_createDiagnosticianButton();
+
+        //  Back to diagnostician list page
+        diagnostician.click_BackBtn();
+        validate_text(diagnostician.diagnosticListText, "Diagnosticians List");
+
+        // Creating Diagnostician
+        diagnostician.click_createDiagnosticianButton();
         diagnostician.create_Diagnostician(diagnosticianFirstName, diagnosticianLastName, diagnosticianPhoneNumber, diagnosticianEmailAddress, diagnosticianUserName, "123456", "123456");
         WebdriverWaits.waitUntilVisible(diagnostician.actualText);
 
@@ -85,15 +100,20 @@ public class AdminTest extends BaseTest {
         DashBoardPanelPage logout = new DashBoardPanelPage();
         logout.click_LogOutLink();
         diagnostician.login_As_Diagnostician(diagnosticianUserName, "123456");
+
+        //Set availability
         diagnostician.set_Availability();
-        // diagnostician.click_Availablity();
+
+        //Cancel Availabilty
         diagnostician.cancel_Availability();
+
+        //Delete Availabilty
         diagnostician.deleting_Availability();
         logout.click_LogOutLink();
 
     }
 
-    @Test(priority = 3, enabled = true, description = "1.18, 3.1, 3.6, 4.1, 3.10,   Creating Director from admin")
+    @Test(priority = 3, enabled = true, description = "1.18, 3.1, 3.6, 4.1, 3.10, 3.9  Creating Director from admin")
     public void verify_createDirector() throws InterruptedException {
         DashBoardPanelPage panelpage = new DashBoardPanelPage();
         DirectorPage director = new DirectorPage();
@@ -106,6 +126,14 @@ public class AdminTest extends BaseTest {
         dirCellNumber = RandomStrings.requiredDigits(10);
         panelpage.click_DirectorTab();
         validate_text(director.directorActualText, "Directors List");
+
+        director.click_CreateDirectorsButton();
+        director.click_BackBtn();
+        WebdriverWaits.waitUntilVisible(director.directorActualText);
+        WebdriverWaits.waitForSpinner();
+        validate_text(director.directorActualText, "Directors List");
+
+        director.click_CreateDirectorsButton();
         director.create_Director(directorFirstName, directorLastName, dirCellNumber, directorEmailAddress, directorUserName, "123456", "123456");
         panelpage.click_LogOutLink();
     }
@@ -121,12 +149,12 @@ public class AdminTest extends BaseTest {
         panelPage.click_LogOutLink();
     }
 
-    @Test(priority = 5, enabled = true, description = "2.1, 2.2, 2.5, 2.10, 2.12,1.20, 2.14, Appointment scheduled by admin for a client")
+    @Test(priority = 5, enabled = true, description = "2.1, 2.2, 2.5, 2.10, 2.12,1.20, 2.14,2.13 Appointment scheduled by admin for a client")
     public void verify_ScheduleAppointment() throws InterruptedException {
         LoginPage login = new LoginPage();
         DashboardPage dashboard = new DashboardPage();
         AppointmentsPage appPage = new AppointmentsPage();
-        login.adminLogin("allen", "123456");
+        login.adminLogin(adminUserName, "123456");
         dashboard.clickScheduleAppointment();
         WebdriverWaits.waitUntilVisible(appPage.titleText);
         validate_text(appPage.titleText, "Create Appointment");
@@ -172,6 +200,10 @@ public class AdminTest extends BaseTest {
         AppointmentsPage fillClientDetails = new AppointmentsPage();
 
         dashboard.clickScheduleAppointment();
+        appPage.navigate_appointmentDashboardPage();
+        validate_text(appPage.dashboardTitleText, "Dashboard");
+
+        dashboard.clickScheduleAppointment();
         appPage.selectTestinglocation("Austin");
         appPage.selectAppointmentSlot(0);
         appPage.selectAssesmentType("Adult ADHD Only");
@@ -190,13 +222,14 @@ public class AdminTest extends BaseTest {
         validate_text(admin.validateScheduledFollowUp, "Follow Up Scheduled!!");
         admin.click_BackBtn();
     }
+
     @Test(priority = 0, enabled = true, description = "8.6 Re-Assign Appointment for client by admin")
-    public void re_AssignAppointment()  {
+    public void re_AssignAppointment() {
         AdminPage reAssign = new AdminPage();
         reAssign.click_ReAssignBn();
         WebdriverWaits.waitUntilVisible(reAssign.reAssignDiagList);
-        List<WebElement> reassigList= reAssign.get_diagList(reAssign.diagList);
-        boolean result = reAssign.compare_DiagAndReAssignDiagList(diagList,reassigList);
+        List<WebElement> reassigList = reAssign.get_diagList(reAssign.diagList);
+        boolean result = reAssign.compare_DiagAndReAssignDiagList(diagList, reassigList);
         Assert.assertTrue(result);
     }
 
@@ -432,11 +465,15 @@ public class AdminTest extends BaseTest {
 
     //******************* Edit Director ***************//
 
-    @Test(priority = 34, enabled = true, description = "3.9, 3.10, 4.6, 4.11, 4.13, 6.6 Creating Director from admin")
+    @Test(priority = 34, enabled = true, description = "3.10, 4.6, 4.11, 4.13, 6.6,4.5 Creating Director from admin")
     public void verify_Edit_Director() throws InterruptedException {
         DirectorPage director = new DirectorPage();
         DashBoardPanelPage clickDirectorTab = new DashBoardPanelPage();
         clickDirectorTab.click_DirectorTab();
+
+        director.search_CreatedDirector(directorUserName);
+        validate_text(director.clientName, directorUserName);
+
         directorEmailAddress = directorFirstName + "010@yopmail.com";
         director.edit_Director(directorEmailAddress, "12345678", "12345678");
         validate_text(director.edit_SuccMsg, "Director details updated successfully.");
@@ -465,14 +502,14 @@ public class AdminTest extends BaseTest {
     public void verify_TodayAppointmentTab() throws InterruptedException {
         AdminPage admin = new AdminPage();
         DateGenerator datePage = new DateGenerator();
-        LoginPage login =new LoginPage();
+        LoginPage login = new LoginPage();
         DashBoardPanelPage dashboard = new DashBoardPanelPage();
         login.adminLogin("allen", "123456");
         dashboard.click_AppointmentsTab();
         Thread.sleep(2000);
         dashboard.click_AppointmentsTab();
-         WebdriverWaits.waitUntilInvisible(admin.viewAllTab);
-        Assert.assertFalse(dashboard.isElementDisplay_custom(admin.viewAllTab,"ViewALLTab"));
+        WebdriverWaits.waitUntilInvisible(admin.viewAllTab);
+        Assert.assertFalse(dashboard.isElementDisplay_custom(admin.viewAllTab, "ViewALLTab"));
         Thread.sleep(5000);
         dashboard.click_AppointmentsTab();
         Thread.sleep(5000);
@@ -733,7 +770,7 @@ public class AdminTest extends BaseTest {
         panelpage.click_LogOutLink();
     }
 
-    @Test(dependsOnMethods = {"verify_Cancelled_Appointments"},description="verify that admin is able to do full payment or not")
+    @Test(dependsOnMethods = {"verify_Cancelled_Appointments"}, description = "verify that admin is able to do full payment or not")
     public void verify_Full_Payment() throws InterruptedException, AWTException {
         LoginPage login = new LoginPage();
         AdminPage admin = new AdminPage();

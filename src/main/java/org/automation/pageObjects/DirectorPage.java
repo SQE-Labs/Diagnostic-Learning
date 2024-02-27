@@ -39,8 +39,8 @@ public class DirectorPage extends BasePage {
 
     //**************Search created director***************
     public By filterButton = By.xpath("//a[text()='Filter']");
-    public By searchField = By.xpath("//input[@id='filterSearch']");
-
+    public By searchField = By.xpath("//input[@aria-controls='appointmentTable']");
+    public By clientName=By.xpath("(//td)[2]");
 
     //****************edit created director**************
 
@@ -66,14 +66,7 @@ public class DirectorPage extends BasePage {
     public By yearButton = By.xpath("//span[@class='mbsc-calendar-title mbsc-calendar-year mbsc-ios ng-star-inserted']");
     public By monthHeader = By.xpath("//span[@class='mbsc-calendar-month mbsc-calendar-title mbsc-ios ng-star-inserted']");
     public By yearHeader = By.xpath("//span[@class='mbsc-calendar-title mbsc-calendar-year mbsc-ios ng-star-inserted']");
-    public By clickOnBox = By.xpath("(//div[@class='mbsc-flex-1-0 mbsc-ios mbsc-schedule-item ng-star-inserted'])[23]");
-    public By clickOnBox1 = By.xpath("(//div[@class='mbsc-flex-1-0 mbsc-ios mbsc-schedule-item ng-star-inserted'])[24]");
-    public By clickOnBox2 = By.xpath("(//div[@class='mbsc-flex-1-0 mbsc-ios mbsc-schedule-item ng-star-inserted'])[25]");
-    public By clickOnBox3 = By.xpath("(//div[@class='mbsc-flex-1-0 mbsc-ios mbsc-schedule-item ng-star-inserted'])[26]");
-    public By clickOnBox4 = By.xpath("(//div[@class='mbsc-flex-1-0 mbsc-ios mbsc-schedule-item ng-star-inserted'])[27]");
-    public By clickOnBox5 = By.xpath("(//div[@class='mbsc-flex-1-0 mbsc-ios mbsc-schedule-item ng-star-inserted'])[28]");
-    public By clickOnBox6 = By.xpath("(//div[@class='mbsc-flex-1-0 mbsc-ios mbsc-schedule-item ng-star-inserted'])[29]");
-    // public By clickOnBox6=By.xpath("(//div[@class='mbsc-flex-1-0 mbsc-ios mbsc-schedule-item ng-star-inserted'])[21]");
+      public By backBtn =By.xpath("//button[@class='theme-button grey float-md-right mr-md-4']");
     public By availableText = By.xpath("//div[text()='Available']");
     public By saveButton = By.xpath("//button[text()='Save']");
     public By validationMsg = By.xpath("//div[@class='alert alert-danger ng-star-inserted']");
@@ -239,8 +232,8 @@ public class DirectorPage extends BasePage {
         click_custom(updateButton);
     }
 
-    public void clickOn_YearHeader() {
-        click_custom(yearHeader);
+    public void click_BackBtn() {
+        click_custom(backBtn);
     }
 
     public void click_MonthHeader() {
@@ -300,7 +293,6 @@ public class DirectorPage extends BasePage {
 
     //*********Create director**************
     public void create_Director(String directorsFirstNameText, String directorsLastNameText, String directorsMobileNumberText, String directorsEmailText, String directorsUserNameText, String password_FieldText, String confirmPasswordFieldText) throws InterruptedException {
-        click_CreateDirectorsButton();
         click_directorsFirstNameField(directorsFirstNameText);
         click_directorsLastNameField(directorsLastNameText);
         click_directorsMobileNumberField(directorsMobileNumberText);
@@ -329,8 +321,7 @@ public class DirectorPage extends BasePage {
     }
 
     //**************Search created director*************
-    public void search_CreatedDirector(String UserName) throws InterruptedException {
-        click_filterButton();
+    public void search_CreatedDirector(String UserName)  {
         enterInSearchField(UserName);
     }
 
