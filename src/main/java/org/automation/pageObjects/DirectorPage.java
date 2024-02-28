@@ -35,6 +35,8 @@ public class DirectorPage extends BasePage {
     public By password_Field = By.xpath("//input[@placeholder='Create Password']");
     public By confirm_PasswordField = By.xpath("//input[@class='ng-untouched ng-pristine ng-valid border border-danger']");
     public By createDirectorsButton = By.xpath("//button[text()='Create Director']");
+    public By createDirectorBtn=By.xpath("//button[@class='theme-button float-md-right']");
+
     public By availableSlots = By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-all-day-inner mbsc-schedule-event-inner ng-star-inserted']");
 
     //**************Search created director***************
@@ -197,7 +199,12 @@ public class DirectorPage extends BasePage {
     }
 
     public void click_createDirectorButton() {
+        WebdriverWaits.waitUntilVisible(createDirectorsButton);
+        WebdriverWaits.waitForSpinner();
         click_custom(createDirectorsButton);
+    }
+    public void click_createDirectorBtn(){
+        click_custom(createDirectorBtn);
     }
 
     //***************search created diagnostician******************
@@ -208,6 +215,8 @@ public class DirectorPage extends BasePage {
     }
 
     public void enterInSearchField(String searchFieldText) {
+        WebdriverWaits.waitUntilVisible(searchField);
+        WebdriverWaits.waitForSpinner();
         sendKeys_withClear(searchField, searchFieldText);
     }
 
@@ -293,6 +302,7 @@ public class DirectorPage extends BasePage {
 
     //*********Create director**************
     public void create_Director(String directorsFirstNameText, String directorsLastNameText, String directorsMobileNumberText, String directorsEmailText, String directorsUserNameText, String password_FieldText, String confirmPasswordFieldText) throws InterruptedException {
+        click_createDirectorButton();
         click_directorsFirstNameField(directorsFirstNameText);
         click_directorsLastNameField(directorsLastNameText);
         click_directorsMobileNumberField(directorsMobileNumberText);
@@ -301,7 +311,7 @@ public class DirectorPage extends BasePage {
         click_directorsUserNameField(directorsUserNameText);
         click_passwordField(password_FieldText);
         enter_ConfirmPassword(confirmPasswordFieldText);
-        click_createDirectorButton();
+        click_createDirectorBtn();
     }
 
     public void click_EditBtnAfterSearch() throws InterruptedException {

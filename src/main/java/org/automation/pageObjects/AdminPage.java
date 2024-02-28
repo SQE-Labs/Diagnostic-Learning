@@ -295,8 +295,9 @@ public class AdminPage extends BasePage {
     }
 
     public void enterTxt_InSearchField(String searchFieldText) {
-        WebdriverWaits.waitUntilVisible(adminSearchField);
-        sendKeys_withClear(adminSearchField, searchFieldText);
+        WebdriverWaits.waitUntilVisible(searchTextBox);
+        WebdriverWaits.waitForSpinner();
+        sendKeys_withClear(searchTextBox, searchFieldText);
     }
 
     public void click_SearchButton() {
@@ -353,9 +354,8 @@ public class AdminPage extends BasePage {
 
     public void click_ReAssignBn() {
         WebdriverWaits.waitUntilVisible(reAssignbtn);
+        WebdriverWaits.waitForSpinner();
         click_custom(reAssignbtn);
-
-
     }
 
     public void enter_Reason(String reason) {
@@ -398,6 +398,7 @@ public class AdminPage extends BasePage {
     }
 
     public void off_ToggleButton() {
+        WebdriverWaits.waitUntilVisible(toggle);
         click_custom(toggle);
     }
 
@@ -448,7 +449,7 @@ public class AdminPage extends BasePage {
 //*******************SuperAdmin  searching created admin******************
 
     public void search_CreatedAdmin(String UserName) {
-        click_filterButton();
+        //  click_filterButton();
         enterTxt_InSearchField(UserName);
     }
     //******************EDIT ADMIN****************
@@ -737,6 +738,7 @@ public class AdminPage extends BasePage {
         WebdriverWaits.waitForSpinner();
         click_custom(testCompleteTab);
     }
+
     public void filter_ForUpcoming(String clientText) {
         waitUntilVisible(filterButton);
         WebdriverWaits.waitForSpinner();
@@ -816,15 +818,18 @@ public class AdminPage extends BasePage {
         click_CancelTab();
         enterInSearchField(clientName);
     }
+
     public void click_Card() {
         waitUntilVisible(card);
         click_custom(card);
     }
+
     public void enterClientNameInSearchFieldCompleted(String nameOfClient) {
         WebdriverWaits.waitUntilVisible(searchTextBox);
         WebdriverWaits.waitForSpinner();
         sendKeys_withClear(searchTextBox, nameOfClient);
     }
+
     public void click_ViewDetailsBtn() {
         WebdriverWaits.waitUntilVisible(getViewDetails);
         WebdriverWaits.waitForSpinner();
@@ -836,6 +841,7 @@ public class AdminPage extends BasePage {
         WebdriverWaits.waitForSpinner();
         scrollIntoView(amountDue);
     }
+
     public void click_ViewDocumentsButton() {
         WebdriverWaits.waitUntilVisible(viewDocumentsButton);
         click_custom(viewDocumentsButton);
@@ -845,6 +851,7 @@ public class AdminPage extends BasePage {
         waitUntilVisible(backButton);
         click_custom(backButton);
     }
+
     public void click_ViewObservationBtn() {
         WebdriverWaits.waitUntilVisible(viewStudentObservationButton);
         click_custom(viewStudentObservationButton);
@@ -855,6 +862,7 @@ public class AdminPage extends BasePage {
         WebdriverWaits.waitForSpinner();
         click_custom(viewDocumentBtn);
     }
+
     public void clickOn_UploadButtons() {
         click_custom(uploadButton);
     }
@@ -864,6 +872,7 @@ public class AdminPage extends BasePage {
         WebdriverWaits.waitForSpinner();
         click_custom(closeIcon);
     }
+
     public void filter_ForCancel() {
         waitUntilVisible(filterButton);
         WebdriverWaits.waitForSpinner();
@@ -877,6 +886,7 @@ public class AdminPage extends BasePage {
         WebdriverWaits.waitForSpinner();
         moveToElement(chooseField);
     }
+
     public void clickOn_UnHoldBtn() {
         waitUntilVisible(unHoldBtn);
         WebdriverWaits.waitForSpinner();

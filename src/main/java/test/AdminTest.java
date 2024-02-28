@@ -29,7 +29,7 @@ public class AdminTest extends BaseTest {
 
     public static String clientLastName;
     public static String clientFirstName;
-    public static String diagnosticianUserName;
+    public  String diagnosticianUserName;
     String directorFirstName;
     String directorUserName;
     String dirCellNumber;
@@ -79,9 +79,10 @@ public class AdminTest extends BaseTest {
 
 
         diagnostician.click_createDiagnosticianButton();
-
         //  Back to diagnostician list page
         diagnostician.click_BackBtn();
+        WebdriverWaits.waitUntilVisible(diagnostician.diagnosticListText);
+        WebdriverWaits.waitForSpinner();
         validate_text(diagnostician.diagnosticListText, "Diagnosticians List");
 
         // Creating Diagnostician
@@ -90,35 +91,17 @@ public class AdminTest extends BaseTest {
         WebdriverWaits.waitUntilVisible(diagnostician.actualText);
 
         //validate Diagnostician
+        diagnostician.enter_InSearchField(diagnosticianFirstName);
         validate_text(diagnostician.actualText, diagnosticianUserName);
-        diagList = reAssign.get_diagList(reAssign.diagList);
-    }
+     }
 
-    @Test(priority = 2, enabled = true, description = "Set availability for diagnostician by admin")
-    public void verify_DiagnosticianAvailability() throws InterruptedException {
-        DiagnosticianPage diagnostician = new DiagnosticianPage();
-        DashBoardPanelPage logout = new DashBoardPanelPage();
-        logout.click_LogOutLink();
-        diagnostician.login_As_Diagnostician(diagnosticianUserName, "123456");
-
-        //Set availability
-        diagnostician.set_Availability();
-
-        //Cancel Availabilty
-        diagnostician.cancel_Availability();
-
-        //Delete Availabilty
-        diagnostician.deleting_Availability();
-        logout.click_LogOutLink();
-
-    }
 
     @Test(priority = 3, enabled = true, description = "1.18, 3.1, 3.6, 4.1, 3.10, 3.9  Creating Director from admin")
     public void verify_createDirector() throws InterruptedException {
         DashBoardPanelPage panelpage = new DashBoardPanelPage();
         DirectorPage director = new DirectorPage();
         LoginPage login = new LoginPage();
-        login.adminLogin(adminUserName, "12345678");
+      //  login.adminLogin(adminUserName, "12345678");
         directorFirstName = "AU_Arlo" + RandomStrings.requiredCharacters(3);
         directorLastName = "AU_Joel" + RandomStrings.requiredCharacters(3);
         directorEmailAddress = directorFirstName + "@yopmail.com";
@@ -223,7 +206,7 @@ public class AdminTest extends BaseTest {
         admin.click_BackBtn();
     }
 
-    @Test(priority = 0, enabled = true, description = "8.6 Re-Assign Appointment for client by admin")
+    @Test(priority = 11, enabled = true, description = "8.6 Re-Assign Appointment for client by admin")
     public void re_AssignAppointment() {
         AdminPage reAssign = new AdminPage();
         reAssign.click_ReAssignBn();

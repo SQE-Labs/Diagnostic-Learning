@@ -50,7 +50,7 @@ public class DiagnosticianPage extends BasePage {
 
     public By searchFld = By.xpath("//input[@placeholder='Type here to search']");
     public By searchFild = By.xpath("//input[@aria-controls='DataTables_Table_0']");
-    public By testCompleteSearchFld = By.xpath("//input[@aria-controls='appointmentTable']");
+    public By SearchField = By.xpath("//input[@aria-controls='appointmentTable']");
     public By viewClientDetailLink = By.xpath("(//td)[6]");
     public By clientDetailText = By.xpath("//div[contains(@class,'page-header align-items-lg-center')]");
     public By clientNameText = By.cssSelector("tr:not([style='display: none;' ]) td:nth-child(1)");
@@ -214,10 +214,10 @@ public class DiagnosticianPage extends BasePage {
         sendKeys_withClear(searchFild, searchFieldTexts);
     }
 
-    public void enter_InSearchField(String testCompleteClientName) {
-        WebdriverWaits.waitUntilVisible(testCompleteSearchFld);
+    public void enter_InSearchField(String ClientName) {
+        WebdriverWaits.waitUntilVisible(SearchField);
         WebdriverWaits.waitForSpinner();
-        sendKeys_withClear(testCompleteSearchFld, testCompleteClientName);
+        sendKeys_withClear(SearchField, ClientName);
     }
 
     public void click_ViewDetailLink() {
@@ -225,7 +225,7 @@ public class DiagnosticianPage extends BasePage {
     }
 
     //+++++++++++++++++EDIT DIAGNOSTICIAN++++++++++++++
-    public void click_EditButton() throws InterruptedException {
+    public void click_EditButton()  {
         WebdriverWaits.waitUntilVisible(editButton);
         WebdriverWaits.waitForSpinner();
         moveToElement(editButton);
@@ -275,6 +275,7 @@ public class DiagnosticianPage extends BasePage {
 
     public void create_Diagnostician(String CustomerFirstName, String CustomerLastName, String diagnostician_MobileNumberText, String EmailAddress, String UserName, String PasswordText, String RePassword) throws InterruptedException {
         WebdriverWaits.waitForSpinner();
+        click_createDiagnosticianButton();
         enter_diagnostician_FirstName(CustomerFirstName);
         enter_diagnostician_LastName(CustomerLastName);
         enter_Diagnostician_MobileNumber(diagnostician_MobileNumberText);
@@ -310,8 +311,8 @@ public class DiagnosticianPage extends BasePage {
     }
 
     public void disable_Diagnostician(String userNameText) throws InterruptedException {
-        click_FilterButton();
-        enterInSearchField(userNameText);
+//click_FilterButton();
+        enter_InSearchField(userNameText);
         Thread.sleep(2000);
         click_EditButton();
         off_ToggleButton();
