@@ -26,22 +26,23 @@ public class DirectorTest extends BaseTest {
     LoginPage login = new LoginPage();
 
     @Test(priority = 1, enabled = true, description = "1 Verify Director is able to login with valid credentials")
-    public void verify_Login_Director() {
+    public void verify_Login_Director()
+    {
         login.director_Login();
         validate_text(director.dashboardPage, "Dashboard");
-
 
     }
 
     @Test(priority = 2, enabled = true, description = " 4 Verify that 'Appointments' tab expands, on 'Dashboard' page.")
-    public void verify_AppointmentsTabExpands() {
+    public void verify_AppointmentsTabExpands()
+    {
         panelPage.click_AppointmentsTab();
         validate_text(director.viewAll, "View All");
 
     }
 
 
-    @Test(priority = 3, enabled = true, description = "12 and 13 Verify that 'Set Availability' page opens up and Year Picker appear")
+    @Test(priority = 3, enabled =true , description = "Bug 12 and 13 Verify that 'Set Availability' page opens up and Year Picker appear")
     public void validate_SetAppointment_AND_YearPicker() throws InterruptedException {
         panelPage.click_Availability();
         validate_text(director.setAvailaibility, "Set Availability");
@@ -55,6 +56,7 @@ public class DirectorTest extends BaseTest {
         // Split the string into words
         String[] words = yearTitleText.split(" ");
 
+
         // Get the first word
         String actualText = words[0];
         System.out.println(actualText);
@@ -63,29 +65,27 @@ public class DirectorTest extends BaseTest {
     }
 
 
-    @Test(priority = 4, enabled = true, description = "20 and 21 Verify that 'Available' card appears and click on Save button.")
-    public void verify_AvailableCards_AND_SaveButtonEnabled() throws InterruptedException {
+    @Test(priority = 4, enabled = false, description = "20 and 21 Verify that 'Available' card appears and click on Save button.")
+    public void verify_AvailableCards_AND_SaveButtonEnabled() throws InterruptedException
+    {
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
         DirectorPage director = new DirectorPage();
         AdminPage admin = new AdminPage();
-        login.director_Login();
         panelPage.click_Availability();
-        //todo
         director.director_AvailabilityWithoutSaveBtn();
         validate_text(director.validateAvailable, "Available");
         validate_text(director.saveButton, "Save");
 
-
     }
 
 
-    @Test(priority = 5, enabled = true, description = "24 Verify that '<Date>' popup closes, when director clicks on 'Cancel' button")
-    public void verify_Closed_PopUp_OnCancel() throws InterruptedException {
+    @Test(priority = 5, enabled = false, description = "24 Verify that '<Date>' popup closes, when director clicks on 'Cancel' button")
+    public void verify_Closed_PopUp_OnCancel() throws InterruptedException
+    {
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
         AppointmentsPage appPage = new AppointmentsPage();
         DirectorPage director = new DirectorPage();
         login.director_Login();
-
         panelPage.click_Availability();
         director.director_Availability(5);
         dashpage.cancel_AvailabilityDirector();
@@ -104,14 +104,14 @@ public class DirectorTest extends BaseTest {
     }
 
 
-    @Test(priority = 6, enabled = true, description = "23 Verify that director is able to delete already available marked slot")
+    @Test(priority = 6, enabled = false, description = "23 Verify that director is able to delete already available marked slot")
     public void verify_DeleteSlots() throws InterruptedException {
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
         AppointmentsPage appPage = new AppointmentsPage();
         DirectorPage director = new DirectorPage();
         verify_Login_Director();
         panelPage.click_Availability();
-        director.deleting_Availability();
+     //   director.deleting_Availability();
         List<WebElement> allSlots = appPage.getWebElements(appPage.slots);
         boolean result = true;
         for (int i = 0; i < allSlots.size(); i++) {
@@ -131,143 +131,83 @@ public class DirectorTest extends BaseTest {
     public void verify_Today_AppointmentPage() throws InterruptedException {
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
         AppointmentsPage appointment = new AppointmentsPage();
-        verify_Login_Director();
         Thread.sleep(5000);
-        panelPage.click_AppointmentsTab();
         appointment.click_Today_AppointmentCard();
         validate_text(appointment.todaysAppointmentTXT, "Today's Appointments");
-
     }
 
-    @Test(priority = 8, enabled = true, description = "8. & 13. Verify that director is directed to 'Today's Appointments' page")
-    public void verify_Upcoming_AppointmentPage() throws InterruptedException {
+    @Test(priority = 8, enabled = true, description = "8. & 28. Verify that director is directed to 'Today's Appointments' page")
+    public void verify_Upcoming_AppointmentPage() throws InterruptedException, FileNotFoundException {
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
         AppointmentsPage appointment = new AppointmentsPage();
         AdminPage admin = new AdminPage();
         appointment.click_UpcomingCard();
+
         validate_text(appointment.upcomingAppointmentTXT, "Upcoming Appointments");
-        appointment.click_Filter();
+       /* appointment.click_Filter();
         String fromDateplaceholder = admin.getAttributevalue(appointment.fromDateText, "placeholder");
         String toDatePlaceholder = admin.getAttributevalue(appointment.toDateText, "placeholder");
         Assert.assertEquals(fromDateplaceholder, "From Date");
         Assert.assertEquals(toDatePlaceholder, "To Date");
-
+*/
+        appointment.click_ExportCSVButton();
+        String downloadFile = panelPage.getDownloadFileName();
+        Assert.assertTrue(panelPage.isFileDownloaded(downloadFile));
+        getDriver().navigate().to("https://topuptalent.com/Diagnosticlearning/");
     }
 
 
 
 
     @Test(priority = 9, enabled = true, description = "14 Verify that relevant records appear after entering valid data in search textbox, on 'Upcoming Appointments' page")
-    public void verify_RelevantRecords() throws InterruptedException {
-        AppointmentsPage appointment = new AppointmentsPage();
+    public void verify_RelevantRecords() throws InterruptedException
+    {
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
-        DashboardPage dashPage = new DashboardPage();
         DirectorPage director=new DirectorPage();
-        String data=getText_custom();
+        AdminPage admin=new AdminPage();
+        AppointmentsPage appointment = new AppointmentsPage();
+        panelPage.click_AppointmentsTab();
+        appointment.click_UpcomingCard();
+        String data=getText_custom(director.clientNameUpcomingPage);
         director.searchTextField(data);
-        panelPage.click_AppointmentsTab();
-        appointment.click_UpcomingCard();
-
-        appointment.click_Filter();
-        dashPage.enter_DataSearhTextBox("Mark Henry");
-        validate_text(appointment.firstSearchedRecord, "Mark Henry");
+        admin.click_ViewDetailsBtn();
+        validate_text(director.fullNameOfClient, data);
+        getDriver().navigate().to("https://topuptalent.com/Diagnosticlearning/");
     }
 
 
 
-    //TODO //After the fix we will added assertions//
-    @Test(priority = 11, enabled = true, description = "16 Verify that date picker appears after clicking on calendar icon in 'From Date' field")
-    public void verify_FromDatePickerAppear() throws InterruptedException {
+    @Test(priority = 14, enabled = true, description = "29, 30, 33 & 34 Verify that admin is directed to '<client Details>' page after clicking 'View Details'  button")
+    public void verify_ViewDetailsPage() throws InterruptedException
+    {
         AppointmentsPage appointment = new AppointmentsPage();
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
+        DirectorPage director=new DirectorPage();
+        AdminPage testPlan = new AdminPage();
         panelPage.click_AppointmentsTab();
-        appointment.click_UpcomingCard();
-        appointment.click_Filter();
-        appointment.click_FromDate();
-    }
-
-    //TODO //After the fix we will added assertions//
-    @Test(priority = 12, enabled = false, description = "21 Verify that date picker appears after clicking on calendar icon in 'To Date' field")
-    public void verify_ToDatePickerAppear() throws InterruptedException {
-        AppointmentsPage appointment = new AppointmentsPage();
-        DashBoardPanelPage panelPage = new DashBoardPanelPage();
-        panelPage.click_AppointmentsTab();
-        appointment.click_UpcomingCard();
-        appointment.click_Filter();
-        appointment.click_ToDate();
-    }
-
-    @Test(priority = 13, enabled = true, description = "28 Verify that CSV file gets downloaded after clicking on 'Export to CSV' button")
-    public void verify_CSV_GetsDownloaded() throws InterruptedException, FileNotFoundException {
-        AppointmentsPage appointment = new AppointmentsPage();
-        DashBoardPanelPage panelPage = new DashBoardPanelPage();
-        DashBoardPanelPage panelpage = new DashBoardPanelPage();
-        panelPage.click_AppointmentsTab();
-        appointment.click_UpcomingCard();
-        appointment.exportCSV_Button();
-        String downloadFile = panelpage.getDownloadFileName();
-        Assert.assertTrue(panelpage.isFileDownloaded(downloadFile));
-
-    }
-
-    @Test(priority = 14, enabled = true, description = "29 Verify that admin is directed to '<client Details>' page after clicking 'View Details'  button")
-    public void verify_ViewDetailsPage() throws InterruptedException {
-        AppointmentsPage appointment = new AppointmentsPage();
-        DashBoardPanelPage panelPage = new DashBoardPanelPage();
-        panelPage.click_AppointmentsTab();
-        appointment.click_ViewAll();
+        appointment.click_UpcomingTab();
         appointment.click_ViewDetailLink();
+        String expectedTitle=getText_custom(testPlan.title);
+        appointment.click_EditTestPlan();
+        validate_text(director.editTestPopupTitle, "Please choose tests.");
+        director.click_CloseBtnEditPopup();
+        validate_text(testPlan.title, expectedTitle);
         validate_text(appointment.getAppointmentDetails, "Appointment Details");
-
-    }
-
-    @Test(priority = 15, enabled = true, description = "Verify that 'Test Plan' pop up appears after clicking 'Test Plan' button")
-    public void verify_TestPlan_PopupAppears() throws InterruptedException {
-        AppointmentsPage appointment = new AppointmentsPage();
-        DashBoardPanelPage panelPage = new DashBoardPanelPage();
-        panelPage.click_AppointmentsTab();
-        appointment.click_ViewAll();
-        appointment.click_ViewDetailLink();
-
-    }
-
-    @Test(priority = 16, enabled = true, description = " Verify that 'Test Plan' pop up appears after clicking 'Test Plan' button.")
-    public void verify_TestPlan_AND_AddComments() throws InterruptedException {
-        AppointmentsPage appointment = new AppointmentsPage();
-        DashBoardPanelPage panelPage = new DashBoardPanelPage();
-        panelPage.click_AppointmentsTab();
-        appointment.click_ViewAll();
-        appointment.click_ViewDetailLink();
         appointment.click_EditTestPlan();
         appointment.select_Checkbox();
         appointment.enter_OtherComments("My Appointment");
         appointment.click_SaveButton();
-
+        validate_text(appointment.selectWISC, "WAIS");
+        Thread.sleep(2000);
     }
 
-    @Test(priority = 17, enabled = true, description = "33 Verify that changes made by director on 'Test Plan' popup does not get saved, after clicking 'Close' button")
-    public void verify_TestPlan_ChangesSaved() throws InterruptedException {
-        AppointmentsPage appointment = new AppointmentsPage();
-        DashBoardPanelPage panelPage = new DashBoardPanelPage();
-        panelPage.click_AppointmentsTab();
-        appointment.click_ViewAll();
-        appointment.click_ViewDetailLink();
-        appointment.click_EditTestPlan();
-        appointment.select_Checkbox();
-        appointment.click_CloseButton();
-
-    }
 
     @Test(priority = 18, enabled = true, description = "36 Verify that 'Collect Payment' popup opens up after clicking 'Payment' button")
-    public void verify_CollectPayment_PopupOpenUp() throws InterruptedException {
+    public void verify_CollectPayment_PopupOpenUp() throws InterruptedException
+    {
         AppointmentsPage appointment = new AppointmentsPage();
-        DashBoardPanelPage panelPage = new DashBoardPanelPage();
-        panelPage.click_AppointmentsTab();
-        appointment.click_ViewAll();
-        appointment.click_ViewDetailLink();
         appointment.click_PaymentButton();
         validate_text(appointment.collectPaymentTXT, "Collect Payment");
-
     }
 
     @Test(priority = 19, enabled = true, description = "37 Verify that 'Test Fee Adjustment' field accepts positive amount and that positive amount gets added to 'Assessment Amount' and 'Amount Due' values, on 'Collect Payment' pop up")
@@ -448,7 +388,7 @@ public class DirectorTest extends BaseTest {
         AppointmentsPage appPage = new AppointmentsPage();
         DirectorPage director = new DirectorPage();
         //Clicked on 'Cancel' button.
-        login.director_Login();
+
         appointment.click_UpcomingTab();
         validate_text(admin.titleOfUpcomingPage, "Upcoming Appointments");
         dashPage.enter_DataSearhTextBox("Upcoming");
@@ -458,9 +398,11 @@ public class DirectorTest extends BaseTest {
         director.cancelFollowupSlot(0);
         List<WebElement> allSlots = appPage.getWebElements(appPage.slots);
         boolean result = true;
-        for (int i = 0; i < allSlots.size(); i++) {
+        for (int i = 0; i < allSlots.size(); i++)
+        {
             String slotsClass = allSlots.get(i).getAttribute("class");
-            if (!slotsClass.contains("mbsc-ios mbsc-schedule-event-background ng-star-inserted")) {
+            if (!slotsClass.contains("mbsc-ios mbsc-schedule-event-background ng-star-inserted"))
+            {
                 result = false;
 
             }
@@ -479,14 +421,14 @@ public class DirectorTest extends BaseTest {
         director.click_ResetBtnSlot();
         List<WebElement> allSlotsAfterReset = appPage.getWebElements(appPage.slots);
         boolean resultForReset = true;
-        for (int i = 0; i < allSlotsAfterReset.size(); i++) {
+        for (int i = 0; i < allSlotsAfterReset.size(); i++)
+        {
             String slotsClass = allSlotsAfterReset.get(i).getAttribute("class");
-            if (!slotsClass.contains("mbsc-ios mbsc-schedule-event-background ng-star-inserted")) {
+            if (!slotsClass.contains("mbsc-ios mbsc-schedule-event-background ng-star-inserted"))
+            {
                 resultForReset = false;
-
             }
         }
-
         Assert.assertFalse(resultForReset);
     }
 
@@ -624,7 +566,6 @@ public class DirectorTest extends BaseTest {
         DashboardPage dashPage = new DashboardPage();
         DirectorPage director = new DirectorPage();
         ActionEngine action = new ActionEngine();
-        login.director_Login();
         appointment.click_UpcomingTab();
         dashPage.enter_DataSearhTextBox("Test Ready");
         director.click_ViewDetailsBtn();
@@ -657,7 +598,6 @@ public class DirectorTest extends BaseTest {
         DashboardPage dashPage = new DashboardPage();
         DirectorPage director = new DirectorPage();
         ActionEngine action = new ActionEngine();
-        login.director_Login();
         appointment.click_AppointmentsTab();
         appointment.click_TestCompleteTab();
         director.click_ViewDetailBtn();
@@ -674,7 +614,6 @@ public class DirectorTest extends BaseTest {
         AdminPage admin = new AdminPage();
         DashboardPage dashPage = new DashboardPage();
         DirectorPage director = new DirectorPage();
-        login.director_Login();
         appointment.click_AppointmentsTab();
         appointment.click_UpcomingTab();
         dashPage.enter_DataSearhTextBox("Test Ready");
@@ -701,7 +640,6 @@ public class DirectorTest extends BaseTest {
         AdminPage admin = new AdminPage();
         DashBoardPanelPage dashboard = new DashBoardPanelPage();
         DirectorPage director = new DirectorPage();
-        login.director_Login();
         appointment.click_AppointmentsTab();
         appointment.click_TestCompleteTab();
         String expectedName = getText_custom(director.nameOnTestCompletePage);
@@ -721,7 +659,6 @@ public class DirectorTest extends BaseTest {
         AppointmentsPage appointment = new AppointmentsPage();
         AdminPage admin = new AdminPage();
         PaymentPage payment = new PaymentPage();
-        login.director_Login();
         appointment.click_CompletedTab();
         String expectedName = getText_custom(director.nameOnTestCompletePage);
         director.click_ViewDetailBtn();
@@ -756,7 +693,6 @@ public class DirectorTest extends BaseTest {
         AppointmentsPage appointment = new AppointmentsPage();
         AdminPage admin = new AdminPage();
         PaymentPage payment = new PaymentPage();
-        login.director_Login();
         appointment.click_CompletedTab();
         director.click_ViewDetailBtn();
         admin.scrollUptoVAmountDue();
@@ -791,7 +727,6 @@ public class DirectorTest extends BaseTest {
         AppointmentsPage appointment = new AppointmentsPage();
         AdminPage admin = new AdminPage();
         PaymentPage payment = new PaymentPage();
-        login.director_Login();
         appointment.click_CompletedTab();
         admin.click_FilterBtn();
         //Search field

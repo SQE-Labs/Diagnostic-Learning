@@ -42,8 +42,11 @@ public class DirectorPage extends BasePage {
     public By directorsMobileNumber = By.xpath("//input[@placeholder='Cell Number']");
     public By directorsEmail = By.xpath("//input[@placeholder='Email']");
     public By assignLocation = By.xpath("//select[@id='testingLocation']");
+
+    public By closeBtnEditPopup = By.xpath("(//a[text()='Close'])[1]");
     public By directorsLocationName = By.xpath("//option[text()='Austin']");
     public By directorsUserName = By.xpath("//input[@placeholder='Username']");
+    public By editTestPopupTitle = By.xpath("(//h6[contains(@class,'text-purple')])[1]");
     public By password_Field = By.xpath("//input[@placeholder='Create Password']");
     public By confirm_PasswordField = By.xpath("//input[@class='ng-untouched ng-pristine ng-valid border border-danger']");
     public By createDirectorsButton = By.xpath("//button[text()='Create Director']");
@@ -78,6 +81,9 @@ public class DirectorPage extends BasePage {
     public By confirmPasswordField = By.xpath("(//input[@type='password'])[2]");
     public By edit_SuccMsg = By.xpath("//div[@class='alert alert-success ng-star-inserted']");
     public By UserNameGetText = By.xpath("(//td)[2]");
+    public By clientNameUpcomingPage = By.xpath("(//td[@class='tablewidth sorting_1'])[1]");
+
+    public By fullNameOfClient = By.xpath( "//label[text()='Full Name']/following-sibling::p");
 
     public By toggle = By.xpath("//span[@class='slider round']");
     public By dontSaveButton = By.xpath("//a[text()='Don’t Save']");
@@ -215,6 +221,12 @@ public class DirectorPage extends BasePage {
         WebdriverWaits.waitForSpinner();
         click_custom(logOutLink);
     }
+    public void click_CloseBtnEditPopup() {
+        WebdriverWaits.waitUntilVisible(closeBtnEditPopup);
+        WebdriverWaits.waitForSpinner();
+        click_custom(closeBtnEditPopup);
+    }
+
 
     public void click_ConfirmFollowUpBtn() {
         WebdriverWaits.waitUntilVisible(confirmZoomRadioBtn);

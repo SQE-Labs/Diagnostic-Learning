@@ -45,8 +45,8 @@ public class LoginPage extends BasePage {
     }
 
     public void diagnostician_Login(String getText_Dia, String PasswordFieldText) {
-        sendKeys_withClear(userNameField, getText_Dia);
-        enterPassword(PasswordFieldText);
+        sendKeys_withClear(userNameField, PropertiesUtil.getPropertyValue("diagnostician_userName"));
+        sendKeys_withClear(PasswordField, PropertiesUtil.getPropertyValue("diagnostician_password"));
         click_custom(login);
         WebdriverWaits.waitForSpinner();
 

@@ -224,6 +224,9 @@ public class AdminPage extends BasePage {
 
     public By nameOfClientDetailsPage = By.xpath("(//div[@class='col-md-4']/label/following-sibling::p)[6]");
 
+
+
+
     public By closeFollowupButton = By.xpath("//button[@class='theme-button grey float-right']");
 
     public By cancelBtnOfTimeSlotPopup = By.xpath("(//mbsc-button[@role='button'])[5]");

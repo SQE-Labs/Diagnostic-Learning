@@ -52,7 +52,6 @@ public class DiagnosticianTest extends BaseTest {
     @Test(priority = 3, enabled = true, description = "32 Verify diagnostian client details page")
     public void verify_ClientDetailsPage() {
         DiagnosticianPage diagnostician = new DiagnosticianPage();
-
         diagnostician.click_ClientDetailLink(clientFirstName);
         WebdriverWaits.waitUntilVisible(diagnostician.clientDetailText);
         WebdriverWaits.waitForSpinner();
@@ -68,7 +67,7 @@ public class DiagnosticianTest extends BaseTest {
         diagnostician.click_upcomingTab();
 
         WebdriverWaits.waitForSpinner();
-        diagnostician.click_filterButton();
+       diagnostician.click_filterButton();
         ActionEngine engine;
         engine = new ActionEngine();
         String toDate = DateGenerator.getCurrentDate();
@@ -95,7 +94,7 @@ public class DiagnosticianTest extends BaseTest {
 
     }
 
-    @Test(priority = 5, enabled = true, description = "31, 32 ,44, 46 Verify diagnostician is able to download csv file or not")
+    @Test(priority = 5, enabled = true, description = " 32 ,44, 46 Verify diagnostician is able to download csv file or not")
     public void verify_download_CSV_File() throws InterruptedException, IOException, AWTException, CsvException {
         AppointmentsPage appointment = new AppointmentsPage();
         DashBoardPanelPage panelpage = new DashBoardPanelPage();

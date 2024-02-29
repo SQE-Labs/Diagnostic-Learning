@@ -45,7 +45,7 @@ public class AppointmentsPage extends BasePage {
     public By slots = By.xpath("//div[@class='mbsc-flex-1-0 mbsc-ios mbsc-schedule-item ng-star-inserted']");
     public By totalSlots = By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-background ng-star-inserted']");
 
-    public By appointmentsToday = By.xpath("//*[@id=\"Appointments\"]/li[2]/a");
+    public By appointmentsToday = By.xpath("//a[text()=\"Today's\"]");
     public By todaysAppointmentTXT = By.xpath("//div[@class='align-items-md-center d-flex flex-column flex-md-row page-header']");
     public By upcomingCard = By.xpath("//a[text()='Upcoming']");
     public By filterButton = By.xpath("//a[text()='Filter']");
@@ -106,7 +106,7 @@ public class AppointmentsPage extends BasePage {
     public By getAppointmentDetails = By.xpath("(//h5[@class='mb-0 text-purple'])[1]");
 
     public By saveBtnEditPlan = By.xpath("//button[@class='theme-button green mr-2']");
-    public By otherComment = By.xpath("//textarea[@name='testSurveyComment']");
+    public By otherComment = By.xpath("(//textarea[@name='testSurveyComment'])[2]");
 
     public By collectPaymentTXT = By.xpath("(//h4[@class='text-center'])[1]");
     public By toDateText = By.xpath("//input[@formcontrolname='toDate']");
@@ -459,6 +459,8 @@ public class AppointmentsPage extends BasePage {
         click_ViewAllTab();
         click_ExportCSVButton();
     }
+
+
 
 
     public void filterRecords(String clientFirstName) {
