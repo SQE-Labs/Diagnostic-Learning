@@ -14,7 +14,6 @@ public class LoginPage extends BasePage {
     public By login = By.id("loginFormSubmit");
 
     public void enterUsername(String userNameText) {
-
         WebdriverWaits.waitUntilVisible(userNameField);
         WebdriverWaits.waitForSpinner();
         sendKeys_withClear(userNameField, userNameText);

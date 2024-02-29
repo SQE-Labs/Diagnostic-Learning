@@ -35,6 +35,7 @@ public class AdminPage extends BasePage {
     //****************Search Created Admin****************
     public By filterButton = By.xpath("//a[@class='theme-button grey ml-auto mr-3']");
     public By searchField = By.xpath("//input[@aria-controls='appointmentTable']");
+
     public By adminSearchField = By.xpath("//input[@placeholder='Type here to search']");
     public By actualText = By.xpath("(//td)[2]");
     public By viewStudentObservationButton = By.xpath("//a[@class='theme-button green ml-2 ng-star-inserted']");
@@ -122,6 +123,7 @@ public class AdminPage extends BasePage {
     public By testFeeAdjustmentAmt = By.xpath("(//input[contains(@class,'custom-input my-1')])[1]");
     public By collectFeeAmt = By.xpath("(//input[contains(@class,'custom-input my-1')])[2]");
     public By enterAmt = By.id("bookingDeposit");
+    public By closeBtn=By.xpath("(//a[@class='theme-button grey'])[5]");
     public By collectPayBtn = By.xpath("//button[@class='theme-button mx-2']");
     public By closebtn = By.xpath("(//a[text()='Close'])[2]");
     public By amountDue = By.xpath("//label[text()='Amount Due']//following-sibling::p");
@@ -161,7 +163,7 @@ public class AdminPage extends BasePage {
     public By todayDateOnCard = By.xpath("(//span[@class='text-grey'])[1]");
     public By getTestReadyTitle = By.xpath("//div[@class='align-items-md-center d-flex flex-column flex-md-row page-header']/h3");
     public By titleOfUpcomingPage = By.xpath("//div[@class='page-header align-items-lg-center d-flex flex-column flex-md-row']/h3");
-    public By getStatus = By.xpath("(//tr[not(contains(@style,'display: none;'))])[2]//span");
+    public By getStatus = By.xpath("(//tr[not(contains(@style,'display: none;'))])[3]//span");
     public By getViewDetails = By.xpath("(//tr[not(contains(@style,'display: none;'))])[2]//a");
     public By getNameOfClient = By.xpath("((//tr[not(contains(@style,'display: none;'))])[2]//td)[1]");
     public By getTitleOfTestComplete = By.xpath("//div[@class='page-header align-items-lg-center d-flex flex-column flex-md-row']/h3");
@@ -279,6 +281,10 @@ public class AdminPage extends BasePage {
 
     public void click_createadminButton() {
         click_custom(createadminButton);
+    }
+    public void clickCloseBtn(){
+        WebdriverWaits.waitUntilVisible(closeBtn);
+         click_custom(closeBtn);
     }
 
     //*******************SuperAdmin  searching created admin******************
@@ -721,8 +727,8 @@ public class AdminPage extends BasePage {
         enter_CollectAmiuntAdjustment(amount);
         enter_Amount(amount);
         click_CollectBtn();
-        click_CloseBtn();
-    }
+        clickCloseBtn();
+     }
 
     public void enter_Amount(String amount) {
         WebdriverWaits.waitUntilVisible(enterAmt);
@@ -742,8 +748,13 @@ public class AdminPage extends BasePage {
     public void filter_ForUpcoming(String clientText) {
         waitUntilVisible(filterButton);
         WebdriverWaits.waitForSpinner();
-        click_custom(filterButton);
+       // click_custom(filterButton);
         sendKeys_withClear(searchField, clientText);
+    }
+    public void enter_InSearchField(String ClientName) {
+        WebdriverWaits.waitUntilVisible(searchField);
+        WebdriverWaits.waitForSpinner();
+        sendKeys_withClear(searchField, ClientName);
     }
 
     public void click_Re_AssigDropDown() {

@@ -204,16 +204,6 @@ public class DiagnosticianPage extends BasePage {
         validate_AttText(toDateText, "To Date");
     }
 
-    public void enterInSearchField(String searchFieldText) {
-        WebdriverWaits.waitUntilVisible(searchFld);
-        sendKeys_withClear(searchFld, searchFieldText);
-    }
-
-    public void enter_SearchField(String searchFieldTexts) {
-        WebdriverWaits.waitUntilVisible(searchFild);
-        sendKeys_withClear(searchFild, searchFieldTexts);
-    }
-
     public void enter_InSearchField(String ClientName) {
         WebdriverWaits.waitUntilVisible(SearchField);
         WebdriverWaits.waitForSpinner();
@@ -221,11 +211,13 @@ public class DiagnosticianPage extends BasePage {
     }
 
     public void click_ViewDetailLink() {
+        WebdriverWaits.waitUntilVisible(viewClientDetailLink);
+        WebdriverWaits.waitForSpinner();
         click_custom(viewClientDetailLink);
     }
 
     //+++++++++++++++++EDIT DIAGNOSTICIAN++++++++++++++
-    public void click_EditButton()  {
+    public void click_EditButton() {
         WebdriverWaits.waitUntilVisible(editButton);
         WebdriverWaits.waitForSpinner();
         moveToElement(editButton);
@@ -265,6 +257,8 @@ public class DiagnosticianPage extends BasePage {
 
     //**********Diagnostician is viewing appointments************
     public void click_AppointmentTab() {
+        WebdriverWaits.waitUntilVisible(appointmentsTab);
+        WebdriverWaits.waitForSpinner();
         moveToElement(appointmentsTab);
     }
 
@@ -287,10 +281,6 @@ public class DiagnosticianPage extends BasePage {
         click_DiagnosticianBtn();
     }
 
-    public void search_CreatedDiagnostician(String UserName) {
-        click_FilterButton();
-        enterInSearchField(UserName);
-    }
 
     public void edit_Diagnostician(String EmailAddress1, String passwordTextFieldText, String confirmPasswordFieldText) throws InterruptedException {
         click_EditButton();
@@ -527,16 +517,11 @@ public class DiagnosticianPage extends BasePage {
         click_custom(diagnosticianSaveButton);
     }
 
-    public void click_ClientDetailLink(String clientLastName) {
-
-        enter_SearchField(clientLastName);
+    public void click_ClientDetailLink() {
         click_ViewDetailLink();
     }
 
-    public void enter_ClientDetail(String clientLastName) {
-        enterInSearchField(clientLastName);
-        click_ViewDetailLink();
-    }
+
 
     //**************Diagnostician Started Assessment***************
     public void payment_NewPage() {

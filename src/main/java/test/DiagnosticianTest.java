@@ -14,11 +14,13 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.awt.*;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.List;
+
 import static org.automation.utilities.Assertions.validate_text;
 import static test.AdminTest.*;
 import static test.SuperAdminTest.diagnosticianUserName;
@@ -36,6 +38,7 @@ public class DiagnosticianTest extends BaseTest {
         WebdriverWaits.waitUntilVisible(diagnostician.dashboard);
         validate_text(diagnostician.dashboard, "Dashboard");
     }
+
     @Test(priority = 1, enabled = true, description = "Set availability for diagnostician by admin")
     public void verify_DiagnosticianAvailability() throws InterruptedException {
         DiagnosticianPage diagnostician = new DiagnosticianPage();
@@ -47,20 +50,23 @@ public class DiagnosticianTest extends BaseTest {
         panelpage.click_LogOutLink();
     }
 
-    @Test(dependsOnMethods = {"verify_UpcomingTab"}, description = "31 Diagnostician is Verifying upcoming appointments")
+    @Test(dependsOnMethods = {"click_OnViewDetailsButton"}, description = "31 Diagnostician is Verifying upcoming appointments")
     public void verify_UpcomingAppointments() {
         DiagnosticianPage diagnostician = new DiagnosticianPage();
+        LoginPage login=new LoginPage();
+
+        login.directorLogin(diagnosticianUserName,"12345678");
         diagnostician.click_AppointmentTab();
         diagnostician.click_upcomingTab();
         WebdriverWaits.waitUntilVisible(diagnostician.upcomingPageTitle);
         validate_text(diagnostician.upcomingPageTitle, "Upcoming Appointments");
     }
 
-    @Test(dependsOnMethods = {"verify_UpcomingAppointments"} , description = "32 Verify diagnostian client details page")
+    @Test(dependsOnMethods = {"verify_UpcomingAppointments"}, description = "32 Verify diagnostian client details page")
     public void verify_ClientDetailsPage() {
         DiagnosticianPage diagnostician = new DiagnosticianPage();
 
-        diagnostician.click_ClientDetailLink(clientFirstName);
+        diagnostician.click_ClientDetailLink( );
         WebdriverWaits.waitUntilVisible(diagnostician.clientDetailText);
         WebdriverWaits.waitForSpinner();
         validate_text(diagnostician.clientDetailText, clientFirstName + ' ' + clientLastName + ' ' + "Details");
@@ -133,19 +139,26 @@ public class DiagnosticianTest extends BaseTest {
         DiagnosticianPage diagnostician = new DiagnosticianPage();
 
         diagnostician.verify_CompleteAss();
-        diagnostician.click_filterButton();
-        diagnostician.enter_ClientDetail(clientFirstName);
+       diagnostician.click_filterButton();
+        diagnostician.enter_InSearchField(clientFirstName);
         WebdriverWaits.waitUntilVisible(diagnostician.clientText);
         validate_text(diagnostician.clientText, clientFirstName + ' ' + clientLastName + ' ' + "Details");
     }
 
     @Test(dependsOnMethods = {"verify_Completed_Assessment"}, description = "24, 86, 88 Verify diagnostician is able to download csv file or not after completing the assessment")
-    public void verify_completeAss() {
+    public void verify_completeAss() throws InterruptedException, FileNotFoundException {
         DiagnosticianPage diagnostician = new DiagnosticianPage();
+        AppointmentsPage appointment = new AppointmentsPage();
+        DashBoardPanelPage panelpage = new DashBoardPanelPage();
         diagnostician.verify_CompleteAss();
-        diagnostician.search_CreatedDiagnostician(clientFirstName);
+        diagnostician.enter_InSearchField(clientFirstName);
         WebdriverWaits.waitUntilVisible(diagnostician.clientNameText);
         validate_text(diagnostician.clientNameText, clientFirstName + ' ' + clientLastName);
+        appointment.click_ExportCSVButton();
+        Thread.sleep(3000);
+        //Download exportCSV File and Check file is downloaded or not
+        String downloadFile = panelpage.getDownloadFileName();
+        Assert.assertTrue(panelpage.isFileDownloaded(downloadFile));
     }
 
     @Test(dependsOnMethods = {"verify_completeAss"}, description = "89, 90  Verify diagnostician is able to download csv file or not after completing the assessment")

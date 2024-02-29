@@ -74,8 +74,8 @@ public class SuperAdminTest extends BaseTest {
         admin.create_Admin(adminFirstName, adminLastName, admin_cell_Number, adminEmailAddress, adminUserName, "123456", "123456");
         WebdriverWaits.waitUntilVisible(admin.succ_Msg);
         validate_text(admin.succ_Msg, "Admin Created Successfully");
-     //   Thread.sleep(5000);
-     //   PropertiesUtil.setPropertyValue("admin_userName", adminUserName);
+        //   Thread.sleep(5000);
+        //   PropertiesUtil.setPropertyValue("admin_userName", adminUserName);
     }
 
     @Test(priority = 3, enabled = true, description = "SuperAdmin is able to search created admin or not")
@@ -317,6 +317,7 @@ public class SuperAdminTest extends BaseTest {
         WebdriverWaits.waitUntilVisible(director.directorListPage);
         validate_text(director.directorListPage, "Directors List");
     }
+
     @Test(priority = 20, enabled = true, description = "3.1, 3.5, 3.9, 3.8, 3.36 verify that duplicate Director throws error")
     public void create_duplicate_Directors() throws InterruptedException {
         DirectorPage director = new DirectorPage();
@@ -391,13 +392,13 @@ public class SuperAdminTest extends BaseTest {
         login.directorLogin(directorUserName, "12345678");
         WebdriverWaits.waitUntilVisible(director.directorDashBoardPage);
         validate_text(director.directorDashBoardPage, "Dashboard");
-       // panelPage.click_LogOutLink();
+        // panelPage.click_LogOutLink();
     }
 
 
     //************Appointments page******************
 
-    @Test(dependsOnMethods = {"verify_Full_Payment"} ,description="2.1, 2.3, Verify that 'Appointments' accordion expands after clicking on 'Appointment' accordion from left panel, on 'Dashboard' page.")
+    @Test(dependsOnMethods = {"verify_Full_Payment"}, description = "2.1, 2.3, Verify that 'Appointments' accordion expands after clicking on 'Appointment' accordion from left panel, on 'Dashboard' page.")
     public void verify_Appointments_Page() {
         AppointmentsPage appointment = new AppointmentsPage();
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
@@ -419,6 +420,7 @@ public class SuperAdminTest extends BaseTest {
         appointment.click_SearchField(clientFirstName);
         WebdriverWaits.waitUntilVisible(appointment.searchedText);
         validate_text(appointment.searchedText, clientFirstName + ' ' + clientLastName);
+
 
         //**********Verifying Todate and from
 
@@ -458,7 +460,7 @@ public class SuperAdminTest extends BaseTest {
         AppointmentsPage appointment = new AppointmentsPage();
         SuperAdminPage admin = new SuperAdminPage();
         DashBoardPanelPage panelpage = new DashBoardPanelPage();
-       
+
 
         appointment.click_ViewAllTab();
         admin.click_Export_CSV_Button();
@@ -472,7 +474,7 @@ public class SuperAdminTest extends BaseTest {
     }
 
     //**********************SuperAdmin is viewing Payments page********************
-    @Test(dependsOnMethods = {"verify_Cancelled_Appointments"},description="6.1, Verify that list of payments appears after clicking 'Payments' tab, on 'Dashboard' page.")
+    @Test(dependsOnMethods = {"verify_Cancelled_Appointments"}, description = "6.1, Verify that list of payments appears after clicking 'Payments' tab, on 'Dashboard' page.")
     public void view_Payments_Page() {
         PaymentPage payment = new PaymentPage();
         LoginPage login = new LoginPage();
@@ -487,38 +489,55 @@ public class SuperAdminTest extends BaseTest {
     }
 
     //****************Admin while do the payment after creating the appointments.
-    @Test(dependsOnMethods = {"view_Payments_Page"},description="6.2, 6.3Verify that search text box appears after clicking 'Filter' button on 'Payments' page.")
-    public void verify_Search_Payment() {
+    @Test(dependsOnMethods = {"view_Payments_Page"}, description = "6.2, 6.3Verify that search text box appears after clicking 'Filter' button on 'Payments' page.")
+    public void verify_Search_Payment() throws InterruptedException {
         PaymentPage payment = new PaymentPage();
         //  String getText = getText_custom(payment.getCust_Name);
         //  payment.click_filterButton();
         payment.enterInSearchField(clientFirstName);
+        AppointmentsPage appPage = new AppointmentsPage();
+        SuperAdminPage admin = new SuperAdminPage();
+
+        String toDate = DateGenerator.getCurrentDate();
+
+        String FromDate = DateGenerator.getDateWithDays("dd-MM-yyyy", -2);
+        admin.click_filterButton();
+        appPage.enter_Dates(FromDate, toDate);
+        WebdriverWaits.waitUntilVisible(admin.dateEle);
+        WebdriverWaits.waitForSpinner();
+        Thread.sleep(4000);
+        List<WebElement> my_list = admin.getWebElements(admin.dateEle);
+        HashSet<WebElement> dateSet = new HashSet<>(my_list);
+
+        LocalDate toDateLocal = LocalDate.parse(toDate, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+        LocalDate fromDateLocal = LocalDate.parse(FromDate, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+
+        boolean result = true;
+        for (WebElement i : dateSet) {
+            String date = i.getText();
+            LocalDate inputDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("MMM dd, yyyy"));
+            if (!(DateGenerator.isDateWithinRange(fromDateLocal, toDateLocal, inputDate))) {
+                result = false;
+                break;
+            }
+        }
+        Assert.assertTrue(result);
     }
 
-    @Test(dependsOnMethods = {"verify_Search_Payment"},description="6.5, Verify that CSV file gets downloaded after clicking 'Export to CSV' button, on 'Payments' page")
+
+
+    @Test(dependsOnMethods = {"verify_Search_Payment"}, description = "6.5, Verify that CSV file gets downloaded after clicking 'Export to CSV' button, on 'Payments' page")
     public void download_ExportCSV_File() throws InterruptedException, FileNotFoundException {
         DashBoardPanelPage panelpage = new DashBoardPanelPage();
-       
+
         panelpage.click_ExportCSVButton();
 
         //Download exportCSV File and Check file is downloaded or not
         String downloadFile = panelpage.getDownloadFileName();
         Assert.assertTrue(panelpage.isFileDownloaded(downloadFile));
         panelpage.navigate_Back();
-       // panelpage.click_LogOutLink();
+        // panelpage.click_LogOutLink();
     }
-
-//    @Test(priority = 29, enabled = true, description = "SuperAdmin is able to disable the diagnostician")
-//    public void verify_disable_diagnostician() throws InterruptedException {
-//        LoginPage login = new LoginPage();
-//        login.superAdminLogin();
-//        DiagnosticianPage diagnostician = new DiagnosticianPage();
-//        DashBoardPanelPage panelPage = new DashBoardPanelPage();
-//        panelPage.click_DiagnosticianTab();
-//
-//        diagnostician.disable_Diagnostician(diagnosticianUserName);
-//        diagnostician.click_UpdateButton();
-//    }
 
     //logout superadmin
     @Test(priority = 30, enabled = true, description = "34 Verify that SuperAdmin is able to logout")
