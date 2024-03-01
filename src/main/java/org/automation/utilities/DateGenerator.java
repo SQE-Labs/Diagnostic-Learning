@@ -50,8 +50,8 @@ public class DateGenerator {
         LocalDate currentDate = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM yyyy");
         return currentDate.format(formatter);
-
     }
+
 
     public static String getCurrentMonthFormat() {
         LocalDate currentDate = LocalDate.now();

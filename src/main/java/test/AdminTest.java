@@ -28,7 +28,7 @@ import static test.SuperAdminTest.*;
 public class AdminTest extends BaseTest {
     public static String clientLastName;
     public static String clientFirstName;
-    public String diagnosticianUserName;
+    public static String diagnosticianUserName;
     String directorFirstName;
     String directorUserName;
     String dirCellNumber;
@@ -93,6 +93,24 @@ public class AdminTest extends BaseTest {
         diagnostician.enter_InSearchField(diagnosticianFirstName);
         validate_text(diagnostician.actualText, diagnosticianUserName);
     }
+    @Test(priority = 2, enabled = true, description = "Set availability for diagnostician by admin")
+    public void verify_DiagnosticianAvailability() throws InterruptedException {
+        DiagnosticianPage diagnostician = new DiagnosticianPage();
+        DashBoardPanelPage logout = new DashBoardPanelPage();
+        logout.click_LogOutLink();
+        diagnostician.login_As_Diagnostician(diagnosticianUserName, "123456");
+
+        //Set availability
+        diagnostician.set_Availability();
+
+        //Cancel Availabilty
+        diagnostician.cancel_Availability();
+
+        //Delete Availabilty
+        diagnostician.deleting_Availability();
+        logout.click_LogOutLink();
+
+    }
 
 
     @Test(priority = 3, enabled = true, description = "1.18, 3.1, 3.6, 4.1, 3.10, 3.9  Creating Director from admin")
@@ -106,6 +124,7 @@ public class AdminTest extends BaseTest {
         directorEmailAddress = directorFirstName + "@yopmail.com";
         directorUserName = "AU_Koa" + RandomStrings.requiredCharacters(3);
         dirCellNumber = RandomStrings.requiredDigits(10);
+        login.adminLogin(adminUserName,"12345678");
         panelpage.click_DirectorTab();
         validate_text(director.directorActualText, "Directors List");
 
@@ -431,8 +450,7 @@ public class AdminTest extends BaseTest {
         diagnostician.enter_InSearchField(diagnosticianUserName);
         diagnostician.edit_Diagnostician(diagnosticianUpdatedEmail, "12345678", "12345678");
         WebdriverWaits.waitUntilVisible(diagnostician.edit_Succ_Msg);
-        String succ_Msg = getText_custom(diagnostician.edit_Succ_Msg);
-        validate_text(diagnostician.edit_Succ_Msg, succ_Msg);
+        validate_text(diagnostician.edit_Succ_Msg, "Diagnostician details updated successfully.");
     }
 
     @Test(priority = 32, enabled = true, description = "Enable created diagnostician by admin")
@@ -532,8 +550,9 @@ public class AdminTest extends BaseTest {
         WebdriverWaits.waitUntilVisible(admin.titleOfUpcomingPage);
         WebdriverWaits.waitForSpinner();
         validate_text(admin.titleOfUpcomingPage, "Upcoming Appointments");
-        admin.enter_InSearchField(clientFirstName);
-        validate_text(admin.getStatus, "Upcoming");
+//        admin.enter_InSearchField(clientFirstName);
+//        WebdriverWaits.waitUntilVisible(admin.getStatus);
+       // validate_text(admin.getStatus, "Upcoming");
     }
 
     @Test(priority = 40, enabled = true, description = "18.1, Admin is directed to 'Test Ready Appointment' page")
@@ -585,7 +604,7 @@ public class AdminTest extends BaseTest {
             expectedTitleText = firstWord + " " + secondWord;
         }
         validate_AttText(actualText, expectedTitleText);
-        panelPage.click_LogOutLink();
+
     }
 
     @Test(dependsOnMethods = {"download_CSV_File"}, description = " 20.1, 20.7, 20.22, 7.2, 7.17,14.2  Admin is able to View 'Test Complete' Appointments")

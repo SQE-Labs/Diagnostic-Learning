@@ -4,8 +4,8 @@
 <test name="Diagnostician Test Cases" parallel="none" >
     <classes>
         <class name="test.SuperAdminTest"/>
-        <class name="test.DiagnosticianTest"/>
         <class name="test.AdminTest"/>
+        <class name="test.DiagnosticianTest"/>
         <class name="test.DirectorTest"></class>
       </classes>
 </test>

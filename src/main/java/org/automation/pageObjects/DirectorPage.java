@@ -242,6 +242,8 @@ public class DirectorPage extends BasePage {
     }
 
     public void click_BackBtn() {
+        WebdriverWaits.waitUntilVisible(backBtn);
+        WebdriverWaits.waitForSpinner();
         click_custom(backBtn);
     }
 
@@ -348,6 +350,7 @@ public class DirectorPage extends BasePage {
         // test case number ( 4.6 ).
         validate_text(edit_Popup, "Edit User");
         Log.info("Successfully Edit popUp opens");
+
         enter_Director_Email1(EmailAddress1);
         click_PasswordField(passwordTextFieldText);
         click_confirmPasswordField(confirmPasswordFieldText);

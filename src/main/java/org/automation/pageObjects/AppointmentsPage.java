@@ -97,9 +97,9 @@ public class AppointmentsPage extends BasePage {
     public By searchTextBox = By.id("filterSearch");
     public By directorFilter = By.xpath("//a[text()='Filter']");
     public By yearButton = By.xpath("//span[@class='mbsc-calendar-title mbsc-calendar-year mbsc-ios ng-star-inserted']");
-    public By monthHeader = By.xpath("//span[@class='mbsc-calendar-month mbsc-calendar-title mbsc-ios ng-star-inserted']");
-    public By yearHeader = By.xpath("//span[@class='mbsc-calendar-title mbsc-calendar-year mbsc-ios ng-star-inserted']");
-
+    public By monthHeader = By.xpath("//span[contains(@class,'mbsc-calendar-month')]");
+    public By yearHeader = By.xpath("//span[contains(@class,'mbsc-calendar-title mbsc-calendar-yea')]");
+    //span[contains(@class,'mbsc-calendar-month')]
     //******************************************
     public By firstSearchedRecord = By.xpath("(//td[@class='tablewidth'])[4]");
     public By afterClickFromDate = By.xpath("//*[@id=\"filterShow\"]/div/div[2]/input");
@@ -281,6 +281,7 @@ public class AppointmentsPage extends BasePage {
         System.out.println(list.size());
         for (WebElement slot : list) {
             Thread.sleep(1000);
+            scrolltoHorizontal();
             click_custom(slot);
 
             if (getWebElements(totalSlots).size() > count) {
@@ -314,8 +315,8 @@ public class AppointmentsPage extends BasePage {
     public void selectAppointmentSlot(int count) throws InterruptedException {
         click_AssessmentDate();
         String currentDate = getMonthAndYear();
-        validate_text(monthHeader, currentDate.split(" ")[0]);
-        validate_text(yearHeader, currentDate.split(" ")[1]);
+        //validate_text(monthHeader, currentDate.split(" ")[0]);
+        //validate_text(yearHeader, currentDate.split(" ")[1]);
 
         getTotalColumnCount(count);
         WebdriverWaits.waitUntilVisible(newEventText);

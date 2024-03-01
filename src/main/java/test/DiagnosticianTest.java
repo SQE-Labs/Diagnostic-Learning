@@ -2,17 +2,13 @@ package test;
 
 import com.opencsv.exceptions.CsvException;
 import org.automation.base.BaseTest;
-
 import org.automation.pageObjects.*;
-
 import org.automation.utilities.ActionEngine;
 import org.automation.utilities.DateGenerator;
 import org.automation.utilities.WebdriverWaits;
-
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-
 import java.awt.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -20,10 +16,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.List;
-
 import static org.automation.utilities.Assertions.validate_text;
 import static test.AdminTest.*;
-import static test.SuperAdminTest.diagnosticianUserName;
 
 public class DiagnosticianTest extends BaseTest {
 
@@ -39,40 +33,31 @@ public class DiagnosticianTest extends BaseTest {
         validate_text(diagnostician.dashboard, "Dashboard");
     }
 
-    @Test(priority = 1, enabled = true, description = "Set availability for diagnostician by admin")
-    public void verify_DiagnosticianAvailability() throws InterruptedException {
-        DiagnosticianPage diagnostician = new DiagnosticianPage();
-        DashBoardPanelPage panelpage = new DashBoardPanelPage();
-        diagnostician.set_Availability();
-        // diagnostician.click_Availablity();
-        diagnostician.cancel_Availability();
-        diagnostician.deleting_Availability();
-        panelpage.click_LogOutLink();
-    }
 
-    @Test(dependsOnMethods = {"click_OnViewDetailsButton"}, description = "31 Diagnostician is Verifying upcoming appointments")
+
+    @Test(priority = 2, enabled = true, description = "31 Diagnostician is Verifying upcoming appointments")
     public void verify_UpcomingAppointments() {
         DiagnosticianPage diagnostician = new DiagnosticianPage();
-        LoginPage login=new LoginPage();
+        LoginPage login = new LoginPage();
 
-        login.directorLogin(diagnosticianUserName,"12345678");
+     //   login.directorLogin(diagnosticianUserName, "12345678");
         diagnostician.click_AppointmentTab();
         diagnostician.click_upcomingTab();
         WebdriverWaits.waitUntilVisible(diagnostician.upcomingPageTitle);
         validate_text(diagnostician.upcomingPageTitle, "Upcoming Appointments");
     }
 
-    @Test(dependsOnMethods = {"verify_UpcomingAppointments"}, description = "32 Verify diagnostian client details page")
+    @Test(priority = 3, enabled = true, description = "32 Verify diagnostian client details page")
     public void verify_ClientDetailsPage() {
         DiagnosticianPage diagnostician = new DiagnosticianPage();
 
-        diagnostician.click_ClientDetailLink( );
+        diagnostician.click_ClientDetailLink();
         WebdriverWaits.waitUntilVisible(diagnostician.clientDetailText);
         WebdriverWaits.waitForSpinner();
         validate_text(diagnostician.clientDetailText, clientFirstName + ' ' + clientLastName + ' ' + "Details");
     }
 
-    @Test(dependsOnMethods = {"verify_ClientDetailsPage"}, description = "  44 Diagnostician is verifying  that relevant records appear after selecting valid range of date, on 'Upcoming Appointments' page.")
+    @Test(priority = 4, enabled = true, description = "  44 Diagnostician is verifying  that relevant records appear after selecting valid range of date, on 'Upcoming Appointments' page.")
     public void verify_From_And_Todate() {
         AppointmentsPage appPage = new AppointmentsPage();
         DiagnosticianPage diagnostician = new DiagnosticianPage();
@@ -105,7 +90,7 @@ public class DiagnosticianTest extends BaseTest {
         Assert.assertTrue(result);
     }
 
-    @Test(dependsOnMethods = {"verify_From_And_Todate"}, description = "31, 32 ,44, 46 Verify diagnostician is able to download csv file or not")
+    @Test(priority = 5, enabled = true, description = "31, 32 ,44, 46 Verify diagnostician is able to download csv file or not")
     public void verify_download_CSV_File() throws InterruptedException, IOException, AWTException, CsvException {
         AppointmentsPage appointment = new AppointmentsPage();
         DashBoardPanelPage panelpage = new DashBoardPanelPage();
@@ -122,7 +107,7 @@ public class DiagnosticianTest extends BaseTest {
         Assert.assertTrue(panelpage.isFileDownloaded(downloadFile));
     }
 
-    @Test(dependsOnMethods = {"verify_download_CSV_File"}, description = "26, 27, 28, 12, 13, 14, 16, 17, 18  diagnostician is starting assessment")
+    @Test(priority = 6, enabled = true, description = "26, 27, 28, 12, 13, 14, 16, 17, 18  diagnostician is starting assessment")
     public void verify_todays_Appointments() throws InterruptedException {
         ActionEngine action = new ActionEngine();
         DiagnosticianPage diagnostician = new DiagnosticianPage();
@@ -134,24 +119,25 @@ public class DiagnosticianTest extends BaseTest {
         validate_text(diagnostician.upcoming_App, "Upcoming Appointments");
     }
 
-    @Test(dependsOnMethods = {"verify_todays_Appointments"}, description = "73,74,86 diagnostician is verifying completed assessments")
+    @Test(priority = 7, enabled = true, description = "73,74,86 diagnostician is verifying completed assessments")
     public void verify_Completed_Assessment() {
         DiagnosticianPage diagnostician = new DiagnosticianPage();
 
         diagnostician.verify_CompleteAss();
-       diagnostician.click_filterButton();
-        diagnostician.enter_InSearchField(clientFirstName);
+        diagnostician.click_filterButton();
+        diagnostician.enter_SearchField(clientFirstName);
         WebdriverWaits.waitUntilVisible(diagnostician.clientText);
+        diagnostician.click_ClientDetailLink();
         validate_text(diagnostician.clientText, clientFirstName + ' ' + clientLastName + ' ' + "Details");
     }
 
-    @Test(dependsOnMethods = {"verify_Completed_Assessment"}, description = "24, 86, 88 Verify diagnostician is able to download csv file or not after completing the assessment")
+    @Test(priority = 8, enabled = true, description = "24, 86, 88 Verify diagnostician is able to download csv file or not after completing the assessment")
     public void verify_completeAss() throws InterruptedException, FileNotFoundException {
         DiagnosticianPage diagnostician = new DiagnosticianPage();
         AppointmentsPage appointment = new AppointmentsPage();
         DashBoardPanelPage panelpage = new DashBoardPanelPage();
         diagnostician.verify_CompleteAss();
-        diagnostician.enter_InSearchField(clientFirstName);
+        diagnostician.enter_SearchField(clientFirstName);
         WebdriverWaits.waitUntilVisible(diagnostician.clientNameText);
         validate_text(diagnostician.clientNameText, clientFirstName + ' ' + clientLastName);
         appointment.click_ExportCSVButton();
@@ -161,10 +147,11 @@ public class DiagnosticianTest extends BaseTest {
         Assert.assertTrue(panelpage.isFileDownloaded(downloadFile));
     }
 
-    @Test(dependsOnMethods = {"verify_completeAss"}, description = "89, 90  Verify diagnostician is able to download csv file or not after completing the assessment")
+    @Test(priority = 9, enabled = true, description = "89, 90  Verify diagnostician is able to download csv file or not after completing the assessment")
     public void verify_Cancelled_Appointments() {
         DiagnosticianPage diagnostician = new DiagnosticianPage();
         DashBoardPanelPage panelpage = new DashBoardPanelPage();
+        panelpage.navigate_Back();
         diagnostician.click_CancelTab();
         diagnostician.enter_InSearchField(clientLastName);
         WebdriverWaits.waitUntilVisible(diagnostician.clientNameText);

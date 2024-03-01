@@ -90,7 +90,7 @@ public class AdminPage extends BasePage {
     public By dlsDyslexiaCheckBox = By.xpath("//label[text()='DLS Dyslexia']/..");
     public By testPlanSaveButton = By.xpath("//button[text()='Save']");
     public By actualEditTest = By.xpath("//p[text()=' WRAML ']");
-    public By closeButton = By.xpath("//a[text()='Close']");
+    public By closeButton = By.xpath("(//a[text()='Close'])[2]");
     public By editClientBtn = By.xpath("//a[text()='Edit Client']");
     public By editCllientActualText = By.xpath("//h5[text()='Edit Client Info']");
     public By editFirstName = By.xpath(" //input[@formcontrolname='studentFirstName']");
@@ -101,8 +101,6 @@ public class AdminPage extends BasePage {
     public By editGrade = By.id("schoolType");
     public By reAssignbtn = By.xpath("//a[text()='Re-assign Appointment']");
     public By reAssignDiagList = By.xpath("//select[@id='diag']//option[@class='ng-star-inserted']");
-
-
     public By todaysTab = By.xpath("//*[@id=\"Appointments\"]/li[2]/a");
     public By editAddress1 = By.xpath(" //input[@formcontrolname='address1']");
     public By editUpdateBtn = By.id("intakeFormSubmit");
@@ -123,7 +121,7 @@ public class AdminPage extends BasePage {
     public By testFeeAdjustmentAmt = By.xpath("(//input[contains(@class,'custom-input my-1')])[1]");
     public By collectFeeAmt = By.xpath("(//input[contains(@class,'custom-input my-1')])[2]");
     public By enterAmt = By.id("bookingDeposit");
-    public By closeBtn=By.xpath("(//a[@class='theme-button grey'])[5]");
+    public By closeBtn = By.xpath("(//a[@class='theme-button grey'])[5]");
     public By collectPayBtn = By.xpath("//button[@class='theme-button mx-2']");
     public By closebtn = By.xpath("(//a[text()='Close'])[2]");
     public By amountDue = By.xpath("//label[text()='Amount Due']//following-sibling::p");
@@ -144,7 +142,6 @@ public class AdminPage extends BasePage {
     public By yesUnholdButton = By.xpath("//button[@class='theme-button danger mx-2']");
 
     //*******************Paying full payment by client****************
-
     public By appointmentTab = By.xpath("//a[text()=' Appointments ']");
     public By testCompleteTab = By.xpath("//a[text()='Test complete']");
     public By clientDetailLink = cssSelector("tr:not([style='display: none;' ]) td:nth-child(7)");
@@ -152,7 +149,7 @@ public class AdminPage extends BasePage {
     public By inr = By.xpath("(//td)[10]");
     public By amountField = By.xpath("//input[@id='bookingDeposit']");
     public By collectButton = By.xpath("//button[@class='theme-button mx-2']");
-    public By cancelButton = By.xpath("(//a[@class='theme-button grey'])[4]");
+    public By cancelButton = By.xpath("(//a[text()='Close'])[3]");
     public By clientNameDetail = By.xpath("//h3");
     public By cancelAppointmentBtn = By.xpath("//button[text()=' Cancel Appointment ']");
     public By cancelTab = By.xpath("//a[text()='Canceled']");
@@ -282,9 +279,10 @@ public class AdminPage extends BasePage {
     public void click_createadminButton() {
         click_custom(createadminButton);
     }
-    public void clickCloseBtn(){
+
+    public void clickCloseBtn() {
         WebdriverWaits.waitUntilVisible(closeBtn);
-         click_custom(closeBtn);
+        click_custom(closeBtn);
     }
 
     //*******************SuperAdmin  searching created admin******************
@@ -728,7 +726,7 @@ public class AdminPage extends BasePage {
         enter_Amount(amount);
         click_CollectBtn();
         clickCloseBtn();
-     }
+    }
 
     public void enter_Amount(String amount) {
         WebdriverWaits.waitUntilVisible(enterAmt);
@@ -748,9 +746,10 @@ public class AdminPage extends BasePage {
     public void filter_ForUpcoming(String clientText) {
         waitUntilVisible(filterButton);
         WebdriverWaits.waitForSpinner();
-       // click_custom(filterButton);
+        // click_custom(filterButton);
         sendKeys_withClear(searchField, clientText);
     }
+
     public void enter_InSearchField(String ClientName) {
         WebdriverWaits.waitUntilVisible(searchField);
         WebdriverWaits.waitForSpinner();

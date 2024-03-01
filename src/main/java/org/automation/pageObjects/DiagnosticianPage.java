@@ -33,6 +33,7 @@ public class DiagnosticianPage extends BasePage {
     public By userName = By.xpath("//input[@placeholder='Username']");
     public By password_Field = By.xpath("//input[@placeholder='Create Password']");
     public By confirm_PasswordField = By.xpath("//input[@placeholder='Confirm Password']");
+    public By edit_Popup = By.xpath("//h5[text()='Edit User']");
 
     public By validationMsg = By.cssSelector(".alert.alert-danger.ng-star-inserted");
 
@@ -49,7 +50,7 @@ public class DiagnosticianPage extends BasePage {
     public By filterButton = By.xpath("//a[@class='theme-button grey ml-auto mr-3']");
 
     public By searchFld = By.xpath("//input[@placeholder='Type here to search']");
-    public By searchFild = By.xpath("//input[@aria-controls='DataTables_Table_0']");
+    public By searchFild = By.xpath("//input[contains(@aria-controls,'DataTables_Table')]");
     public By SearchField = By.xpath("//input[@aria-controls='appointmentTable']");
     public By viewClientDetailLink = By.xpath("(//td)[6]");
     public By clientDetailText = By.xpath("//div[contains(@class,'page-header align-items-lg-center')]");
@@ -209,6 +210,11 @@ public class DiagnosticianPage extends BasePage {
         WebdriverWaits.waitForSpinner();
         sendKeys_withClear(SearchField, ClientName);
     }
+    public void enter_SearchField(String clientName){
+        WebdriverWaits.waitUntilVisible(searchFild);
+        WebdriverWaits.waitForSpinner();
+        sendKeys_withClear(searchFild,clientName);
+    }
 
     public void click_ViewDetailLink() {
         WebdriverWaits.waitUntilVisible(viewClientDetailLink);
@@ -220,7 +226,7 @@ public class DiagnosticianPage extends BasePage {
     public void click_EditButton() {
         WebdriverWaits.waitUntilVisible(editButton);
         WebdriverWaits.waitForSpinner();
-        moveToElement(editButton);
+        click_custom(editButton);
     }
 
     public void enter_CellNumber(String cellNumberText) {
@@ -285,6 +291,9 @@ public class DiagnosticianPage extends BasePage {
     public void edit_Diagnostician(String EmailAddress1, String passwordTextFieldText, String confirmPasswordFieldText) throws InterruptedException {
         click_EditButton();
         // enter_CellNumber(cellNumberText);
+        validate_text(edit_Popup, "Edit User");
+        Log.info("Successfully Edit popUp opens");
+
         enter_Diagnostician_Email1(EmailAddress1);
         click_PasswordField(passwordTextFieldText);
         click_confirmPasswordFieldField(confirmPasswordFieldText);
@@ -294,6 +303,7 @@ public class DiagnosticianPage extends BasePage {
 
     public void cheking_DisableUser() throws InterruptedException {
         click_EditButton();
+
         WebdriverWaits.waitUntilVisible(enableUser);
         WebdriverWaits.waitForSpinner();
         validate_text(enableUser, "Enable User");
