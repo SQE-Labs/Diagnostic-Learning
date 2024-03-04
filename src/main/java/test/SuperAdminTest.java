@@ -159,6 +159,8 @@ public class SuperAdminTest extends BaseTest {
     @Test(priority = 9, enabled = true, description = "5.12 Verify that superadmin is not  able create admin with duplicate username or not")
     public void verify_Duplicate_UserName() throws InterruptedException {
         AdminPage admin = new AdminPage();
+
+       // Verify that validation message appears after clicking on 'Create Admin' button, when user enter same username in 'username' field, on 'Create Admin ' page.
         admin.create_Admin(adminFirstName, adminLastName, admin_cell_Number, adminEmailAddress, adminUserName, "123456", "123456");
         WebdriverWaits.waitUntilVisible(admin.Error_Msg);
         validate_text(admin.Error_Msg, "An error occurred while creating the admin. Username already exists!");
@@ -319,10 +321,10 @@ public class SuperAdminTest extends BaseTest {
 
     @Test(priority = 19, enabled = true, description = "3.1, 3.5, 3.9, verify that SuperAdmin is able to create Director or not")
     public void create_Directors() throws InterruptedException {
-        directorFirstName = "AU_Felix" + RandomStrings.requiredCharacters(3);
-        directorLastName = "AU_Tyler" + RandomStrings.requiredCharacters(3);
+        directorFirstName = "AU_Elix" + RandomStrings.requiredCharacters(3);
+        directorLastName = "AU_Tyk" + RandomStrings.requiredCharacters(3);
         directorEmailAddress = directorFirstName + "@yopmail.com";
-        directorUserName = "AU_Lucy" + RandomStrings.requiredCharacters(3);
+        directorUserName = "AU_Spar" + RandomStrings.requiredCharacters(3);
         dir_Cell_Number = RandomStrings.requiredDigits(10);
         DirectorPage director = new DirectorPage();
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
@@ -396,11 +398,9 @@ public class SuperAdminTest extends BaseTest {
         director.enterInSearchField(directorFirstName);
         director.enable_Director();
         WebdriverWaits.waitUntilVisible(director.edit_SuccMsg);
-
         validate_text(director.edit_SuccMsg, "Director details updated successfully.");
         Log.info("Successfully Edited the created director");
     }
-
 
     @Test(priority = 24, enabled = true, description = "verify that superadmin is able to edit or not after clicking dont save button")
     public void verify_Dir_DntSaveBtn() throws InterruptedException {
@@ -441,10 +441,11 @@ public class SuperAdminTest extends BaseTest {
 
     //************Appointments page******************
 
-    @Test(dependsOnMethods = {"verify_Full_Payment"}, description = "2.1, 2.3,2.5 Verify that 'Appointments' accordion expands after clicking on 'Appointment' accordion from left panel, on 'Dashboard' page.")
-    public void verify_Appointments_Page() {
+    @Test(dependsOnMethods = {"verify_Full_Payment"}, description = "2.1, 2.3,2.5,2.8, 4 Verify that 'Appointments' accordion expands after clicking on 'Appointment' accordion from left panel, on 'Dashboard' page.")
+    public void verify_Appointments_Page() throws InterruptedException {
         AppointmentsPage appointment = new AppointmentsPage();
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
+        SuperAdminPage superAdmin=new SuperAdminPage();
         LoginPage login = new LoginPage();
         login.superAdminLogin();
         WebdriverWaits.waitUntilVisible(appointment.dashBoardPage);
@@ -467,13 +468,35 @@ public class SuperAdminTest extends BaseTest {
         WebdriverWaits.waitUntilVisible(appointment.searchedText);
         validate_text(appointment.searchedText, clientFirstName + ' ' + clientLastName);
 
+        //**********Verifying Todate and from********************
+        String toDate = DateGenerator.getCurrentDate();
 
-        //**********Verifying Todate and from
+        String FromDate = DateGenerator.getDateWithDays("dd-MM-yyyy", -2);
+        superAdmin.click_filterButton();
+        appointment.enter_Dates(FromDate, toDate);
+        WebdriverWaits.waitUntilVisible(superAdmin.dateEle);
+        WebdriverWaits.waitForSpinner();
+        Thread.sleep(4000);
+        List<WebElement> my_list = superAdmin.getWebElements(superAdmin.dateEle);
+        HashSet<WebElement> dateSet = new HashSet<>(my_list);
 
+        LocalDate toDateLocal = LocalDate.parse(toDate, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+        LocalDate fromDateLocal = LocalDate.parse(FromDate, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+
+        boolean result = true;
+        for (WebElement i : dateSet) {
+            String date = i.getText();
+            LocalDate inputDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("MMM dd, yyyy"));
+            if (!(DateGenerator.isDateWithinRange(fromDateLocal, toDateLocal, inputDate))) {
+                result = false;
+                break;
+            }
+        }
+        Assert.assertTrue(result);
     }
 
     //*************This testcase also has defect*********************
-    @Test(dependsOnMethods = {"verify_Appointments_Page"}, description = " 2.7, 2.8, 2.91Verify that 'Appointment Details' page opens up on clicking 'View Detail' link")
+    @Test(dependsOnMethods = {"verify_Appointments_Page"}, description = " 2.7,  2.91Verify that 'Appointment Details' page opens up on clicking 'View Detail' link")
     public void verify_view_Details_Page() {
         AppointmentsPage appointment = new AppointmentsPage();
         SuperAdminPage superAdmin = new SuperAdminPage();
@@ -542,7 +565,7 @@ public class SuperAdminTest extends BaseTest {
     }
 
     //****************Admin while do the payment after creating the appointments.
-    @Test(dependsOnMethods = {"view_Payments_Page"}, description = "6.2, 6.3 Verify that search text box appears after clicking 'Filter' button on 'Payments' page.")
+    @Test(dependsOnMethods = {"view_Payments_Page"}, description = "6.2, 6.3,6.4 Verify that search text box appears after clicking 'Filter' button on 'Payments' page.")
     public void verify_Search_Payment() throws InterruptedException {
         PaymentPage payment = new PaymentPage();
         //  String getText = getText_custom(payment.getCust_Name);

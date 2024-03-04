@@ -49,12 +49,12 @@ public class AdminTest extends BaseTest {
 
         //Login by using superAdmin credentials
 
+        //Verify that admin is able to login into account using valid 'Username' and 'Password' on 'Sign in your account' page.
         login.adminLogin(adminUserName, "12345678");
         AdminPage dasboard = new AdminPage();
         WebdriverWaits.waitUntilVisible(dasboard.adminDashboardText);
         waitForSpinner();
         validate_text(dasboard.adminDashboardText, "Dashboard");
-
     }
 
     //********* Create Daignostician by admin
@@ -72,7 +72,7 @@ public class AdminTest extends BaseTest {
         //Create Diagnostician.
         diagnosticianFirstName = "AU_Hicks" + RandomStrings.requiredCharacters(3);
         diagnosticianLastName = "AU_Read" + RandomStrings.requiredCharacters(3);
-        diagnosticianUserName = "Au_Quinn" + RandomStrings.requiredCharacters(3);
+        diagnosticianUserName = "Au_Jack" + RandomStrings.requiredCharacters(3);
         diagnosticianEmailAddress = diagnosticianFirstName + "10@yopmail.com";
         String diagnosticianPhoneNumber = RandomStrings.requiredDigits(10);
 
@@ -82,6 +82,8 @@ public class AdminTest extends BaseTest {
         diagnostician.click_BackBtn();
         WebdriverWaits.waitUntilVisible(diagnostician.diagnosticListText);
         WebdriverWaits.waitForSpinner();
+
+        //Verify that admin is directed to 'Diagnosticians List' page after clicking 'Diagnosticians' tab from left panel, on 'Dashboard' page.
         validate_text(diagnostician.diagnosticListText, "Diagnosticians List");
 
         // Creating Diagnostician
@@ -125,15 +127,20 @@ public class AdminTest extends BaseTest {
         directorUserName = "AU_Koa" + RandomStrings.requiredCharacters(3);
         dirCellNumber = RandomStrings.requiredDigits(10);
         login.adminLogin(adminUserName,"12345678");
+
+        //Verify that admin is directed to 'Directors List' page after clicking 'Directors' tab from left panel, on 'Dashboard' page.
         panelpage.click_DirectorTab();
         validate_text(director.directorActualText, "Directors List");
 
         director.click_CreateDirectorsButton();
+
+        //Verify that admin is directed back to 'Directors List' page after clicking 'Back' button on 'Create Director' page.
         director.click_BackBtn();
         WebdriverWaits.waitUntilVisible(director.directorActualText);
         WebdriverWaits.waitForSpinner();
         validate_text(director.directorActualText, "Directors List");
 
+        //Verify that admin is able to enter valid data in all mandatory fields on 'Create Director' page.
         director.click_CreateDirectorsButton();
         director.create_Director(directorFirstName, directorLastName, dirCellNumber, directorEmailAddress, directorUserName, "123456", "123456");
         panelpage.click_LogOutLink();
@@ -156,12 +163,19 @@ public class AdminTest extends BaseTest {
         DashboardPage dashboard = new DashboardPage();
         AppointmentsPage appPage = new AppointmentsPage();
         login.adminLogin(adminUserName, "12345678");
+
+        //Verify that admin is directed to 'Create Appointment' page after clicking 'Schedule Appointment' button from left panel, on 'Dashboard 'page.
         dashboard.clickScheduleAppointment();
         WebdriverWaits.waitUntilVisible(appPage.titleText);
         validate_text(appPage.titleText, "Create Appointment");
 
+        //Verify that appropriate dropdown list appears after clicking on 'Choose Testing Location' field, while scheduling an appointment, on 'Create Appointment' page.
         appPage.locationName_Lists();
+
+        //Verify that admin is able to select any location from 'Choose Testing Location' dropdown list, while scheduling an appointment, on 'Create Appointment' page.
         appPage.selectTestinglocation("Austin");
+
+        //Verify that calendar appears after admin clicks on 'Assessment Date' field  under 'Preferred Location & Date' section, on 'Create Appointment' page.
         appPage.selectAppointmentSlot(0);
 
         appPage.selectAssesmentType("Adult ADHD Only");
@@ -194,7 +208,7 @@ public class AdminTest extends BaseTest {
         validate_text(admin.clientName, clientFirstName + ' ' + clientLastName);
     }
 
-    @Test(priority = 9, enabled = true, description = "8.11, 8.19,  Appointment scheduled by admin for a client")
+    @Test(priority = 9, enabled = true, description = "8.11, 8.19, 2.38, 2.39 Appointment scheduled by admin for a client")
     public void verify_ReScheduleAppointment() throws InterruptedException {
         DashboardPage dashboard = new DashboardPage();
         AppointmentsPage appPage = new AppointmentsPage();
@@ -471,6 +485,7 @@ public class AdminTest extends BaseTest {
         DashBoardPanelPage clickDirectorTab = new DashBoardPanelPage();
         clickDirectorTab.click_DirectorTab();
 
+        //Verify that admin is directed to 'Directors List' page, after creating a new Director on 'Create Director' page.
         director.search_CreatedDirector(directorUserName);
         WebdriverWaits.waitUntilVisible(director.clientName);
         validate_text(director.clientName, directorUserName);
@@ -502,16 +517,20 @@ public class AdminTest extends BaseTest {
     }
 
 
-    @Test(priority = 37, enabled = true, description = "17.1, 1.14, Admin is directed to 'Today's Appointment' page")
+    @Test(priority = 37, enabled = true, description = "17.1, 1.14,1.15 Admin is directed to 'Today's Appointment' page")
     public void verify_TodayAppointmentTab() throws InterruptedException {
         AdminPage admin = new AdminPage();
         DateGenerator datePage = new DateGenerator();
         LoginPage login = new LoginPage();
         DashBoardPanelPage dashboard = new DashBoardPanelPage();
        // login.adminLogin("allen", "123456");
+
+        //Verify that 'Appointments' accordion expands after clicking on 'Appointment' tab from left panel, on 'Dashboard' page.
         dashboard.click_AppointmentsTab();
         Thread.sleep(2000);
         dashboard.click_AppointmentsTab();
+
+       //  Verify that 'Appointments' accordion collapses after clicking on 'Appointment' tab from left panel, on 'Dashboard' page.
         WebdriverWaits.waitUntilInvisible(admin.viewAllTab);
         Assert.assertFalse(dashboard.isElementDisplay_custom(admin.viewAllTab, "View All"));
         Thread.sleep(5000);
@@ -546,6 +565,8 @@ public class AdminTest extends BaseTest {
     public void verify_UpcomingTab() {
         AdminPage admin = new AdminPage();
         AppointmentsPage appointment = new AppointmentsPage();
+
+        //Verify that user is directed to 'Upcoming Appointments' page after clicking 'Upcoming' subtab, on 'Dashboard'
         appointment.click_UpcomingTab();
         WebdriverWaits.waitUntilVisible(admin.titleOfUpcomingPage);
         WebdriverWaits.waitForSpinner();

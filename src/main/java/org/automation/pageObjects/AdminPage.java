@@ -69,6 +69,7 @@ public class AdminPage extends BasePage {
     public By assestmentType = By.xpath("//select[@id='assesmentType']");
     public By updateBtn = By.xpath("//button[@class='theme-button mr-3']");
     public By clientAsses = By.xpath("//p[text()=' IQ']");
+    public By gradeList=By.xpath("(//select[@id='schoolType'])[1]/option");
     //***********Re-assign appointment************//
 
     public By diag = By.id("diag");
@@ -123,7 +124,7 @@ public class AdminPage extends BasePage {
     public By enterAmt = By.id("bookingDeposit");
     public By closeBtn = By.xpath("(//a[@class='theme-button grey'])[5]");
     public By collectPayBtn = By.xpath("//button[@class='theme-button mx-2']");
-    public By closebtn = By.xpath("(//a[text()='Close'])[2]");
+    public By closebtn = By.xpath("(//a[text()='Close'])[3]");
     public By amountDue = By.xpath("//label[text()='Amount Due']//following-sibling::p");
     public By assessmentAmount = By.xpath("//label[text()='Assessment Amount']//following-sibling::p");
     public By receivedAmount = By.xpath("//label[text()='Received Amount']//following-sibling::p");
@@ -160,7 +161,7 @@ public class AdminPage extends BasePage {
     public By todayDateOnCard = By.xpath("(//span[@class='text-grey'])[1]");
     public By getTestReadyTitle = By.xpath("//div[@class='align-items-md-center d-flex flex-column flex-md-row page-header']/h3");
     public By titleOfUpcomingPage = By.xpath("//div[@class='page-header align-items-lg-center d-flex flex-column flex-md-row']/h3");
-    public By getStatus = By.xpath("(//tr[not(contains(@style,'display: none;'))])[3]//span");
+    public By getStatus = By.xpath("(//tr[not(contains(@style,'display: none;'))])[2]//span");
     public By getViewDetails = By.xpath("(//tr[not(contains(@style,'display: none;'))])[2]//a");
     public By getNameOfClient = By.xpath("((//tr[not(contains(@style,'display: none;'))])[2]//td)[1]");
     public By getTitleOfTestComplete = By.xpath("//div[@class='page-header align-items-lg-center d-flex flex-column flex-md-row']/h3");
@@ -499,6 +500,7 @@ public class AdminPage extends BasePage {
         WebdriverWaits.waitForSpinner();
         click_custom(editAss);
     }
+
 
     public void click_UpdateBtn() {
         WebdriverWaits.waitUntilVisible(updateBtn);
@@ -986,7 +988,7 @@ public class AdminPage extends BasePage {
     public void upload_FileAttachment() throws InterruptedException, AWTException {
         click_UploadButton();
         click_ChooseFile();
-        Thread.sleep(5000);
+        Thread.sleep(6000);
         String filepath = "Downloads\\33200_1911.pdf";
         ChromeDownloads.uploadFileUsingRobot(filepath);
         click_UploadButtons();

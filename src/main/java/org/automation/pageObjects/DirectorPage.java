@@ -35,14 +35,14 @@ public class DirectorPage extends BasePage {
     public By password_Field = By.xpath("//input[@placeholder='Create Password']");
     public By confirm_PasswordField = By.xpath("//input[@class='ng-untouched ng-pristine ng-valid border border-danger']");
     public By createDirectorsButton = By.xpath("//button[text()='Create Director']");
-    public By createDirectorBtn=By.xpath("//button[@class='theme-button float-md-right']");
+    public By createDirectorBtn = By.xpath("//button[@class='theme-button float-md-right']");
 
     public By availableSlots = By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-all-day-inner mbsc-schedule-event-inner ng-star-inserted']");
 
     //**************Search created director***************
     public By filterButton = By.xpath("//a[text()='Filter']");
     public By searchField = By.xpath("//input[@aria-controls='appointmentTable']");
-    public By clientName=By.xpath("(//td)[2]");
+    public By clientName = By.xpath("(//td)[2]");
 
     //****************edit created director**************
 
@@ -68,7 +68,7 @@ public class DirectorPage extends BasePage {
     public By yearButton = By.xpath("//span[@class='mbsc-calendar-title mbsc-calendar-year mbsc-ios ng-star-inserted']");
     public By monthHeader = By.xpath("//span[@class='mbsc-calendar-month mbsc-calendar-title mbsc-ios ng-star-inserted']");
     public By yearHeader = By.xpath("//span[@class='mbsc-calendar-title mbsc-calendar-year mbsc-ios ng-star-inserted']");
-      public By backBtn =By.xpath("//button[@class='theme-button grey float-md-right mr-md-4']");
+    public By backBtn = By.xpath("//button[@class='theme-button grey float-md-right mr-md-4']");
     public By availableText = By.xpath("//div[text()='Available']");
     public By saveButton = By.xpath("//button[text()='Save']");
     public By validationMsg = By.xpath("//div[@class='alert alert-danger ng-star-inserted']");
@@ -203,7 +203,8 @@ public class DirectorPage extends BasePage {
         WebdriverWaits.waitForSpinner();
         click_custom(createDirectorsButton);
     }
-    public void click_createDirectorBtn(){
+
+    public void click_createDirectorBtn() {
         click_custom(createDirectorBtn);
     }
 
@@ -229,6 +230,7 @@ public class DirectorPage extends BasePage {
     //***************edit created director*****************
     public void click_EditButton() {
         WebdriverWaits.waitUntilVisible(editButton);
+        WebdriverWaits.waitForSpinner();
         click_custom(editButton);
     }
 
@@ -333,7 +335,7 @@ public class DirectorPage extends BasePage {
     }
 
     //**************Search created director*************
-    public void search_CreatedDirector(String UserName)  {
+    public void search_CreatedDirector(String UserName) {
         enterInSearchField(UserName);
     }
 
