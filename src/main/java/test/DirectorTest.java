@@ -14,12 +14,14 @@ public class DirectorTest extends BaseTest {
     DirectorPage director = new DirectorPage();
     DashBoardPanelPage panelPage = new DashBoardPanelPage();
     LoginPage login = new LoginPage();
+
     @Test(priority = 1, enabled = true, description = "1 Verify Director is able to login with valid credentials")
     public void verify_Login_Director() {
         login.directorLogin(directorUserName, "12345678");
         WebdriverWaits.waitUntilVisible(director.dashboardPage);
         validate_text(director.dashboardPage, "Dashboard");
     }
+
     @Test(priority = 2, enabled = true, description = " 4 Verify that 'Appointments' tab expands, on 'Dashboard' page.")
     public void verify_AppointmentsTabExpands() {
         panelPage.click_AppointmentsTab();

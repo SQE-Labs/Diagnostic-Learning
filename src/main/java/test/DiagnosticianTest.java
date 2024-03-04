@@ -2,30 +2,22 @@ package test;
 
 import com.opencsv.exceptions.CsvException;
 import org.automation.base.BaseTest;
-
 import org.automation.pageObjects.*;
-
 import org.automation.utilities.ActionEngine;
 import org.automation.utilities.DateGenerator;
 import org.automation.utilities.WebdriverWaits;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-
 import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.List;
-
-import static org.automation.utilities.Assertions.validate_AttText;
 import static org.automation.utilities.Assertions.validate_text;
 import static test.AdminTest.*;
-
 
 public class DiagnosticianTest extends BaseTest {
 
@@ -33,27 +25,22 @@ public class DiagnosticianTest extends BaseTest {
     @Test(priority = 0, enabled = true, description = "1, Login as a diagnostician and verify it is diagnostician dashboard page or not")
     public void verify_diagnostician_Login() {
         LoginPage login = new LoginPage();
+        DiagnosticianPage diagnostician = new DiagnosticianPage();
+
 
         login.diagnostician_Login(diagnosticianUserName, "12345678");
-        DiagnosticianPage diagnostician = new DiagnosticianPage();
         WebdriverWaits.waitUntilVisible(diagnostician.dashboard);
         validate_text(diagnostician.dashboard, "Dashboard");
     }
-    @Test(priority = 1, enabled = true, description = "Set availability for diagnostician by admin")
-    public void verify_DiagnosticianAvailability() throws InterruptedException {
-        DiagnosticianPage diagnostician = new DiagnosticianPage();
-        DashBoardPanelPage logout = new DashBoardPanelPage();
-        logout.click_LogOutLink();
-        diagnostician.login_As_Diagnostician(diagnosticianUserName, "123456");
-        diagnostician.set_Availability();
-        // diagnostician.click_Availablity();
-        diagnostician.cancel_Availability();
-        diagnostician.deleting_Availability();
-    }
+
+
 
     @Test(priority = 2, enabled = true, description = "31 Diagnostician is Verifying upcoming appointments")
     public void verify_UpcomingAppointments() {
         DiagnosticianPage diagnostician = new DiagnosticianPage();
+        LoginPage login = new LoginPage();
+
+     //   login.directorLogin(diagnosticianUserName, "12345678");
         diagnostician.click_AppointmentTab();
         diagnostician.click_upcomingTab();
         WebdriverWaits.waitUntilVisible(diagnostician.upcomingPageTitle);
@@ -64,7 +51,7 @@ public class DiagnosticianTest extends BaseTest {
     public void verify_ClientDetailsPage() {
         DiagnosticianPage diagnostician = new DiagnosticianPage();
 
-        diagnostician.click_ClientDetailLink(clientFirstName);
+        diagnostician.click_ClientDetailLink();
         WebdriverWaits.waitUntilVisible(diagnostician.clientDetailText);
         WebdriverWaits.waitForSpinner();
         validate_text(diagnostician.clientDetailText, clientFirstName + ' ' + clientLastName + ' ' + "Details");
@@ -138,24 +125,33 @@ public class DiagnosticianTest extends BaseTest {
 
         diagnostician.verify_CompleteAss();
         diagnostician.click_filterButton();
-        diagnostician.enter_ClientDetail(clientFirstName);
+        diagnostician.enter_SearchField(clientFirstName);
         WebdriverWaits.waitUntilVisible(diagnostician.clientText);
+        diagnostician.click_ClientDetailLink();
         validate_text(diagnostician.clientText, clientFirstName + ' ' + clientLastName + ' ' + "Details");
     }
 
     @Test(priority = 8, enabled = true, description = "24, 86, 88 Verify diagnostician is able to download csv file or not after completing the assessment")
-    public void verify_completeAss() {
+    public void verify_completeAss() throws InterruptedException, FileNotFoundException {
         DiagnosticianPage diagnostician = new DiagnosticianPage();
+        AppointmentsPage appointment = new AppointmentsPage();
+        DashBoardPanelPage panelpage = new DashBoardPanelPage();
         diagnostician.verify_CompleteAss();
-        diagnostician.search_CreatedDiagnostician(clientFirstName);
+        diagnostician.enter_SearchField(clientFirstName);
         WebdriverWaits.waitUntilVisible(diagnostician.clientNameText);
         validate_text(diagnostician.clientNameText, clientFirstName + ' ' + clientLastName);
+        appointment.click_ExportCSVButton();
+        Thread.sleep(3000);
+        //Download exportCSV File and Check file is downloaded or not
+        String downloadFile = panelpage.getDownloadFileName();
+        Assert.assertTrue(panelpage.isFileDownloaded(downloadFile));
     }
 
     @Test(priority = 9, enabled = true, description = "89, 90  Verify diagnostician is able to download csv file or not after completing the assessment")
     public void verify_Cancelled_Appointments() {
         DiagnosticianPage diagnostician = new DiagnosticianPage();
         DashBoardPanelPage panelpage = new DashBoardPanelPage();
+        panelpage.navigate_Back();
         diagnostician.click_CancelTab();
         diagnostician.enter_InSearchField(clientLastName);
         WebdriverWaits.waitUntilVisible(diagnostician.clientNameText);
