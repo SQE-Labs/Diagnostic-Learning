@@ -12,6 +12,9 @@ public class SuperAdminPage extends BasePage {
     public By backButton = By.xpath("//a[@class='grey ml-3 theme-button']");
     public By exportCSVButton = By.xpath("//button[text()='Export to CSV']");
 
+    public By dateEle = By.xpath("((//tr[not(contains(@style,'display: none;'))])[2]//td)[4]");
+    public By filterButton = By.xpath("//a[@class='theme-button grey ml-auto mr-3']");
+
     public void click_ViewStudentObservationButton() {
         WebdriverWaits.waitUntilVisible(viewStudentObservationButton);
         WebdriverWaits.waitForSpinner();
@@ -21,6 +24,11 @@ public class SuperAdminPage extends BasePage {
     public void click_BackButton() {
         WebdriverWaits.waitUntilVisible(backButton);
         click_custom(backButton);
+    }
+    public void click_filterButton() {
+        WebdriverWaits.waitUntilVisible(filterButton);
+        WebdriverWaits.waitForSpinner();
+        click_custom(filterButton);
     }
 
     public void clickOn_ViewObservationBtn() {

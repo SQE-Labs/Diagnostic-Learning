@@ -7,18 +7,6 @@
         <class name="test.AdminTest"/>
         <class name="test.DiagnosticianTest"/>
         <class name="test.DirectorTest"></class>
-    </classes>
+      </classes>
 </test>
 </suite>
-
-<!--<suite name="Suite">-->
-<!--<test thread-count="1" parallel="classes" name="Test">-->
-<!--    <classes>-->
-<!--        <class name="test.SuperAdminTest" priority="1"></class>-->
-<!--        <class name="test.AdminTest"></class>-->
-<!--        <class name="test.DiagnosticianTest"></class>-->
-<!--        &lt;!&ndash;            <class name="test.DirectorTest"></class>&ndash;&gt;-->
-
-<!--    </classes>-->
-<!--</test>-->
-<!--</suite>-->

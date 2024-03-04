@@ -15,10 +15,13 @@ public class LoginPage extends BasePage {
 
     public void enterUsername(String userNameText) {
         WebdriverWaits.waitUntilVisible(userNameField);
+        WebdriverWaits.waitForSpinner();
         sendKeys_withClear(userNameField, userNameText);
     }
 
     public void enterPassword(String passNameText) {
+        WebdriverWaits.waitUntilVisible(PasswordField);
+        WebdriverWaits.waitForSpinner();
         sendKeys_withClear(PasswordField, passNameText);
     }
 
@@ -44,10 +47,10 @@ public class LoginPage extends BasePage {
 
     }
 
-    public void diagnostician_Login(String getText_Dia, String PasswordFieldText) {
-        sendKeys_withClear(userNameField, getText_Dia);
+    public void diagnostician_Login(String userNameText, String PasswordFieldText) {
+        enterUsername(userNameText);
         enterPassword(PasswordFieldText);
-        click_custom(login);
+        clickLoginBtn();
         WebdriverWaits.waitForSpinner();
 
     }

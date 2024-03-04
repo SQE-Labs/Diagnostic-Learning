@@ -35,12 +35,14 @@ public class DirectorPage extends BasePage {
     public By password_Field = By.xpath("//input[@placeholder='Create Password']");
     public By confirm_PasswordField = By.xpath("//input[@class='ng-untouched ng-pristine ng-valid border border-danger']");
     public By createDirectorsButton = By.xpath("//button[text()='Create Director']");
+    public By createDirectorBtn = By.xpath("//button[@class='theme-button float-md-right']");
+
     public By availableSlots = By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-all-day-inner mbsc-schedule-event-inner ng-star-inserted']");
 
     //**************Search created director***************
     public By filterButton = By.xpath("//a[text()='Filter']");
-    public By searchField = By.xpath("//input[@id='filterSearch']");
-
+    public By searchField = By.xpath("//input[@aria-controls='appointmentTable']");
+    public By clientName = By.xpath("(//td)[2]");
 
     //****************edit created director**************
 
@@ -66,14 +68,7 @@ public class DirectorPage extends BasePage {
     public By yearButton = By.xpath("//span[@class='mbsc-calendar-title mbsc-calendar-year mbsc-ios ng-star-inserted']");
     public By monthHeader = By.xpath("//span[@class='mbsc-calendar-month mbsc-calendar-title mbsc-ios ng-star-inserted']");
     public By yearHeader = By.xpath("//span[@class='mbsc-calendar-title mbsc-calendar-year mbsc-ios ng-star-inserted']");
-    public By clickOnBox = By.xpath("(//div[@class='mbsc-flex-1-0 mbsc-ios mbsc-schedule-item ng-star-inserted'])[23]");
-    public By clickOnBox1 = By.xpath("(//div[@class='mbsc-flex-1-0 mbsc-ios mbsc-schedule-item ng-star-inserted'])[24]");
-    public By clickOnBox2 = By.xpath("(//div[@class='mbsc-flex-1-0 mbsc-ios mbsc-schedule-item ng-star-inserted'])[25]");
-    public By clickOnBox3 = By.xpath("(//div[@class='mbsc-flex-1-0 mbsc-ios mbsc-schedule-item ng-star-inserted'])[26]");
-    public By clickOnBox4 = By.xpath("(//div[@class='mbsc-flex-1-0 mbsc-ios mbsc-schedule-item ng-star-inserted'])[27]");
-    public By clickOnBox5 = By.xpath("(//div[@class='mbsc-flex-1-0 mbsc-ios mbsc-schedule-item ng-star-inserted'])[28]");
-    public By clickOnBox6 = By.xpath("(//div[@class='mbsc-flex-1-0 mbsc-ios mbsc-schedule-item ng-star-inserted'])[29]");
-    // public By clickOnBox6=By.xpath("(//div[@class='mbsc-flex-1-0 mbsc-ios mbsc-schedule-item ng-star-inserted'])[21]");
+    public By backBtn = By.xpath("//button[@class='theme-button grey float-md-right mr-md-4']");
     public By availableText = By.xpath("//div[text()='Available']");
     public By saveButton = By.xpath("//button[text()='Save']");
     public By validationMsg = By.xpath("//div[@class='alert alert-danger ng-star-inserted']");
@@ -98,11 +93,9 @@ public class DirectorPage extends BasePage {
     public By totalSlots = By.xpath("//div[@class='ng-star-inserted']");
     public By totalAvailleSlots = By.xpath("//div[@class='mbsc-flex-1-0 mbsc-ios mbsc-schedule-item ng-star-inserted']");
 
-
     public By yearsTitle = By.xpath("(//mbsc-button[contains(@class,'mbsc-calendar-button')])[5]");
 
-    public By yearTitleFromText = By.xpath("(//d" +
-            "iv[contains(@class,'mbsc-calendar-year-text')])[13]");
+    public By yearTitleFromText = By.xpath("(//div[contains(@class,'mbsc-calendar-year-text')])[13]");
     public By spinner = By.cssSelector("div.ngx-spinner-overlay");
     public By setAvailaibility = By.xpath("//div[@class='page-header d-flex align-items-center']");
     public By slotSelection = By.xpath("(//div[@class='mbsc-flex-1-0 mbsc-ios mbsc-schedule-item ng-star-inserted'])[1]");
@@ -206,7 +199,13 @@ public class DirectorPage extends BasePage {
     }
 
     public void click_createDirectorButton() {
+        WebdriverWaits.waitUntilVisible(createDirectorsButton);
+        WebdriverWaits.waitForSpinner();
         click_custom(createDirectorsButton);
+    }
+
+    public void click_createDirectorBtn() {
+        click_custom(createDirectorBtn);
     }
 
     //***************search created diagnostician******************
@@ -217,6 +216,8 @@ public class DirectorPage extends BasePage {
     }
 
     public void enterInSearchField(String searchFieldText) {
+        WebdriverWaits.waitUntilVisible(searchField);
+        WebdriverWaits.waitForSpinner();
         sendKeys_withClear(searchField, searchFieldText);
     }
 
@@ -229,6 +230,7 @@ public class DirectorPage extends BasePage {
     //***************edit created director*****************
     public void click_EditButton() {
         WebdriverWaits.waitUntilVisible(editButton);
+        WebdriverWaits.waitForSpinner();
         click_custom(editButton);
     }
 
@@ -241,8 +243,10 @@ public class DirectorPage extends BasePage {
         click_custom(updateButton);
     }
 
-    public void clickOn_YearHeader() {
-        click_custom(yearHeader);
+    public void click_BackBtn() {
+        WebdriverWaits.waitUntilVisible(backBtn);
+        WebdriverWaits.waitForSpinner();
+        click_custom(backBtn);
     }
 
     public void click_MonthHeader() {
@@ -302,7 +306,7 @@ public class DirectorPage extends BasePage {
 
     //*********Create director**************
     public void create_Director(String directorsFirstNameText, String directorsLastNameText, String directorsMobileNumberText, String directorsEmailText, String directorsUserNameText, String password_FieldText, String confirmPasswordFieldText) throws InterruptedException {
-        click_CreateDirectorsButton();
+        click_createDirectorButton();
         click_directorsFirstNameField(directorsFirstNameText);
         click_directorsLastNameField(directorsLastNameText);
         click_directorsMobileNumberField(directorsMobileNumberText);
@@ -311,7 +315,7 @@ public class DirectorPage extends BasePage {
         click_directorsUserNameField(directorsUserNameText);
         click_passwordField(password_FieldText);
         enter_ConfirmPassword(confirmPasswordFieldText);
-        click_createDirectorButton();
+        click_createDirectorBtn();
     }
 
     public void click_EditBtnAfterSearch() throws InterruptedException {
@@ -331,8 +335,7 @@ public class DirectorPage extends BasePage {
     }
 
     //**************Search created director*************
-    public void search_CreatedDirector(String UserName) throws InterruptedException {
-        click_filterButton();
+    public void search_CreatedDirector(String UserName) {
         enterInSearchField(UserName);
     }
 
@@ -349,6 +352,7 @@ public class DirectorPage extends BasePage {
         // test case number ( 4.6 ).
         validate_text(edit_Popup, "Edit User");
         Log.info("Successfully Edit popUp opens");
+
         enter_Director_Email1(EmailAddress1);
         click_PasswordField(passwordTextFieldText);
         click_confirmPasswordField(confirmPasswordFieldText);

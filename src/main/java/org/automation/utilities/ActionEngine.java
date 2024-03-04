@@ -11,6 +11,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -379,6 +380,15 @@ public class ActionEngine extends BaseTest {
             return attributeName;
         }
 
+    }
+    public void dropdownListsValues(By locator,String Description){
+        List<WebElement> locNames=getWebElements(locator,Description);
+        ArrayList<String> dropdownValues = new ArrayList<>();
+        for (WebElement option : locNames) {
+            dropdownValues.add(option.getText());
+
+        }
+        System.out.println(dropdownValues);
     }
 
 }
