@@ -257,19 +257,16 @@ public class DirectorPage extends BasePage {
     public void select_Year() {
         WebdriverWaits.waitUntilVisible(selectYear);
         click_custom(selectYear);
-
     }
 
     public void select_Month() {
         WebdriverWaits.waitUntilVisible(selectMonth);
         click_custom(selectMonth);
-
     }
 
     public void clickOn_DontSave() {
         click_custom(dontSaveButton);
     }
-
 
     public void off_ToggleButton() {
         WebdriverWaits.waitUntilVisible(toggle);
@@ -322,16 +319,12 @@ public class DirectorPage extends BasePage {
         wait.waitUntilVisible(editBtnAfterSearch);
         WebdriverWaits.waitForSpinner();
         click_custom(editBtnAfterSearch);
-
-
     }
 
     public void click_ViewDetailsBtn() throws InterruptedException {
         wait.waitUntilVisible(viewDetailsBtn);
         WebdriverWaits.waitForSpinner();
         click_custom(viewDetailsBtn);
-
-
     }
 
     //**************Search created director*************
@@ -366,6 +359,7 @@ public class DirectorPage extends BasePage {
         click_EditButton();
         WebdriverWaits.waitUntilVisible(enableUser);
         validate_text(enableUser, "Enable User");
+        off_ToggleButton();
         click_DontSave();
     }
 

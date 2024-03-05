@@ -1,5 +1,6 @@
 package org.automation.pageObjects;
 import org.automation.base.BasePage;
+import org.automation.elements.DropDown;
 import org.automation.logger.Log;
 import org.automation.utilities.WebdriverWaits;
 import org.openqa.selenium.By;
@@ -151,12 +152,14 @@ public class AppointmentsPage extends BasePage {
     public void selectGradeType(int gradeType) {
         dropdownListsValues(grade,"gradeTypeList");
          selectDropDownByIndex_custom(grade, gradeType);
+        System.out.println(DropDown.getSelectedOption(grade));
     }
 
     public void selectSchoolType(int schoolTypeOption) {
         // click_custom(SchoolType);
         dropdownListsValues(schoolType,"schoolTypeList");
         selectDropDownByIndex_custom(schoolType, schoolTypeOption);
+       System.out.println(DropDown.getSelectedOption(schoolType));
     }
 
     public void enterCellNumber(String cellNumberText) throws InterruptedException {
@@ -164,8 +167,7 @@ public class AppointmentsPage extends BasePage {
         click_custom(cellNumber);
         Thread.sleep(1000);
         sendKeys_withClear(cellNumber, cellNumberText);
-        Boolean cellText=getDriver().findElement(By.xpath("//input[@placeholder='Cell Number']")).getAttribute("Placeholder").contains("Value");
-        System.out.println(cellText);
+
     }
 
     public void click_UpcomingCard() {
@@ -214,15 +216,9 @@ public class AppointmentsPage extends BasePage {
         selectDropDownByVisibleText_custom(chooseTestingLocation, chooseLocationText, "ChooseLocation");
 
     }
-    public void locationName_Lists(){
-        List<WebElement> locNames=getWebElements(locationLists,"Location List");
-        ArrayList<String> dropdownValues = new ArrayList<>();
-            for (WebElement option : locNames) {
-                dropdownValues.add(option.getText());
-                dropdownValues.remove("Choose Testing Location");
-            }
-        System.out.println(dropdownValues);
-        }
+    public void locationName_Lists() {
+        dropdownListsRemoveValues(locationLists, "Location List", "Choose Testing Location");
+    }
 
     public void enterAmount(String enterAmountText)    {
         WebdriverWaits.waitUntilInvisible(enterAmountField);
@@ -322,9 +318,12 @@ public class AppointmentsPage extends BasePage {
         validate_text(paymentPopUp, "Booking Payment");
 
         enterAmount(enterAmountText);
+
+        //Verify that admin is able to collect payment after clicking 'Collect Payment' button, on 'Booking Payment' pop up of 'Create Appointment' page.
         clickCollectDepositButton();
         WebdriverWaits.waitUntilVisible(actualText);
         validate_text(actualText, "Appointment Scheduled!!");
+        //Verify that  admin is directed to '<Client> Details' page after clicking 'View details' button, on 'Appointment Scheduled !!' pop up of 'Create Appointment' page.
         clickViewDetailsButton();
         WebdriverWaits.waitForSpinner();
         Thread.sleep(5000);

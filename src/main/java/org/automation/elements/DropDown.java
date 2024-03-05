@@ -80,9 +80,10 @@ public final class DropDown extends Element {
      *
      * @return currently selected option
      */
-    public String getSelectedOption() {
-        Log.info("Get the selected option from the [" + description + "] drop down");
-        WebElement element = wait.until(elementToBeClickable(locator));
+
+
+    public static String getSelectedOption(By ele){
+        WebElement element=getDriver().findElement(ele);
         return new Select(element).getFirstSelectedOption().getText();
     }
 
