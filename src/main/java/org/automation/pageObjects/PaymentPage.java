@@ -65,8 +65,6 @@ public class PaymentPage extends BasePage {
         WebdriverWaits.waitUntilVisible(viewReceiptButton);
         WebdriverWaits.waitForSpinner();
         click_custom(viewReceiptButton);
-
-
     }
 
     public void click_CollectBtn() {

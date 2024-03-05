@@ -53,9 +53,15 @@ public class LoginPage extends BasePage {
     }
 
     public void adminLogin(String username, String password) {
-        enterUsername(username);
-        enterPassword(password);
-        clickLoginBtn();
+        sendKeys_withClear(userNameField, PropertiesUtil.getPropertyValue("admin_userName"));
+        sendKeys_withClear(PasswordField, PropertiesUtil.getPropertyValue("admin_password"));
+        click_custom(login);
+        WebdriverWaits.waitForSpinner();
+    }
+    public void admin_Login( ) {
+        sendKeys_withClear(userNameField, PropertiesUtil.getPropertyValue("admin_userName"));
+        sendKeys_withClear(PasswordField, PropertiesUtil.getPropertyValue("admin_password"));
+        click_custom(login);
         WebdriverWaits.waitForSpinner();
     }
 

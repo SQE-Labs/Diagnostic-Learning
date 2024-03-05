@@ -161,7 +161,6 @@ public class WebdriverWaits extends BaseTest {
                     .ignoring(NoSuchElementException.class, ElementNotInteractableException.class);
             fluentWait1.until(ExpectedConditions.visibilityOfElementLocated(element));
         } catch (Exception e) {
-
         }
     }
 

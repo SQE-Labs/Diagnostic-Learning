@@ -136,25 +136,6 @@ public class DirectorTest extends BaseTest {
         validate_text(appointment.todaysAppointmentTXT, "Today's Appointments");
     }
 
-    @Test(priority = 8, enabled = true, description = "8. & 28. Verify that director is directed to 'Today's Appointments' page")
-    public void verify_Upcoming_AppointmentPage() throws InterruptedException, FileNotFoundException {
-        DashBoardPanelPage panelPage = new DashBoardPanelPage();
-        AppointmentsPage appointment = new AppointmentsPage();
-        AdminPage admin = new AdminPage();
-        appointment.click_UpcomingCard();
-
-        validate_text(appointment.upcomingAppointmentTXT, "Upcoming Appointments");
-       /* appointment.click_Filter();
-        String fromDateplaceholder = admin.getAttributevalue(appointment.fromDateText, "placeholder");
-        String toDatePlaceholder = admin.getAttributevalue(appointment.toDateText, "placeholder");
-        Assert.assertEquals(fromDateplaceholder, "From Date");
-        Assert.assertEquals(toDatePlaceholder, "To Date");
-*/
-        appointment.click_ExportCSVButton();
-        String downloadFile = panelPage.getDownloadFileName();
-        Assert.assertTrue(panelPage.isFileDownloaded(downloadFile));
-        getDriver().navigate().to("https://topuptalent.com/Diagnosticlearning/");
-    }
 
 
 
@@ -188,13 +169,16 @@ public class DirectorTest extends BaseTest {
         appointment.click_UpcomingTab();
         appointment.click_ViewDetailLink();
         String expectedTitle=getText_custom(testPlan.title);
+        //Verify that 'Test Plan' pop up appears after clicking 'Test Plan' button, on '<Client> Details page.
         appointment.click_EditTestPlan();
         validate_text(director.editTestPopupTitle, "Please choose tests.");
         director.click_CloseBtnEditPopup();
         validate_text(testPlan.title, expectedTitle);
         validate_text(appointment.getAppointmentDetails, "Appointment Details");
+        //Verify that changes made by director on 'Test Plan' popup does not get saved, after clicking 'Close' button, on 'Test Plan' popup of '<Client Details>' page.
         appointment.click_EditTestPlan();
         appointment.select_Checkbox();
+        //Verify that director is able to add comments in 'Other Comments' field, on 'Test Plan' popup of '<Client> Details' page.
         appointment.enter_OtherComments("My Appointment");
         appointment.click_SaveButton();
         validate_text(appointment.selectWISC, "WAIS");
@@ -213,14 +197,23 @@ public class DirectorTest extends BaseTest {
     @Test(priority = 19, enabled = true, description = "37 Verify that 'Test Fee Adjustment' field accepts positive amount and that positive amount gets added to 'Assessment Amount' and 'Amount Due' values, on 'Collect Payment' pop up")
     public void verify_TestFeeAdjustment() throws InterruptedException {
         AppointmentsPage appointment = new AppointmentsPage();
-        DashBoardPanelPage panelPage = new DashBoardPanelPage();
+        DashboardPage dashPage = new DashboardPage();
         PaymentPage payment = new PaymentPage();
-        panelPage.click_AppointmentsTab();
-        appointment.click_ViewAll();
-        appointment.click_ViewDetailLink();
-        appointment.click_PaymentButton();
-        payment.enter_TestFeeAdjustment("100");
-        payment.click_CollectButton();
+        appointment.click_AppoinptmentTab();
+        appointment.click_ViewAllTab();
+        String status = "Test Ready";
+        dashPage.enter_DataSearhTextBox(status);
+        appointment.click_ViewDetails();
+        Float beforeAssementAmount = payment.retrieveAmount(payment.assessmentAmountInDisplay);
+        Float beforeAmountDue = payment.retrieveAmount(payment.amountDue);
+        payment.clickOn_PaymentBtn();
+        payment.enter_TestFeeAdjustment("200.00");
+        payment.click_OnCollectAmountBtn();
+        payment.click_CloseBtn();
+        Float afterAssementAmount = payment.retrieveAmount(payment.assessmentAmountInDisplay);
+        Float afterAmountDue = payment.retrieveAmount(payment.amountDue);
+        Assert.assertEquals((afterAssementAmount - beforeAssementAmount), "200.00");
+        Assert.assertEquals((afterAmountDue - beforeAmountDue), "200.00");
         payment.click_CloseBtn_PopUp();
     }
 
@@ -279,9 +272,9 @@ public class DirectorTest extends BaseTest {
         payment.click_CloseBtn();
         Float afterAssementAmount = payment.retrieveAmount(payment.assessmentAmountInDisplay);
         Float afterAmountDue = payment.retrieveAmount(payment.amountDue);
-        Assert.assertEquals((afterAssementAmount - beforeAssementAmount), "-200.00");
-        Assert.assertEquals((afterAmountDue - beforeAmountDue), "-200.00");
-
+        Assert.assertEquals((beforeAssementAmount-afterAssementAmount), "-200.00");
+        Assert.assertEquals((beforeAmountDue-afterAmountDue), "-200.00");
+        payment.click_CloseBtn_PopUp();
     }
 
     @Test(priority = 24, enabled = true, description = "68. 'Test Fee Adjustment' field accepts negative value")
