@@ -189,7 +189,7 @@ public class SuperAdminTest extends BaseTest {
         //**************SuperAdmin is creating diagnostician*************
 
 
-        diagnostician.create_Diagnostician(diagnosticianFirstName, diagnosticianLastName, dia_Cell_Number, diagnosticianEmailAddress, diagnosticianUserName, "123456", "123456");
+        diagnostician.create_Diagnostician(diagnosticianFirstName, diagnosticianLastName, dia_Cell_Number, diagnosticianEmailAddress, "Austin",diagnosticianUserName, "123456", "123456");
         diagnostician.enter_InSearchField(diagnosticianUserName);
         WebdriverWaits.waitUntilVisible(diagnostician.actualText);
         validate_text(diagnostician.actualText, diagnosticianUserName);
@@ -204,7 +204,7 @@ public class SuperAdminTest extends BaseTest {
         //creating duplicate name diagnostistician
 
         //Verify that validtion message appears after clicking on 'Create Diagnostician' button, when user enter same username in 'username' field, on 'Create Diagnostician' page.
-        diagnostician.create_Diagnostician(diagnosticianFirstName, diagnosticianLastName, "8564234568", diagnosticianEmailAddress, diagnosticianUserName, "123456", "123456");
+        diagnostician.create_Diagnostician(diagnosticianFirstName, diagnosticianLastName, "8564234568", diagnosticianEmailAddress, "Austin",diagnosticianUserName, "123456", "123456");
         WebdriverWaits.waitUntilVisible(diagnostician.validationMsg);
         WebdriverWaits.waitForSpinner();
         validate_text(diagnostician.validationMsg, "An error occurred while creating the user. Username already exists!");

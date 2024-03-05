@@ -386,7 +386,17 @@ public class ActionEngine extends BaseTest {
         ArrayList<String> dropdownValues = new ArrayList<>();
         for (WebElement option : locNames) {
             dropdownValues.add(option.getText());
+        }
+        System.out.println(dropdownValues);
+    }
 
+
+    public void dropdownListsRemoveValues(By locator,String Description,String value){
+        List<WebElement> locNames=getWebElements(locator,Description);
+        ArrayList<String> dropdownValues = new ArrayList<>();
+        for (WebElement option : locNames) {
+            dropdownValues.add(option.getText());
+            dropdownValues.remove(value);
         }
         System.out.println(dropdownValues);
     }

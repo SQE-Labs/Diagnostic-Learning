@@ -195,6 +195,9 @@ public class AdminPage extends BasePage {
     public By sendButton = By.xpath("//button[@class='theme-button mx-2 ng-star-inserted']");
     public By viewDocumentsButton = By.xpath("//a[@class='ml-auto ml-2 theme-button green']");
     public By viewDocumentBtn = By.xpath("//a[@class='ml-2 theme-button green ng-star-inserted']");
+    public By clientNameText=By.xpath("(//div[@class='col-lg-6']//tr)[2]");
+    public By clientDetail=By.xpath("//h3");
+    public By clientNme=By.xpath("(//h6[text()='Follow-Ups to be scheduled']/..//following-sibling::tr)[1]");
 
     //******************Verifying cancelled appointments*****************
 
@@ -229,6 +232,16 @@ public class AdminPage extends BasePage {
     public void userNameField(String userNameText) {
         waitUntilVisible(userName);
         sendKeys_withClear(userName, userNameText);
+    }
+    public void click_ClientLink(){
+        WebdriverWaits.waitUntilVisible(clientNameText);
+        WebdriverWaits.waitForSpinner();
+        click_custom(clientNameText);
+    }
+    public void click_ScheduledClient(){
+        WebdriverWaits.waitUntilVisible(clientNme);
+        WebdriverWaits.waitForSpinner();
+        click_custom(clientNme);
     }
 
     public void enterSearchField(String nameOfClients) {
@@ -858,6 +871,7 @@ public class AdminPage extends BasePage {
         WebdriverWaits.waitUntilVisible(viewDocumentsButton);
         click_custom(viewDocumentsButton);
     }
+
 
     public void clickOn_BackBtn() {
         waitUntilVisible(backButton);
