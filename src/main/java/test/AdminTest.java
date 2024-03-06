@@ -49,7 +49,7 @@ public class AdminTest extends BaseTest {
         //Login by using superAdmin credentials
 
         //Verify that admin is able to login into account using valid 'Username' and 'Password' on 'Sign in your account' page.
-        login.adminLogin("allen", "123456");
+        login.admin_Login();
         AdminPage dasboard = new AdminPage();
         WebdriverWaits.waitUntilVisible(dasboard.adminDashboardText);
         waitForSpinner();
@@ -147,7 +147,7 @@ public class AdminTest extends BaseTest {
         directorEmailAddress = directorFirstName + "@yopmail.com";
         directorUserName = "AU_Koa" + RandomStrings.requiredCharacters(3);
         dirCellNumber = RandomStrings.requiredDigits(10);
-        login.adminLogin(adminUserName, "12345678");
+        login.admin_Login();
 
         //Verify that admin is directed to 'Directors List' page after clicking 'Directors' tab from left panel, on 'Dashboard' page.
         panelpage.click_DirectorTab();
@@ -171,7 +171,7 @@ public class AdminTest extends BaseTest {
     public void director_Availability() throws InterruptedException {
         LoginPage login = new LoginPage();
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
-        login.directorLogin(directorUserName, "123456");
+        login.directorLogin();
         DirectorPage director = new DirectorPage();
         panelPage.click_Availability();
         director.director_Availability(2);
@@ -183,7 +183,7 @@ public class AdminTest extends BaseTest {
         LoginPage login = new LoginPage();
         DashboardPage dashboard = new DashboardPage();
         AppointmentsPage appPage = new AppointmentsPage();
-        login.adminLogin(adminUserName, "12345678");
+        login.admin_Login();
 
         //Verify that admin is directed to 'Create Appointment' page after clicking 'Schedule Appointment' button from left panel, on 'Dashboard 'page.
         dashboard.clickScheduleAppointment();
@@ -669,7 +669,7 @@ public class AdminTest extends BaseTest {
         DashBoardPanelPage dashboard = new DashBoardPanelPage();
         AppointmentsPage appointment = new AppointmentsPage();
         LoginPage login = new LoginPage();
-        login.adminLogin(adminUserName, "12345678");
+        login.admin_Login();
         dashboard.click_AppointmentsTab();
 
         //***********Add assertion*******
@@ -838,7 +838,7 @@ public class AdminTest extends BaseTest {
         LoginPage login = new LoginPage();
         AdminPage admin = new AdminPage();
         DashBoardPanelPage panelpage = new DashBoardPanelPage();
-        login.adminLogin(adminUserName, "12345678");
+        login.admin_Login();
         admin.paying_DueAmount(clientFirstName);
         WebdriverWaits.waitUntilVisible(admin.clientNameDetail);
         validate_text(admin.clientNameDetail, clientFirstName + ' ' + clientLastName + ' ' + "Details");

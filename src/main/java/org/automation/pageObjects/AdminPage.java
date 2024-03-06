@@ -317,7 +317,20 @@ public class AdminPage extends BasePage {
         WebdriverWaits.waitForSpinner();
         sendKeys_withClear(searchTextBox, searchFieldText);
     }
+    public void clickOn_TodayTab() {
+        waitUntilVisible(todaysTab);
+        WebdriverWaits.waitForSpinner();
+        moveToElement(todaysTab);
+    }
 
+    public void upload_FileAttachmentSecondTime() throws InterruptedException, AWTException, AWTException {
+        click_ChooseFile();
+        Thread.sleep(5000);
+        String filepath = "Downloads\\33200_1911.pdf";
+        ChromeDownloads.uploadFileUsingRobot(filepath);
+        click_UploadButtons();
+        click_CloseButton();
+    }
     public void click_SearchButton() {
         WebdriverWaits.waitUntilVisible(searchButton);
         click_custom(searchButton);

@@ -39,6 +39,11 @@ public class DashBoardPanelPage extends BasePage {
         Thread.sleep(4000);
         click_custom(directorsTab);
     }
+    public void click_AppointmentsTab2(){
+        WebdriverWaits.waitUntilInvisible(availabilityTab);
+        WebdriverWaits.waitForSpinner();
+        click_custom(availabilityTab);
+    }
 
     public void click_DiagnosticianTab() {
         WebdriverWaits.waitUntilVisible(diagnosticianLink);
@@ -83,6 +88,8 @@ public class DashBoardPanelPage extends BasePage {
     }
 
     public void click_ExportCSVButton() {
+        WebdriverWaits.waitUntilInvisible(exportCSVButton);
+        WebdriverWaits.waitForSpinner();
         click_custom(exportCSVButton);
     }
 
