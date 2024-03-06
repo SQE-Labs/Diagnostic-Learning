@@ -2,15 +2,18 @@ package org.automation.pageObjects;
 
 import org.apache.commons.collections.list.SynchronizedList;
 import org.automation.base.BasePage;
+import org.automation.elements.DropDown;
 import org.automation.logger.Log;
 import org.automation.utilities.ActionEngine;
 import org.automation.utilities.WebdriverWaits;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 
 import java.util.*;
 
 import static java.lang.Double.parseDouble;
+import static org.automation.elements.DropDown.getSelectedOption;
 import static org.automation.utilities.Assertions.validate_AttText;
 import static org.automation.utilities.Assertions.validate_text;
 import static org.automation.utilities.WebdriverWaits.moveToEleByWE;
@@ -26,6 +29,7 @@ public class DiagnosticianPage extends BasePage {
     public By diagListPageText = By.xpath("//h3[text()='Diagnosticians List']");
     public By diagnostician_FirstName = By.xpath("//input[@placeholder='First Name']");
     public By diagnostician_LastName = By.xpath("//input[@placeholder='Last Name']");
+    public By locationList=By.xpath("//select/option");
     public By diagnostician_MobileNumber = By.xpath("//input[@placeholder='Cell Number']");
     public By diagnostician_Email = By.xpath("//input[@placeholder='Email']");
     public By assignLocation = By.xpath("//select[@id='testingLocation']");
@@ -33,6 +37,7 @@ public class DiagnosticianPage extends BasePage {
     public By userName = By.xpath("//input[@placeholder='Username']");
     public By password_Field = By.xpath("//input[@placeholder='Create Password']");
     public By confirm_PasswordField = By.xpath("//input[@placeholder='Confirm Password']");
+    public By edit_Popup = By.xpath("//h5[text()='Edit User']");
 
     public By validationMsg = By.cssSelector(".alert.alert-danger.ng-star-inserted");
 
@@ -49,8 +54,8 @@ public class DiagnosticianPage extends BasePage {
     public By filterButton = By.xpath("//a[@class='theme-button grey ml-auto mr-3']");
 
     public By searchFld = By.xpath("//input[@placeholder='Type here to search']");
-    public By searchFild = By.xpath("//input[@aria-controls='DataTables_Table_0']");
-    public By testCompleteSearchFld = By.xpath("//input[@aria-controls='appointmentTable']");
+    public By searchFild = By.xpath("//input[contains(@aria-controls,'DataTables_Table')]");
+    public By SearchField = By.xpath("//input[@aria-controls='appointmentTable']");
     public By viewClientDetailLink = By.xpath("(//td)[6]");
     public By clientDetailText = By.xpath("//div[contains(@class,'page-header align-items-lg-center')]");
     public By clientNameText = By.cssSelector("tr:not([style='display: none;' ]) td:nth-child(1)");
@@ -86,7 +91,7 @@ public class DiagnosticianPage extends BasePage {
     public By upcomingTab = By.xpath("//a[text()='Upcoming']");
 
     public By dia_AvailSlots = By.xpath("//div[@class='mbsc-flex-1-1 mbsc-ios mbsc-ltr mbsc-timeline-column ng-star-inserted']");
-    public By availableSlots=By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-all-day-inner mbsc-schedule-event-inner ng-star-inserted']");
+    public By availableSlots = By.xpath("//div[@class='mbsc-ios mbsc-schedule-event-all-day-inner mbsc-schedule-event-inner ng-star-inserted']");
 
 //*****************Set Availability for diagnostician ****************
 
@@ -167,11 +172,32 @@ public class DiagnosticianPage extends BasePage {
         sendKeys_withClear(diagnostician_Email, diagnostician_EmailText);
     }
 
-    public void click_AssignLocation() {
+    public void click_AssignLocation(String location) {
+        dropdownListsRemoveValues(locationList, "locationLists","Assign Location");
         click_custom(assignLocation);
-        click_custom(locationName);
+        selectDropDownByVisibleText_custom(assignLocation,location);
+       System.out.println( DropDown.getSelectedOption(assignLocation));
     }
+    public void cancel_AvailabilityDirector() throws InterruptedException {
+        Thread.sleep(5000);
+        List<WebElement> slots = getWebElements(availableSlots, "Diagnostician Available slots");
+        System.out.println(slots.size());
+        for (WebElement slot : slots) {
+            Thread.sleep(2000);
+            moveToEleByWE(slot);
+            WebElement cancelSlot=getDriver().findElement(By.xpath("//div[@class='mbsc-ios mbsc-popup-header mbsc-popup-header-center ng-star-inserted']"));
+            if (cancelSlot.isDisplayed()) {
+                Thread.sleep(4000);
+                String getText = getText_custom(shiftText);
+                WebdriverWaits.waitUntilVisible(shiftText);
+                validate_text(shiftText, getText);
+                WebdriverWaits.waitUntilVisible(cancel);
+                click_custom(cancel);
+                break;
+            }
+        }
 
+    }
     public void userNameField(String userNameText) {
         sendKeys_withClear(userName, userNameText);
     }
@@ -204,31 +230,28 @@ public class DiagnosticianPage extends BasePage {
         validate_AttText(toDateText, "To Date");
     }
 
-    public void enterInSearchField(String searchFieldText) {
-        WebdriverWaits.waitUntilVisible(searchFld);
-        sendKeys_withClear(searchFld, searchFieldText);
-    }
-
-    public void enter_SearchField(String searchFieldTexts) {
-        WebdriverWaits.waitUntilVisible(searchFild);
-        sendKeys_withClear(searchFild, searchFieldTexts);
-    }
-
-    public void enter_InSearchField(String testCompleteClientName) {
-        WebdriverWaits.waitUntilVisible(testCompleteSearchFld);
+    public void enter_InSearchField(String ClientName) {
+        WebdriverWaits.waitUntilVisible(SearchField);
         WebdriverWaits.waitForSpinner();
-        sendKeys_withClear(testCompleteSearchFld, testCompleteClientName);
+        sendKeys_withClear(SearchField, ClientName);
+    }
+    public void enter_SearchField(String clientName){
+        WebdriverWaits.waitUntilVisible(searchFild);
+        WebdriverWaits.waitForSpinner();
+        sendKeys_withClear(searchFild,clientName);
     }
 
     public void click_ViewDetailLink() {
+        WebdriverWaits.waitUntilVisible(viewClientDetailLink);
+        WebdriverWaits.waitForSpinner();
         click_custom(viewClientDetailLink);
     }
 
     //+++++++++++++++++EDIT DIAGNOSTICIAN++++++++++++++
-    public void click_EditButton() throws InterruptedException {
+    public void click_EditButton() {
         WebdriverWaits.waitUntilVisible(editButton);
         WebdriverWaits.waitForSpinner();
-        moveToElement(editButton);
+        click_custom(editButton);
     }
 
     public void enter_CellNumber(String cellNumberText) {
@@ -265,6 +288,8 @@ public class DiagnosticianPage extends BasePage {
 
     //**********Diagnostician is viewing appointments************
     public void click_AppointmentTab() {
+        WebdriverWaits.waitUntilVisible(appointmentsTab);
+        WebdriverWaits.waitForSpinner();
         moveToElement(appointmentsTab);
     }
 
@@ -273,27 +298,27 @@ public class DiagnosticianPage extends BasePage {
         moveToElement(upcomingTab);
     }
 
-    public void create_Diagnostician(String CustomerFirstName, String CustomerLastName, String diagnostician_MobileNumberText, String EmailAddress, String UserName, String PasswordText, String RePassword) throws InterruptedException {
+    public void create_Diagnostician(String CustomerFirstName, String CustomerLastName, String diagnostician_MobileNumberText, String EmailAddress,String location, String UserName, String PasswordText, String RePassword) throws InterruptedException {
         WebdriverWaits.waitForSpinner();
+        click_createDiagnosticianButton();
         enter_diagnostician_FirstName(CustomerFirstName);
         enter_diagnostician_LastName(CustomerLastName);
         enter_Diagnostician_MobileNumber(diagnostician_MobileNumberText);
         enter_Diagnostician_Email(EmailAddress);
-        click_AssignLocation();
+        click_AssignLocation(location);
         userNameField(UserName);
         create_passwordField(PasswordText);
         confirm_PasswordField(RePassword);
         click_DiagnosticianBtn();
     }
 
-    public void search_CreatedDiagnostician(String UserName) {
-        click_FilterButton();
-        enterInSearchField(UserName);
-    }
 
     public void edit_Diagnostician(String EmailAddress1, String passwordTextFieldText, String confirmPasswordFieldText) throws InterruptedException {
         click_EditButton();
         // enter_CellNumber(cellNumberText);
+        validate_text(edit_Popup, "Edit User");
+        Log.info("Successfully Edit popUp opens");
+
         enter_Diagnostician_Email1(EmailAddress1);
         click_PasswordField(passwordTextFieldText);
         click_confirmPasswordFieldField(confirmPasswordFieldText);
@@ -303,6 +328,7 @@ public class DiagnosticianPage extends BasePage {
 
     public void cheking_DisableUser() throws InterruptedException {
         click_EditButton();
+
         WebdriverWaits.waitUntilVisible(enableUser);
         WebdriverWaits.waitForSpinner();
         validate_text(enableUser, "Enable User");
@@ -310,8 +336,8 @@ public class DiagnosticianPage extends BasePage {
     }
 
     public void disable_Diagnostician(String userNameText) throws InterruptedException {
-        click_FilterButton();
-        enterInSearchField(userNameText);
+//click_FilterButton();
+        enter_InSearchField(userNameText);
         Thread.sleep(2000);
         click_EditButton();
         off_ToggleButton();
@@ -413,8 +439,6 @@ public class DiagnosticianPage extends BasePage {
         Thread.sleep(6000);
         sendKeys_withClear(amountField, Inr);
     }
-
-
 
     public void enter_HighAmount() throws InterruptedException {
         String Inr = getText_custom(inr).replace("$", "");
@@ -528,37 +552,11 @@ public class DiagnosticianPage extends BasePage {
         click_custom(diagnosticianSaveButton);
     }
 
-    public void cancel_AvailabilityDirector() throws InterruptedException {
-        Thread.sleep(5000);
-        List<WebElement> slots = getWebElements(availableSlots, "Diagnostician Available slots");
-        System.out.println(slots.size());
-        for (WebElement slot : slots) {
-            Thread.sleep(2000);
-            moveToEleByWE(slot);
-            WebElement cancelSlot=getDriver().findElement(By.xpath("//div[@class='mbsc-ios mbsc-popup-header mbsc-popup-header-center ng-star-inserted']"));
-            if (cancelSlot.isDisplayed()) {
-                Thread.sleep(4000);
-                String getText = getText_custom(shiftText);
-                WebdriverWaits.waitUntilVisible(shiftText);
-                validate_text(shiftText, getText);
-                WebdriverWaits.waitUntilVisible(cancel);
-                click_custom(cancel);
-                break;
-            }
-        }
-
-    }
-
-    public void click_ClientDetailLink(String clientLastName) {
-
-        enter_SearchField(clientLastName);
+    public void click_ClientDetailLink() {
         click_ViewDetailLink();
     }
 
-    public void enter_ClientDetail(String clientLastName) {
-        enterInSearchField(clientLastName);
-        click_ViewDetailLink();
-    }
+
 
     //**************Diagnostician Started Assessment***************
     public void payment_NewPage() {
@@ -593,13 +591,11 @@ public class DiagnosticianPage extends BasePage {
         click_CompleteAssTab();
     }
 
-    public void click_CancelTab()
-    {
+    public void click_CancelTab() {
         WebdriverWaits.waitUntilVisible(cancelTab);
         WebdriverWaits.waitForSpinner();
         moveToElement(cancelTab);
     }
-
 
 
 }

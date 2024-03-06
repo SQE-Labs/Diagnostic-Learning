@@ -63,8 +63,9 @@ class UpcomingAppointment extends BaseTest {
         diagnostician.click_createDiagnosticianButton();
 
         //**************Admin is creating diagnostician*************
-        diagnostician.create_Diagnostician(diagnosticianFirstName, diagnosticianLastName, dia_Cell_Number, diagnosticianEmailAddress, diagnosticianUserName, "123456", "123456");
+        diagnostician.create_Diagnostician(diagnosticianFirstName, diagnosticianLastName, dia_Cell_Number, diagnosticianEmailAddress,"Plano", diagnosticianUserName, "123456", "123456");
         diagnostician.enter_InSearchField(diagnosticianUserName);
+
         WebdriverWaits.waitUntilVisible(diagnostician.actualText);
         validate_text(diagnostician.actualText, diagnosticianUserName);
         Log.info("Successfully SuperAdmin Created diagnostician");
@@ -84,14 +85,14 @@ class UpcomingAppointment extends BaseTest {
         panelPage.click_LogOutLink();
 
         //Set Availbility Diag
-        login.diagnostician_Login(diagnosticianUserName,"123456");
+        login.diagnostician_Login();
         diagnostician.set_Availability();
         diagnostician.cancel_Availability();
         diagnostician.deleting_Availability();
         panelPage.click_LogOutLink();
 
        //Set Availbility of Director
-        login.directorLogin(directorUserName, "123456");
+        login.directorLogin();
         panelPage.click_Availability();
         director.director_Availability(2);
         panelPage.click_LogOutLink();

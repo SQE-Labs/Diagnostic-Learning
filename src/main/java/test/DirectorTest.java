@@ -1,6 +1,5 @@
 package test;
 
-
 import org.automation.base.BaseTest;
 import org.automation.pageObjects.*;
 import org.automation.utilities.ActionEngine;
@@ -17,6 +16,9 @@ import java.util.List;
 
 import static org.automation.utilities.Assertions.*;
 import static org.automation.utilities.DateGenerator.getMonthAndYear;
+import static test.SuperAdminTest.directorUserName;
+
+
 
 
 public class DirectorTest extends BaseTest {
@@ -85,6 +87,7 @@ public class DirectorTest extends BaseTest {
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
         AppointmentsPage appPage = new AppointmentsPage();
         DirectorPage director = new DirectorPage();
+        DiagnosticianPage dashpage=new DiagnosticianPage();
         login.director_Login();
         panelPage.click_Availability();
         director.director_Availability(5);
@@ -104,14 +107,14 @@ public class DirectorTest extends BaseTest {
     }
 
 
-    @Test(priority = 6, enabled = false, description = "23 Verify that director is able to delete already available marked slot")
+    @Test(priority = 6, enabled = true, description = "23 Verify that director is able to delete already available marked slot")
     public void verify_DeleteSlots() throws InterruptedException {
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
         AppointmentsPage appPage = new AppointmentsPage();
         DirectorPage director = new DirectorPage();
         verify_Login_Director();
         panelPage.click_Availability();
-     //   director.deleting_Availability();
+        //   director.deleting_Availability();
         List<WebElement> allSlots = appPage.getWebElements(appPage.slots);
         boolean result = true;
         for (int i = 0; i < allSlots.size(); i++) {
@@ -147,6 +150,7 @@ public class DirectorTest extends BaseTest {
         DirectorPage director=new DirectorPage();
         AdminPage admin=new AdminPage();
         AppointmentsPage appointment = new AppointmentsPage();
+        login.directorLogin();
         panelPage.click_AppointmentsTab();
         appointment.click_UpcomingCard();
         String data=getText_custom(director.clientNameUpcomingPage);
@@ -553,7 +557,7 @@ public class DirectorTest extends BaseTest {
     }
 
     @Test(priority = 38, enabled = true, description = "9., 10., 11., 14. User is able to click on 'Upload Document' button.")
-    public void verify_ClickOnUploadDocBtn() throws InterruptedException, AWTException {
+    public void verify_ClickOnUploadDocBtn() throws InterruptedException, AWTException, AWTException {
         AppointmentsPage appointment = new AppointmentsPage();
         AdminPage admin = new AdminPage();
         DashboardPage dashPage = new DashboardPage();

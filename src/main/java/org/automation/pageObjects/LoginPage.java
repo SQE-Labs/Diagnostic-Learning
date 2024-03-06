@@ -15,10 +15,13 @@ public class LoginPage extends BasePage {
 
     public void enterUsername(String userNameText) {
         WebdriverWaits.waitUntilVisible(userNameField);
+        WebdriverWaits.waitForSpinner();
         sendKeys_withClear(userNameField, userNameText);
     }
 
     public void enterPassword(String passNameText) {
+        WebdriverWaits.waitUntilVisible(PasswordField);
+        WebdriverWaits.waitForSpinner();
         sendKeys_withClear(PasswordField, passNameText);
     }
 
@@ -33,7 +36,6 @@ public class LoginPage extends BasePage {
         sendKeys_withClear(PasswordField, PropertiesUtil.getPropertyValue("super_password"));
         clickBtn_custom(login);
         WebdriverWaits.waitForSpinner();
-
     }
 
     public void director_Login() {
@@ -41,36 +43,27 @@ public class LoginPage extends BasePage {
         sendKeys_withClear(PasswordField, PropertiesUtil.getPropertyValue("director_password"));
         clickBtn_custom(login);
         WebdriverWaits.waitForSpinner();
-
     }
 
-    public void diagnostician_Login(String getText_Dia, String PasswordFieldText) {
+    public void diagnostician_Login() {
         sendKeys_withClear(userNameField, PropertiesUtil.getPropertyValue("diagnostician_userName"));
         sendKeys_withClear(PasswordField, PropertiesUtil.getPropertyValue("diagnostician_password"));
-        click_custom(login);
+        clickLoginBtn();
         WebdriverWaits.waitForSpinner();
-
     }
 
-    public void adminLogin(String username, String password) {
+    public void admin_Login() {
         sendKeys_withClear(userNameField, PropertiesUtil.getPropertyValue("admin_userName"));
         sendKeys_withClear(PasswordField, PropertiesUtil.getPropertyValue("admin_password"));
-        click_custom(login);
-        WebdriverWaits.waitForSpinner();
-    }
-    public void admin_Login( ) {
-        sendKeys_withClear(userNameField, PropertiesUtil.getPropertyValue("admin_userName"));
-        sendKeys_withClear(PasswordField, PropertiesUtil.getPropertyValue("admin_password"));
-        click_custom(login);
+        clickLoginBtn();
         WebdriverWaits.waitForSpinner();
     }
 
-    public void directorLogin(String userNameFieldText, String PasswordFieldText) {
-        enterUsername(userNameFieldText);
-        enterPassword(PasswordFieldText);
+    public void directorLogin() {
+        sendKeys_withClear(userNameField, PropertiesUtil.getPropertyValue("director_userName"));
+        sendKeys_withClear(PasswordField, PropertiesUtil.getPropertyValue("director_password"));
         click_custom(login);
-
-
+        WebdriverWaits.waitForSpinner();
     }
 
 }
