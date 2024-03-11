@@ -44,7 +44,7 @@ public class DirectorTest extends BaseTest {
     }
 
 
-    @Test(priority = 3, enabled =true , description = "Bug 12 and 13 Verify that 'Set Availability' page opens up and Year Picker appear")
+    @Test(priority = 3, enabled =true , description = "12 and 13 Verify that 'Set Availability' page opens up and Year Picker appear")
     public void validate_SetAppointment_AND_YearPicker() throws InterruptedException {
         panelPage.click_Availability();
         validate_text(director.setAvailaibility, "Set Availability");
@@ -67,7 +67,7 @@ public class DirectorTest extends BaseTest {
     }
 
 
-    @Test(priority = 4, enabled = false, description = "20 and 21 Verify that 'Available' card appears and click on Save button.")
+    @Test(priority = 4, enabled = true, description = "20 and 21 Verify that 'Available' card appears and click on Save button.")
     public void verify_AvailableCards_AND_SaveButtonEnabled() throws InterruptedException
     {
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
@@ -81,7 +81,7 @@ public class DirectorTest extends BaseTest {
     }
 
 
-    @Test(priority = 5, enabled = false, description = "24 Verify that '<Date>' popup closes, when director clicks on 'Cancel' button")
+    @Test(priority = 5, enabled = true, description = "24 Verify that '<Date>' popup closes, when director clicks on 'Cancel' button")
     public void verify_Closed_PopUp_OnCancel() throws InterruptedException
     {
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
@@ -112,7 +112,7 @@ public class DirectorTest extends BaseTest {
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
         AppointmentsPage appPage = new AppointmentsPage();
         DirectorPage director = new DirectorPage();
-        verify_Login_Director();
+        login.director_Login();
         panelPage.click_Availability();
         //   director.deleting_Availability();
         List<WebElement> allSlots = appPage.getWebElements(appPage.slots);
@@ -362,7 +362,6 @@ public class DirectorTest extends BaseTest {
         AdminPage admin = new AdminPage();
         DashboardPage dashPage = new DashboardPage();
         AppointmentsPage appPage = new AppointmentsPage();
-
         DirectorPage director = new DirectorPage();
         appointment.click_UpcomingTab();
         validate_text(admin.titleOfUpcomingPage, "Upcoming Appointments");
@@ -556,7 +555,7 @@ public class DirectorTest extends BaseTest {
         Assert.assertEquals(searchPlaceHolder, "Type here to search");
     }
 
-    @Test(priority = 38, enabled = true, description = "9., 10., 11., 14. User is able to click on 'Upload Document' button.")
+    @Test(priority = 38, enabled = true, description = "5. 9., 10., 11., 14. User is able to click on 'Upload Document' button.")
     public void verify_ClickOnUploadDocBtn() throws InterruptedException, AWTException, AWTException {
         AppointmentsPage appointment = new AppointmentsPage();
         AdminPage admin = new AdminPage();
@@ -588,7 +587,7 @@ public class DirectorTest extends BaseTest {
 
     }
 
-    @Test(priority = 39, enabled = true, description = "15., 16. User is able to click on 'View Observation' button.")
+    @Test(priority = 39, enabled = true, description = " 15., 16.,17.,36. User is able to click on 'View Observation' button.")
     public void verify_ClickOnViewObservationBtn() throws InterruptedException, AWTException {
         AppointmentsPage appointment = new AppointmentsPage();
         AdminPage admin = new AdminPage();
@@ -631,8 +630,8 @@ public class DirectorTest extends BaseTest {
         Assert.assertTrue(resultForReset);
     }
 
-    @Test(priority = 41, enabled = true, description = "1.,36. & 16. User is able to download attached files.")
-    public void verify_FileGetDownload() throws InterruptedException, AWTException, FileNotFoundException {
+    @Test(priority = 41, enabled = true, description = "36. & 16. User is able to download attached files.")
+    public void verify_FileGetDownload() throws InterruptedException, FileNotFoundException {
         AppointmentsPage appointment = new AppointmentsPage();
         AdminPage admin = new AdminPage();
         DashBoardPanelPage dashboard = new DashBoardPanelPage();

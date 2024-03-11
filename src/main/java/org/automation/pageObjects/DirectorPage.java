@@ -141,6 +141,8 @@ public class DirectorPage extends BasePage {
     public By validateAvailable = By.xpath("//*[@class='ng-star-inserted'][contains( text(), 'Available')]");
     public By avail_SaveButton = By.id("diagnoSetAvailabilitySubmit");
     public By viewDetailBtn= By.xpath("(//a[text()='View Details'])[1]");
+
+    public By saveBtn= By.xpath("//a[text()='Save']");
     public By viewObservationBtn= By.xpath("//a[text()='View Student Observation']");
 
 

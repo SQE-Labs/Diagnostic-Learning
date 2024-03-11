@@ -52,6 +52,19 @@ public class LoginPage extends BasePage {
         WebdriverWaits.waitForSpinner();
     }
 
+    public void diagnosticianLogin(String username, String password) {
+        sendKeys_withClear(userNameField,username);
+        sendKeys_withClear(PasswordField,password);
+        clickLoginBtn();
+        WebdriverWaits.waitForSpinner();
+    }
+    public void directorLogin(String username, String password) {
+        sendKeys_withClear(userNameField,username);
+        sendKeys_withClear(PasswordField,password);
+        clickLoginBtn();
+        WebdriverWaits.waitForSpinner();
+    }
+
     public void admin_Login() {
         sendKeys_withClear(userNameField, PropertiesUtil.getPropertyValue("admin_userName"));
         sendKeys_withClear(PasswordField, PropertiesUtil.getPropertyValue("admin_password"));

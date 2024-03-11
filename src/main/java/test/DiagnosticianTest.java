@@ -19,15 +19,14 @@ import java.util.List;
 import static org.automation.utilities.Assertions.validate_text;
 import static test.AdminTest.*;
 
-public class DiagnosticianTest extends BaseTest {
-
+public class DiagnosticianTest extends BaseTest
+{
 
     @Test(priority = 0, enabled = true, description = "1, Login as a diagnostician and verify it is diagnostician dashboard page or not")
-    public void verify_diagnostician_Login() {
+    public void verify_diagnostician_Login()
+    {
         LoginPage login = new LoginPage();
         DiagnosticianPage diagnostician = new DiagnosticianPage();
-
-
         login.diagnostician_Login();
         WebdriverWaits.waitUntilVisible(diagnostician.dashboard);
         validate_text(diagnostician.dashboard, "Dashboard");
@@ -36,16 +35,16 @@ public class DiagnosticianTest extends BaseTest {
 
 
     @Test(priority = 2, enabled = true, description = "31 Diagnostician is Verifying upcoming appointments")
-    public void verify_UpcomingAppointments() {
+    public void verify_UpcomingAppointments()
+    {
         DiagnosticianPage diagnostician = new DiagnosticianPage();
-        LoginPage login = new LoginPage();
-
-     //   login.directorLogin(diagnosticianUserName, "12345678");
         diagnostician.click_AppointmentTab();
         diagnostician.click_upcomingTab();
         WebdriverWaits.waitUntilVisible(diagnostician.upcomingPageTitle);
         validate_text(diagnostician.upcomingPageTitle, "Upcoming Appointments");
     }
+
+
 
     @Test(priority = 3, enabled = true, description = "32 Verify diagnostian client details page")
     public void verify_ClientDetailsPage() {
@@ -62,7 +61,6 @@ public class DiagnosticianTest extends BaseTest {
         AppointmentsPage appPage = new AppointmentsPage();
         DiagnosticianPage diagnostician = new DiagnosticianPage();
         diagnostician.click_upcomingTab();
-
         WebdriverWaits.waitForSpinner();
         diagnostician.click_filterButton();
         ActionEngine engine;

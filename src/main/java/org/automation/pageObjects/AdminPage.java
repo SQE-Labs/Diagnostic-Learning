@@ -155,7 +155,7 @@ public class AdminPage extends BasePage {
     public By cancelAppointmentBtn = By.xpath("//button[text()=' Cancel Appointment ']");
     public By cancelTab = By.xpath("//a[text()='Canceled']");
     public By clientName = By.cssSelector("tr:not([style='display: none;' ]) td:nth-child(1)");
-    public By todayAppointmentTitle = By.xpath("//div[@class='align-items-md-center d-flex flex-column flex-md-row page-header']/h3");
+    public By todayAppointmentTitle = By.xpath("//h3");
     public By card = By.xpath("(//td[@class='d-block ng-star-inserted'])[1]");
     public By nameOnCard = By.xpath("(//p[@class='text-purple mb-0'])[1]");
     public By todayDateOnCard = By.xpath("(//span[@class='text-grey'])[1]");

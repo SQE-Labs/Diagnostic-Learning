@@ -454,7 +454,6 @@ public class AppointmentsPage extends BasePage {
     public void click_AppointmentsTab() {
         WebdriverWaits.waitUntilVisible(appointmentsTab);
         click_custom(appointmentsTab);
-
     }
 
     public void click_CompletedTab() {
