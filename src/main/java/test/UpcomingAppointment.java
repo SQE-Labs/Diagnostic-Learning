@@ -134,6 +134,7 @@ class UpcomingAppointment extends BaseTest {
         DashboardPage dashPage = new DashboardPage();
         AppointmentsPage appPage = new AppointmentsPage();
         DirectorPage director = new DirectorPage();
+
         appPage.click_AppointmentsTab();
         appPage.click_ViewAllTab();
         validate_text(admin.allAppointmentsPage, "All Appointments");
