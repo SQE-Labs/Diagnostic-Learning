@@ -150,13 +150,20 @@ public class ActionEngine extends BaseTest {
         try {
             WebElement element = getDriver().findElement(elements);
             flag = element.isDisplayed();
-            extentTest.log(PASS, "Is  " + fieldName + " element present => " + flag);
+            extentTest.log(PASS, "Is  " + fieldName + " ele" +
+                    "ment present => " + flag);
             return flag;
         } catch (Exception e) {
             extentTest.log(FAIL, "Checking for presence of field: " + fieldName + " not tested due to exception: " + e);
             return flag;
 
         }
+    }
+
+    public WebElement webelementConverter(By locator)
+    {
+        WebElement element=getDriver().findElement(locator);
+        return element;
     }
 
 
@@ -386,7 +393,17 @@ public class ActionEngine extends BaseTest {
         ArrayList<String> dropdownValues = new ArrayList<>();
         for (WebElement option : locNames) {
             dropdownValues.add(option.getText());
+        }
+        System.out.println(dropdownValues);
+    }
 
+
+    public void dropdownListsRemoveValues(By locator,String Description,String value){
+        List<WebElement> locNames=getWebElements(locator,Description);
+        ArrayList<String> dropdownValues = new ArrayList<>();
+        for (WebElement option : locNames) {
+            dropdownValues.add(option.getText());
+            dropdownValues.remove(value);
         }
         System.out.println(dropdownValues);
     }

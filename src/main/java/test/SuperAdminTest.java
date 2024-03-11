@@ -132,7 +132,7 @@ public class SuperAdminTest extends BaseTest {
 
 
         // Login with Admin new password
-        login.adminLogin(adminUserName, "12345678");
+        login.admin_Login();
 
         WebdriverWaits.waitUntilVisible(admin.dashboard);
         WebdriverWaits.waitForSpinner();
@@ -189,7 +189,7 @@ public class SuperAdminTest extends BaseTest {
         //**************SuperAdmin is creating diagnostician*************
 
 
-        diagnostician.create_Diagnostician(diagnosticianFirstName, diagnosticianLastName, dia_Cell_Number, diagnosticianEmailAddress, diagnosticianUserName, "123456", "123456");
+        diagnostician.create_Diagnostician(diagnosticianFirstName, diagnosticianLastName, dia_Cell_Number, diagnosticianEmailAddress, "Austin",diagnosticianUserName, "123456", "123456");
         diagnostician.enter_InSearchField(diagnosticianUserName);
         WebdriverWaits.waitUntilVisible(diagnostician.actualText);
         validate_text(diagnostician.actualText, diagnosticianUserName);
@@ -204,7 +204,7 @@ public class SuperAdminTest extends BaseTest {
         //creating duplicate name diagnostistician
 
         //Verify that validtion message appears after clicking on 'Create Diagnostician' button, when user enter same username in 'username' field, on 'Create Diagnostician' page.
-        diagnostician.create_Diagnostician(diagnosticianFirstName, diagnosticianLastName, "8564234568", diagnosticianEmailAddress, diagnosticianUserName, "123456", "123456");
+        diagnostician.create_Diagnostician(diagnosticianFirstName, diagnosticianLastName, "8564234568", diagnosticianEmailAddress, "Austin",diagnosticianUserName, "123456", "123456");
         WebdriverWaits.waitUntilVisible(diagnostician.validationMsg);
         WebdriverWaits.waitForSpinner();
         validate_text(diagnostician.validationMsg, "An error occurred while creating the user. Username already exists!");
@@ -291,7 +291,7 @@ public class SuperAdminTest extends BaseTest {
         panelPage.click_LogOutLink();
 
         // Login with Diagnostician new password
-        login.diagnostician_Login(diagnosticianUserName, "12345678");
+        login.diagnostician_Login();
         WebdriverWaits.waitUntilVisible(diagnostician.diagnosticianDashBoardPage);
         WebdriverWaits.waitForSpinner();
         validate_text(diagnostician.diagnosticianDashBoardPage, "Dashboard");
@@ -305,7 +305,7 @@ public class SuperAdminTest extends BaseTest {
         // Logging with Old password to get validation message.
         DashBoardPanelPage panelpage = new DashBoardPanelPage();
         panelpage.click_LogOutLink();
-        login.diagnostician_Login(diagnosticianUserName, "123456");
+        login.diagnostician_Login();
         WebdriverWaits.waitUntilVisible(diagnostician.validation_Msg);
         Thread.sleep(2000);
         validate_text(diagnostician.validation_Msg, "Username or password is incorrect");
@@ -419,7 +419,7 @@ public class SuperAdminTest extends BaseTest {
         DirectorPage director = new DirectorPage();
         LoginPage login = new LoginPage();
         //Director trying to login with old password
-        login.directorLogin(directorUserName, "123456");
+        login.directorLogin();
         WebdriverWaits.waitUntilVisible(director.validation_Msg);
         validate_text(director.validation_Msg, "Username or password is incorrect");
     }
@@ -432,7 +432,7 @@ public class SuperAdminTest extends BaseTest {
 
         //Director trying to login with new password
         // Verify that user is able to login using new password after editing the password on 'Edit' popup, on 'Directors List' page.
-        login.directorLogin(directorUserName, "12345678");
+        login.directorLogin();
         WebdriverWaits.waitUntilVisible(director.directorDashBoardPage);
         validate_text(director.directorDashBoardPage, "Dashboard");
          panelPage.click_LogOutLink();

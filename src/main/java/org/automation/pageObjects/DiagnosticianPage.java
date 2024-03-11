@@ -2,15 +2,18 @@ package org.automation.pageObjects;
 
 import org.apache.commons.collections.list.SynchronizedList;
 import org.automation.base.BasePage;
+import org.automation.elements.DropDown;
 import org.automation.logger.Log;
 import org.automation.utilities.ActionEngine;
 import org.automation.utilities.WebdriverWaits;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 
 import java.util.*;
 
 import static java.lang.Double.parseDouble;
+import static org.automation.elements.DropDown.getSelectedOption;
 import static org.automation.utilities.Assertions.validate_AttText;
 import static org.automation.utilities.Assertions.validate_text;
 import static org.automation.utilities.WebdriverWaits.moveToEleByWE;
@@ -26,6 +29,7 @@ public class DiagnosticianPage extends BasePage {
     public By diagListPageText = By.xpath("//h3[text()='Diagnosticians List']");
     public By diagnostician_FirstName = By.xpath("//input[@placeholder='First Name']");
     public By diagnostician_LastName = By.xpath("//input[@placeholder='Last Name']");
+    public By locationList=By.xpath("//select/option");
     public By diagnostician_MobileNumber = By.xpath("//input[@placeholder='Cell Number']");
     public By diagnostician_Email = By.xpath("//input[@placeholder='Email']");
     public By assignLocation = By.xpath("//select[@id='testingLocation']");
@@ -168,11 +172,32 @@ public class DiagnosticianPage extends BasePage {
         sendKeys_withClear(diagnostician_Email, diagnostician_EmailText);
     }
 
-    public void click_AssignLocation() {
+    public void click_AssignLocation(String location) {
+        dropdownListsRemoveValues(locationList, "locationLists","Assign Location");
         click_custom(assignLocation);
-        click_custom(locationName);
+        selectDropDownByVisibleText_custom(assignLocation,location);
+       System.out.println( DropDown.getSelectedOption(assignLocation));
     }
+    public void cancel_AvailabilityDirector() throws InterruptedException {
+        Thread.sleep(5000);
+        List<WebElement> slots = getWebElements(availableSlots, "Diagnostician Available slots");
+        System.out.println(slots.size());
+        for (WebElement slot : slots) {
+            Thread.sleep(2000);
+            moveToEleByWE(slot);
+            WebElement cancelSlot=getDriver().findElement(By.xpath("//div[@class='mbsc-ios mbsc-popup-header mbsc-popup-header-center ng-star-inserted']"));
+            if (cancelSlot.isDisplayed()) {
+                Thread.sleep(4000);
+                String getText = getText_custom(shiftText);
+                WebdriverWaits.waitUntilVisible(shiftText);
+                validate_text(shiftText, getText);
+                WebdriverWaits.waitUntilVisible(cancel);
+                click_custom(cancel);
+                break;
+            }
+        }
 
+    }
     public void userNameField(String userNameText) {
         sendKeys_withClear(userName, userNameText);
     }
@@ -273,14 +298,14 @@ public class DiagnosticianPage extends BasePage {
         moveToElement(upcomingTab);
     }
 
-    public void create_Diagnostician(String CustomerFirstName, String CustomerLastName, String diagnostician_MobileNumberText, String EmailAddress, String UserName, String PasswordText, String RePassword) throws InterruptedException {
+    public void create_Diagnostician(String CustomerFirstName, String CustomerLastName, String diagnostician_MobileNumberText, String EmailAddress,String location, String UserName, String PasswordText, String RePassword) throws InterruptedException {
         WebdriverWaits.waitForSpinner();
         click_createDiagnosticianButton();
         enter_diagnostician_FirstName(CustomerFirstName);
         enter_diagnostician_LastName(CustomerLastName);
         enter_Diagnostician_MobileNumber(diagnostician_MobileNumberText);
         enter_Diagnostician_Email(EmailAddress);
-        click_AssignLocation();
+        click_AssignLocation(location);
         userNameField(UserName);
         create_passwordField(PasswordText);
         confirm_PasswordField(RePassword);
