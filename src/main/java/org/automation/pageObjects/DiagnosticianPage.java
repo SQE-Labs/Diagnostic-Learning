@@ -152,6 +152,8 @@ public class DiagnosticianPage extends BasePage {
     }
 
     public void click_BackBtn() {
+        WebdriverWaits.waitUntilVisible(backBtn);
+        WebdriverWaits.waitForSpinner();
         click_custom(backBtn);
     }
 

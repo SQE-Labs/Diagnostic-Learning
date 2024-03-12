@@ -256,21 +256,30 @@ public class AdminTest extends BaseTest {
 
     //********************** Create Follow Up For Client ***********************//
 
-    @Test(priority = 12, enabled = true, description = "16.1, Creat follow up for client by admin")
+    @Test(priority = 12, enabled = true, description = "16.1,16.13, 16.14, 16.21  Creat follow up for client by admin")
     public void create_FollowUp() throws InterruptedException {
         AdminPage admin = new AdminPage();
+        LoginPage login=new LoginPage();
+        admin.click_CreateFollowUpBtn();
+        admin.click_FollowUpCloseBtn();
+
+        admin.click_CreateFollowUpBtn();
+        admin.cancel_FollowUpSlot(0);
         admin.create_FollowUp(0);
         WebdriverWaits.waitUntilVisible(admin.validateScheduledFollowUp);
         WebdriverWaits.waitForSpinner();
         validate_text(admin.validateScheduledFollowUp, "Follow Up Scheduled!!");
         admin.click_BackBtn();
+        WebdriverWaits.waitUntilVisible(admin.clientDetail);
+        WebdriverWaits.waitForSpinner();
+        validate_text(admin.clientDetail,  clientFirstName+' '+clientLastName+ " Details");
     }
 
     //******To Do************
     @Test(priority = 13, enabled = true, description = "8.6,8.7, 8.8,8.10,8.9 Re-Assign Appointment for client by admin")
     public void re_AssignAppointment() {
         AdminPage admin = new AdminPage();
-        admin.ReAssign_Appointment("Austin");
+        admin.reAssign_Appointment("Austin");
 
 //        List<WebElement> reassigList = reAssign.get_diagList(reAssign.diagList);
 //        boolean result = reAssign.compare_DiagAndReAssignDiagList(diagList, reassigList);
@@ -619,9 +628,13 @@ public class AdminTest extends BaseTest {
         WebdriverWaits.waitUntilVisible(admin.titleOfUpcomingPage);
         WebdriverWaits.waitForSpinner();
         validate_text(admin.titleOfUpcomingPage, "Upcoming Appointments");
-        //admin.enter_InSearchField(clientFirstName);
-        //WebdriverWaits.waitUntilVisible(admin.getStatus);
-        // validate_text(admin.getStatus, "Upcoming");
+        admin.click_FilterBtn();
+
+        String fromDateplaceholder = admin.getAttributevalue(admin.fromDateText, "placeholder");
+        String toDatePlaceholder = admin.getAttributevalue(admin.toDateText, "placeholder");
+        Assert.assertEquals(fromDateplaceholder, "From Date");
+        Assert.assertEquals(toDatePlaceholder, "To Date");
+
     }
 
     @Test(priority = 40, enabled = true, description = "18.1, Admin is directed to 'Test Ready Appointment' page")
