@@ -153,6 +153,7 @@ public class AdminPage extends BasePage {
     public By validateHoldClient = cssSelector("tr:not([style='display: none;' ]) td:nth-child(3)");
     public By unHoldBtn = cssSelector("tr:not([style='display: none;' ]) td:nth-child(7)");
     public By yesUnholdButton = By.xpath("//button[@class='theme-button danger mx-2']");
+    WebElement element=getDriver().findElement(By.xpath("//div[contains(text(),'Follow Up')]"));
 
     //*******************Paying full payment by client****************
     public By appointmentTab = By.xpath("//a[text()=' Appointments ']");
@@ -732,7 +733,7 @@ public class AdminPage extends BasePage {
             if (getWebElements(followUpSlot).size() > count) {
                 Thread.sleep(1000);
                 click_custom(followUpCancelButton);
-                WebElement element=getDriver().findElement(By.xpath("//div[contains(text(),'Follow Up')]"));
+
                 Assert.assertTrue(!element.isDisplayed());
                 break;
             }
