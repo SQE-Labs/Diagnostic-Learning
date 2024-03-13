@@ -307,10 +307,14 @@ public class AppointmentsPage extends BasePage {
         enterFirstName(CustomerFirstName);
         enterLastName(CustomerLastName);
         enterInDateField(dateOfBirthText);
+
+        //Verify that appropriate dropdown list appears after clicking 'Grade' dropdown list and admin is able to select any one option from it under 'Fill Client Details' section, on 'Create Appointment' page.
         selectGradeType(gradeType);
+        //Verify that appropriate dropdown list appears after clicking 'School Type' dropdown list and admin is able to select any one option from it, under 'Fill Client Details' section, on 'Create Appointment' page.
         selectSchoolType(schoolTypeOption);
         enterCellNumber(cellNumber);
         enterEmialAddress(EmailAddress);
+        //Verify that appropriate dropdown list appears after clicking 'Reason for call' dropdown list and admin is able to select any one option from it, under 'Fill Client Details' section, on 'Create Appointment' page.
         reasonForCallDropDown(reasonForCallText);
         enterTestAmount(testAmountText);
         clickContinueToDepositButton();

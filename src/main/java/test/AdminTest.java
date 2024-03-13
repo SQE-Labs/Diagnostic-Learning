@@ -228,9 +228,12 @@ public class AdminTest extends BaseTest {
         appPage.click_CancelAppointmentButton();
         WebdriverWaits.waitUntilVisible(admin.dashboardPage);
         WebdriverWaits.waitForSpinner();
+
         //Verify that admin is directed to 'Canceled Appointments' page after clicking 'Canceled' sub tab from left panel.
         validate_text(admin.dashboardPage, "Canceled Appointments");
         admin.click_filterButton();
+
+        //Verify that admin is directed to 'Canceled Appointments' page after clicking 'Canceled' sub tab from left panel.
         String searchPlaceholder = admin.getAttributevalue(admin.searchFieldName, "placeholder");
         Assert.assertEquals(searchPlaceholder, "Type here to search");
     }
@@ -269,20 +272,24 @@ public class AdminTest extends BaseTest {
 
     //********************** Create Follow Up For Client ***********************//
 
-    @Test(priority = 12, enabled = true, description = "16.1,16.13, 16.14, 16.21  Creat follow up for client by admin")
+    @Test(priority = 12, enabled = true, description = "16.1, 16.7, 16.13, 16.14, 16.21  Creat follow up for client by admin")
     public void create_FollowUp() throws InterruptedException {
         AdminPage admin = new AdminPage();
         admin.click_CreateFollowUpBtn();
         admin.click_FollowUpCloseBtn();
         WebdriverWaits.waitUntilVisible(admin.clientDetail);
         WebdriverWaits.waitForSpinner();
-        validate_text(admin.clientDetail,  clientFirstName+' '+clientLastName+ " Details");
+        validate_text(admin.clientDetail, clientFirstName + ' ' + clientLastName + " Details");
         admin.click_CreateFollowUpBtn();
         admin.cancel_FollowUpSlot(0);
+
+        //Verify that 'Follow Up' popup appears after clicking preferred slot, on 'Calander' popup of '<Client> Details' page.
         admin.create_FollowUp(0);
         WebdriverWaits.waitUntilVisible(admin.validateScheduledFollowUp);
         WebdriverWaits.waitForSpinner();
         validate_text(admin.validateScheduledFollowUp, "Follow Up Scheduled!!");
+
+        //Verify that admin is directed to '<Client> Details page after clicking 'Back' button, on  'Follow Up Scheduled!' success popup
         admin.click_BackBtn();
         WebdriverWaits.waitUntilVisible(admin.clientDetail);
         WebdriverWaits.waitForSpinner();
@@ -632,10 +639,10 @@ public class AdminTest extends BaseTest {
         validate_AttText(actualText, expectedTitleText);
     }
 
-    @Test(priority = 39, enabled = true, description = "1.13, 19.1,  19.17, Admin is directed to 'Upcoming Appointment' page")
+    @Test(priority = 39, enabled = true, description = "1.13, 19.1, 19.2, 19.17, Admin is directed to 'Upcoming Appointment' page")
     public void verify_UpcomingTab() throws FileNotFoundException, InterruptedException {
         ActionEngine action = new ActionEngine();
-        AdminPage admin=new AdminPage();
+        AdminPage admin = new AdminPage();
 
         AppointmentsPage appointment = new AppointmentsPage();
         DashBoardPanelPage dashboard = new DashBoardPanelPage();
@@ -647,6 +654,7 @@ public class AdminTest extends BaseTest {
         validate_text(admin.titleOfUpcomingPage, "Upcoming Appointments");
         admin.click_FilterBtn();
 
+//Verify that search textbox, 'From Date' and 'To Date' date picker appears after clicking on 'Filter' button, on 'Upcoming Appointments' page.
         String fromDateplaceholder = admin.getAttributevalue(admin.fromDateText, "placeholder");
         String toDatePlaceholder = admin.getAttributevalue(admin.toDateText, "placeholder");
         Assert.assertEquals(fromDateplaceholder, "From Date");
@@ -773,6 +781,8 @@ public class AdminTest extends BaseTest {
         String expectedText = "Client Observation";
         String actualText = getText_custom(superAdmin.clientObservation);
         validate_AttText(actualText, expectedText);
+
+        //Verify that admin is directed to '<Client> Details' page after clicking 'Back' button, on 'Client Observation' page.
         admin.clickOn_BackBtn();
         validate_text(admin.clientNameDetail, clientFirstName + ' ' + clientLastName + ' ' + "Details");
 
@@ -859,6 +869,7 @@ public class AdminTest extends BaseTest {
         if (actualAmountDue.equals(expectedAmountDue)) {
             payment.viewReceiptButtonDisplayed();
             validate_text(admin.titleOfViewReceipt, "View Receipt");
+            //Verify that 'View Receipt' popup closes after clicking 'Close' button on '<Client> Details' page.
             admin.click_CloseBtn();
         } else {
             String amountDue = getText_custom(payment.amountDue);
