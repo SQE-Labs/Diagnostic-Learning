@@ -246,9 +246,8 @@ public class DiagnosticianPage extends BasePage {
         click_custom(updateButton);
     }
 
-    public void off_ToggleButton() throws InterruptedException {
+    public void off_ToggleButton()  {
         WebdriverWaits.waitUntilVisible(toggle);
-        Thread.sleep(2000);
         click_custom(toggle);
     }
 

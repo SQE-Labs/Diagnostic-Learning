@@ -9,6 +9,7 @@ import org.automation.utilities.WebdriverWaits;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
 import java.awt.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -16,6 +17,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.List;
+
 import static org.automation.utilities.Assertions.validate_text;
 import static test.AdminTest.*;
 
@@ -34,13 +36,12 @@ public class DiagnosticianTest extends BaseTest {
     }
 
 
-
     @Test(priority = 2, enabled = true, description = "31 Diagnostician is Verifying upcoming appointments")
     public void verify_UpcomingAppointments() {
         DiagnosticianPage diagnostician = new DiagnosticianPage();
         LoginPage login = new LoginPage();
 
-     //   login.directorLogin(diagnosticianUserName, "12345678");
+        //   login.directorLogin(diagnosticianUserName, "12345678");
         diagnostician.click_AppointmentTab();
         diagnostician.click_upcomingTab();
         WebdriverWaits.waitUntilVisible(diagnostician.upcomingPageTitle);
@@ -55,7 +56,7 @@ public class DiagnosticianTest extends BaseTest {
         diagnostician.click_ClientDetailLink();
         WebdriverWaits.waitUntilVisible(diagnostician.clientDetailText);
         WebdriverWaits.waitForSpinner();
-        validate_text(diagnostician.clientDetailText, clientFirstName +' '+ clientLastName +' '+" Details");
+        validate_text(diagnostician.clientDetailText, clientFirstName + ' ' + clientLastName + ' ' + " Details");
     }
 
     @Test(priority = 4, enabled = true, description = "  44/70 Diagnostician is verifying  that relevant records appear after selecting valid range of date, on 'Upcoming Appointments' page.")
@@ -110,9 +111,9 @@ public class DiagnosticianTest extends BaseTest {
 
     @Test(priority = 6, enabled = true, description = "7/31, 8/32, 9/33, 13/37, 13/39, 17/43, 18/44, 22/48, 26/52, 28/54 diagnostician is starting assessment")
     public void verify_todays_Appointments() throws InterruptedException {
-        ActionEngine action = new ActionEngine();
+
         DiagnosticianPage diagnostician = new DiagnosticianPage();
-        action.navigate_Back();
+        diagnostician.navigate_Back();
         diagnostician.payment_NewPage();
         diagnostician.start_Assessment_ByPaying_LessAmount("I am doing Simple Testing");
         WebdriverWaits.waitUntilVisible(diagnostician.upcoming_App);

@@ -41,8 +41,7 @@ public class AdminPage extends BasePage {
     public By filterButton = By.xpath("//a[@class='theme-button grey ml-auto mr-3']");
     public By searchField = By.xpath("//input[@aria-controls='appointmentTable']");
 
-    public By adminSearchField = By.xpath("//input[@placeholder='Type here to search']");
-    public By actualText = By.xpath("(//td)[2]");
+     public By actualText = By.xpath("(//td)[2]");
     public By viewStudentObservationButton = By.xpath("//a[@class='theme-button green ml-2 ng-star-inserted']");
     //*****************Edit Admin with valid credentials****************
     public By editButton = By.xpath("(//a[text()='Edit'])[1]");
@@ -149,11 +148,12 @@ public class AdminPage extends BasePage {
     public By holdfilterButton = By.xpath("//a[text()='Filter']");
     public By searchTextBox = By.xpath("//input[@aria-controls='appointmentTable']");
     public By toDateText = By.xpath("//input[@formcontrolname='toDate']");
+    public By searchFieldName=By.xpath("//input[@id='filterSearch']");
     public By fromDateText = By.xpath("//input[@formcontrolname='fromDate']");
     public By validateHoldClient = cssSelector("tr:not([style='display: none;' ]) td:nth-child(3)");
     public By unHoldBtn = cssSelector("tr:not([style='display: none;' ]) td:nth-child(7)");
     public By yesUnholdButton = By.xpath("//button[@class='theme-button danger mx-2']");
-    WebElement element=getDriver().findElement(By.xpath("//div[contains(text(),'Follow Up')]"));
+
 
     //*******************Paying full payment by client****************
     public By appointmentTab = By.xpath("//a[text()=' Appointments ']");
@@ -695,11 +695,11 @@ public class AdminPage extends BasePage {
         WebdriverWaits.waitForSpinner();
         click_custom(followUp);
     }
-    public void click_FollowUpCloseBtn(){
+    public void click_FollowUpCloseBtn() throws InterruptedException {
         WebdriverWaits.waitUntilVisible(followUp_CloseBtn);
         WebdriverWaits.waitForSpinner();
+        Thread.sleep(4000);
         click_custom(followUp_CloseBtn);
-        validate_text(clientDetail,  clientFirstName+' '+clientLastName+ " Details");
     }
 
     public void click_FollowUpSlot(int count) throws InterruptedException {
@@ -727,18 +727,20 @@ public class AdminPage extends BasePage {
         Thread.sleep(15000);
         List<WebElement> slots = getWebElements(followUpSlots, "followUpSlots");
         System.out.println(slots.size());
-        for (WebElement slot : slots) {
-            Thread.sleep(1000);
-            click_custom(slot);
-            if (getWebElements(followUpSlot).size() > count) {
-                Thread.sleep(1000);
-                click_custom(followUpCancelButton);
 
-                Assert.assertTrue(!element.isDisplayed());
-                break;
+        boolean result = true;
+        for (int i = 0; i < slots.size(); i++)
+        {
+            String slotsClass = slots.get(i).getAttribute("class");
+            if (!slotsClass.contains("mbsc-ios mbsc-schedule-event-background ng-star-inserted"))
+            {
+                result = false;
+
             }
         }
+        Assert.assertFalse(result);
     }
+
 
     public void click_FollowUpSlotSaveBtn() {
         WebdriverWaits.waitUntilVisible(slotSaveBtn);
@@ -964,6 +966,7 @@ public class AdminPage extends BasePage {
 
     public void clickOn_BackBtn() {
         waitUntilVisible(backButton);
+        WebdriverWaits.waitForSpinner();
         click_custom(backButton);
     }
 
