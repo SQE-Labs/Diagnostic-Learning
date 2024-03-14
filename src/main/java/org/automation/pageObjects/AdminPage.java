@@ -1,9 +1,12 @@
 package org.automation.pageObjects;
 
 import org.automation.base.BasePage;
+import org.automation.elements.DropDown;
+import org.automation.logger.Log;
 import org.automation.utilities.WebdriverWaits;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.testng.Assert;
 
 import java.awt.*;
 import java.util.List;
@@ -12,6 +15,8 @@ import static org.automation.utilities.Assertions.*;
 import static org.automation.utilities.WebdriverWaits.moveToElement;
 import static org.automation.utilities.WebdriverWaits.waitUntilVisible;
 import static org.openqa.selenium.By.cssSelector;
+import static test.AdminTest.clientFirstName;
+import static test.AdminTest.clientLastName;
 
 public class AdminPage extends BasePage {
     public By adminDashboardText = By.xpath("//h3[text()='Dashboard']");
@@ -36,8 +41,7 @@ public class AdminPage extends BasePage {
     public By filterButton = By.xpath("//a[@class='theme-button grey ml-auto mr-3']");
     public By searchField = By.xpath("//input[@aria-controls='appointmentTable']");
 
-    public By adminSearchField = By.xpath("//input[@placeholder='Type here to search']");
-    public By actualText = By.xpath("(//td)[2]");
+     public By actualText = By.xpath("(//td)[2]");
     public By viewStudentObservationButton = By.xpath("//a[@class='theme-button green ml-2 ng-star-inserted']");
     //*****************Edit Admin with valid credentials****************
     public By editButton = By.xpath("(//a[text()='Edit'])[1]");
@@ -69,7 +73,7 @@ public class AdminPage extends BasePage {
     public By assestmentType = By.xpath("//select[@id='assesmentType']");
     public By updateBtn = By.xpath("//button[@class='theme-button mr-3']");
     public By clientAsses = By.xpath("//p[text()=' IQ']");
-    public By gradeList=By.xpath("(//select[@id='schoolType'])[1]/option");
+    public By gradeList = By.xpath("(//select[@id='schoolType'])[1]/option");
     //***********Re-assign appointment************//
 
     public By diag = By.id("diag");
@@ -90,6 +94,7 @@ public class AdminPage extends BasePage {
     public By cbrsSelfCheckBox = By.xpath("//label[text()='CBRS Self']/..");
     public By dlsDyslexiaCheckBox = By.xpath("//label[text()='DLS Dyslexia']/..");
     public By testPlanSaveButton = By.xpath("//button[text()='Save']");
+    public By testsList=By.xpath("//h5[text()='Tests to be performed']/..//p");
     public By actualEditTest = By.xpath("//p[text()=' WRAML ']");
     public By closeButton = By.xpath("(//a[text()='Close'])[2]");
     public By editClientBtn = By.xpath("//a[text()='Edit Client']");
@@ -100,16 +105,22 @@ public class AdminPage extends BasePage {
     public By editPhoneNumber = By.xpath(" //input[@formcontrolname='phoneNumber']");
     public By editEmail2 = By.xpath(" //input[@formcontrolname='secondaryEmailAddress']");
     public By editGrade = By.id("schoolType");
+    public By locList = By.xpath("//select[@id='testingLocation']");
+    public By dia_List = By.xpath("//select[@id='diag']");
     public By reAssignbtn = By.xpath("//a[text()='Re-assign Appointment']");
-    public By reAssignDiagList = By.xpath("//select[@id='diag']//option[@class='ng-star-inserted']");
+
     public By todaysTab = By.xpath("//*[@id=\"Appointments\"]/li[2]/a");
     public By editAddress1 = By.xpath(" //input[@formcontrolname='address1']");
     public By editUpdateBtn = By.id("intakeFormSubmit");
     public By actualTextClient = By.xpath("//p[text()=' College']");
     public By followUp = By.xpath("//a[text()=' Create Follow Up ']");
+    public By followUp_CloseBtn=By.xpath("//button[@class='theme-button grey float-right']");
     public By followUpSlot = By.xpath("(//div[@class='ng-star-inserted'])[2]");
+    public By followUpPopUp=By.xpath("//div[@class='mbsc-ios mbsc-popup-header mbsc-popup-header-anchored ng-star-inserted']");
     public By followUpSlots = By.xpath("//div[@class='mbsc-flex-1-0 mbsc-ios mbsc-schedule-item ng-star-inserted']");
+    public By followUpCancelButton=By.xpath("//mbsc-button[contains(text(),' Cancel ')]");
     public By slotSaveBtn = By.xpath("//mbsc-button[text()=' Save ']");
+    public By followUpText=By.xpath("//div[contains(text(),'Follow Up')]");
     public By followUpSaveBtn = By.xpath("//a[text()='Save']");
     public By confirmBtn = By.xpath("//a[text()='Confirm']");
     public By validateScheduledFollowUp = By.xpath("//h4[text()='Follow Up Scheduled!!']");
@@ -122,7 +133,7 @@ public class AdminPage extends BasePage {
     public By testFeeAdjustmentAmt = By.xpath("(//input[contains(@class,'custom-input my-1')])[1]");
     public By collectFeeAmt = By.xpath("(//input[contains(@class,'custom-input my-1')])[2]");
     public By enterAmt = By.id("bookingDeposit");
-    public By closeBtn = By.xpath("(//a[@class='theme-button grey'])[5]");
+    public By closeBtn = By.xpath("(//a[text()='Close'])[4]");
     public By collectPayBtn = By.xpath("//button[@class='theme-button mx-2']");
     public By closebtn = By.xpath("(//a[text()='Close'])[3]");
     public By amountDue = By.xpath("//label[text()='Amount Due']//following-sibling::p");
@@ -134,19 +145,23 @@ public class AdminPage extends BasePage {
     public By holdAppointmentBtn = By.xpath("//button[text()='Yes, Hold']");
     public By holdtab = By.xpath("//a[text()='Hold']");
     public By holdAppointmentText = By.xpath("//h3[text()='Hold Appointments']");
+    public By backBtn=By.xpath("//a[@class='theme-button grey mx-2']");
     public By holdfilterButton = By.xpath("//a[text()='Filter']");
     public By searchTextBox = By.xpath("//input[@aria-controls='appointmentTable']");
     public By toDateText = By.xpath("//input[@formcontrolname='toDate']");
+    public By searchFieldName=By.xpath("//input[@id='filterSearch']");
     public By fromDateText = By.xpath("//input[@formcontrolname='fromDate']");
     public By validateHoldClient = cssSelector("tr:not([style='display: none;' ]) td:nth-child(3)");
     public By unHoldBtn = cssSelector("tr:not([style='display: none;' ]) td:nth-child(7)");
     public By yesUnholdButton = By.xpath("//button[@class='theme-button danger mx-2']");
+
 
     //*******************Paying full payment by client****************
     public By appointmentTab = By.xpath("//a[text()=' Appointments ']");
     public By testCompleteTab = By.xpath("//a[text()='Test complete']");
     public By clientDetailLink = cssSelector("tr:not([style='display: none;' ]) td:nth-child(7)");
     public By paymentButton = By.xpath("//button[@class='theme-button green m-2 ng-star-inserted']");
+    public By collectPaymentTxt=By.xpath("//div[@class='modal-content light px-5 py-4']/h4[text()='Collect Payment']");
     public By inr = By.xpath("(//td)[10]");
     public By amountField = By.xpath("//input[@id='bookingDeposit']");
     public By collectButton = By.xpath("//button[@class='theme-button mx-2']");
@@ -155,6 +170,7 @@ public class AdminPage extends BasePage {
     public By cancelAppointmentBtn = By.xpath("//button[text()=' Cancel Appointment ']");
     public By cancelTab = By.xpath("//a[text()='Canceled']");
     public By clientName = By.cssSelector("tr:not([style='display: none;' ]) td:nth-child(1)");
+
     public By todayAppointmentTitle = By.xpath("//div[@class='align-items-md-center d-flex flex-column flex-md-row page-header']/h3");
     public By card = By.xpath("(//td[@class='d-block ng-star-inserted'])[1]");
     public By nameOnCard = By.xpath("(//p[@class='text-purple mb-0'])[1]");
@@ -167,12 +183,18 @@ public class AdminPage extends BasePage {
     public By getTitleOfTestComplete = By.xpath("//div[@class='page-header align-items-lg-center d-flex flex-column flex-md-row']/h3");
     public By getTitleOfAttachedDocument = By.xpath("//h5[@class='text-center mb-4']");
     public By uploadDocumentButton = By.xpath("//button[@class='theme-button m-2 ng-star-inserted']");
+    public By uploadDocumentTitle=By.xpath("//h4[text()='Upload Documents']");
     public By chooseField = By.xpath("//input[@placeholder='select document to be uploaded']");
+    public By cancelBtn=By.xpath("//button[text()='Cancel']");
     public By uploadButton = By.xpath("//button[@class='theme-button mx-2']");
+    public By success_Msg=By.xpath("//h5[contains(text(),'Uploaded')]");
     public By closeIcon = By.xpath("//button[@aria-label='Close']/span");
+    public By clientNameTextTitle = By.cssSelector("tr:not([style='display: none;' ]) td:nth-child(2)");
+
     public By backButton = By.xpath("//a[@class='grey ml-3 theme-button']");
     public By backBtnCancelPopup = By.xpath("(//a[@class='theme-button grey mx-2'])[1]");
-
+    public By re_AssignBtn = By.xpath("//button[@class='theme-button green']");
+    public By paymentRecievePopUp=By.xpath("//h4[text()='Payment Received!!']");
     public By title = By.xpath("//h3");
     public By clientNameCompleted = By.xpath("((//tr[not(contains(@style,'display: none;'))])[2]/td)[1]");
     public By unoldBackBtn = By.xpath("//a[@class='theme-button grey mx-2']");
@@ -195,9 +217,11 @@ public class AdminPage extends BasePage {
     public By sendButton = By.xpath("//button[@class='theme-button mx-2 ng-star-inserted']");
     public By viewDocumentsButton = By.xpath("//a[@class='ml-auto ml-2 theme-button green']");
     public By viewDocumentBtn = By.xpath("//a[@class='ml-2 theme-button green ng-star-inserted']");
-    public By clientNameText=By.xpath("(//div[@class='col-lg-6']//tr)[2]");
-    public By clientDetail=By.xpath("//h3");
-    public By clientNme=By.xpath("(//h6[text()='Follow-Ups to be scheduled']/..//following-sibling::tr)[1]");
+    public By clientNameText = By.xpath("(//div[@class='col-lg-6']//tr)[2]");
+    public By clientDetail = By.xpath("//h3");
+    public By clientNme = By.xpath("(//h6[text()='Follow-Ups to be scheduled']/..//following-sibling::tr)[1]");
+    public By viewDetails = By.xpath("//a[text()='View Details']");
+    public By diagName=By.xpath("//label[text()='Diagnostician']/following-sibling::p");
 
     //******************Verifying cancelled appointments*****************
 
@@ -233,19 +257,21 @@ public class AdminPage extends BasePage {
         waitUntilVisible(userName);
         sendKeys_withClear(userName, userNameText);
     }
-    public void click_ClientLink(){
+
+    public void click_ClientLink() {
         WebdriverWaits.waitUntilVisible(clientNameText);
         WebdriverWaits.waitForSpinner();
         click_custom(clientNameText);
     }
-    public void click_ScheduledClient(){
+
+    public void click_ScheduledClient() {
         WebdriverWaits.waitUntilVisible(clientNme);
         WebdriverWaits.waitForSpinner();
         click_custom(clientNme);
     }
 
-    public void enterSearchField(String nameOfClients) {
-        sendKeys_withClear(searchTextBox, nameOfClients);
+    public void click_ViewDetailsLink() {
+        click_custom(viewDetails);
     }
 
     public void create_passwordField(String passwordFieldText) {
@@ -376,9 +402,21 @@ public class AdminPage extends BasePage {
         click_custom(reAssignbtn);
     }
 
-    public void enter_Reason(String reason) {
-        waitUntilVisible(editReason);
-        selectDropDownByVisibleText_custom(editReason, reason);
+    public void re_Assign_Location_Lists(String locName) {
+        dropdownListsRemoveValues(locList, "Re_Assign_Location lists", "Choose Testing Location");
+        //Verify that appropriate 'Choose dignostician' dropdown list appears after selecting preferred testing location from 'Choose Testing Location' dropdown list, on '<Client> Re-assign Appointment' page
+        selectDropDownByVisibleText_custom(locList, locName);
+        //Verify that appropriate dropdown list appears & admin is able to select any option from it, after clicking  'Choose Testing Location' field, on '<Client> Re-assign Appointment' page.
+        System.out.println(DropDown.getSelectedOption(locList));
+    }
+    public void click_ReAssignBtn(){
+        click_custom(re_AssignBtn);
+    }
+
+    public void re_Assign_Diagnostician_Lists() {
+        dropdownListsRemoveValues(dia_List, "Re_Assign Diagnostician lists", "Choose Diagnostician");
+        //Verify that admin is able to select any option from 'Choose Diagnostician' dropdown list and selected option appears in 'Choose Diagnostician' field, on '<Client> Re-assign Appointment' page
+        System.out.println(DropDown.getSelectedOption(locList));
     }
 
 
@@ -556,6 +594,24 @@ public class AdminPage extends BasePage {
     public void click_TestPlanSaveButton() {
         click_custom(testPlanSaveButton);
     }
+    public void validate_TestsList(){
+        scrolltoUp();
+        WebdriverWaits.waitUntilVisible(testsList);
+        WebdriverWaits.waitForSpinner();
+        int count=0;
+        //Verify that selected test & surveys appear under 'Tests to be performed' & 'Surveys to be performed' section after clicking 'Save' button on '<Client> Details' page.
+        List<WebElement> testLists=getWebElements(testsList, "Get Lists");
+        for(WebElement list :testLists) {
+            if (list.isDisplayed()) {
+                count++;
+                Log.info(list.getText());
+                Log.info(String.valueOf(count));
+            } else {
+            Log.info("There is not test values to print");
+            }
+        }
+        }
+
 
     public void click_EditClientBtn() {
         WebdriverWaits.waitUntilVisible(editClientBtn);
@@ -614,6 +670,7 @@ public class AdminPage extends BasePage {
 
     public void click_unHoldBtn() throws InterruptedException {
         WebdriverWaits.waitUntilVisible(unHoldBtn);
+        WebdriverWaits.waitForSpinner();
         click_custom(unHoldBtn);
         WebdriverWaits.waitUntilVisible(yesUnholdButton);
         click_custom(yesUnholdButton);
@@ -644,6 +701,12 @@ public class AdminPage extends BasePage {
         WebdriverWaits.waitForSpinner();
         click_custom(followUp);
     }
+    public void click_FollowUpCloseBtn() throws InterruptedException {
+        WebdriverWaits.waitUntilVisible(followUp_CloseBtn);
+        WebdriverWaits.waitForSpinner();
+        Thread.sleep(4000);
+        click_custom(followUp_CloseBtn);
+    }
 
     public void click_FollowUpSlot(int count) throws InterruptedException {
         WebdriverWaits.waitUntilVisible(followUpSlots);
@@ -654,11 +717,50 @@ public class AdminPage extends BasePage {
         for (WebElement slot : slots) {
             Thread.sleep(1000);
             click_custom(slot);
+            Thread.sleep(2000);
+
             if (getWebElements(followUpSlot).size() > count) {
+                validate_text(followUpPopUp,"Follow Up");
                 break;
             }
         }
+        click_FollowUpSlotSaveBtn();
     }
+    //div[contains(text(),'Follow Up')]
+    public void cancel_FollowUpSlot(int count) throws InterruptedException {
+        WebdriverWaits.waitUntilVisible(followUpSlots);
+        WebdriverWaits.waitForSpinner();
+        Thread.sleep(15000);
+        List<WebElement> slots = getWebElements(followUpSlots, "followUpSlots");
+        System.out.println(slots.size());
+        for (WebElement slot : slots) {
+            Thread.sleep(2000);
+
+            click_custom(slot);
+            if (getWebElements(followUpSlot).size() > count) {
+                WebdriverWaits.waitUntilVisible(followUpCancelButton);
+                WebdriverWaits.waitForSpinner();
+                click_custom(followUpCancelButton);
+                WebdriverWaits.waitUntilInvisible(followUpText);
+                Assert.assertFalse(isElementDisplay_custom(followUpText, "Follow Up"));
+                break;
+            }
+        }
+//        boolean result = true;
+//        for (int i = 0; i < slots.size(); i++)
+//        {
+//            String slotsClass = slots.get(i).getAttribute("class");
+//            if (!slotsClass.contains("mbsc-ios mbsc-schedule-event-background ng-star-inserted"))
+//            {
+//                result = false;
+//
+//            }
+//        }
+//        Assert.assertFalse(result);
+//    }
+
+    }
+
 
     public void click_FollowUpSlotSaveBtn() {
         WebdriverWaits.waitUntilVisible(slotSaveBtn);
@@ -682,9 +784,8 @@ public class AdminPage extends BasePage {
     }
 
     public void create_FollowUp(int count) throws InterruptedException {
-        click_CreateFollowUpBtn();
+//        click_CreateFollowUpBtn();
         click_FollowUpSlot(count);
-        click_FollowUpSlotSaveBtn();
         click_FollowUpSaveBtn();
         click_ConfirmFollowUpBtn();
         validate_text(validateScheduledFollowUp, "Follow Up Scheduled!!");
@@ -789,6 +890,7 @@ public class AdminPage extends BasePage {
         WebdriverWaits.waitForSpinner();
         scrollIntoView(paymentButton);
         click_custom(paymentButton);
+        validate_text(collectPaymentTxt,"Collect Payment");
     }
 
     public void enter_ValidAmount() throws InterruptedException {
@@ -825,6 +927,14 @@ public class AdminPage extends BasePage {
         click_custom(sendButton);
     }
 
+    public void reAssign_Appointment(String location) {
+        click_ReAssignBn();
+        re_Assign_Location_Lists(location);
+        //Verify that admin is able to select any option from 'Choose Diagnostician' dropdown list and selected option appears in 'Choose Diagnostician' field, on '<Client> Re-assign Appointment' page
+        re_Assign_Diagnostician_Lists();
+        click_ReAssignBtn();
+    }
+
     //*****************Doing full payment by client********************
 
 
@@ -836,6 +946,8 @@ public class AdminPage extends BasePage {
         click_ViewDetailLink();
         enter_ValidAmount();
         click_CollectButton();
+        //Verify that information message appears after completeing full payment on '<client> Details' page.
+        validate_text(paymentRecievePopUp, "Payment Received!!");
         click_CancelButton();
     }
 
@@ -873,9 +985,10 @@ public class AdminPage extends BasePage {
     }
 
 
-    public void clickOn_BackBtn() {
-        waitUntilVisible(backButton);
-        click_custom(backButton);
+    public void click_HoldBackBtn() {
+        waitUntilVisible(backBtn);
+        WebdriverWaits.waitForSpinner();
+        click_custom(backBtn);
     }
 
     public void click_ViewObservationBtn() {
@@ -934,6 +1047,9 @@ public class AdminPage extends BasePage {
         WebdriverWaits.waitForSpinner();
         scrollIntoView(uploadDocumentButton);
         click_custom(uploadDocumentButton);
+    }
+    public void click_Cancel_Button(){
+        click_custom(cancelBtn);
     }
 
     public void click_UploadButtons() {
@@ -998,14 +1114,26 @@ public class AdminPage extends BasePage {
         click_custom(cancelBtnOfTimeSlotPopup);
 
     }
-
     public void upload_FileAttachment() throws InterruptedException, AWTException {
         click_UploadButton();
+        validate_text(uploadDocumentTitle,"Upload Documents");
+        //Verify that admin is directed back to '<Client> Details' page after Clicking 'Cancel' button on 'Upload Documents' popup, of '<Client> Details' page.
+        click_Cancel_Button();
+         scrolltoUp();
+         WebdriverWaits.waitUntilVisible(clientNameDetail);
+         WebdriverWaits.waitForSpinner();
+        validate_text(clientNameDetail, clientFirstName +' '+ clientLastName +' '+ "Details");
+        click_UploadButton();
+        //Verify that '<choose file window>' opens up after clicking 'Choose files' button, on 'Upload Documents' popup of '<Client> Details' page.
         click_ChooseFile();
         Thread.sleep(6000);
         String filepath = "Downloads\\33200_1911.pdf";
         ChromeDownloads.uploadFileUsingRobot(filepath);
+        //Verify that admin is able to upload single document after clicking 'Upload' button on '<Client> Details' button.
         click_UploadButtons();
+        WebdriverWaits.waitUntilVisible(success_Msg);
+        WebdriverWaits.waitForSpinner();
+        validate_text(success_Msg,"Document Uploaded Successfully!!");
         click_CloseButton();
     }
 

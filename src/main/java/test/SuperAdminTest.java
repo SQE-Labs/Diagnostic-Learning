@@ -33,7 +33,7 @@ public class SuperAdminTest extends BaseTest {
     public String admin_cell_Number;
 
     //***********Diagnostician Variables*****
-    public  String diagnosticianUserName;
+    public String diagnosticianUserName;
     public String diagnosticianFirstName;
     public String diagnosticianEmailAddress;
     public String diagnosticianLastName;
@@ -160,7 +160,7 @@ public class SuperAdminTest extends BaseTest {
     public void verify_Duplicate_UserName() throws InterruptedException {
         AdminPage admin = new AdminPage();
 
-       // Verify that validation message appears after clicking on 'Create Admin' button, when user enter same username in 'username' field, on 'Create Admin ' page.
+        // Verify that validation message appears after clicking on 'Create Admin' button, when user enter same username in 'username' field, on 'Create Admin ' page.
         admin.create_Admin(adminFirstName, adminLastName, admin_cell_Number, adminEmailAddress, adminUserName, "123456", "123456");
         WebdriverWaits.waitUntilVisible(admin.Error_Msg);
         validate_text(admin.Error_Msg, "An error occurred while creating the admin. Username already exists!");
@@ -189,7 +189,7 @@ public class SuperAdminTest extends BaseTest {
         //**************SuperAdmin is creating diagnostician*************
 
 
-        diagnostician.create_Diagnostician(diagnosticianFirstName, diagnosticianLastName, dia_Cell_Number, diagnosticianEmailAddress, "Austin",diagnosticianUserName, "123456", "123456");
+        diagnostician.create_Diagnostician(diagnosticianFirstName, diagnosticianLastName, dia_Cell_Number, diagnosticianEmailAddress, "Austin", diagnosticianUserName, "123456", "123456");
         diagnostician.enter_InSearchField(diagnosticianUserName);
         WebdriverWaits.waitUntilVisible(diagnostician.actualText);
         validate_text(diagnostician.actualText, diagnosticianUserName);
@@ -204,7 +204,7 @@ public class SuperAdminTest extends BaseTest {
         //creating duplicate name diagnostistician
 
         //Verify that validtion message appears after clicking on 'Create Diagnostician' button, when user enter same username in 'username' field, on 'Create Diagnostician' page.
-        diagnostician.create_Diagnostician(diagnosticianFirstName, diagnosticianLastName, "8564234568", diagnosticianEmailAddress, "Austin",diagnosticianUserName, "123456", "123456");
+        diagnostician.create_Diagnostician(diagnosticianFirstName, diagnosticianLastName, "8564234568", diagnosticianEmailAddress, "Austin", diagnosticianUserName, "123456", "123456");
         WebdriverWaits.waitUntilVisible(diagnostician.validationMsg);
         WebdriverWaits.waitForSpinner();
         validate_text(diagnostician.validationMsg, "An error occurred while creating the user. Username already exists!");
@@ -242,6 +242,7 @@ public class SuperAdminTest extends BaseTest {
         //Verify that 'Cell Number' field accepts ten digit number in defined format on 'Edit User' pop up, of 'Diagnosticians List' page
         diagnostician.edit_Diagnostician(diagnosticianEmailAddress1, "12345678", "12345678");
         WebdriverWaits.waitUntilVisible(diagnostician.edit_Succ_Msg);
+        WebdriverWaits.waitForSpinner();
         validate_text(diagnostician.edit_Succ_Msg, "Diagnostician details updated successfully.");
         Log.info("Successfully Edited the created diagnostician");
     }
@@ -398,6 +399,7 @@ public class SuperAdminTest extends BaseTest {
         director.enterInSearchField(directorFirstName);
         director.enable_Director();
         WebdriverWaits.waitUntilVisible(director.edit_SuccMsg);
+        WebdriverWaits.waitForSpinner();
         validate_text(director.edit_SuccMsg, "Director details updated successfully.");
         Log.info("Successfully Edited the created director");
     }
@@ -435,7 +437,7 @@ public class SuperAdminTest extends BaseTest {
         login.directorLogin(directorUserName, "12345678");
         WebdriverWaits.waitUntilVisible(director.directorDashBoardPage);
         validate_text(director.directorDashBoardPage, "Dashboard");
-         panelPage.click_LogOutLink();
+        panelPage.click_LogOutLink();
     }
 
 
@@ -445,7 +447,7 @@ public class SuperAdminTest extends BaseTest {
     public void verify_Appointments_Page() throws InterruptedException {
         AppointmentsPage appointment = new AppointmentsPage();
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
-        SuperAdminPage superAdmin=new SuperAdminPage();
+        SuperAdminPage superAdmin = new SuperAdminPage();
         LoginPage login = new LoginPage();
         login.superAdminLogin();
         WebdriverWaits.waitUntilVisible(appointment.dashBoardPage);
@@ -616,8 +618,9 @@ public class SuperAdminTest extends BaseTest {
         String downloadFile = panelpage.getDownloadFileName();
         Assert.assertTrue(panelpage.isFileDownloaded(downloadFile));
         panelpage.navigate_Back();
-         panelpage.click_LogOutLink();
+        panelpage.click_LogOutLink();
     }
+
     @Test(priority = 29, enabled = true, description = "SuperAdmin is able to disable the diagnostician")
     public void verify_disable_diagnostician() throws InterruptedException {
         LoginPage login = new LoginPage();

@@ -288,9 +288,11 @@ public class AppointmentsPage extends BasePage {
 
         getTotalColumnCount(count);
         WebdriverWaits.waitUntilVisible(newEventText);
+        //Verify that 'New Event' pop up appears after admin clicks on available time slot for desired Diagnostician on calendar, on 'Create Appointment' page'
         validate_text(newEventText, "New Event");
 
         clickSlotSaveButton();
+        //Verify that selected time slot appears highlighted in blue colour after clicking 'Save' button, on 'New Event' pop up of 'Create Appointment' page.
         WebdriverWaits.waitUntilVisible(newSlotText);
         validate_text(newSlotText, "New event");
 
@@ -307,13 +309,24 @@ public class AppointmentsPage extends BasePage {
         enterFirstName(CustomerFirstName);
         enterLastName(CustomerLastName);
         enterInDateField(dateOfBirthText);
+
+        //Verify that appropriate dropdown list appears after clicking 'Grade' dropdown list and admin is able to select any one option from it under 'Fill Client Details' section, on 'Create Appointment' page.
         selectGradeType(gradeType);
+        //Verify that appropriate dropdown list appears after clicking 'School Type' dropdown list and admin is able to select any one option from it, under 'Fill Client Details' section, on 'Create Appointment' page.
         selectSchoolType(schoolTypeOption);
+        //Verify that 'Cell Number' field accepts ten digit number in defined format under 'Fill Client Details' section, on 'Create Appointment' page
         enterCellNumber(cellNumber);
+
         enterEmialAddress(EmailAddress);
+
+        //Verify that appropriate dropdown list appears after clicking 'Reason for call' dropdown list and admin is able to select any one option from it, under 'Fill Client Details' section, on 'Create Appointment' page.
         reasonForCallDropDown(reasonForCallText);
         enterTestAmount(testAmountText);
+
+        //Verify that admin is able to collect payment after clicking 'Collect Payment' button, on 'Booking Payment' pop up of 'Create Appointment' page.
         clickContinueToDepositButton();
+
+        //Verify that 'Booking payment' pop up appears after clicking 'Continue to Deposit' button, on 'Create Appointment' page.
         WebdriverWaits.waitUntilVisible(paymentPopUp);
         validate_text(paymentPopUp, "Booking Payment");
 
