@@ -145,6 +145,7 @@ public class AdminPage extends BasePage {
     public By holdAppointmentBtn = By.xpath("//button[text()='Yes, Hold']");
     public By holdtab = By.xpath("//a[text()='Hold']");
     public By holdAppointmentText = By.xpath("//h3[text()='Hold Appointments']");
+    public By backBtn=By.xpath("//a[@class='theme-button grey mx-2']");
     public By holdfilterButton = By.xpath("//a[text()='Filter']");
     public By searchTextBox = By.xpath("//input[@aria-controls='appointmentTable']");
     public By toDateText = By.xpath("//input[@formcontrolname='toDate']");
@@ -403,7 +404,9 @@ public class AdminPage extends BasePage {
 
     public void re_Assign_Location_Lists(String locName) {
         dropdownListsRemoveValues(locList, "Re_Assign_Location lists", "Choose Testing Location");
+        //Verify that appropriate 'Choose dignostician' dropdown list appears after selecting preferred testing location from 'Choose Testing Location' dropdown list, on '<Client> Re-assign Appointment' page
         selectDropDownByVisibleText_custom(locList, locName);
+        //Verify that appropriate dropdown list appears & admin is able to select any option from it, after clicking  'Choose Testing Location' field, on '<Client> Re-assign Appointment' page.
         System.out.println(DropDown.getSelectedOption(locList));
     }
     public void click_ReAssignBtn(){
@@ -412,6 +415,7 @@ public class AdminPage extends BasePage {
 
     public void re_Assign_Diagnostician_Lists() {
         dropdownListsRemoveValues(dia_List, "Re_Assign Diagnostician lists", "Choose Diagnostician");
+        //Verify that admin is able to select any option from 'Choose Diagnostician' dropdown list and selected option appears in 'Choose Diagnostician' field, on '<Client> Re-assign Appointment' page
         System.out.println(DropDown.getSelectedOption(locList));
     }
 
@@ -595,6 +599,7 @@ public class AdminPage extends BasePage {
         WebdriverWaits.waitUntilVisible(testsList);
         WebdriverWaits.waitForSpinner();
         int count=0;
+        //Verify that selected test & surveys appear under 'Tests to be performed' & 'Surveys to be performed' section after clicking 'Save' button on '<Client> Details' page.
         List<WebElement> testLists=getWebElements(testsList, "Get Lists");
         for(WebElement list :testLists) {
             if (list.isDisplayed()) {
@@ -665,6 +670,7 @@ public class AdminPage extends BasePage {
 
     public void click_unHoldBtn() throws InterruptedException {
         WebdriverWaits.waitUntilVisible(unHoldBtn);
+        WebdriverWaits.waitForSpinner();
         click_custom(unHoldBtn);
         WebdriverWaits.waitUntilVisible(yesUnholdButton);
         click_custom(yesUnholdButton);
@@ -727,18 +733,32 @@ public class AdminPage extends BasePage {
         Thread.sleep(15000);
         List<WebElement> slots = getWebElements(followUpSlots, "followUpSlots");
         System.out.println(slots.size());
+        for (WebElement slot : slots) {
+            Thread.sleep(2000);
 
-        boolean result = true;
-        for (int i = 0; i < slots.size(); i++)
-        {
-            String slotsClass = slots.get(i).getAttribute("class");
-            if (!slotsClass.contains("mbsc-ios mbsc-schedule-event-background ng-star-inserted"))
-            {
-                result = false;
-
+            click_custom(slot);
+            if (getWebElements(followUpSlot).size() > count) {
+                WebdriverWaits.waitUntilVisible(followUpCancelButton);
+                WebdriverWaits.waitForSpinner();
+                click_custom(followUpCancelButton);
+                WebdriverWaits.waitUntilInvisible(followUpText);
+                Assert.assertFalse(isElementDisplay_custom(followUpText, "Follow Up"));
+                break;
             }
         }
-        Assert.assertFalse(result);
+//        boolean result = true;
+//        for (int i = 0; i < slots.size(); i++)
+//        {
+//            String slotsClass = slots.get(i).getAttribute("class");
+//            if (!slotsClass.contains("mbsc-ios mbsc-schedule-event-background ng-star-inserted"))
+//            {
+//                result = false;
+//
+//            }
+//        }
+//        Assert.assertFalse(result);
+//    }
+
     }
 
 
@@ -926,6 +946,7 @@ public class AdminPage extends BasePage {
         click_ViewDetailLink();
         enter_ValidAmount();
         click_CollectButton();
+        //Verify that information message appears after completeing full payment on '<client> Details' page.
         validate_text(paymentRecievePopUp, "Payment Received!!");
         click_CancelButton();
     }
@@ -964,10 +985,10 @@ public class AdminPage extends BasePage {
     }
 
 
-    public void clickOn_BackBtn() {
-        waitUntilVisible(backButton);
+    public void click_HoldBackBtn() {
+        waitUntilVisible(backBtn);
         WebdriverWaits.waitForSpinner();
-        click_custom(backButton);
+        click_custom(backBtn);
     }
 
     public void click_ViewObservationBtn() {
@@ -1096,16 +1117,19 @@ public class AdminPage extends BasePage {
     public void upload_FileAttachment() throws InterruptedException, AWTException {
         click_UploadButton();
         validate_text(uploadDocumentTitle,"Upload Documents");
+        //Verify that admin is directed back to '<Client> Details' page after Clicking 'Cancel' button on 'Upload Documents' popup, of '<Client> Details' page.
         click_Cancel_Button();
          scrolltoUp();
          WebdriverWaits.waitUntilVisible(clientNameDetail);
          WebdriverWaits.waitForSpinner();
         validate_text(clientNameDetail, clientFirstName +' '+ clientLastName +' '+ "Details");
         click_UploadButton();
+        //Verify that '<choose file window>' opens up after clicking 'Choose files' button, on 'Upload Documents' popup of '<Client> Details' page.
         click_ChooseFile();
         Thread.sleep(6000);
         String filepath = "Downloads\\33200_1911.pdf";
         ChromeDownloads.uploadFileUsingRobot(filepath);
+        //Verify that admin is able to upload single document after clicking 'Upload' button on '<Client> Details' button.
         click_UploadButtons();
         WebdriverWaits.waitUntilVisible(success_Msg);
         WebdriverWaits.waitForSpinner();

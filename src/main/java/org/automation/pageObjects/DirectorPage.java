@@ -308,6 +308,7 @@ public class DirectorPage extends BasePage {
         click_directorsLastNameField(directorsLastNameText);
         click_directorsMobileNumberField(directorsMobileNumberText);
         click_directorsdirectorsEmailField(directorsEmailText);
+        //Verify that dropdown options appear after clicking 'Assign Location' dropdown list & selected options appear in 'Assign Location' field on 'Create Director' page
         click_directorsassignLocationField();
         click_directorsUserNameField(directorsUserNameText);
         click_passwordField(password_FieldText);
@@ -342,6 +343,7 @@ public class DirectorPage extends BasePage {
     //***********edit created director*************
     public void edit_Director(String EmailAddress1, String passwordTextFieldText, String confirmPasswordFieldText) throws InterruptedException {
         click_EditButton();
+        //Verify that  'Edit User' pop up appears after clicking 'Edit' button of any director, on 'Directors List' page
         // test case number ( 4.6 ).
         validate_text(edit_Popup, "Edit User");
         Log.info("Successfully Edit popUp opens");
