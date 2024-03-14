@@ -1,5 +1,6 @@
 package org.automation.pageObjects;
 import org.automation.base.BasePage;
+import org.automation.elements.DropDown;
 import org.automation.logger.Log;
 import org.automation.utilities.WebdriverWaits;
 import org.openqa.selenium.By;
@@ -151,12 +152,14 @@ public class AppointmentsPage extends BasePage {
     public void selectGradeType(int gradeType) {
         dropdownListsValues(grade,"gradeTypeList");
          selectDropDownByIndex_custom(grade, gradeType);
+        System.out.println(DropDown.getSelectedOption(grade));
     }
 
     public void selectSchoolType(int schoolTypeOption) {
         // click_custom(SchoolType);
         dropdownListsValues(schoolType,"schoolTypeList");
         selectDropDownByIndex_custom(schoolType, schoolTypeOption);
+       System.out.println(DropDown.getSelectedOption(schoolType));
     }
 
     public void enterCellNumber(String cellNumberText) throws InterruptedException {
@@ -164,8 +167,7 @@ public class AppointmentsPage extends BasePage {
         click_custom(cellNumber);
         Thread.sleep(1000);
         sendKeys_withClear(cellNumber, cellNumberText);
-        Boolean cellText=getDriver().findElement(By.xpath("//input[@placeholder='Cell Number']")).getAttribute("Placeholder").contains("Value");
-        System.out.println(cellText);
+
     }
 
     public void click_UpcomingCard() {
@@ -214,15 +216,9 @@ public class AppointmentsPage extends BasePage {
         selectDropDownByVisibleText_custom(chooseTestingLocation, chooseLocationText, "ChooseLocation");
 
     }
-    public void locationName_Lists(){
-        List<WebElement> locNames=getWebElements(locationLists,"Location List");
-        ArrayList<String> dropdownValues = new ArrayList<>();
-            for (WebElement option : locNames) {
-                dropdownValues.add(option.getText());
-                dropdownValues.remove("Choose Testing Location");
-            }
-        System.out.println(dropdownValues);
-        }
+    public void locationName_Lists() {
+        dropdownListsRemoveValues(locationLists, "Location List", "Choose Testing Location");
+    }
 
     public void enterAmount(String enterAmountText)    {
         WebdriverWaits.waitUntilInvisible(enterAmountField);
@@ -292,9 +288,11 @@ public class AppointmentsPage extends BasePage {
 
         getTotalColumnCount(count);
         WebdriverWaits.waitUntilVisible(newEventText);
+        //Verify that 'New Event' pop up appears after admin clicks on available time slot for desired Diagnostician on calendar, on 'Create Appointment' page'
         validate_text(newEventText, "New Event");
 
         clickSlotSaveButton();
+        //Verify that selected time slot appears highlighted in blue colour after clicking 'Save' button, on 'New Event' pop up of 'Create Appointment' page.
         WebdriverWaits.waitUntilVisible(newSlotText);
         validate_text(newSlotText, "New event");
 
@@ -311,20 +309,34 @@ public class AppointmentsPage extends BasePage {
         enterFirstName(CustomerFirstName);
         enterLastName(CustomerLastName);
         enterInDateField(dateOfBirthText);
+
+        //Verify that appropriate dropdown list appears after clicking 'Grade' dropdown list and admin is able to select any one option from it under 'Fill Client Details' section, on 'Create Appointment' page.
         selectGradeType(gradeType);
+        //Verify that appropriate dropdown list appears after clicking 'School Type' dropdown list and admin is able to select any one option from it, under 'Fill Client Details' section, on 'Create Appointment' page.
         selectSchoolType(schoolTypeOption);
+        //Verify that 'Cell Number' field accepts ten digit number in defined format under 'Fill Client Details' section, on 'Create Appointment' page
         enterCellNumber(cellNumber);
+
         enterEmialAddress(EmailAddress);
+
+        //Verify that appropriate dropdown list appears after clicking 'Reason for call' dropdown list and admin is able to select any one option from it, under 'Fill Client Details' section, on 'Create Appointment' page.
         reasonForCallDropDown(reasonForCallText);
         enterTestAmount(testAmountText);
+
+        //Verify that admin is able to collect payment after clicking 'Collect Payment' button, on 'Booking Payment' pop up of 'Create Appointment' page.
         clickContinueToDepositButton();
+
+        //Verify that 'Booking payment' pop up appears after clicking 'Continue to Deposit' button, on 'Create Appointment' page.
         WebdriverWaits.waitUntilVisible(paymentPopUp);
         validate_text(paymentPopUp, "Booking Payment");
 
         enterAmount(enterAmountText);
+
+        //Verify that admin is able to collect payment after clicking 'Collect Payment' button, on 'Booking Payment' pop up of 'Create Appointment' page.
         clickCollectDepositButton();
         WebdriverWaits.waitUntilVisible(actualText);
         validate_text(actualText, "Appointment Scheduled!!");
+        //Verify that  admin is directed to '<Client> Details' page after clicking 'View details' button, on 'Appointment Scheduled !!' pop up of 'Create Appointment' page.
         clickViewDetailsButton();
         WebdriverWaits.waitForSpinner();
         Thread.sleep(5000);

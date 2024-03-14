@@ -257,19 +257,16 @@ public class DirectorPage extends BasePage {
     public void select_Year() {
         WebdriverWaits.waitUntilVisible(selectYear);
         click_custom(selectYear);
-
     }
 
     public void select_Month() {
         WebdriverWaits.waitUntilVisible(selectMonth);
         click_custom(selectMonth);
-
     }
 
     public void clickOn_DontSave() {
         click_custom(dontSaveButton);
     }
-
 
     public void off_ToggleButton() {
         WebdriverWaits.waitUntilVisible(toggle);
@@ -311,6 +308,7 @@ public class DirectorPage extends BasePage {
         click_directorsLastNameField(directorsLastNameText);
         click_directorsMobileNumberField(directorsMobileNumberText);
         click_directorsdirectorsEmailField(directorsEmailText);
+        //Verify that dropdown options appear after clicking 'Assign Location' dropdown list & selected options appear in 'Assign Location' field on 'Create Director' page
         click_directorsassignLocationField();
         click_directorsUserNameField(directorsUserNameText);
         click_passwordField(password_FieldText);
@@ -322,16 +320,12 @@ public class DirectorPage extends BasePage {
         wait.waitUntilVisible(editBtnAfterSearch);
         WebdriverWaits.waitForSpinner();
         click_custom(editBtnAfterSearch);
-
-
     }
 
     public void click_ViewDetailsBtn() throws InterruptedException {
         wait.waitUntilVisible(viewDetailsBtn);
         WebdriverWaits.waitForSpinner();
         click_custom(viewDetailsBtn);
-
-
     }
 
     //**************Search created director*************
@@ -349,6 +343,7 @@ public class DirectorPage extends BasePage {
     //***********edit created director*************
     public void edit_Director(String EmailAddress1, String passwordTextFieldText, String confirmPasswordFieldText) throws InterruptedException {
         click_EditButton();
+        //Verify that  'Edit User' pop up appears after clicking 'Edit' button of any director, on 'Directors List' page
         // test case number ( 4.6 ).
         validate_text(edit_Popup, "Edit User");
         Log.info("Successfully Edit popUp opens");
@@ -366,6 +361,7 @@ public class DirectorPage extends BasePage {
         click_EditButton();
         WebdriverWaits.waitUntilVisible(enableUser);
         validate_text(enableUser, "Enable User");
+       // off_ToggleButton();
         click_DontSave();
     }
 
