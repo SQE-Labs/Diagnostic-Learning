@@ -149,16 +149,16 @@ public class AppointmentsPage extends BasePage {
         click_custom(goBackBtn);
     }
 
-    public void selectGradeType(int gradeType) {
+    public void selectGradeType(String gradeType) {
         dropdownListsValues(grade,"gradeTypeList");
-         selectDropDownByIndex_custom(grade, gradeType);
+         selectDropDownByVisibleText_custom(grade, gradeType);
         System.out.println(DropDown.getSelectedOption(grade));
     }
 
-    public void selectSchoolType(int schoolTypeOption) {
+    public void selectSchoolType(String schoolTypeOption) {
         // click_custom(SchoolType);
         dropdownListsValues(schoolType,"schoolTypeList");
-        selectDropDownByIndex_custom(schoolType, schoolTypeOption);
+        selectDropDownByVisibleText_custom(schoolType, schoolTypeOption);
        System.out.println(DropDown.getSelectedOption(schoolType));
     }
 
@@ -305,7 +305,7 @@ public class AppointmentsPage extends BasePage {
         selectDropDownByVisibleText_custom(assestmentType, assestmentTypeTexts);
     }
 
-    public void fill_clientDetailsSection(String CustomerFirstName, String CustomerLastName, int gradeType, String dateOfBirthText, int schoolTypeOption, String cellNumber, String EmailAddress, String reasonForCallText, String cityText, String stateText, String zipCodeText, String testAmountText, String enterAmountText) throws InterruptedException {
+    public void fill_clientDetailsSection(String CustomerFirstName, String CustomerLastName, String dateOfBirthText,String gradeType, String schoolTypeOption, String cellNumber, String EmailAddress, String reasonForCallText, String cityText, String stateText, String zipCodeText, String testAmountText, String enterAmountText) throws InterruptedException {
         enterFirstName(CustomerFirstName);
         enterLastName(CustomerLastName);
         enterInDateField(dateOfBirthText);

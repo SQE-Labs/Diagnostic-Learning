@@ -37,8 +37,8 @@ public class AdminTest extends BaseTest {
     String clientEmail;
     String clientEmail2;
     String clientCellNumber;
-    String diagnosticianFirstName;
-    String diagnosticianLastName;
+    public static String diagnosticianFirstName;
+    public static String diagnosticianLastName;
     String diagnosticianEmailAddress;
 
 
@@ -222,7 +222,7 @@ public class AdminTest extends BaseTest {
         clientCellNumber = RandomStrings.requiredDigits(10);
         clientEmail = clientFirstName + "@yopmail.com";
         clientEmail2 = clientFirstName + "101@yopmail.com";
-        fillClientDetails.fill_clientDetailsSection(clientFirstName, clientLastName, 1, "19-11-2000", 1, clientCellNumber, clientEmail, "Other", "New York", "Texas", "30052", "1000", "900");
+        fillClientDetails.fill_clientDetailsSection(clientFirstName, clientLastName, "19-11-2000","Grade 2",   "Private", clientCellNumber, clientEmail, "Other", "New York", "Texas", "30052", "1000", "900");
     }
 
     @Test(priority = 9, enabled = true, description = "11.1, 22.1, 22.2 Verify that admin is able to cancel the appointment or not")
@@ -270,7 +270,7 @@ public class AdminTest extends BaseTest {
         appPage.selectAssesmentType("Adult ADHD Only");
 
         //Verify that 'Booking payment' pop up appears after clicking 'Continue to Deposit' button, on 'Create Appointment' page.
-        fillClientDetails.fill_clientDetailsSection(clientFirstName, clientLastName, 1, "19-11-2000", 1, clientCellNumber, clientEmail, "Other", "New York", "Texas", "30052", "1000", "900");
+        fillClientDetails.fill_clientDetailsSection(clientFirstName, clientLastName, "19-11-2000","Grade 2",   "Private", clientCellNumber, clientEmail, "Other", "New York", "Texas", "30052", "1000", "900");
         validate_text(admin.clientDetail, clientFirstName + ' ' + clientLastName + " Details");
     }
 
@@ -302,7 +302,7 @@ public class AdminTest extends BaseTest {
     }
 
     //******To Do************
-    @Test(priority = 13, enabled = true, description = "8.6,8.7, 8.8,8.10,8.9 Re-Assign Appointment for client by admin")
+    @Test(priority = 13, enabled = true, description = "8.6,8.7, 8.8,8.10,8.9,2.43 Re-Assign Appointment for client by admin")
     public void re_AssignAppointment() {
         AdminPage admin = new AdminPage();
         admin.reAssign_Appointment("Austin");
@@ -329,10 +329,12 @@ public class AdminTest extends BaseTest {
         WebdriverWaits.waitUntilVisible(editType.clientAsses);
         validate_text(editType.clientAsses, "IQ");
     }
-    @Test(priority = 15, enabled = true, description = "8.3, Verify Edit Assessment type button .")
+    @Test(priority = 15, enabled = true, description = "8.3,8.25 Verify Edit Assessment type button .")
     public void verify_ReScheduleApp() throws InterruptedException {
         AdminPage admin = new AdminPage();
-        admin.click_RescheduleBtn();
+
+        admin. re_ScheduleApp();
+
     }
 
 
@@ -423,7 +425,7 @@ public class AdminTest extends BaseTest {
     @Test(priority = 22, enabled = true, description = "9.9, 9.10, 9.11, 9.12, 9.13, 9.16,9.17,9.18, 9.19 Verify Edit client details popup client page.")
     public void verify_UpdateBtn() {
         AdminPage editClient = new AdminPage();
-        editClient.edit_ClientInfo(clientFirstName, clientLastName, "401 Broadway E eastate g", "College");
+        editClient.edit_ClientInfo(clientFirstName, clientLastName, "401 Broadway E eastate g", "College","Private","Grade 2");
         editClient.click_UpdateClientBtn();
         WebdriverWaits.waitUntilVisible(editClient.actualTextClient);
         validate_text(editClient.actualTextClient, "College");
