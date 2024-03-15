@@ -15,8 +15,7 @@ import static org.automation.utilities.Assertions.*;
 import static org.automation.utilities.WebdriverWaits.moveToElement;
 import static org.automation.utilities.WebdriverWaits.waitUntilVisible;
 import static org.openqa.selenium.By.cssSelector;
-import static test.AdminTest.clientFirstName;
-import static test.AdminTest.clientLastName;
+import static test.AdminTest.*;
 
 public class AdminPage extends BasePage {
     public By adminDashboardText = By.xpath("//h3[text()='Dashboard']");
@@ -107,6 +106,9 @@ public class AdminPage extends BasePage {
     public By editGrade = By.id("schoolType");
     public By locList = By.xpath("//select[@id='testingLocation']");
     public By dia_List = By.xpath("//select[@id='diag']");
+    public By grade_List = By.xpath("(//select[@id='schoolType'])[1]/option");
+    public By schoolType = By.xpath("(//select[@id='schoolType'])[2]");
+    public By grade = By.xpath("(//select[@id='schoolType'])[1]");
     public By reAssignbtn = By.xpath("//a[text()='Re-assign Appointment']");
 
     public By todaysTab = By.xpath("//*[@id=\"Appointments\"]/li[2]/a");
@@ -200,6 +202,7 @@ public class AdminPage extends BasePage {
     public By unoldBackBtn = By.xpath("//a[@class='theme-button grey mx-2']");
     public By titleOfViewReceipt = By.xpath("//h4[@class='text-center ng-star-inserted']");
     public By rescheduleAppointmentBtn = By.xpath("//a[text()='Reschedule Appointment']");
+    public By diagnosticianName=By.xpath("//input[@placeholder='Select Diagnostician']");
     public By cancelRadioBtn = By.xpath("(//div[@class='custom-control custom-radio custom-control-inline'])[1]");
     public By yesBtn = By.xpath("(//button[@type='submit'])[1]");
     public By cancelBtnOfTimeSlotPopup = By.xpath("(//mbsc-button[@role='button'])[5]");
@@ -414,6 +417,7 @@ public class AdminPage extends BasePage {
     }
 
     public void re_Assign_Diagnostician_Lists() {
+        selectDropDownByVisibleText_custom(locList,diagnosticianFirstName+' '+diagnosticianLastName);
         dropdownListsRemoveValues(dia_List, "Re_Assign Diagnostician lists", "Choose Diagnostician");
         //Verify that admin is able to select any option from 'Choose Diagnostician' dropdown list and selected option appears in 'Choose Diagnostician' field, on '<Client> Re-assign Appointment' page
         System.out.println(DropDown.getSelectedOption(locList));
@@ -635,6 +639,19 @@ public class AdminPage extends BasePage {
         WebdriverWaits.waitUntilVisible(editGrade);
         click_custom(editGrade);
         selectDropDownByVisibleText_custom(editGrade, grade);
+        dropdownListsRemoveValues(grade_List, "Edit client Info lists", "Grade");
+         System.out.println(DropDown.getSelectedOption(editGrade));
+    }
+    public void selectSchoolType(String schoolTypeOption) {
+        // click_custom(SchoolType);
+        dropdownListsValues(schoolType,"schoolTypeList");
+        selectDropDownByVisibleText_custom(schoolType, schoolTypeOption);
+        System.out.println(DropDown.getSelectedOption(schoolType));
+    }
+    public void selectGradeType(String gradeType) {
+        dropdownListsValues(grade,"gradeTypeList");
+        selectDropDownByVisibleText_custom(grade, gradeType);
+        System.out.println(DropDown.getSelectedOption(grade));
     }
 
     public void enter_Address1(String address) {
@@ -677,12 +694,18 @@ public class AdminPage extends BasePage {
         Thread.sleep(4000);
     }
 
-    public String edit_ClientInfo(String firstName, String lastName, String address1, String grade) {
+    public String edit_ClientInfo(String firstName, String lastName, String address1, String grade,String schoolTypeOption,String gradeType) {
         String fullName = firstName + " " + lastName;
         enter_FirstName(firstName);
         enter_LastName(lastName);
         enter_Address1(address1);
         enter_grade(grade);
+
+        //Verify that appropriate dropdown list appears after clicking 'School Type' dropdown list and admin is able to select any updated option from it, on 'Edit Client info' pop up, of  '<Client> Details' page.
+        selectSchoolType(schoolTypeOption);
+
+        //Verify that appropriate dropdown list appears after clicking 'Grade' dropdown list and admin is able to select updated option from it,on 'Edit Client info' pop up, of  '<Client> Details' page.
+        selectGradeType(gradeType);
         return fullName;
     }
 
@@ -849,6 +872,7 @@ public class AdminPage extends BasePage {
         sendKeys_custom(enterAmt, amount);
     }
 
+
     //*******************Paying full payment by client**************
     public void click_AppointmentTab() {
         WebdriverWaits.waitUntilVisible(appointmentTab);
@@ -929,10 +953,21 @@ public class AdminPage extends BasePage {
 
     public void reAssign_Appointment(String location) {
         click_ReAssignBn();
+        WebdriverWaits.waitUntilVisible(clientNameDetail);
+        WebdriverWaits.waitForSpinner();
+        validate_text( clientNameDetail, clientFirstName+' '+clientLastName+" Re-assign Appointment");
         re_Assign_Location_Lists(location);
         //Verify that admin is able to select any option from 'Choose Diagnostician' dropdown list and selected option appears in 'Choose Diagnostician' field, on '<Client> Re-assign Appointment' page
         re_Assign_Diagnostician_Lists();
         click_ReAssignBtn();
+    }
+    public void re_ScheduleApp() throws InterruptedException {
+        click_RescheduleBtn();
+        validate_text( clientNameDetail, clientFirstName+' '+clientLastName+" Reschedule Appointment");
+        click_Diag_Field();
+        //Verify that nothing happens after clicking 'Close' button of calendar on '<Client Reschedule Appointment' page.
+        click_FollowUpCloseBtn();
+        validate_text( clientNameDetail, clientFirstName+' '+clientLastName+" Reschedule Appointment");
     }
 
     //*****************Doing full payment by client********************
@@ -1061,7 +1096,9 @@ public class AdminPage extends BasePage {
         waitUntilVisible(rescheduleAppointmentBtn);
         WebdriverWaits.waitForSpinner();
         click_custom(rescheduleAppointmentBtn);
-
+    }
+    public void click_Diag_Field(){
+        click_custom(diagnosticianName);
     }
 
     public void click_EditBtn() {
