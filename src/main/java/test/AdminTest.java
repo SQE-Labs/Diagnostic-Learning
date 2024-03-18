@@ -425,7 +425,7 @@ public class AdminTest extends BaseTest {
     @Test(priority = 22, enabled = true, description = "9.9, 9.10, 9.11, 9.12, 9.13, 9.16,9.17,9.18, 9.19 Verify Edit client details popup client page.")
     public void verify_UpdateBtn() {
         AdminPage editClient = new AdminPage();
-        editClient.edit_ClientInfo(clientFirstName, clientLastName, "401 Broadway E eastate g", "College","Private","Grade 2");
+        editClient.edit_ClientInfo(clientFirstName, clientLastName, "401 Broadway E eastate g", "College","Private","Math","Grade 2");
         editClient.click_UpdateClientBtn();
         WebdriverWaits.waitUntilVisible(editClient.actualTextClient);
         validate_text(editClient.actualTextClient, "College");

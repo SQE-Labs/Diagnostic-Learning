@@ -108,6 +108,8 @@ public class AdminPage extends BasePage {
     public By dia_List = By.xpath("//select[@id='diag']");
     public By grade_List = By.xpath("(//select[@id='schoolType'])[1]/option");
     public By schoolType = By.xpath("(//select[@id='schoolType'])[2]");
+    public By reasonTypeDropdownList=By.xpath("//select[@id='reasonForCall']/option");
+    public By reasonForCall = By.id("reasonForCall");
     public By grade = By.xpath("(//select[@id='schoolType'])[1]");
     public By reAssignbtn = By.xpath("//a[text()='Re-assign Appointment']");
 
@@ -648,6 +650,12 @@ public class AdminPage extends BasePage {
         selectDropDownByVisibleText_custom(schoolType, schoolTypeOption);
         System.out.println(DropDown.getSelectedOption(schoolType));
     }
+    public void reasonForCallDropDown(String reasonForCallText) {
+        //Verify that appropriate dropdown list appears after clicking 'Reason for call' dropdown list and admin is able to select any one option from it, on 'Edit Client info' pop up, of  '<Client> Details' page.
+        dropdownListsRemoveValues(reasonTypeDropdownList,"schoolTypeList","Reason For Call");
+        selectDropDownByVisibleText_custom(reasonForCall, reasonForCallText);
+        System.out.println(DropDown.getSelectedOption(reasonForCall));
+    }
     public void selectGradeType(String gradeType) {
         dropdownListsValues(grade,"gradeTypeList");
         selectDropDownByVisibleText_custom(grade, gradeType);
@@ -694,7 +702,7 @@ public class AdminPage extends BasePage {
         Thread.sleep(4000);
     }
 
-    public String edit_ClientInfo(String firstName, String lastName, String address1, String grade,String schoolTypeOption,String gradeType) {
+    public String edit_ClientInfo(String firstName, String lastName, String address1, String grade,String schoolTypeOption,String reasonForCallText,String gradeType) {
         String fullName = firstName + " " + lastName;
         enter_FirstName(firstName);
         enter_LastName(lastName);
@@ -703,9 +711,12 @@ public class AdminPage extends BasePage {
 
         //Verify that appropriate dropdown list appears after clicking 'School Type' dropdown list and admin is able to select any updated option from it, on 'Edit Client info' pop up, of  '<Client> Details' page.
         selectSchoolType(schoolTypeOption);
+        reasonForCallDropDown(reasonForCallText);
 
         //Verify that appropriate dropdown list appears after clicking 'Grade' dropdown list and admin is able to select updated option from it,on 'Edit Client info' pop up, of  '<Client> Details' page.
         selectGradeType(gradeType);
+
+        //
         return fullName;
     }
 

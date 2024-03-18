@@ -29,7 +29,6 @@ public class DiagnosticianTest extends BaseTest {
         LoginPage login = new LoginPage();
         DiagnosticianPage diagnostician = new DiagnosticianPage();
 
-
         login.diagnostician_Login(diagnosticianUserName, "12345678");
         WebdriverWaits.waitUntilVisible(diagnostician.dashboard);
         validate_text(diagnostician.dashboard, "Dashboard");

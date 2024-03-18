@@ -36,43 +36,29 @@ public class PropertiesUtil {
         return value;
     }
 
-    public static void setPropertyValue(String key, String value) {
-        //1. load data from properties file
-        String propFilePath = System.getProperty("user.dir") + "/src/main/java/org/automation/config/config.properties";
-        Properties confprop = new Properties();
-        FileOutputStream fos;
+    public static void setpropertyValue(String key, String value) throws IOException {
         try {
-            fos = new FileOutputStream(propFilePath);
+            FileInputStream inputStream = new FileInputStream("config.properties");
+            Properties confprop = new Properties();
+            confprop.load(inputStream);
+            inputStream.close();
+
+            // Update value of property
             confprop.setProperty(key, value);
-            prop.store(fos, null);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
+            // Write updated properties back to config file
+            FileOutputStream outputStream = new FileOutputStream("config.properties");
+            confprop.store(outputStream, null);
+            outputStream.close();
+
+    } catch(
+    IOException e)
+
+    {
+        e.printStackTrace();
     }
 
-    public static String getPropertyValue(String key, String configFile) {
-        //1. load data from properties file
-        String propFilePath = System.getProperty("user.dir") + "/src/main/java/org/automation/config/" + configFile;
-        FileInputStream fis;
-        try {
-            fis = new FileInputStream(propFilePath);
-            prop.load(fis);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+}
 
-
-        //2. read data
-        String value = prop.get(key).toString();
-
-        if (StringUtils.isEmpty(value)) {
-            try {
-                throw new Exception("Value is not specified for key: " + key + " in properties file.");
-            } catch (Exception e) {
-            }
-        }
-
-        return value;
-    }
 }
 

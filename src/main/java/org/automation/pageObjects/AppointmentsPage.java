@@ -58,6 +58,7 @@ public class AppointmentsPage extends BasePage {
 
     public By grade = By.xpath("(//select[@id='schoolType'])[1]");
     public By schoolType = By.xpath("(//select[@id='schoolType'])[2]");
+    public By reasonTypeDropdownList=By.xpath("//select[@id='reasonForCall']/option");
     public By continueToDeposit = By.id("intakeFormSubmit");
     public By testAmount = By.xpath("//input[@placeholder='Test Amount']");
     public By cellNumber = By.xpath("//input[@placeholder='Cell Number']");
@@ -189,7 +190,10 @@ public class AppointmentsPage extends BasePage {
 
 
     public void reasonForCallDropDown(String reasonForCallText) {
+        //Verify that appropriate dropdown list appears after clicking 'Reason for call' dropdown list and admin is able to select any one option from it, on 'Edit Client info' pop up, of  '<Client> Details' page.
+        dropdownListsRemoveValues(reasonTypeDropdownList,"schoolTypeList","Reason For Call");
         selectDropDownByVisibleText_custom(reasonForCall, reasonForCallText);
+        System.out.println(DropDown.getSelectedOption(reasonForCall));
     }
 
     public void enterTestAmount(String testAmountText) {

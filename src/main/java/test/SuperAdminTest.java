@@ -11,11 +11,13 @@ import org.testng.annotations.Test;
 
 
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Properties;
 
 import static org.automation.utilities.Assertions.*;
 import static test.AdminTest.clientFirstName;
@@ -74,9 +76,11 @@ public class SuperAdminTest extends BaseTest {
         admin.create_Admin(adminFirstName, adminLastName, admin_cell_Number, adminEmailAddress, adminUserName, "123456", "123456");
         WebdriverWaits.waitUntilVisible(admin.succ_Msg);
         validate_text(admin.succ_Msg, "Admin Created Successfully");
-        //   Thread.sleep(5000);
-        //   PropertiesUtil.setPropertyValue("admin_userName", adminUserName);
+        Thread.sleep(5000);
+
+        PropertiesUtil.setpropertyValue("admin_userName", adminUserName);
     }
+
 
     @Test(priority = 3, enabled = true, description = "SuperAdmin is able to search created admin or not")
     public void validate_Search_Created_Admin() {
@@ -90,7 +94,7 @@ public class SuperAdminTest extends BaseTest {
     }
 
     @Test(priority = 4, enabled = true, description = "5.6, 5.7 Super admin is able to edit the created admin or not -Bug raised")
-    public void verify_Edit_Admin() throws InterruptedException {
+    public void verify_Edit_Admin() throws InterruptedException, IOException {
         String adminEmailAddress1 = adminFirstName + "12@yopmail.com";
         AdminPage admin = new AdminPage();
 
@@ -100,6 +104,7 @@ public class SuperAdminTest extends BaseTest {
         //  Verify that user is able to edit details of already created admin, on 'Edit User' popup, on 'Admins List' page.
         String succ_Msg = getText_custom(admin.Succ_Msg_Upd);
         validate_text(admin.Succ_Msg_Upd, succ_Msg);
+        PropertiesUtil.setpropertyValue("admin_password", "12345678");
     }
 
     @Test(priority = 5, enabled = true, description = "5.9 verify that toggle is off or not")
@@ -168,7 +173,7 @@ public class SuperAdminTest extends BaseTest {
 
     //Testcase for Diagnostician ********************************************
     @Test(priority = 10, enabled = true, description = "4.1 SuperAdmin is able to create Diagnostician")
-    public void verify_Create_Diagnostician_By_SuperAdmin() throws InterruptedException {
+    public void verify_Create_Diagnostician_By_SuperAdmin() throws InterruptedException, IOException {
         //Login by using superAdmin credentials
         DiagnosticianPage diagnostician = new DiagnosticianPage();
         diagnosticianFirstName = "AU_Sarah" + RandomStrings.requiredCharacters(3);
@@ -184,7 +189,7 @@ public class SuperAdminTest extends BaseTest {
         WebdriverWaits.waitUntilVisible(diagnostician.diagnosticListText);
         WebdriverWaits.waitForSpinner();
         validate_text(diagnostician.diagnosticListText, "Diagnosticians List");
-
+        PropertiesUtil.setpropertyValue("diagnostician_userName", diagnosticianUserName);
 
         //**************SuperAdmin is creating diagnostician*************
 
