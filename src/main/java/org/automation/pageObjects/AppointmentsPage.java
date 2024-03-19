@@ -53,6 +53,9 @@ public class AppointmentsPage extends BasePage {
     public By titleText=By.xpath("//h3");
     public By clientFirstName = By.xpath("//input[@placeholder='Client First Name']");
     public By clientLastName = By.xpath("//input[@placeholder='Client Last Name']");
+    public By clientParentName = By.xpath("//input[@placeholder='Parent Name (Optional)']");
+
+
     public By headerResource = By.xpath("//div[@class='header-resource-name']");
     public By dateOfBirth = By.xpath("//input[@placeholder='Date of Birth']");
 
@@ -123,6 +126,10 @@ public class AppointmentsPage extends BasePage {
     public void enterLastName(String cilentLastNameText) {
         WebdriverWaits.waitUntilVisible(clientLastName);
         sendKeys_withClear(clientLastName, cilentLastNameText);
+    }
+    public void enterParentName(String cilentParentNameText) {
+        WebdriverWaits.waitUntilVisible(clientParentName);
+        sendKeys_withClear( clientParentName, cilentParentNameText);
     }
 
     public void click_CloseButton() {
@@ -309,10 +316,11 @@ public class AppointmentsPage extends BasePage {
         selectDropDownByVisibleText_custom(assestmentType, assestmentTypeTexts);
     }
 
-    public void fill_clientDetailsSection(String CustomerFirstName, String CustomerLastName, String dateOfBirthText,String gradeType, String schoolTypeOption, String cellNumber, String EmailAddress, String reasonForCallText, String cityText, String stateText, String zipCodeText, String testAmountText, String enterAmountText) throws InterruptedException {
+    public void fill_clientDetailsSection(String CustomerFirstName, String CustomerLastName, String parentNameField,String dateOfBirthText,String gradeType, String schoolTypeOption, String cellNumber, String EmailAddress, String reasonForCallText, String cityText, String stateText, String zipCodeText, String testAmountText, String enterAmountText) throws InterruptedException {
         enterFirstName(CustomerFirstName);
         enterLastName(CustomerLastName);
         enterInDateField(dateOfBirthText);
+        enterParentName(parentNameField);
 
         //Verify that appropriate dropdown list appears after clicking 'Grade' dropdown list and admin is able to select any one option from it under 'Fill Client Details' section, on 'Create Appointment' page.
         selectGradeType(gradeType);

@@ -382,23 +382,6 @@ public class DirectorPage extends BasePage {
         Thread.sleep(6000);
     }
 
-    //***********Relogin using new password*************
-
-    public void Relogin_With_newPassword(String userNameFieldText, String PasswordFieldText) throws InterruptedException {
-        click_LogOutLink();
-        click_Login_UsernameField(userNameFieldText);
-        click_Login_PasswordField(PasswordFieldText);
-        click_Login_Button();
-    }
-
-    //************director login with old Password***********
-    public void directorRelogin_With_OldPassword(String userNameFieldText, String PasswordFieldText) throws InterruptedException {
-        click_LogOutLink();
-        click_Login_UsernameField(userNameFieldText);
-        click_Login_PasswordField(PasswordFieldText);
-        click_Login_Button();
-    }
-
     public void director_Availability(int count) throws InterruptedException {
         Thread.sleep(9000);
         List<WebElement> list = getWebElements(totalAvailleSlots, "Available slots");

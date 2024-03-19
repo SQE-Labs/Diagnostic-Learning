@@ -196,6 +196,7 @@ public class AdminPage extends BasePage {
     public By clientNameTextTitle = By.cssSelector("tr:not([style='display: none;' ]) td:nth-child(2)");
 
     public By backButton = By.xpath("//a[@class='grey ml-3 theme-button']");
+    public By viewDetail=By.cssSelector("tr:not([style='display: none;' ]) td:nth-child(8)");
     public By backBtnCancelPopup = By.xpath("(//a[@class='theme-button grey mx-2'])[1]");
     public By re_AssignBtn = By.xpath("//button[@class='theme-button green']");
     public By paymentRecievePopUp=By.xpath("//h4[text()='Payment Received!!']");
@@ -419,8 +420,8 @@ public class AdminPage extends BasePage {
     }
 
     public void re_Assign_Diagnostician_Lists() {
-        selectDropDownByVisibleText_custom(locList,diagnosticianFirstName+' '+diagnosticianLastName);
-        dropdownListsRemoveValues(dia_List, "Re_Assign Diagnostician lists", "Choose Diagnostician");
+         dropdownListsRemoveValues(dia_List, "Re_Assign Diagnostician lists", "Choose Diagnostician");
+
         //Verify that admin is able to select any option from 'Choose Diagnostician' dropdown list and selected option appears in 'Choose Diagnostician' field, on '<Client> Re-assign Appointment' page
         System.out.println(DropDown.getSelectedOption(locList));
     }
@@ -573,6 +574,8 @@ public class AdminPage extends BasePage {
 
     public void click_TestPlan() {
         WebdriverWaits.waitUntilVisible(testPlan);
+        WebdriverWaits.waitForSpinner();
+        scrollIntoView(testPlan);
         click_custom(testPlan);
     }
 
@@ -634,6 +637,9 @@ public class AdminPage extends BasePage {
     public void enter_LastName(String lastName) {
         WebdriverWaits.waitUntilVisible(editLastName);
         sendKeys_withClear(editLastName, lastName);
+    }
+    public void clik_ViewDetailLink(){
+        click_custom(viewDetail);
     }
 
     public void enter_grade(String grade) {
@@ -716,6 +722,7 @@ public class AdminPage extends BasePage {
         //Verify that appropriate dropdown list appears after clicking 'Grade' dropdown list and admin is able to select updated option from it,on 'Edit Client info' pop up, of  '<Client> Details' page.
         selectGradeType(gradeType);
 
+
         //
         return fullName;
     }
@@ -745,13 +752,13 @@ public class AdminPage extends BasePage {
     public void click_FollowUpSlot(int count) throws InterruptedException {
         WebdriverWaits.waitUntilVisible(followUpSlots);
         WebdriverWaits.waitForSpinner();
-        Thread.sleep(15000);
+        Thread.sleep(10000);
         List<WebElement> slots = getWebElements(followUpSlots, "followUpSlots");
         System.out.println(slots.size());
         for (WebElement slot : slots) {
             Thread.sleep(1000);
             click_custom(slot);
-            Thread.sleep(2000);
+            Thread.sleep(1000);
 
             if (getWebElements(followUpSlot).size() > count) {
                 validate_text(followUpPopUp,"Follow Up");
@@ -760,41 +767,23 @@ public class AdminPage extends BasePage {
         }
         click_FollowUpSlotSaveBtn();
     }
-    //div[contains(text(),'Follow Up')]
-    public void cancel_FollowUpSlot(int count) throws InterruptedException {
+     public void cancel_FollowUpSlot(int count) throws InterruptedException {
         WebdriverWaits.waitUntilVisible(followUpSlots);
         WebdriverWaits.waitForSpinner();
-        Thread.sleep(15000);
+        Thread.sleep(5000);
         List<WebElement> slots = getWebElements(followUpSlots, "followUpSlots");
         System.out.println(slots.size());
-        for (WebElement slot : slots) {
-            Thread.sleep(2000);
-
-            click_custom(slot);
-            if (getWebElements(followUpSlot).size() > count) {
-                WebdriverWaits.waitUntilVisible(followUpCancelButton);
-                WebdriverWaits.waitForSpinner();
-                click_custom(followUpCancelButton);
-                WebdriverWaits.waitUntilInvisible(followUpText);
-                Assert.assertFalse(isElementDisplay_custom(followUpText, "Follow Up"));
-                break;
+        boolean result = true;
+        for (int i = 0; i < slots.size(); i++)
+        {
+            String slotsClass = slots.get(i).getAttribute("class");
+            if (!slotsClass.contains("mbsc-ios mbsc-schedule-event-background ng-star-inserted"))
+            {
+                result = false;
             }
         }
-//        boolean result = true;
-//        for (int i = 0; i < slots.size(); i++)
-//        {
-//            String slotsClass = slots.get(i).getAttribute("class");
-//            if (!slotsClass.contains("mbsc-ios mbsc-schedule-event-background ng-star-inserted"))
-//            {
-//                result = false;
-//
-//            }
-//        }
-//        Assert.assertFalse(result);
-//    }
-
+        Assert.assertFalse(result);
     }
-
 
     public void click_FollowUpSlotSaveBtn() {
         WebdriverWaits.waitUntilVisible(slotSaveBtn);
@@ -894,6 +883,7 @@ public class AdminPage extends BasePage {
         click_custom(testCompleteTab);
     }
 
+
     public void filter_ForUpcoming(String clientText) {
         waitUntilVisible(filterButton);
         WebdriverWaits.waitForSpinner();
@@ -974,6 +964,8 @@ public class AdminPage extends BasePage {
     }
     public void re_ScheduleApp() throws InterruptedException {
         click_RescheduleBtn();
+        WebdriverWaits.waitUntilVisible(clientNameDetail);
+        WebdriverWaits.waitForSpinner();
         validate_text( clientNameDetail, clientFirstName+' '+clientLastName+" Reschedule Appointment");
         click_Diag_Field();
         //Verify that nothing happens after clicking 'Close' button of calendar on '<Client Reschedule Appointment' page.

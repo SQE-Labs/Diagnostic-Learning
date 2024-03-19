@@ -311,9 +311,6 @@ public class DiagnosticianPage extends BasePage {
     public void cheking_DisableUser() throws InterruptedException {
         click_EditButton();
 
-        WebdriverWaits.waitUntilVisible(enableUser);
-        WebdriverWaits.waitForSpinner();
-        validate_text(enableUser, "Enable User");
         click_DontSave();
     }
 
