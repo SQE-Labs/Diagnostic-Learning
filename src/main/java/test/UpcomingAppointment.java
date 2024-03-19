@@ -7,11 +7,8 @@ import org.automation.utilities.ActionEngine;
 import org.automation.utilities.DateGenerator;
 import org.automation.utilities.RandomStrings;
 import org.automation.utilities.WebdriverWaits;
-import org.junit.jupiter.api.BeforeAll;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.awt.*;
@@ -121,6 +118,7 @@ class UpcomingAppointment extends BaseTest {
         LoginPage login = new LoginPage();
         Thread.sleep(5000);
         login.directorLogin(directorUserName, "123456");
+        //Verify that director is directed to 'Today's Appointments' page.
         appointment.click_AppointmentsTab();
         appointment.click_Today_AppointmentCard();
         validate_text(appointment.todaysAppointmentTXT, "Today's Appointments");
@@ -134,8 +132,9 @@ class UpcomingAppointment extends BaseTest {
         DashboardPage dashPage = new DashboardPage();
         AppointmentsPage appPage = new AppointmentsPage();
         DirectorPage director = new DirectorPage();
-
         appPage.click_AppointmentsTab();
+
+        //User is able to click on 'View All' subtab.
         appPage.click_ViewAllTab();
         validate_text(admin.allAppointmentsPage, "All Appointments");
         String expectedRecord = getText_custom(director.getNameOfClient);
@@ -151,12 +150,12 @@ class UpcomingAppointment extends BaseTest {
         AppointmentsPage appointment = new AppointmentsPage();
         AdminPage admin = new AdminPage();
 
-        //Click on Upcoming tab
+        //Verify that director is directed to 'Upcoming Appointments' page after clicking 'Upcoming' tab, on 'Dashboard'
         appointment.click_AppointmentsTab();
         appointment.click_UpcomingCard();
         validate_text(appointment.upcomingAppointmentTXT, "Upcoming Appointments");
 
-        //click on filter button
+        //Verify that search textbox, 'From Date' and 'To Date' date picker appears after clicking on 'Filter' button, on 'Upcoming Appointments' page.
         admin.click_HoldFilterBtn();
         String fromDateplaceholder = admin.getAttributevalue(admin.fromDateText, "placeholder");
         String toDatePlaceholder = admin.getAttributevalue(admin.toDateText, "placeholder");
@@ -169,6 +168,7 @@ class UpcomingAppointment extends BaseTest {
     {
         DirectorPage director=new DirectorPage();
         AdminPage admin=new AdminPage();
+        //Verify that director is able to search relevant records
         String data=getText_custom(director.clientNameUpcomingPage);
         director.searchTextField(data);
         admin.click_ViewDetailsBtn();
@@ -186,7 +186,7 @@ class UpcomingAppointment extends BaseTest {
         AppointmentsPage appointment = new AppointmentsPage();
         appointment.click_AppointmentsTab();
         appointment.click_UpcomingCard();
-        //Click on Export CSV button
+        //Verify that CSV file gets downloaded after clicking on 'Export to CSV' button, on 'Upcoming Appointments' page
         appointment.click_ExportCSVButton();
         String downloadFile = panelPage.getDownloadFileName();
         Assert.assertTrue(panelPage.isFileDownloaded(downloadFile));
@@ -210,6 +210,7 @@ class UpcomingAppointment extends BaseTest {
         appointment.click_EditTestPlan();
         validate_text(director.editTestPopupTitle, "Please choose tests.");
         director.click_CloseBtnEditPopup();
+        //Verify that 'Test Plan' pop up appears after clicking 'Test Plan' button, on '<Client> Details page.
         validate_text(testPlan.title, expectedTitle);
         validate_text(appointment.getAppointmentDetails, "Appointment Details");
         //Verify that changes made by director on 'Test Plan' popup does not get saved, after clicking 'Close' button, on 'Test Plan' popup of '<Client Details>' page.
@@ -225,9 +226,10 @@ class UpcomingAppointment extends BaseTest {
     @Test(priority = 7, enabled = true, description = "45., 59. User is able to click on 'Create Followup' for a client.")
     public void verify_ClickOnCreateFollowupBtn() throws InterruptedException {
         DirectorPage director = new DirectorPage();
-        //Clicked on 'Close' button.
+        //Verify that follow up calendar appears after clicking 'Create Follow Up' button on '<Client> Details' page.
         String expectedName = getText_custom(director.nameOfClient);
         director.click_CreateFollowUpBtn();
+        //Verify that 'Calendar' popup gets discarded after clicking 'Close' button, on '<Client> Details' page.
         director.click_CloseBtn();
         String actualName = getText_custom(director.nameOfClient);
         validate_AttText(actualName, expectedName);
@@ -301,6 +303,7 @@ class UpcomingAppointment extends BaseTest {
         validate_text(director.monthHeader, currentDate.split(" ")[0]);
 
         //End to End Flow
+
         director.click_FollowUpSaveBtn();
         director.click_ConfirmFollowUpBtn();
         WebdriverWaits.waitUntilVisible(admin.validateScheduledFollowUp);
@@ -328,6 +331,7 @@ class UpcomingAppointment extends BaseTest {
     public void verify_ClickOnTestReadySubtab() throws InterruptedException {
         AdminPage admin = new AdminPage();
         AppointmentsPage appointment = new AppointmentsPage();
+        appointment.click_AppointmentsTab();
         appointment.click_TestReadyTab();
         validate_text(admin.getTestReadyTitle, "Test Ready Appointments");
         String actualText = getText_custom(admin.nameOnCard);
@@ -353,6 +357,7 @@ class UpcomingAppointment extends BaseTest {
         DashboardPage dashPage = new DashboardPage();
         DirectorPage director = new DirectorPage();
         ActionEngine action = new ActionEngine();
+        appointment.click_AppointmentsTab();
         appointment.click_UpcomingTab();
         dashPage.enter_DataSearhTextBox("Test Ready");
         director.click_ViewDetailsBtn();
@@ -400,6 +405,7 @@ class UpcomingAppointment extends BaseTest {
         dashboard.click_ExportCSVButton();
         String downloadFile = dashboard.getDownloadFileName();
         Assert.assertTrue(dashboard.isFileDownloaded(downloadFile));
+        getDriver().navigate().to("https://topuptalent.com/Diagnosticlearning/");
     }
 
     @Test(priority = 15, enabled = true, description = " 15., 16.,17.,36. User is able to click on 'View Observation' button.")

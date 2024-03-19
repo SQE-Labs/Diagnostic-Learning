@@ -64,10 +64,23 @@ public class LoginPage extends BasePage {
         clickLoginBtn();
         WebdriverWaits.waitForSpinner();
     }
+    public void adminLogin(String username, String password) {
+        sendKeys_withClear(userNameField,username);
+        sendKeys_withClear(PasswordField,password);
+        clickLoginBtn();
+        WebdriverWaits.waitForSpinner();
+    }
 
     public void admin_Login() {
         sendKeys_withClear(userNameField, PropertiesUtil.getPropertyValue("admin_userName"));
         sendKeys_withClear(PasswordField, PropertiesUtil.getPropertyValue("admin_password"));
+        clickLoginBtn();
+        WebdriverWaits.waitForSpinner();
+    }
+
+    public void diagnostician_Login(String username, String password) {
+        sendKeys_withClear(userNameField,username);
+        sendKeys_withClear(PasswordField,password);
         clickLoginBtn();
         WebdriverWaits.waitForSpinner();
     }

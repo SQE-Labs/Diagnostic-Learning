@@ -81,7 +81,7 @@ public class DirectorPage extends BasePage {
     public By yearButton = By.xpath("//span[@class='mbsc-calendar-title mbsc-calendar-year mbsc-ios ng-star-inserted']");
     public By monthHeader = By.xpath("//span[@class='mbsc-calendar-month mbsc-calendar-title mbsc-ios ng-star-inserted']");
     public By yearHeader = By.xpath("//span[@class='mbsc-calendar-title mbsc-calendar-year mbsc-ios ng-star-inserted']");
-    public By backBtn = By.xpath("//button[@class='theme-button grey float-md-right mr-md-4']");
+    public By backBtn = By.xpath("//a[text()='Back']");
     public By availableText = By.xpath("//div[text()='Available']");
     public By saveButton = By.xpath("//button[text()='Save']");
     public By changeBtn = By.xpath("//a[text()='Change']");
@@ -472,6 +472,7 @@ public class DirectorPage extends BasePage {
         click_directorsLastNameField(directorsLastNameText);
         click_directorsMobileNumberField(directorsMobileNumberText);
         click_directorsdirectorsEmailField(directorsEmailText);
+        //Verify that dropdown options appear after clicking 'Assign Location' dropdown list & selected options appear in 'Assign Location' field on 'Create Director' page
         click_directorsassignLocationField();
         click_directorsUserNameField(directorsUserNameText);
         click_passwordField(password_FieldText);
@@ -506,6 +507,7 @@ public class DirectorPage extends BasePage {
     //***********edit created director*************
     public void edit_Director(String EmailAddress1, String passwordTextFieldText, String confirmPasswordFieldText) throws InterruptedException {
         click_EditButton();
+        //Verify that  'Edit User' pop up appears after clicking 'Edit' button of any director, on 'Directors List' page
         // test case number ( 4.6 ).
         validate_text(edit_Popup, "Edit User");
         Log.info("Successfully Edit popUp opens");
@@ -523,7 +525,7 @@ public class DirectorPage extends BasePage {
         click_EditButton();
         waitUntilVisible(enableUser);
         validate_text(enableUser, "Enable User");
-        off_ToggleButton();
+       // off_ToggleButton();
         click_DontSave();
     }
 
