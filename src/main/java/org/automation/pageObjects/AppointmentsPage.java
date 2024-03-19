@@ -10,8 +10,12 @@ import static org.automation.utilities.Assertions.validate_text;
 import static org.automation.utilities.DateGenerator.getMonthAndYear;
 import static org.automation.utilities.WebdriverWaits.moveToElement;
 
-public class AppointmentsPage extends BasePage {
+    public class AppointmentsPage extends BasePage {
     public By appointmentsTab = By.xpath("//a[@class='collapsed']");
+    public By selectWISC = By.xpath("(//div[@class='col-md-3 ng-star-inserted'])[6]");
+
+    public By upcomingAppointmentTXT = By.xpath("//h3[@class='mb-4 mb-md-0']");
+    public By todaysAppointmentTXT = By.xpath("//div[@class='align-items-md-center d-flex flex-column flex-md-row page-header']");
     public By upcomingTab = By.xpath("//a[text()='Upcoming']");
     public By testReadyTab = By.xpath("//a[text()='Test Ready']");
     public By testCompleteTab = By.xpath("//a[text()='Test complete']");
@@ -37,6 +41,7 @@ public class AppointmentsPage extends BasePage {
     public By toDate = By.xpath("//input[@placeholder='To Date']");
     public By exportCSVButton = By.xpath("//button[text()='Export to CSV']");
     public By assessmentDate = By.id("assessmentDate");
+    public By paymentButton = By.xpath("//button[@class='theme-button green m-2 ng-star-inserted']");
     public By diagnosticianTab = By.xpath("//a[text()='Diagnosticians']");
     public By editTestPlanButton = By.xpath("(//button[@class='theme-button m-2 ng-star-inserted'])[1]");
     public By viewDetails = By.xpath("//a[@class='theme-button grey']");
@@ -53,6 +58,7 @@ public class AppointmentsPage extends BasePage {
     public By titleText=By.xpath("//h3");
     public By clientFirstName = By.xpath("//input[@placeholder='Client First Name']");
     public By clientLastName = By.xpath("//input[@placeholder='Client Last Name']");
+    public By appointmentsToday = By.xpath("//a[text()=\"Today's\"]");
     public By headerResource = By.xpath("//div[@class='header-resource-name']");
     public By dateOfBirth = By.xpath("//input[@placeholder='Date of Birth']");
 
@@ -123,6 +129,10 @@ public class AppointmentsPage extends BasePage {
         WebdriverWaits.waitUntilVisible(clientLastName);
         sendKeys_withClear(clientLastName, cilentLastNameText);
     }
+    public void click_Today_AppointmentCard(){
+        WebdriverWaits.waitUntilVisible(appointmentsToday);
+        click_custom(appointmentsToday);
+    }
 
     public void click_CloseButton() {
         WebdriverWaits.waitUntilVisible(saveBtnEditPlan);
@@ -147,6 +157,30 @@ public class AppointmentsPage extends BasePage {
         WebdriverWaits.waitUntilVisible(goBackBtn);
         WebdriverWaits.waitForSpinner();
         click_custom(goBackBtn);
+    }
+    public void click_ViewAll() {
+        WebdriverWaits.waitUntilVisible(viewAllTab);
+    }
+    public void click_FromDate() throws InterruptedException {
+        WebdriverWaits.waitUntilVisible(fromDateText);
+        clickBtn_custom(fromDateText);
+        WebdriverWaits.waitUntilVisible(afterClickFromDate);
+        clickBtn_custom(afterClickFromDate);
+    }
+    public void click_PaymentButton() {
+        WebdriverWaits.waitUntilVisible(paymentButton);
+        scrollIntoView(paymentButton);
+        clickBtn_custom(paymentButton);
+    }
+    public void click_ViewDetailLink() {
+        WebdriverWaits.waitUntilVisible(viewDetailsLink);
+        clickBtn_custom(viewDetailsLink);
+    }
+    public void click_AppoinptmentTab()
+    {
+        WebdriverWaits.waitUntilVisible(appointmentsTab);
+        click_custom(appointmentsTab);
+
     }
 
     public void selectGradeType(int gradeType) {
@@ -298,6 +332,23 @@ public class AppointmentsPage extends BasePage {
 
         clickCalSaveButton();
     }
+
+    public void click_EditTestPlan() {
+        WebdriverWaits.waitUntilVisible(editTestPlanButton);
+        scrollIntoView(editTestPlanButton);
+        clickBtn_custom(editTestPlanButton);
+
+    }
+    public void select_Checkbox() {
+        WebdriverWaits.waitForSpinner();
+        WebdriverWaits.waitUntilVisible(selectWISC);
+        clickBtn_custom(selectWISC);
+    }
+    public void click_SaveButton() {
+        WebdriverWaits.waitUntilVisible(saveBtnEditPlan);
+        scrollIntoView(saveBtnEditPlan);
+        clickBtn_custom(saveBtnEditPlan);
+    }
     public void selectAssesmentType(String assestmentTypeTexts) {
         WebdriverWaits.waitUntilVisible(assestmentType);
         WebdriverWaits.waitForSpinner();
@@ -416,7 +467,6 @@ public class AppointmentsPage extends BasePage {
     public void click_AppointmentsTab() {
         WebdriverWaits.waitUntilVisible(appointmentsTab);
         click_custom(appointmentsTab);
-
     }
 
     public void click_CompletedTab() {

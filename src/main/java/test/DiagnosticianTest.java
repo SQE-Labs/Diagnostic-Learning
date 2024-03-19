@@ -18,6 +18,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.List;
 
+import static org.automation.utilities.Assertions.getText_custom;
 import static org.automation.utilities.Assertions.validate_text;
 import static test.AdminTest.*;
 
@@ -159,6 +160,19 @@ public class DiagnosticianTest extends BaseTest {
         WebdriverWaits.waitUntilVisible(diagnostician.clientNameText);
         validate_text(diagnostician.clientNameText, clientFirstName + ' ' + clientLastName);
         panelpage.click_LogOutLink();
+    }
+
+    @Test(priority = 4, enabled = true, description = "14. Verify that director is able to search relevant records")
+    public void verify_RelevantRecordsAppear() throws InterruptedException, FileNotFoundException
+    {
+        DirectorPage director=new DirectorPage();
+        AdminPage admin=new AdminPage();
+        String data=getText_custom(director.clientNameUpcomingPage);
+        director.searchTextField(data);
+        admin.click_ViewDetailsBtn();
+        validate_text(director.fullNameOfClient, data);
+        getDriver().navigate().to("https://topuptalent.com/Diagnosticlearning/");
+
     }
 }
 

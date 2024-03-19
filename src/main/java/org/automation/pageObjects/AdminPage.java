@@ -248,6 +248,19 @@ public class AdminPage extends BasePage {
         sendKeys_withClear(admin_MobileNumber, diagnostician_MobileNumberText);
     }
 
+    public void clickOn_TodayTab() {
+        waitUntilVisible(todaysTab);
+        WebdriverWaits.waitForSpinner();
+        moveToElement(todaysTab);
+    }
+    public void upload_FileAttachmentSecondTime() throws InterruptedException, AWTException, AWTException {
+        click_ChooseFile();
+        Thread.sleep(5000);
+        String filepath = "Downloads\\33200_1911.pdf";
+        ChromeDownloads.uploadFileUsingRobot(filepath);
+        click_UploadButtons();
+        click_CloseButton();
+    }
     public void enter_admin_Email(String diagnostician_EmailText) {
         waitUntilVisible(admin_Email);
         sendKeys_withClear(admin_Email, diagnostician_EmailText);
