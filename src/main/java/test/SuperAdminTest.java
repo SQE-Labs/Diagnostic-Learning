@@ -28,7 +28,7 @@ public class SuperAdminTest extends BaseTest {
 
 
     //***********Admin Variables**********
-    public static String adminUserName;
+    public  String adminUserName;
     public String adminFirstName;
     public String adminEmailAddress;
     public String adminLastName;
@@ -77,7 +77,6 @@ public class SuperAdminTest extends BaseTest {
         WebdriverWaits.waitUntilVisible(admin.succ_Msg);
         validate_text(admin.succ_Msg, "Admin Created Successfully");
         Thread.sleep(5000);
-
         PropertiesUtil.setpropertyValue("admin_userName", adminUserName);
     }
 
@@ -104,6 +103,7 @@ public class SuperAdminTest extends BaseTest {
         //  Verify that user is able to edit details of already created admin, on 'Edit User' popup, on 'Admins List' page.
         String succ_Msg = getText_custom(admin.Succ_Msg_Upd);
         validate_text(admin.Succ_Msg_Upd, succ_Msg);
+        Thread.sleep(4000);
         PropertiesUtil.setpropertyValue("admin_password", "12345678");
     }
 
@@ -124,8 +124,6 @@ public class SuperAdminTest extends BaseTest {
 
         // Enabling the user
         validate_text(admin.Succ_Msg_Upd, "Admin details updated successfully.");
-
-
     }
 
     @Test(priority = 7, enabled = true, description = "5.10 Verify Admin is able to login with new password or not")
@@ -135,14 +133,12 @@ public class SuperAdminTest extends BaseTest {
         LoginPage login = new LoginPage();
         panelPage.click_LogOutLink();
 
-
         // Login with Admin new password
-        login.adminLogin(adminUserName, "12345678");
+        login.admin_Login();
 
         WebdriverWaits.waitUntilVisible(admin.dashboard);
         WebdriverWaits.waitForSpinner();
         validate_text(admin.dashboard, "Dashboard");
-
         panelPage.click_LogOutLink();
     }
 
@@ -190,6 +186,9 @@ public class SuperAdminTest extends BaseTest {
         WebdriverWaits.waitForSpinner();
         validate_text(diagnostician.diagnosticListText, "Diagnosticians List");
         PropertiesUtil.setpropertyValue("diagnostician_userName", diagnosticianUserName);
+        PropertiesUtil.setpropertyValue("diagnosticianFirstName", diagnosticianFirstName);
+
+
 
         //**************SuperAdmin is creating diagnostician*************
 
@@ -221,7 +220,7 @@ public class SuperAdminTest extends BaseTest {
     public void validate_Created_Diagnostician_In_SuperAdmin() throws InterruptedException {
         DiagnosticianPage diagnostician = new DiagnosticianPage();
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
-        AdminPage admin = new AdminPage();
+
         Thread.sleep(4000);
         panelPage.click_BackButton();
 
@@ -238,7 +237,7 @@ public class SuperAdminTest extends BaseTest {
     }
 
     @Test(priority = 13, enabled = true, description = "4.6, 4.11 Super admin is able to edit the created diagnostician or not")
-    public void verify_edit_Diagnostician_By_SuperAdmin() throws InterruptedException {
+    public void verify_edit_Diagnostician_By_SuperAdmin() throws InterruptedException, IOException {
         String diagnosticianEmailAddress1 = diagnosticianFirstName + "12@yopmail.com";
         DiagnosticianPage diagnostician = new DiagnosticianPage();
         //In Edit-Diagnostician password also changed
@@ -250,6 +249,8 @@ public class SuperAdminTest extends BaseTest {
         WebdriverWaits.waitForSpinner();
         validate_text(diagnostician.edit_Succ_Msg, "Diagnostician details updated successfully.");
         Log.info("Successfully Edited the created diagnostician");
+        PropertiesUtil.setpropertyValue("diagnostician_password", "12345678");
+
     }
 
     @Test(priority = 14, enabled = true, description = "4.13 verify that toggle is off or not for diagnostician by superadmin")
@@ -297,7 +298,7 @@ public class SuperAdminTest extends BaseTest {
         panelPage.click_LogOutLink();
 
         // Login with Diagnostician new password
-        login.diagnostician_Login(diagnosticianUserName, "12345678");
+        login.diagnostician_Login();
         WebdriverWaits.waitUntilVisible(diagnostician.diagnosticianDashBoardPage);
         WebdriverWaits.waitForSpinner();
         validate_text(diagnostician.diagnosticianDashBoardPage, "Dashboard");
@@ -308,10 +309,10 @@ public class SuperAdminTest extends BaseTest {
     public void validate_diagnostician_relogin_old_pwd() throws InterruptedException {
         DiagnosticianPage diagnostician = new DiagnosticianPage();
         LoginPage login = new LoginPage();
-        // Logging with Old password to get validation message.
         DashBoardPanelPage panelpage = new DashBoardPanelPage();
+        // Logging with Old password to get validation message.
         panelpage.click_LogOutLink();
-        login.diagnostician_Login(diagnosticianUserName, "123456");
+        login.diagnostician_LoginWithOldPassword();
         WebdriverWaits.waitUntilVisible(diagnostician.validation_Msg);
         Thread.sleep(2000);
         validate_text(diagnostician.validation_Msg, "Username or password is incorrect");
@@ -326,7 +327,7 @@ public class SuperAdminTest extends BaseTest {
     public static String directorUserName;
 
     @Test(priority = 19, enabled = true, description = "3.1, 3.5, 3.9, verify that SuperAdmin is able to create Director or not")
-    public void create_Directors() throws InterruptedException {
+    public void create_Directors() throws InterruptedException, IOException {
         directorFirstName = "AU_Elix" + RandomStrings.requiredCharacters(3);
         directorLastName = "AU_Tyk" + RandomStrings.requiredCharacters(3);
         directorEmailAddress = directorFirstName + "@yopmail.com";
@@ -352,6 +353,12 @@ public class SuperAdminTest extends BaseTest {
         WebdriverWaits.waitUntilVisible(director.directorListPage);
         WebdriverWaits.waitForSpinner();
         validate_text(director.directorListPage, "Directors List");
+
+        // Setting username and password in config file.
+        PropertiesUtil.setpropertyValue("director_userName", directorUserName);
+        PropertiesUtil.setpropertyValue("directorFirstName", directorFirstName);
+        PropertiesUtil.setpropertyValue("directorLastName", directorLastName);
+
     }
 
     @Test(priority = 20, enabled = true, description = "3.8, 3.36 verify that duplicate Director throws error")
@@ -371,7 +378,7 @@ public class SuperAdminTest extends BaseTest {
 
     //************Functionality has been changed***********************
     @Test(priority = 21, enabled = true, description = "3.2, 3.3, 3.15, 3.17,  Super admin is able to edit the created director or not")
-    public void edit_Director() throws InterruptedException {
+    public void edit_Director() throws InterruptedException, IOException {
         String directorEmailAddress1 = directorFirstName + "12@yopmail.com";
         DirectorPage director = new DirectorPage();
 
@@ -385,6 +392,9 @@ public class SuperAdminTest extends BaseTest {
         director.edit_Director(directorEmailAddress1, "12345678", "12345678");
         validate_text(director.edit_SuccMsg, "Director details updated successfully.");
         Log.info("Successfully Edited the created director");
+
+        // Setting New password in config file.
+        PropertiesUtil.setpropertyValue("director_password", "12345678");
     }
 
 
@@ -399,9 +409,9 @@ public class SuperAdminTest extends BaseTest {
     }
 
     @Test(priority = 23, enabled = true, description = "Verify that Superadmin is able to Enable the user or not")
-    public void verify_director_enable_User() throws InterruptedException {
+    public void verify_director_enable_User()  {
         DirectorPage director = new DirectorPage();
-        director.enterInSearchField(directorFirstName);
+        director.enterInSearchField(PropertiesUtil.getPropertyValue("directorFirstName"));
         director.enable_Director();
         WebdriverWaits.waitUntilVisible(director.edit_SuccMsg);
         WebdriverWaits.waitForSpinner();
@@ -426,8 +436,9 @@ public class SuperAdminTest extends BaseTest {
         DirectorPage director = new DirectorPage();
         LoginPage login = new LoginPage();
         //Director trying to login with old password
-        login.directorLogin(directorUserName, "123456");
+        login.director_LoginWithOldPassword();
         WebdriverWaits.waitUntilVisible(director.validation_Msg);
+
         validate_text(director.validation_Msg, "Username or password is incorrect");
     }
 
@@ -439,7 +450,7 @@ public class SuperAdminTest extends BaseTest {
 
         //Director trying to login with new password
         // Verify that user is able to login using new password after editing the password on 'Edit' popup, on 'Directors List' page.
-        login.directorLogin(directorUserName, "12345678");
+        login.director_Login();
         WebdriverWaits.waitUntilVisible(director.directorDashBoardPage);
         validate_text(director.directorDashBoardPage, "Dashboard");
         panelPage.click_LogOutLink();
@@ -546,7 +557,7 @@ public class SuperAdminTest extends BaseTest {
         appointment.click_ViewAllTab();
         admin.click_Export_CSV_Button();
 
-//Verify that CSV file gets downloaded after clicking 'Export to CSV' button, on 'All Appointments' page
+        //Verify that CSV file gets downloaded after clicking 'Export to CSV' button, on 'All Appointments' page
         //Download exportCSV File and Check file is downloaded or not
         String downloadFile = panelpage.getDownloadFileName();
         Assert.assertTrue(panelpage.isFileDownloaded(downloadFile));

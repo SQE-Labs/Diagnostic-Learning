@@ -47,25 +47,41 @@ public class LoginPage extends BasePage {
 
     }
 
-    public void diagnostician_Login(String userNameText, String PasswordFieldText) {
-        enterUsername(userNameText);
-        enterPassword(PasswordFieldText);
-        clickLoginBtn();
-        WebdriverWaits.waitForSpinner();
-
-    }
-
-    public void adminLogin(String username, String password) {
-        enterUsername(username);
-        enterPassword(password);
-        clickLoginBtn();
+    public void diagnostician_Login() {
+        WebdriverWaits.waitUntilVisible(userNameField);
+        sendKeys_withClear(userNameField, PropertiesUtil.getPropertyValue("diagnostician_userName"));
+        sendKeys_withClear(PasswordField, PropertiesUtil.getPropertyValue("diagnostician_password"));
+        clickBtn_custom(login);
         WebdriverWaits.waitForSpinner();
     }
 
-    public void directorLogin(String userNameFieldText, String PasswordFieldText) {
-        enterUsername(userNameFieldText);
-        enterPassword(PasswordFieldText);
-        click_custom(login);
+    public void diagnostician_LoginWithOldPassword() {
+        WebdriverWaits.waitUntilVisible(userNameField);
+        sendKeys_withClear(userNameField, PropertiesUtil.getPropertyValue("diagnostician_userName"));
+        sendKeys_withClear(PasswordField, PropertiesUtil.getPropertyValue("diagnostician_oldpassword"));
+        clickBtn_custom(login);
+        WebdriverWaits.waitForSpinner();
+    }
+
+    public void admin_Login() {
+        sendKeys_withClear(userNameField, PropertiesUtil.getPropertyValue("admin_userName"));
+        sendKeys_withClear(PasswordField, PropertiesUtil.getPropertyValue("admin_password"));
+        clickBtn_custom(login);
+        WebdriverWaits.waitForSpinner();
+
+    }
+    public void adminLoginWith_OldPassword() {
+        sendKeys_withClear(userNameField, PropertiesUtil.getPropertyValue("admin_userName"));
+        sendKeys_withClear(PasswordField, PropertiesUtil.getPropertyValue("admin_oldpassword"));
+        clickBtn_custom(login);
+        WebdriverWaits.waitForSpinner();
+    }
+
+    public void director_LoginWithOldPassword() {
+        sendKeys_withClear(userNameField, PropertiesUtil.getPropertyValue("director_userName"));
+        sendKeys_withClear(PasswordField, PropertiesUtil.getPropertyValue("director_oldpassword"));
+        clickBtn_custom(login);
+        WebdriverWaits.waitForSpinner();
 
 
     }

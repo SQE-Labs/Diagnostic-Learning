@@ -2,11 +2,8 @@ package test;
 
 import org.automation.base.BaseTest;
 import org.automation.pageObjects.*;
-import org.automation.utilities.ActionEngine;
-import org.automation.utilities.DateGenerator;
-import org.automation.utilities.RandomStrings;
+import org.automation.utilities.*;
 import org.automation.pageObjects.PaymentPage;
-import org.automation.utilities.WebdriverWaits;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
@@ -15,6 +12,7 @@ import java.io.FileNotFoundException;
 
 import org.testng.annotations.Test;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
@@ -38,8 +36,8 @@ public class AdminTest extends BaseTest {
     String clientEmail2;
     String parentName;
     String clientCellNumber;
-    public static String diagnosticianFirstName;
-    public static String diagnosticianLastName;
+    String diagnosticianFirstName;
+    String diagnosticianLastName;
     String diagnosticianEmailAddress;
 
 
@@ -50,7 +48,7 @@ public class AdminTest extends BaseTest {
         //Login by using superAdmin credentials
 
         //Verify that admin is able to login into account using valid 'Username' and 'Password' on 'Sign in your account' page.
-        login.adminLogin(adminUserName, "12345678");
+        login.admin_Login();
         AdminPage dasboard = new AdminPage();
         WebdriverWaits.waitUntilVisible(dasboard.adminDashboardText);
         waitForSpinner();
@@ -83,7 +81,7 @@ public class AdminTest extends BaseTest {
 
     //********* Create Daignostician by admin
     @Test(priority = 3, enabled = true, description = "6.1, 5.7, 1.19, 5.6,5.3 Create diagnostician by admin")
-    public void verify_CreateDiagnostician() throws InterruptedException {
+    public void verify_CreateDiagnostician() throws InterruptedException, IOException {
         DiagnosticianPage diagnostician = new DiagnosticianPage();
 
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
@@ -122,7 +120,8 @@ public class AdminTest extends BaseTest {
         WebdriverWaits.waitUntilVisible(diagnostician.actualText);
 
         //validate Diagnostician
-        diagnostician.enter_InSearchField(diagnosticianFirstName);
+        PropertiesUtil.setpropertyValue("diagnostician_userName",diagnosticianUserName);
+        diagnostician.enter_InSearchField(PropertiesUtil.getPropertyValue("diagnostician_userName"));
         validate_text(diagnostician.actualText, diagnosticianUserName);
     }
 
@@ -130,8 +129,9 @@ public class AdminTest extends BaseTest {
     public void verify_DiagnosticianAvailability() throws InterruptedException {
         DiagnosticianPage diagnostician = new DiagnosticianPage();
         DashBoardPanelPage logout = new DashBoardPanelPage();
+        LoginPage login=new LoginPage();
         logout.click_LogOutLink();
-        diagnostician.login_As_Diagnostician(diagnosticianUserName, "123456");
+        login.diagnostician_LoginWithOldPassword();
 
         //Set availability
         diagnostician.set_Availability();
@@ -146,7 +146,7 @@ public class AdminTest extends BaseTest {
 
 
     @Test(priority = 5, enabled = true, description = "1.18, 3.1, 3.6, 4.1, 3.10, 3.9  Creating Director from admin")
-    public void verify_createDirector() throws InterruptedException {
+    public void verify_createDirector() throws InterruptedException, IOException {
         DashBoardPanelPage panelpage = new DashBoardPanelPage();
         DirectorPage director = new DirectorPage();
         LoginPage login = new LoginPage();
@@ -157,7 +157,7 @@ public class AdminTest extends BaseTest {
         directorEmailAddress = directorFirstName + "@yopmail.com";
         directorUserName = "AU_Koa" + RandomStrings.requiredCharacters(3);
         dirCellNumber = RandomStrings.requiredDigits(10);
-        login.adminLogin(adminUserName, "12345678");
+        login.admin_Login( );
 
         //Verify that admin is directed to 'Directors List' page after clicking 'Directors' tab from left panel, on 'Dashboard' page.
         panelpage.click_DirectorTab();
@@ -179,6 +179,10 @@ public class AdminTest extends BaseTest {
         WebdriverWaits.waitUntilVisible(director.directorActualText);
         WebdriverWaits.waitForSpinner();
         validate_text(director.directorActualText, "Directors List");
+        PropertiesUtil.setpropertyValue("directorFirstName",directorFirstName);
+        PropertiesUtil.setpropertyValue("directorLastName",directorLastName);
+        PropertiesUtil.setpropertyValue("director_userName",directorUserName);
+
         panelpage.click_LogOutLink();
     }
 
@@ -186,7 +190,7 @@ public class AdminTest extends BaseTest {
     public void director_Availability() throws InterruptedException {
         LoginPage login = new LoginPage();
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
-        login.directorLogin(directorUserName, "123456");
+        login.director_LoginWithOldPassword();
         DirectorPage director = new DirectorPage();
         panelPage.click_Availability();
         director.director_Availability(2);
@@ -198,7 +202,7 @@ public class AdminTest extends BaseTest {
         LoginPage login = new LoginPage();
         DashboardPage dashboard = new DashboardPage();
         AppointmentsPage appPage = new AppointmentsPage();
-        login.adminLogin(adminUserName, "12345678");
+        login. admin_Login( );
 
         //Verify that admin is directed to 'Create Appointment' page after clicking 'Schedule Appointment' button from left panel, on 'Dashboard 'page.
         dashboard.clickScheduleAppointment();
@@ -219,7 +223,7 @@ public class AdminTest extends BaseTest {
     }
 
     @Test(priority = 8, enabled = true, description = "2.25, 2.26, 2.27, 2.28, 2.29,2.42, 2.43,  Filling client details by admin.")
-    public void fill_clientDetailsSection() throws InterruptedException {
+    public void fill_clientDetailsSection() throws InterruptedException, IOException {
         AppointmentsPage fillClientDetails = new AppointmentsPage();
         clientFirstName = "Au_Theo" + RandomStrings.requiredCharacters(3);
         clientLastName = "Au_Finn" + RandomStrings.requiredCharacters(3);
@@ -228,6 +232,9 @@ public class AdminTest extends BaseTest {
         clientEmail2 = clientFirstName + "101@yopmail.com";
         parentName = "Au_Gilc" + RandomStrings.requiredCharacters(3);
         fillClientDetails.fill_clientDetailsSection(clientFirstName, clientLastName, parentName, "19-11-2000", "Grade 2", "Private", clientCellNumber, clientEmail, "Other", "New York", "Texas", "30052", "1000", "900");
+        PropertiesUtil.setpropertyValue("clientFirstName",clientFirstName);
+        PropertiesUtil.setpropertyValue("clientLastName",clientLastName);
+
     }
 
     @Test(priority = 9, enabled = true, description = "11.1, 22.1, 22.2 Verify that admin is able to cancel the appointment or not")
@@ -251,10 +258,10 @@ public class AdminTest extends BaseTest {
     @Test(priority = 10, enabled = true, description = "Diagnostician is verifying cancelled appointments")
     public void verify_CancelledAppointment() {
         AdminPage admin = new AdminPage();
-        admin.verify_CancelledApp(clientLastName);
+        admin.verify_CancelledApp(PropertiesUtil.getPropertyValue("clientFirstName"));
         WebdriverWaits.waitUntilVisible(admin.clientNameTextTitle);
         WebdriverWaits.waitForSpinner();
-        validate_text(admin.clientNameTextTitle, clientFirstName + ' ' + clientLastName);
+        validate_text(admin.clientNameTextTitle, PropertiesUtil.getPropertyValue("clientFirstName") + ' ' + PropertiesUtil.getPropertyValue("clientLastName"));
     }
 
     @Test(priority = 11, enabled = true, description = "8.11, 8.19, 2.38/1, 2.39,9.18,9.19,9.21 Appointment scheduled by admin for a client")
@@ -276,7 +283,7 @@ public class AdminTest extends BaseTest {
 
         //Verify that 'Booking payment' pop up appears after clicking 'Continue to Deposit' button, on 'Create Appointment' page.
         fillClientDetails.fill_clientDetailsSection(clientFirstName, clientLastName, parentName, "19-11-2000", "Grade 2", "Private", clientCellNumber, clientEmail, "Other", "New York", "Texas", "30052", "1000", "900");
-        validate_text(admin.clientDetail, clientFirstName + ' ' + clientLastName + " Details");
+        validate_text(admin.clientDetail, PropertiesUtil.getPropertyValue("clientFirstName") + ' ' + PropertiesUtil.getPropertyValue("clientLastName") + " Details");
     }
 
 
@@ -289,7 +296,7 @@ public class AdminTest extends BaseTest {
         admin.click_FollowUpCloseBtn();
         WebdriverWaits.waitUntilVisible(admin.clientDetail);
         WebdriverWaits.waitForSpinner();
-        validate_text(admin.clientDetail, clientFirstName + ' ' + clientLastName + " Details");
+        validate_text(admin.clientDetail, PropertiesUtil.getPropertyValue("clientFirstName") + ' ' + PropertiesUtil.getPropertyValue("clientLastName") + " Details");
         admin.click_CreateFollowUpBtn();
         admin.cancel_FollowUpSlot(0);
 
@@ -303,7 +310,7 @@ public class AdminTest extends BaseTest {
         admin.click_BackBtn();
         WebdriverWaits.waitUntilVisible(admin.clientDetail);
         WebdriverWaits.waitForSpinner();
-        validate_text(admin.clientDetail, clientFirstName + ' ' + clientLastName + " Details");
+        validate_text(admin.clientDetail, PropertiesUtil.getPropertyValue("clientFirstName") + ' ' + PropertiesUtil.getPropertyValue("clientLastName") + " Details");
     }
 
     //******To Do************
@@ -348,7 +355,7 @@ public class AdminTest extends BaseTest {
         WebdriverWaits.waitForSpinner();
         AppointmentsPage appointment = new AppointmentsPage();
         appointment.click_ViewAllTab();
-        admin.enterInSearchField(clientFirstName);
+        admin.enterInSearchField(PropertiesUtil.getPropertyValue("clientFirstName"));
         admin.clik_ViewDetailLink();
         admin.click_TestPlan();
         validate_text(admin.testPlanText, "Please choose tests.");
@@ -517,7 +524,8 @@ public class AdminTest extends BaseTest {
         admin.click_ViewDetailsLink();
         WebdriverWaits.waitUntilVisible(admin.clientNameDetail);
         WebdriverWaits.waitForSpinner();
-        validate_text(admin.clientNameDetail, clientFirstName + " " + clientLastName + " " + "Details");
+        validate_text(admin.clientNameDetail, PropertiesUtil.getPropertyValue("clientFirstName") + ' ' + PropertiesUtil.getPropertyValue("clientLastName") + " Details");
+
     }
 
     @Test(priority = 30, enabled = true, description = "7.15, 7.17, 8.1,7.3 Verify search fromDate and toDate")
@@ -531,7 +539,7 @@ public class AdminTest extends BaseTest {
 
         //Verify that admin is directed to '<client Details>' page after clicking 'View Details'  button on 'All Appointments' page.
         //Verify that relevant records appear after entering valid data in search textbox, on 'All Appointments' page
-        admin.enter_InSearchField(clientFirstName);
+        admin.enter_InSearchField(PropertiesUtil.getPropertyValue("clientFirstName"));
 
         String toDate = DateGenerator.getCurrentDate();
 
@@ -574,7 +582,7 @@ public class AdminTest extends BaseTest {
         DashBoardPanelPage clickDiagnosticianTab = new DashBoardPanelPage();
         admin.navigate_Back();
         clickDiagnosticianTab.click_DiagnosticianTab();
-        diagnostician.enter_InSearchField(diagnosticianUserName);
+        diagnostician.enter_InSearchField(PropertiesUtil.getPropertyValue("diagnosticianUserName"));
         validate_text(diagnostician.actualText, diagnosticianUserName);
     }
 
@@ -582,7 +590,7 @@ public class AdminTest extends BaseTest {
     public void verify_Dia_DontSaveBtn() throws InterruptedException {
         DiagnosticianPage diagnostician = new DiagnosticianPage();
         diagnostician.cheking_DisableUser();
-        diagnostician.enter_InSearchField(diagnosticianFirstName);
+        diagnostician.enter_InSearchField(PropertiesUtil.getPropertyValue("diagnosticianFirstName"));
         diagnostician.verify_DontSave("5659865589", diagnosticianEmailAddress, "123456", "123456");
         validate_text(diagnostician.UserNameGetText, diagnosticianUserName);
     }
@@ -593,7 +601,7 @@ public class AdminTest extends BaseTest {
 
         // Edit Diagnostician
         String diagnosticianUpdatedEmail = diagnosticianFirstName + "10@yopmail.com";
-        diagnostician.enter_InSearchField(diagnosticianUserName);
+        diagnostician.enter_InSearchField(PropertiesUtil.getPropertyValue("diagnosticianFirstName"));
         diagnostician.edit_Diagnostician(diagnosticianUpdatedEmail, "12345678", "12345678");
         WebdriverWaits.waitUntilVisible(diagnostician.edit_Succ_Msg);
         validate_text(diagnostician.edit_Succ_Msg, "Diagnostician details updated successfully.");
@@ -604,7 +612,7 @@ public class AdminTest extends BaseTest {
         DiagnosticianPage diagnostician = new DiagnosticianPage();
 
         //Enable disabled Diagnostician
-        diagnostician.enter_InSearchField(diagnosticianUserName);
+        diagnostician.enter_InSearchField(PropertiesUtil.getPropertyValue("diagnosticianFirstName"));
         diagnostician.enable_DiagnosticianUser();
         validate_text(diagnostician.edit_Succ_Msg, "Diagnostician details updated successfully.");
     }
@@ -784,7 +792,7 @@ public class AdminTest extends BaseTest {
         DashBoardPanelPage dashboard = new DashBoardPanelPage();
         AppointmentsPage appointment = new AppointmentsPage();
         LoginPage login = new LoginPage();
-        login.adminLogin(adminUserName, "12345678");
+        login.admin_Login();
         dashboard.click_AppointmentsTab();
 
         //***********Add assertion*******
@@ -805,7 +813,7 @@ public class AdminTest extends BaseTest {
         Assert.assertEquals(fromDateplaceholder, "From Date");
         Assert.assertEquals(toDatePlaceholder, "To Date");
 
-        admin.enterInSearchField(clientFirstName);
+        admin.enterInSearchField(PropertiesUtil.getPropertyValue("clientFirstName"));
         // Verify that CSV file gets downloaded, after clicking on 'Export to CSV' button on 'Test Complete Appointments' page
         dashboard.click_ExportCSVButton();
         String downloadFile = dashboard.getDownloadFileName();
@@ -821,7 +829,7 @@ public class AdminTest extends BaseTest {
         admin.navigate_Back();
         String expectedTitle = "View Student Observation";
 
-        admin.enterInSearchField(clientFirstName);
+        admin.enterInSearchField(PropertiesUtil.getPropertyValue("clientFirstName"));
         //Verify that admin is directed to '<Client>  Details' page after clicking 'View Details' button.
         admin.click_ViewDetailsBtn();
         String clientName = getText_custom(admin.clientNameDetail);
@@ -851,8 +859,8 @@ public class AdminTest extends BaseTest {
 
         //Verify that admin is directed to '<Client> Details' page after clicking 'Back' button, on 'Client Observation' page.
         admin.click_BackBtn();
+        validate_text(admin.clientNameDetail, PropertiesUtil.getPropertyValue("clientFirstName") + ' ' + PropertiesUtil.getPropertyValue("clientLastName") + " Details");
 
-        validate_text(admin.clientNameDetail, clientFirstName + ' ' + clientLastName + ' ' + "Details");
     }
 
     @Test(dependsOnMethods = {"click_OnViewObservationBtn"}, description = "20.4 Admin is able to click on 'View Observation' button")
@@ -904,8 +912,8 @@ public class AdminTest extends BaseTest {
     @Test(dependsOnMethods = {"verify_ClickOnFilterBtnOfCompletedTab"}, description = "21.3, Admin is able to search valid data")
     public void verify_SearchFiled() {
         AdminPage admin = new AdminPage();
-        admin.enterClientNameInSearchFieldCompleted(clientFirstName);
-        validate_text(admin.clientName, clientFirstName + ' ' + clientLastName);
+        admin.enterClientNameInSearchFieldCompleted(PropertiesUtil.getPropertyValue("clientFirstName"));
+        validate_text(admin.clientName, PropertiesUtil.getPropertyValue("clientFirstName") + ' ' + PropertiesUtil.getPropertyValue("clientLastName") );
     }
 
     @Test(dependsOnMethods = {"verify_SearchFiled"}, description = "21.17, Admin is able to click on 'Export CSV' button")
@@ -921,7 +929,7 @@ public class AdminTest extends BaseTest {
     public void verify_CompletedAppointments() {
         AdminPage admin = new AdminPage();
         admin.navigate_Back();
-        admin.enterClientNameInSearchFieldCompleted(clientFirstName);
+        admin.enterClientNameInSearchFieldCompleted(PropertiesUtil.getPropertyValue("clientFirstName"));
         String expectedResult = getText_custom(admin.clientNameCompleted);
         validate_text(admin.clientNameCompleted, expectedResult);
         admin.click_ViewDetailsBtn();
@@ -968,10 +976,10 @@ public class AdminTest extends BaseTest {
         LoginPage login = new LoginPage();
         AdminPage admin = new AdminPage();
         DashBoardPanelPage panelpage = new DashBoardPanelPage();
-        login.adminLogin(adminUserName, "12345678");
+        login.admin_Login();
         admin.paying_DueAmount(clientFirstName);
         WebdriverWaits.waitUntilVisible(admin.clientNameDetail);
-        validate_text(admin.clientNameDetail, clientFirstName + ' ' + clientLastName + ' ' + "Details");
+        validate_text(admin.clientNameDetail, PropertiesUtil.getPropertyValue("clientFirstName")+ ' ' + PropertiesUtil.getPropertyValue("clientLastName") + ' ' + "Details");
 
         //Verify that admin is able to upload single document after clicking 'Upload' button on '<Client> Details' button.
         //Verify that 'Upload Documents' popup appears after clicking 'Upload Documents' button on '<Client> Details' page.
@@ -979,7 +987,8 @@ public class AdminTest extends BaseTest {
         WebdriverWaits.waitUntilVisible(admin.clientNameDetail);
         WebdriverWaits.waitForSpinner();
         //Verify that admin is directed to '<Client> Details' page after Clicking 'Close' button on 'Doucument Uploaded Successfully!!'  popup, of '<Client> Details' page.
-        validate_text(admin.clientNameDetail, clientFirstName + ' ' + clientLastName + ' ' + "Details");
+        validate_text(admin.clientNameDetail, PropertiesUtil.getPropertyValue("clientFirstName")+ ' ' + PropertiesUtil.getPropertyValue("clientLastName") + ' ' + "Details");
+
         panelpage.click_LogOutLink();
     }
 }

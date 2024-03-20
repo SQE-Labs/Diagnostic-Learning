@@ -3,6 +3,7 @@ package org.automation.pageObjects;
 import org.automation.base.BasePage;
 import org.automation.elements.DropDown;
 import org.automation.logger.Log;
+import org.automation.utilities.PropertiesUtil;
 import org.automation.utilities.WebdriverWaits;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -213,8 +214,7 @@ public class AdminPage extends BasePage {
     public By typesOfEvolution = By.xpath("(//select)[5]");
     public By dysgraphia = By.xpath("//option[@value='Dysgraphia']");
     public By secondaryProvider = By.xpath("(//select)[6]");
-    public By name = By.xpath("//option[@value='AU_Ayladrr AU_AriQAz']");
-    public By primaryDia = By.xpath("(//select)[7]");
+     public By primaryDia = By.xpath("(//select)[7]");
     public By diaName = By.xpath("(//option[@value='DSM-V-314.01 - ADHD Combined ICD10-F90.2'])[1]");
     public By secondaryDia = By.xpath("(//select)[8]");
     public By secDiaName = By.xpath("(//option[@value='DSM-V-314.01 - ADHD Combined ICD10-F90.2'])[2]");
@@ -413,7 +413,7 @@ public class AdminPage extends BasePage {
         //Verify that appropriate 'Choose dignostician' dropdown list appears after selecting preferred testing location from 'Choose Testing Location' dropdown list, on '<Client> Re-assign Appointment' page
         selectDropDownByVisibleText_custom(locList, locName);
         //Verify that appropriate dropdown list appears & admin is able to select any option from it, after clicking  'Choose Testing Location' field, on '<Client> Re-assign Appointment' page.
-        System.out.println(DropDown.getSelectedOption(locList));
+        Log.info(DropDown.getSelectedOption(locList));
     }
     public void click_ReAssignBtn(){
         click_custom(re_AssignBtn);
@@ -423,7 +423,7 @@ public class AdminPage extends BasePage {
          dropdownListsRemoveValues(dia_List, "Re_Assign Diagnostician lists", "Choose Diagnostician");
 
         //Verify that admin is able to select any option from 'Choose Diagnostician' dropdown list and selected option appears in 'Choose Diagnostician' field, on '<Client> Re-assign Appointment' page
-        System.out.println(DropDown.getSelectedOption(locList));
+        Log.info(DropDown.getSelectedOption(locList));
     }
 
 
@@ -648,24 +648,24 @@ public class AdminPage extends BasePage {
         click_custom(editGrade);
         selectDropDownByVisibleText_custom(editGrade, grade);
         dropdownListsRemoveValues(grade_List, "Edit client Info lists", "Grade");
-         System.out.println(DropDown.getSelectedOption(editGrade));
+        Log.info(DropDown.getSelectedOption(editGrade));
     }
     public void selectSchoolType(String schoolTypeOption) {
         // click_custom(SchoolType);
         dropdownListsValues(schoolType,"schoolTypeList");
         selectDropDownByVisibleText_custom(schoolType, schoolTypeOption);
-        System.out.println(DropDown.getSelectedOption(schoolType));
+        Log.info(DropDown.getSelectedOption(schoolType));
     }
     public void reasonForCallDropDown(String reasonForCallText) {
         //Verify that appropriate dropdown list appears after clicking 'Reason for call' dropdown list and admin is able to select any one option from it, on 'Edit Client info' pop up, of  '<Client> Details' page.
         dropdownListsRemoveValues(reasonTypeDropdownList,"schoolTypeList","Reason For Call");
         selectDropDownByVisibleText_custom(reasonForCall, reasonForCallText);
-        System.out.println(DropDown.getSelectedOption(reasonForCall));
+        Log.info(DropDown.getSelectedOption(reasonForCall));
     }
     public void selectGradeType(String gradeType) {
         dropdownListsValues(grade,"gradeTypeList");
         selectDropDownByVisibleText_custom(grade, gradeType);
-        System.out.println(DropDown.getSelectedOption(grade));
+        Log.info(DropDown.getSelectedOption(grade));
     }
 
     public void enter_Address1(String address) {
@@ -956,7 +956,7 @@ public class AdminPage extends BasePage {
         click_ReAssignBn();
         WebdriverWaits.waitUntilVisible(clientNameDetail);
         WebdriverWaits.waitForSpinner();
-        validate_text( clientNameDetail, clientFirstName+' '+clientLastName+" Re-assign Appointment");
+        validate_text( clientNameDetail, PropertiesUtil.getPropertyValue("clientFirstName")+' '+PropertiesUtil.getPropertyValue("clientLastName")+" Re-assign Appointment");
         re_Assign_Location_Lists(location);
         //Verify that admin is able to select any option from 'Choose Diagnostician' dropdown list and selected option appears in 'Choose Diagnostician' field, on '<Client> Re-assign Appointment' page
         re_Assign_Diagnostician_Lists();
@@ -966,11 +966,11 @@ public class AdminPage extends BasePage {
         click_RescheduleBtn();
         WebdriverWaits.waitUntilVisible(clientNameDetail);
         WebdriverWaits.waitForSpinner();
-        validate_text( clientNameDetail, clientFirstName+' '+clientLastName+" Reschedule Appointment");
+        validate_text( clientNameDetail, PropertiesUtil.getPropertyValue("clientFirstName")+' '+PropertiesUtil.getPropertyValue("clientLastName")+" Reschedule Appointment");
         click_Diag_Field();
         //Verify that nothing happens after clicking 'Close' button of calendar on '<Client Reschedule Appointment' page.
         click_FollowUpCloseBtn();
-        validate_text( clientNameDetail, clientFirstName+' '+clientLastName+" Reschedule Appointment");
+        validate_text( clientNameDetail, PropertiesUtil.getPropertyValue("clientFirstName")+' '+PropertiesUtil.getPropertyValue("clientLastName")+" Reschedule Appointment");
     }
 
     //*****************Doing full payment by client********************
@@ -1108,10 +1108,7 @@ public class AdminPage extends BasePage {
         waitUntilVisible(editClientBtn);
         WebdriverWaits.waitForSpinner();
         click_custom(editClientBtn);
-
     }
-
-
     public void enter_DataInEmailField(String email) {
         waitUntilVisible(editEmail);
         WebdriverWaits.waitForSpinner();
@@ -1131,9 +1128,7 @@ public class AdminPage extends BasePage {
         waitUntilVisible(cancelAppointmentBtn);
         WebdriverWaits.waitForSpinner();
         click_custom(cancelAppointmentBtn);
-
     }
-
     public void click_backBtnCancelPopup() {
         waitUntilVisible(backBtnCancelPopup);
         WebdriverWaits.waitForSpinner();
@@ -1148,22 +1143,23 @@ public class AdminPage extends BasePage {
         WebdriverWaits.waitForSpinner();
     }
 
-    public void clickOn_CancelBtnNewSlotPopup() {
+    public void click_CancelBtnNewSlotPopup() {
         waitUntilVisible(cancelBtnOfTimeSlotPopup);
         WebdriverWaits.waitForSpinner();
         click_custom(cancelBtnOfTimeSlotPopup);
-
     }
     public void upload_FileAttachment() throws InterruptedException, AWTException {
         click_UploadButton();
         validate_text(uploadDocumentTitle,"Upload Documents");
+
         //Verify that admin is directed back to '<Client> Details' page after Clicking 'Cancel' button on 'Upload Documents' popup, of '<Client> Details' page.
         click_Cancel_Button();
          scrolltoUp();
          WebdriverWaits.waitUntilVisible(clientNameDetail);
          WebdriverWaits.waitForSpinner();
-        validate_text(clientNameDetail, clientFirstName +' '+ clientLastName +' '+ "Details");
+        validate_text(clientNameDetail, PropertiesUtil.getPropertyValue("clientFirstName") +' '+ PropertiesUtil.getPropertyValue("clientLastName") +' '+ "Details");
         click_UploadButton();
+
         //Verify that '<choose file window>' opens up after clicking 'Choose files' button, on 'Upload Documents' popup of '<Client> Details' page.
         click_ChooseFile();
         Thread.sleep(6000);
@@ -1176,7 +1172,5 @@ public class AdminPage extends BasePage {
         validate_text(success_Msg,"Document Uploaded Successfully!!");
         click_CloseButton();
     }
-
-
 }
 

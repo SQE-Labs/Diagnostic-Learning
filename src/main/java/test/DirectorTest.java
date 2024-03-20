@@ -17,7 +17,7 @@ public class DirectorTest extends BaseTest {
 
     @Test(priority = 1, enabled = true, description = "1 Verify Director is able to login with valid credentials")
     public void verify_Login_Director() {
-        login.directorLogin(directorUserName, "12345678");
+        login.director_Login();
         WebdriverWaits.waitUntilVisible(director.dashboardPage);
         validate_text(director.dashboardPage, "Dashboard");
     }

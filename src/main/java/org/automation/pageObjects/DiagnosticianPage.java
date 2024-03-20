@@ -5,6 +5,7 @@ import org.automation.base.BasePage;
 import org.automation.elements.DropDown;
 import org.automation.logger.Log;
 import org.automation.utilities.ActionEngine;
+import org.automation.utilities.PropertiesUtil;
 import org.automation.utilities.WebdriverWaits;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -470,7 +471,7 @@ public class DiagnosticianPage extends BasePage {
         click_custom(noButton);
         scrolltoUp();
         WebdriverWaits.waitUntilVisible(pageTitle);
-        validate_text(pageTitle, clientFirstName + ' ' + clientLastName + ' ' + "Assessment");
+        validate_text(pageTitle, PropertiesUtil.getPropertyValue("clientFirstName") + ' ' +PropertiesUtil.getPropertyValue("clientLastName")+ ' ' + "Assessment");
 
         click_custom(completeAssButton);
         click_custom(yesCompleteAssButton);
