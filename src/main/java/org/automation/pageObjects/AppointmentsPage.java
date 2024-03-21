@@ -44,7 +44,7 @@ public class AppointmentsPage extends BasePage {
     public By viewAllActualText = By.xpath("//h3[@class='mb-4 mb-md-0']");
     public By assestmentType = By.id("assestmentType");
     public By newEventText = By.xpath("//div[text()='New Event']");
-    public By dateElements = By.xpath("//tr/td[4]");
+    public By dateElements = By.xpath("//tr/td[5]");
     public By dateEle = By.xpath("((//tr[not(contains(@style,'display: none;'))])[2]//td)[4]");
     public By chooseTestingLocation = By.id("testingLocation");
     public By locationLists=By.xpath("//select[@id='testingLocation']/option");
@@ -73,6 +73,7 @@ public class AppointmentsPage extends BasePage {
     public By paymentPopUp=By.xpath("(//div/h4)[1]");
     public By actualText = By.xpath("//h4[text()='Appointment Scheduled!!']");
     public By cancelButton = By.xpath("//button[@class='theme-button danger m-2 ng-star-inserted']");
+    public By backBtn=By.xpath("(//div[@class='action text-center']/a)[1]");
     public By radioBox = By.xpath("(//label[@class='custom-control-label'])[1]");
     public By nameOfTestReadyCard = By.xpath("(//div[@class='client-diagno d-flex align-items-center justify-content-between']/p)[1]");
     public By yesButton = By.xpath("//button[@class='theme-button danger mx-2 ng-star-inserted']");
@@ -230,6 +231,15 @@ public class AppointmentsPage extends BasePage {
     public void locationName_Lists() {
         dropdownListsRemoveValues(locationLists, "Location List", "Choose Testing Location");
     }
+    public void click_BackBtn(){
+        click_custom(backBtn);
+    }
+    public void click_CancelBtn(){
+        refresh_Page();
+        WebdriverWaits.waitUntilVisible(cancelButton);
+        scrollIntoView(cancelButton);
+        click_custom(cancelButton);
+    }
 
     public void enterAmount(String enterAmountText)    {
         WebdriverWaits.waitUntilInvisible(enterAmountField);
@@ -269,15 +279,16 @@ public class AppointmentsPage extends BasePage {
         }
     }
     public void click_CancelAppointmentButton() throws InterruptedException {
-        refresh_Page();
-        WebdriverWaits.waitUntilVisible(cancelButton);
-        scrollIntoView(cancelButton);
-        click_custom(cancelButton);
+        click_CancelBtn();
         WebdriverWaits.waitUntilVisible(radioBox);
         moveToElement(radioBox);
         click_custom(yesButton);
         WebdriverWaits.waitForSpinner();
-        Thread.sleep(4000);
+        Thread.sleep(6000);
+    }
+    public void click_CancelAppointmentBackBtn(){
+        click_CancelBtn();
+        click_BackBtn();
     }
     public void clickSlotSaveButton() {
         WebdriverWaits.waitUntilVisible(clickSlotSaveBtn);
@@ -348,6 +359,7 @@ public class AppointmentsPage extends BasePage {
         clickCollectDepositButton();
         WebdriverWaits.waitUntilVisible(actualText);
         validate_text(actualText, "Appointment Scheduled!!");
+
         //Verify that  admin is directed to '<Client> Details' page after clicking 'View details' button, on 'Appointment Scheduled !!' pop up of 'Create Appointment' page.
         clickViewDetailsButton();
         WebdriverWaits.waitForSpinner();

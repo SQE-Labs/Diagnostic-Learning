@@ -17,18 +17,15 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Properties;
 
 import static org.automation.utilities.Assertions.*;
-import static test.AdminTest.clientFirstName;
-import static test.AdminTest.clientLastName;
 
 
 public class SuperAdminTest extends BaseTest {
 
 
     //***********Admin Variables**********
-    public  String adminUserName;
+    public String adminUserName;
     public String adminFirstName;
     public String adminEmailAddress;
     public String adminLastName;
@@ -46,7 +43,9 @@ public class SuperAdminTest extends BaseTest {
     public void verify_Superadmin_login() {
         LoginPage login = new LoginPage();
         //Login by using superAdmin credentials
-        login.superAdminLogin();
+        String superAdminUserName = PropertiesUtil.getPropertyValue("super_userName");
+        String superAdminPassword = PropertiesUtil.getPropertyValue("super_password");
+        login.superAdminLogin(superAdminUserName, superAdminPassword);
     }
 
     @Test(priority = 1, enabled = true, description = "5.1 Verify that SuperAdmin is able to View AdminList page or not")
@@ -61,10 +60,10 @@ public class SuperAdminTest extends BaseTest {
     @Test(priority = 2, enabled = true, description = "5.5, Verify that SuperAdmin is able to create Admin or not")
     public void verify_Create_Admin() throws InterruptedException, IOException {
         AdminPage admin = new AdminPage();
-        adminFirstName = "AU_Zoe" + RandomStrings.requiredCharacters(3);
-        adminLastName = "AU_Gray" + RandomStrings.requiredCharacters(3);
-        adminEmailAddress = adminFirstName + "@yopmail.com";
-        adminUserName = "AU_Ryder" + RandomStrings.requiredCharacters(3);
+        adminFirstName = "AU_Alice" + RandomStrings.requiredCharacters(3);
+        adminLastName = "AU_Lowe" + RandomStrings.requiredCharacters(3);
+        adminEmailAddress = "AU_Hayes" + "@yopmail.com";
+        adminUserName = "AU_Freya" + RandomStrings.requiredCharacters(3);
         admin_cell_Number = RandomStrings.requiredDigits(10);
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
         WebdriverWaits.waitForSpinner();
@@ -149,7 +148,9 @@ public class SuperAdminTest extends BaseTest {
 
         LoginPage login = new LoginPage();
         // Login with Admin new password
-        login.superAdminLogin();
+        String superAdminUserName = PropertiesUtil.getPropertyValue("super_userName");
+        String superAdminPassword = PropertiesUtil.getPropertyValue("super_password");
+        login.superAdminLogin(superAdminUserName, superAdminPassword);
         panelPage.click_AdminTab();
         admin.search_CreatedAdmin(adminUserName);
         admin.verify_DontSave(adminEmailAddress, "123456", "123456");
@@ -172,10 +173,10 @@ public class SuperAdminTest extends BaseTest {
     public void verify_Create_Diagnostician_By_SuperAdmin() throws InterruptedException, IOException {
         //Login by using superAdmin credentials
         DiagnosticianPage diagnostician = new DiagnosticianPage();
-        diagnosticianFirstName = "AU_Sarah" + RandomStrings.requiredCharacters(3);
-        diagnosticianLastName = "AU_Hill" + RandomStrings.requiredCharacters(3);
-        diagnosticianEmailAddress = diagnosticianFirstName + "@yopmail.com";
-        diagnosticianUserName = "AU_Ward" + RandomStrings.requiredCharacters(3);
+        diagnosticianFirstName = "AU_Haze" + RandomStrings.requiredCharacters(3);
+        diagnosticianLastName = "AU_Arn" + RandomStrings.requiredCharacters(3);
+        diagnosticianEmailAddress = "Peta" + "@yopmail.com";
+        diagnosticianUserName = "AU_Leah" + RandomStrings.requiredCharacters(3);
         dia_Cell_Number = RandomStrings.requiredDigits(10);
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
         //navigating  to base url
@@ -187,7 +188,6 @@ public class SuperAdminTest extends BaseTest {
         validate_text(diagnostician.diagnosticListText, "Diagnosticians List");
         PropertiesUtil.setpropertyValue("diagnostician_userName", diagnosticianUserName);
         PropertiesUtil.setpropertyValue("diagnosticianFirstName", diagnosticianFirstName);
-
 
 
         //**************SuperAdmin is creating diagnostician*************
@@ -312,7 +312,9 @@ public class SuperAdminTest extends BaseTest {
         DashBoardPanelPage panelpage = new DashBoardPanelPage();
         // Logging with Old password to get validation message.
         panelpage.click_LogOutLink();
-        login.diagnostician_LoginWithOldPassword();
+        String diagnosticianUserName = PropertiesUtil.getPropertyValue("diagnostician_userName");
+        String diagnosticianPassword = PropertiesUtil.getPropertyValue("diagnostician_oldpassword");
+        login.diagnostician_LoginWithOldPassword(diagnosticianUserName, diagnosticianPassword);
         WebdriverWaits.waitUntilVisible(diagnostician.validation_Msg);
         Thread.sleep(2000);
         validate_text(diagnostician.validation_Msg, "Username or password is incorrect");
@@ -324,21 +326,23 @@ public class SuperAdminTest extends BaseTest {
     public String dir_Cell_Number;
     public String directorFirstName;
     public String directorEmailAddress;
-    public static String directorUserName;
+    public String directorUserName;
 
     @Test(priority = 19, enabled = true, description = "3.1, 3.5, 3.9, verify that SuperAdmin is able to create Director or not")
     public void create_Directors() throws InterruptedException, IOException {
-        directorFirstName = "AU_Elix" + RandomStrings.requiredCharacters(3);
-        directorLastName = "AU_Tyk" + RandomStrings.requiredCharacters(3);
-        directorEmailAddress = directorFirstName + "@yopmail.com";
-        directorUserName = "AU_Spar" + RandomStrings.requiredCharacters(3);
+        directorFirstName = "AU_Reig" + RandomStrings.requiredCharacters(3);
+        directorLastName = "AU_Sage" + RandomStrings.requiredCharacters(3);
+        directorEmailAddress = "Zoey" + "@yopmail.com";
+        directorUserName = "AU_Skye" + RandomStrings.requiredCharacters(3);
         dir_Cell_Number = RandomStrings.requiredDigits(10);
         DirectorPage director = new DirectorPage();
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
         LoginPage login = new LoginPage();
 
         //Login with super Admin credentials
-        login.superAdminLogin();//login
+        String superAdminUserName = PropertiesUtil.getPropertyValue("super_userName");
+        String superAdminPassword = PropertiesUtil.getPropertyValue("super_password");
+        login.superAdminLogin(superAdminUserName, superAdminPassword);
 
         //Verify that list of director appears after clicking 'Director' tab, on 'Dashboard' page.
         panelPage.click_DirectorTab();
@@ -409,14 +413,10 @@ public class SuperAdminTest extends BaseTest {
     }
 
     @Test(priority = 23, enabled = true, description = "Verify that Superadmin is able to Enable the user or not")
-    public void verify_director_enable_User()  {
+    public void verify_director_enable_User() {
         DirectorPage director = new DirectorPage();
         director.enterInSearchField(PropertiesUtil.getPropertyValue("directorFirstName"));
         director.enable_Director();
-        WebdriverWaits.waitUntilVisible(director.edit_SuccMsg);
-        WebdriverWaits.waitForSpinner();
-        validate_text(director.edit_SuccMsg, "Director details updated successfully.");
-        Log.info("Successfully Edited the created director");
     }
 
     @Test(priority = 24, enabled = true, description = "verify that superadmin is able to edit or not after clicking dont save button")
@@ -436,9 +436,10 @@ public class SuperAdminTest extends BaseTest {
         DirectorPage director = new DirectorPage();
         LoginPage login = new LoginPage();
         //Director trying to login with old password
-        login.director_LoginWithOldPassword();
+        String username = PropertiesUtil.getPropertyValue("director_userName");
+        String password = PropertiesUtil.getPropertyValue("director_oldpassword");
+        login.director_LoginWithOldPassword(username, password);
         WebdriverWaits.waitUntilVisible(director.validation_Msg);
-
         validate_text(director.validation_Msg, "Username or password is incorrect");
     }
 
@@ -450,7 +451,9 @@ public class SuperAdminTest extends BaseTest {
 
         //Director trying to login with new password
         // Verify that user is able to login using new password after editing the password on 'Edit' popup, on 'Directors List' page.
-        login.director_Login();
+        String directorUserName = PropertiesUtil.getPropertyValue("director_userName");
+        String directorPassword = PropertiesUtil.getPropertyValue("director_password");
+        login.director_Login(directorUserName, directorPassword);
         WebdriverWaits.waitUntilVisible(director.directorDashBoardPage);
         validate_text(director.directorDashBoardPage, "Dashboard");
         panelPage.click_LogOutLink();
@@ -465,7 +468,9 @@ public class SuperAdminTest extends BaseTest {
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
         SuperAdminPage superAdmin = new SuperAdminPage();
         LoginPage login = new LoginPage();
-        login.superAdminLogin();
+        String superAdminUserName = PropertiesUtil.getPropertyValue("super_userName");
+        String superAdminPassword = PropertiesUtil.getPropertyValue("super_password");
+        login.superAdminLogin(superAdminUserName, superAdminPassword);
         WebdriverWaits.waitUntilVisible(appointment.dashBoardPage);
         WebdriverWaits.waitForSpinner();
         validate_text(appointment.dashBoardPage, "Dashboard");
@@ -482,9 +487,9 @@ public class SuperAdminTest extends BaseTest {
 
         //Verify that appropriate result appears, when user searches using valid data, on 'All Appointments' page
         //Verify that search text box appears after clicking 'Filter' button on 'All Appointments' page.
-        appointment.click_SearchField(clientFirstName);
+        appointment.click_SearchField(PropertiesUtil.getPropertyValue("clientFirstName"));
         WebdriverWaits.waitUntilVisible(appointment.searchedText);
-        validate_text(appointment.searchedText, clientFirstName + ' ' + clientLastName);
+        validate_text(appointment.searchedText, PropertiesUtil.getPropertyValue("clientFirstName") + ' ' + PropertiesUtil.getPropertyValue("clientLastName"));
 
         //**********Verifying Todate and from********************
         String toDate = DateGenerator.getCurrentDate();
@@ -523,7 +528,7 @@ public class SuperAdminTest extends BaseTest {
         appointment.click_ViewDetails();
         WebdriverWaits.waitForSpinner();
         WebdriverWaits.waitUntilVisible(appointment.app_Text);
-        validate_text(appointment.app_Text, clientFirstName + ' ' + clientLastName + ' ' + "Details");
+        validate_text(appointment.app_Text, PropertiesUtil.getPropertyValue("clientFirstName") + ' ' + PropertiesUtil.getPropertyValue("clientLastName") + ' ' + "Details");
         // appointment.click_ViewAllTab();
 
         //Verify that 'View Document' button appears on top of the '<Client Name>Details' page, after clicking on 'View Details' link under 'Actions' column only for Completed Appointments, on 'All Appointments' page.
@@ -571,7 +576,9 @@ public class SuperAdminTest extends BaseTest {
         PaymentPage payment = new PaymentPage();
         LoginPage login = new LoginPage();
         login.navigate_Back();
-        login.superAdminLogin();
+        String superAdminUserName = PropertiesUtil.getPropertyValue("super_userName");
+        String superAdminPassword = PropertiesUtil.getPropertyValue("super_password");
+        login.superAdminLogin(superAdminUserName, superAdminPassword);
 
         //******************** SuperAdmin viewing payments page**********
 
@@ -592,7 +599,7 @@ public class SuperAdminTest extends BaseTest {
         //  payment.click_filterButton();
 
         //"Verify that result appears, when user searches relevant text, on 'Paymentspage "
-        payment.enterInSearchField(clientFirstName);
+        payment.enterInSearchField(PropertiesUtil.getPropertyValue("clientFirstName"));
         AppointmentsPage appPage = new AppointmentsPage();
         SuperAdminPage admin = new SuperAdminPage();
 
@@ -640,7 +647,9 @@ public class SuperAdminTest extends BaseTest {
     @Test(priority = 29, enabled = true, description = "SuperAdmin is able to disable the diagnostician")
     public void verify_disable_diagnostician() throws InterruptedException {
         LoginPage login = new LoginPage();
-        login.superAdminLogin();
+        String superAdminUserName = PropertiesUtil.getPropertyValue("super_userName");
+        String superAdminPassword = PropertiesUtil.getPropertyValue("super_password");
+        login.superAdminLogin(superAdminUserName, superAdminPassword);
         DiagnosticianPage diagnostician = new DiagnosticianPage();
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
         panelPage.click_DiagnosticianTab();

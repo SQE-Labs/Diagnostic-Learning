@@ -25,23 +25,18 @@ public class LoginPage extends BasePage {
         sendKeys_withClear(PasswordField, passNameText);
     }
 
-    public void clickLoginBtn() {
-        clickBtn_custom(login);
-    }
-
-
-    public void superAdminLogin() {
+    public void superAdminLogin(String superAdminUserName,String superAdminPassword) {
         WebdriverWaits.waitUntilVisible(userNameField);
-        sendKeys_withClear(userNameField, PropertiesUtil.getPropertyValue("super_userName"));
-        sendKeys_withClear(PasswordField, PropertiesUtil.getPropertyValue("super_password"));
+        sendKeys_withClear(userNameField, superAdminUserName);
+        sendKeys_withClear(PasswordField,  superAdminPassword);
         clickBtn_custom(login);
         WebdriverWaits.waitForSpinner();
 
     }
 
-    public void director_Login() {
-        sendKeys_withClear(userNameField, PropertiesUtil.getPropertyValue("director_userName"));
-        sendKeys_withClear(PasswordField, PropertiesUtil.getPropertyValue("director_password"));
+    public void director_Login(String directorUserName, String directorPassword) {
+        sendKeys_withClear(userNameField, directorUserName );
+        sendKeys_withClear(PasswordField, directorPassword );
         clickBtn_custom(login);
         WebdriverWaits.waitForSpinner();
 
@@ -55,10 +50,10 @@ public class LoginPage extends BasePage {
         WebdriverWaits.waitForSpinner();
     }
 
-    public void diagnostician_LoginWithOldPassword() {
+    public void diagnostician_LoginWithOldPassword(String diagnosticianUserName,String diagnosticianPassword) {
         WebdriverWaits.waitUntilVisible(userNameField);
-        sendKeys_withClear(userNameField, PropertiesUtil.getPropertyValue("diagnostician_userName"));
-        sendKeys_withClear(PasswordField, PropertiesUtil.getPropertyValue("diagnostician_oldpassword"));
+        sendKeys_withClear(userNameField, diagnosticianUserName );
+        sendKeys_withClear(PasswordField, diagnosticianPassword );
         clickBtn_custom(login);
         WebdriverWaits.waitForSpinner();
     }
@@ -77,9 +72,9 @@ public class LoginPage extends BasePage {
         WebdriverWaits.waitForSpinner();
     }
 
-    public void director_LoginWithOldPassword() {
-        sendKeys_withClear(userNameField, PropertiesUtil.getPropertyValue("director_userName"));
-        sendKeys_withClear(PasswordField, PropertiesUtil.getPropertyValue("director_oldpassword"));
+    public void director_LoginWithOldPassword(String userName , String pass) {
+        sendKeys_withClear(userNameField,userName);
+        sendKeys_withClear(PasswordField,pass);
         clickBtn_custom(login);
         WebdriverWaits.waitForSpinner();
 

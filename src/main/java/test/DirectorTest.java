@@ -2,12 +2,13 @@ package test;
 
 import org.automation.base.BaseTest;
 import org.automation.pageObjects.*;
+import org.automation.utilities.PropertiesUtil;
 import org.automation.utilities.WebdriverWaits;
 import org.testng.annotations.Test;
 
 import static org.automation.utilities.Assertions.*;
 import static org.automation.utilities.DateGenerator.getMonthAndYear;
-import static test.SuperAdminTest.directorUserName;
+
 
 
 public class DirectorTest extends BaseTest {
@@ -17,7 +18,9 @@ public class DirectorTest extends BaseTest {
 
     @Test(priority = 1, enabled = true, description = "1 Verify Director is able to login with valid credentials")
     public void verify_Login_Director() {
-        login.director_Login();
+        String directorUserName = PropertiesUtil.getPropertyValue("director_userName");
+        String directorPassword = PropertiesUtil.getPropertyValue("director_password");
+        login.director_Login(directorUserName, directorPassword);
         WebdriverWaits.waitUntilVisible(director.dashboardPage);
         validate_text(director.dashboardPage, "Dashboard");
     }

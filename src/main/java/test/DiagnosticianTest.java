@@ -5,6 +5,7 @@ import org.automation.base.BaseTest;
 import org.automation.pageObjects.*;
 import org.automation.utilities.ActionEngine;
 import org.automation.utilities.DateGenerator;
+import org.automation.utilities.PropertiesUtil;
 import org.automation.utilities.WebdriverWaits;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
@@ -28,8 +29,9 @@ public class DiagnosticianTest extends BaseTest {
     public void verify_diagnostician_Login() {
         LoginPage login = new LoginPage();
         DiagnosticianPage diagnostician = new DiagnosticianPage();
-
-        login.diagnostician_Login();
+        String diagnosticianUserName = PropertiesUtil.getPropertyValue("diagnostician_userName");
+        String diagnosticianPassword = PropertiesUtil.getPropertyValue("diagnostician_oldpassword");
+        login.diagnostician_LoginWithOldPassword(diagnosticianUserName, diagnosticianPassword);
         WebdriverWaits.waitUntilVisible(diagnostician.dashboard);
         validate_text(diagnostician.dashboard, "Dashboard");
     }
@@ -53,9 +55,9 @@ public class DiagnosticianTest extends BaseTest {
         DiagnosticianPage diagnostician = new DiagnosticianPage();
 
         diagnostician.click_ClientDetailLink();
-        WebdriverWaits.waitUntilVisible(diagnostician.clientDetailText);
+        WebdriverWaits.waitUntilVisible(diagnostician.clientText);
         WebdriverWaits.waitForSpinner();
-        validate_text(diagnostician.clientDetailText, clientFirstName + ' ' + clientLastName + ' ' + " Details");
+        validate_text(diagnostician.clientText, PropertiesUtil.getPropertyValue("clientFirstName") + ' ' + PropertiesUtil.getPropertyValue("clientLastName") + ' ' + " Details");
     }
 
     @Test(priority = 4, enabled = true, description = "  44/70 Diagnostician is verifying  that relevant records appear after selecting valid range of date, on 'Upcoming Appointments' page.")
@@ -110,7 +112,6 @@ public class DiagnosticianTest extends BaseTest {
 
     @Test(priority = 6, enabled = true, description = "7/31, 8/32, 9/33, 13/37, 13/39, 17/43, 18/44, 22/48, 26/52, 28/54 diagnostician is starting assessment")
     public void verify_todays_Appointments() throws InterruptedException {
-
         DiagnosticianPage diagnostician = new DiagnosticianPage();
         diagnostician.navigate_Back();
         diagnostician.payment_NewPage();
@@ -126,10 +127,10 @@ public class DiagnosticianTest extends BaseTest {
 
         diagnostician.verify_CompleteAss();
         diagnostician.click_filterButton();
-        diagnostician.enter_SearchField(clientFirstName);
+        diagnostician.enter_SearchField(PropertiesUtil.getPropertyValue("clientFirstName"));
         WebdriverWaits.waitUntilVisible(diagnostician.clientText);
         diagnostician.click_ClientDetailLink();
-        validate_text(diagnostician.clientText, clientFirstName + ' ' + clientLastName + ' ' + "Details");
+        validate_text(diagnostician.clientText, PropertiesUtil.getPropertyValue("clientFirstName") + ' ' + PropertiesUtil.getPropertyValue("clientLastName") + ' ' + "Details");
     }
 
     @Test(priority = 8, enabled = true, description = "24, 89/91, 88/90 Verify diagnostician is able to download csv file or not after completing the assessment")
@@ -138,9 +139,9 @@ public class DiagnosticianTest extends BaseTest {
         AppointmentsPage appointment = new AppointmentsPage();
         DashBoardPanelPage panelpage = new DashBoardPanelPage();
         diagnostician.verify_CompleteAss();
-        diagnostician.enter_SearchField(clientFirstName);
+        diagnostician.enter_SearchField(PropertiesUtil.getPropertyValue("clientFirstName"));
         WebdriverWaits.waitUntilVisible(diagnostician.clientNameText);
-        validate_text(diagnostician.clientNameText, clientFirstName + ' ' + clientLastName);
+        validate_text(diagnostician.clientNameText, PropertiesUtil.getPropertyValue("clientFirstName") + ' ' + PropertiesUtil.getPropertyValue("clientLastName"));
         appointment.click_ExportCSVButton();
         Thread.sleep(3000);
         //Download exportCSV File and Check file is downloaded or not
@@ -154,9 +155,9 @@ public class DiagnosticianTest extends BaseTest {
         DashBoardPanelPage panelpage = new DashBoardPanelPage();
         panelpage.navigate_Back();
         diagnostician.click_CancelTab();
-        diagnostician.enter_InSearchField(clientLastName);
+        diagnostician.enter_InSearchField(PropertiesUtil.getPropertyValue("clientLastName"));
         WebdriverWaits.waitUntilVisible(diagnostician.clientNameText);
-        validate_text(diagnostician.clientNameText, clientFirstName + ' ' + clientLastName);
+        validate_text(diagnostician.clientNameText, PropertiesUtil.getPropertyValue("clientFirstName") + ' ' + PropertiesUtil.getPropertyValue("clientLastName"));
         panelpage.click_LogOutLink();
     }
 }

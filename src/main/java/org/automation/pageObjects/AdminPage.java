@@ -13,8 +13,7 @@ import java.awt.*;
 import java.util.List;
 
 import static org.automation.utilities.Assertions.*;
-import static org.automation.utilities.WebdriverWaits.moveToElement;
-import static org.automation.utilities.WebdriverWaits.waitUntilVisible;
+import static org.automation.utilities.WebdriverWaits.*;
 import static org.openqa.selenium.By.cssSelector;
 import static test.AdminTest.*;
 
@@ -112,11 +111,15 @@ public class AdminPage extends BasePage {
     public By reasonTypeDropdownList=By.xpath("//select[@id='reasonForCall']/option");
     public By reasonForCall = By.id("reasonForCall");
     public By grade = By.xpath("(//select[@id='schoolType'])[1]");
+    public By additionalComment=By.cssSelector("[formcontrolname=appointmentComments]");
+    public By messageText=By.xpath("//label[text()='Additional Comments']/../p");
+
     public By reAssignbtn = By.xpath("//a[text()='Re-assign Appointment']");
 
     public By todaysTab = By.xpath("//*[@id=\"Appointments\"]/li[2]/a");
     public By editAddress1 = By.xpath(" //input[@formcontrolname='address1']");
     public By editUpdateBtn = By.id("intakeFormSubmit");
+    public By dontSaveBtn=By.xpath("(//div[contains(@class,'col-12 d-flex justify')])[4]/a");
     public By actualTextClient = By.xpath("//p[text()=' College']");
     public By followUp = By.xpath("//a[text()=' Create Follow Up ']");
     public By followUp_CloseBtn=By.xpath("//button[@class='theme-button grey float-right']");
@@ -182,7 +185,7 @@ public class AdminPage extends BasePage {
     public By todayDateOnCard = By.xpath("(//span[@class='text-grey'])[1]");
     public By getTestReadyTitle = By.xpath("//div[@class='align-items-md-center d-flex flex-column flex-md-row page-header']/h3");
     public By titleOfUpcomingPage = By.xpath("//div[@class='page-header align-items-lg-center d-flex flex-column flex-md-row']/h3");
-    public By getStatus = By.xpath("(//tr[not(contains(@style,'display: none;'))])[2]//span");
+    public By getStatus = By.xpath("(//tr[not(contains(@style,'display: none;'))])[3]//span");
     public By getViewDetails = By.xpath("(//tr[not(contains(@style,'display: none;'))])[2]//a");
     public By getNameOfClient = By.xpath("((//tr[not(contains(@style,'display: none;'))])[2]//td)[1]");
     public By getTitleOfTestComplete = By.xpath("//div[@class='page-header align-items-lg-center d-flex flex-column flex-md-row']/h3");
@@ -204,6 +207,7 @@ public class AdminPage extends BasePage {
     public By title = By.xpath("//h3");
     public By clientNameCompleted = By.xpath("((//tr[not(contains(@style,'display: none;'))])[2]/td)[1]");
     public By unoldBackBtn = By.xpath("//a[@class='theme-button grey mx-2']");
+    public By clientName_Text=By.xpath("((//tr[not(contains(@style,'display: none;'))])[3]/td)[8]");
     public By titleOfViewReceipt = By.xpath("//h4[@class='text-center ng-star-inserted']");
     public By rescheduleAppointmentBtn = By.xpath("//a[text()='Reschedule Appointment']");
     public By diagnosticianName=By.xpath("//input[@placeholder='Select Diagnostician']");
@@ -624,6 +628,7 @@ public class AdminPage extends BasePage {
 
     public void click_EditClientBtn() {
         WebdriverWaits.waitUntilVisible(editClientBtn);
+        WebdriverWaits.waitForSpinner();
         scrollIntoView(editClientBtn);
         click_custom(editClientBtn);
     }
@@ -639,7 +644,15 @@ public class AdminPage extends BasePage {
         sendKeys_withClear(editLastName, lastName);
     }
     public void clik_ViewDetailLink(){
+        WebdriverWaits.waitUntilVisible(viewDetail);
+        WebdriverWaits.waitForSpinner();
         click_custom(viewDetail);
+    }
+    public void click_ViewDetail(){
+        WebdriverWaits.waitUntilVisible(clientName_Text);
+        WebdriverWaits.waitForSpinner();
+        click_custom(clientName_Text);
+
     }
 
     public void enter_grade(String grade) {
@@ -667,6 +680,15 @@ public class AdminPage extends BasePage {
         selectDropDownByVisibleText_custom(grade, gradeType);
         Log.info(DropDown.getSelectedOption(grade));
     }
+    public void enter_Comments(String additionalCommentText){
+        WebdriverWaits.waitUntilVisible(additionalComment);
+        sendKeys_withClear(additionalComment,additionalCommentText);
+    }
+    public void click_DontSaveBtn(){
+        WebdriverWaits.waitUntilVisible(dontSaveBtn);
+        scrollIntoView(dontSaveBtn);
+        click_custom(dontSaveBtn);
+    }
 
     public void enter_Address1(String address) {
         WebdriverWaits.waitUntilVisible(editAddress1);
@@ -675,6 +697,8 @@ public class AdminPage extends BasePage {
 
     public void click_HoldAppointmentBtn() {
         WebdriverWaits.waitUntilVisible(holdButton);
+        WebdriverWaits.waitForSpinner();
+        scrollIntoView(holdButton);
         click_custom(holdButton);
     }
 
@@ -696,6 +720,8 @@ public class AdminPage extends BasePage {
     }
 
     public void send_TextHoldSearchBox(String name) {
+        WebdriverWaits.waitUntilVisible(searchTextBox);
+        WebdriverWaits.waitForSpinner();
         sendKeys_custom(searchTextBox, name);
     }
 
@@ -708,7 +734,7 @@ public class AdminPage extends BasePage {
         Thread.sleep(4000);
     }
 
-    public String edit_ClientInfo(String firstName, String lastName, String address1, String grade,String schoolTypeOption,String reasonForCallText,String gradeType) {
+    public String edit_ClientInfo(String firstName, String lastName, String address1, String grade,String schoolTypeOption,String reasonForCallText,String gradeType,String additionalCommentText) {
         String fullName = firstName + " " + lastName;
         enter_FirstName(firstName);
         enter_LastName(lastName);
@@ -721,9 +747,8 @@ public class AdminPage extends BasePage {
 
         //Verify that appropriate dropdown list appears after clicking 'Grade' dropdown list and admin is able to select updated option from it,on 'Edit Client info' pop up, of  '<Client> Details' page.
         selectGradeType(gradeType);
+        enter_Comments(additionalCommentText);
 
-
-        //
         return fullName;
     }
 
@@ -734,6 +759,8 @@ public class AdminPage extends BasePage {
     }
 
     public void click_UpdateClientBtn() {
+        WebdriverWaits.waitUntilVisible(editUpdateBtn);
+        WebdriverWaits.waitForSpinner();
         click_custom(editUpdateBtn);
     }
 

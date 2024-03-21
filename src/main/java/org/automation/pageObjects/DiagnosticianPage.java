@@ -14,14 +14,10 @@ import org.openqa.selenium.support.ui.Select;
 import java.util.*;
 
 import static java.lang.Double.parseDouble;
-import static org.automation.elements.DropDown.getSelectedOption;
 import static org.automation.utilities.Assertions.validate_AttText;
 import static org.automation.utilities.Assertions.validate_text;
 import static org.automation.utilities.WebdriverWaits.moveToEleByWE;
 import static org.automation.utilities.WebdriverWaits.moveToElement;
-import static test.AdminTest.clientFirstName;
-import static test.AdminTest.clientLastName;
-
 
 public class DiagnosticianPage extends BasePage {
 
@@ -155,7 +151,7 @@ public class DiagnosticianPage extends BasePage {
     public void click_BackBtn() {
         WebdriverWaits.waitUntilVisible(backBtn);
         WebdriverWaits.waitForSpinner();
-        click_custom(backBtn);
+        moveToElement(backBtn);
     }
 
     public void enter_diagnostician_FirstName(String CustomerFirstName) {
@@ -556,7 +552,7 @@ public class DiagnosticianPage extends BasePage {
 
         click_CollectButton();
         WebdriverWaits.waitUntilVisible(pageTitle);
-        validate_text(pageTitle, clientFirstName + ' ' + clientLastName + ' ' + "Assessment");
+        validate_text(pageTitle, PropertiesUtil.getPropertyValue("clientFirstName") + ' ' + PropertiesUtil.getPropertyValue("clientLastName")+ ' ' + "Assessment");
 
         click_CheckBox();
 
