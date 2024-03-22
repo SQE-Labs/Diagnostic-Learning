@@ -38,7 +38,8 @@ public class PropertiesUtil {
 
     public static void setpropertyValue(String key, String value) throws IOException {
         try {
-            FileInputStream inputStream = new FileInputStream("C:\\Users\\SQE Labs\\IdeaProjects\\Diagnostic-Learning\\src\\main\\java\\org\\automation\\config\\config.properties");
+            String propFilePath = System.getProperty("user.dir") + "/src/main/java/org/automation/config/config.properties";
+            FileInputStream inputStream = new FileInputStream(propFilePath);
             Properties confprop = new Properties();
             confprop.load(inputStream);
             inputStream.close();
@@ -47,7 +48,7 @@ public class PropertiesUtil {
             confprop.setProperty(key, value);
 
             // Write updated properties back to config file
-            FileOutputStream outputStream = new FileOutputStream("C:\\Users\\SQE Labs\\IdeaProjects\\Diagnostic-Learning\\src\\main\\java\\org\\automation\\config\\config.properties");
+            FileOutputStream outputStream = new FileOutputStream(propFilePath);
             confprop.store(outputStream, null);
             outputStream.close();
 

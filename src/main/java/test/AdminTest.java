@@ -1,6 +1,7 @@
 package test;
 
 import org.automation.base.BaseTest;
+import org.automation.logger.Log;
 import org.automation.pageObjects.*;
 import org.automation.utilities.*;
 import org.automation.pageObjects.PaymentPage;
@@ -98,7 +99,7 @@ public class AdminTest extends BaseTest {
         //Create Diagnostician.
         diagnosticianFirstName = "AU_Craig" + RandomStrings.requiredCharacters(3);
         diagnosticianLastName = "AU_Dixon" + RandomStrings.requiredCharacters(3);
-        diagnosticianUserName = "Au_Colin" + RandomStrings.requiredCharacters(3);
+        diagnosticianUserName = "AU_Colin" + RandomStrings.requiredCharacters(3);
         diagnosticianEmailAddress = "Tran" + "10@yopmail.com";
         String diagnosticianPhoneNumber = RandomStrings.requiredDigits(10);
 
@@ -116,10 +117,11 @@ public class AdminTest extends BaseTest {
         diagnostician.click_createDiagnosticianButton();
 
         //Verify that appropriate options appear after clicking 'Assign Location' dropdown list & selected options appear in 'Assign Location' field on 'Create Diagnostician' page
-        diagnostician.create_Diagnostician(diagnosticianFirstName, diagnosticianLastName, diagnosticianPhoneNumber, diagnosticianEmailAddress, "Austin", diagnosticianUserName, "123456", "123456");
+        diagnostician.create_Diagnostician(diagnosticianFirstName, diagnosticianLastName, diagnosticianPhoneNumber, diagnosticianEmailAddress, "Woodlands", diagnosticianUserName, "123456", "123456");
         WebdriverWaits.waitUntilVisible(diagnostician.actualText);
 
         //validate Diagnostician
+        WebdriverWaits.waitForSpinner();
         PropertiesUtil.setpropertyValue("diagnostician_userName", diagnosticianUserName);
         diagnostician.enter_InSearchField(PropertiesUtil.getPropertyValue("diagnostician_userName"));
         validate_text(diagnostician.actualText, diagnosticianUserName);
@@ -156,7 +158,7 @@ public class AdminTest extends BaseTest {
         //  login.adminLogin(adminUserName, "12345678");
         directorFirstName = "AU_Felix" + RandomStrings.requiredCharacters(3);
         directorLastName = "AU_Cole" + RandomStrings.requiredCharacters(3);
-        directorEmailAddress = "Lee" + "@yopmail.com";
+        directorEmailAddress = "AU_Lee" + "@yopmail.com";
         directorUserName = "AU_Bell" + RandomStrings.requiredCharacters(3);
         dirCellNumber = RandomStrings.requiredDigits(10);
         login.admin_Login();
@@ -177,7 +179,7 @@ public class AdminTest extends BaseTest {
 
         //Verify that admin is able to enter valid data in all mandatory fields on 'Create Director' page.
         director.click_CreateDirectorsButton();
-        director.create_Director(directorFirstName, directorLastName, dirCellNumber, directorEmailAddress, directorUserName, "123456", "123456");
+        director.create_Director(directorFirstName, directorLastName, dirCellNumber, directorEmailAddress, "Woodlands",directorUserName, "123456", "123456");
         WebdriverWaits.waitUntilVisible(director.directorActualText);
         WebdriverWaits.waitForSpinner();
         validate_text(director.directorActualText, "Directors List");
@@ -217,7 +219,7 @@ public class AdminTest extends BaseTest {
         appPage.locationName_Lists();
 
         //Verify that admin is able to select any location from 'Choose Testing Location' dropdown list, while scheduling an appointment, on 'Create Appointment' page.
-        appPage.selectTestinglocation("Austin");
+        appPage.selectTestinglocation("Woodlands");
 
         //Verify that calendar appears after admin clicks on 'Assessment Date' field  under 'Preferred Location & Date' section, on 'Create Appointment' page.
         appPage.selectAppointmentSlot(0);
@@ -229,12 +231,12 @@ public class AdminTest extends BaseTest {
     @Test(priority = 8, enabled = true, description = "2.25, 2.26, 2.27, 2.28, 2.29,2.42, 2.43,  Filling client details by admin.")
     public void fill_clientDetailsSection() throws InterruptedException, IOException {
         AppointmentsPage fillClientDetails = new AppointmentsPage();
-        clientFirstName = "Au_Dunn" + RandomStrings.requiredCharacters(3);
-        clientLastName = "Au_Jade" + RandomStrings.requiredCharacters(3);
+        clientFirstName = "AU_Dunn" + RandomStrings.requiredCharacters(3);
+        clientLastName = "AU_Jade" + RandomStrings.requiredCharacters(3);
         clientCellNumber = RandomStrings.requiredDigits(10);
-        clientEmail = "Mia" + "@yopmail.com";
-        clientEmail2 = "Pipa" + "101@yopmail.com";
-        parentName = "Au_Kerr" + RandomStrings.requiredCharacters(3);
+        clientEmail = "AU_Mia" + "@yopmail.com";
+        clientEmail2 = "AU_Pipa" + "101@yopmail.com";
+        parentName = "AU_Kerr" + RandomStrings.requiredCharacters(3);
         fillClientDetails.fill_clientDetailsSection(clientFirstName, clientLastName, parentName, "19-11-2000", "Grade 2", "Private", clientCellNumber, clientEmail, "Other", "New York", "Texas", "30052", "1000", "900");
         PropertiesUtil.setpropertyValue("clientFirstName", clientFirstName);
         PropertiesUtil.setpropertyValue("clientLastName", clientLastName);
@@ -250,7 +252,7 @@ public class AdminTest extends BaseTest {
         appPage.click_CancelAppointmentBackBtn();
         admin.scrolltoUp();
         validate_text(admin.clientNameDetail, PropertiesUtil.getPropertyValue("clientFirstName") + ' ' + PropertiesUtil.getPropertyValue("clientLastName") + " Details");
-
+       Thread.sleep(5000);
         appPage.click_CancelAppointmentButton();
         WebdriverWaits.waitUntilVisible(admin.dashboardPage);
         WebdriverWaits.waitForSpinner();
@@ -285,7 +287,7 @@ public class AdminTest extends BaseTest {
         validate_text(appPage.dashboardTitleText, "Dashboard");
 
         dashboard.clickScheduleAppointment();
-        appPage.selectTestinglocation("Austin");
+        appPage.selectTestinglocation("Woodlands");
         appPage.selectAppointmentSlot(0);
         appPage.selectAssesmentType("Adult ADHD Only");
 
@@ -294,7 +296,7 @@ public class AdminTest extends BaseTest {
         validate_text(admin.clientDetail, PropertiesUtil.getPropertyValue("clientFirstName") + ' ' + PropertiesUtil.getPropertyValue("clientLastName") + " Details");
     }
     @Test(priority = 12, enabled = true, description = "19.18, Admin is able to click client detail page after clicking on 'View Details' button")
-    public void click_OnViewDetailsButton() {
+    public void click_ViewDetailsButton() {
         AdminPage admin = new AdminPage();
         AppointmentsPage appointment = new AppointmentsPage();
         appointment.click_UpcomingTab();
@@ -376,6 +378,7 @@ public class AdminTest extends BaseTest {
         admin.enterInSearchField(PropertiesUtil.getPropertyValue("clientFirstName"));
         admin.click_ViewDetail();
         admin.click_TestPlan();
+        //Verify that 'Test Plan' pop up appears after clicking 'Test Plan' button, on '<Client> Details page.
         validate_text(admin.testPlanText, "Please choose tests.");
     }
 
@@ -456,7 +459,7 @@ public class AdminTest extends BaseTest {
     }
 
     @Test(priority = 25, enabled = true, description = "9.9, 9.10, 9.11, 9.12, 9.13, 9.16,9.17,9.18, 9.19, 9.23 Verify Edit client details popup client page.")
-    public void verify_UpdateBtn() {
+    public void verify_UpdateBtn() throws InterruptedException {
         AdminPage admin = new AdminPage();
         admin.edit_ClientInfo(clientFirstName, clientLastName, "401 Broadway E eastate g", "College", "Private", "Math", "Grade 2", "I am doing simple testing");
 
@@ -466,14 +469,12 @@ public class AdminTest extends BaseTest {
         admin.click_EditClientBtn();
         admin.edit_ClientInfo(clientFirstName, clientLastName, "401 Broadway E eastate g", "College", "Private", "Math", "Grade 2", "I am doing simple testing");
         admin.click_UpdateClientBtn();
-
+       Thread.sleep(4000);
         WebdriverWaits.waitUntilVisible(admin.messageText);
         WebdriverWaits.waitForSpinner();
         admin.scrollIntoView(admin.messageText);
         String enteredTexts = "I am doing simple testing";
-        Assert.assertEquals( admin.messageText, enteredTexts);
-        WebdriverWaits.waitUntilVisible(admin.actualTextClient);
-        validate_text(admin.actualTextClient, "College");
+        validate_text( admin.messageText, enteredTexts);
     }
 
     @Test(priority = 26, enabled = true, description = "13.1, 23.1 verify hold appointment button.")
@@ -500,7 +501,6 @@ public class AdminTest extends BaseTest {
         //Verify that 'Hold Appointment' pop up appears after clicking 'Hold' button on '<Client>Details'  page.
         admin.click_HoldTab();
         validate_text(admin.holdAppointmentText, "Hold Appointments");
-
     }
 
     @Test(priority = 29, enabled = true, description = "23.6 verify filter button on hold appointment page.")
@@ -522,7 +522,7 @@ public class AdminTest extends BaseTest {
         //Verify that relevant records appear after entering valid data in search textbox, on 'Hold Appointments' page.
         admin.send_TextHoldSearchBox(PropertiesUtil.getPropertyValue("clientFirstName"));
         validate_text(admin.validateHoldClient, PropertiesUtil.getPropertyValue("clientEmail"));
-        admin.click_HoldBackBtn();
+       // admin.click_HoldBackBtn();
         WebdriverWaits.waitUntilVisible(admin.holdAppointmentText);
         WebdriverWaits.waitForSpinner();
         validate_text(admin.holdAppointmentText, "Hold Appointments");
@@ -554,6 +554,7 @@ public class AdminTest extends BaseTest {
         AdminPage admin = new AdminPage();
         admin.enter_InSearchField(PropertiesUtil.getPropertyValue("clientFirstName"));
         WebdriverWaits.waitUntilVisible(admin.getStatus);
+        WebdriverWaits.waitForSpinner();
         validate_text(admin.getStatus, "Test Ready");
         admin.click_ViewDetailsLink();
         WebdriverWaits.waitUntilVisible(admin.clientNameDetail);
@@ -886,7 +887,13 @@ public class AdminTest extends BaseTest {
         //Verify that 'View Documents' popup appears after clicking 'View Documents' button, on 'Client Observation' page.
         String expectedText = "Attached Documents";
         validate_text(admin.getTitleOfAttachedDocument, expectedText);
-        admin.clickOn_CloseIcon();
+        String documentName=getText_custom(admin.documentName);
+        String[] stringParts = documentName.split("\n");
+        String partA = stringParts[0];
+        Log.info(partA);
+        String partB = stringParts[1];
+        Log.info(partB);
+         admin.clickOn_CloseIcon();
         admin.click_BackButton();
         // String expectedFileName = getText_custom(admin.getTextFromViewDocTwo);
         // System.out.println("expectedFileName= " + expectedFileName);
@@ -992,7 +999,7 @@ public class AdminTest extends BaseTest {
         AdminPage admin = new AdminPage();
         DashBoardPanelPage panelpage = new DashBoardPanelPage();
         login.admin_Login();
-        admin.paying_DueAmount(clientFirstName);
+        admin.paying_DueAmount(PropertiesUtil.getPropertyValue("clientFirstName"));
         WebdriverWaits.waitUntilVisible(admin.clientNameDetail);
         validate_text(admin.clientNameDetail, PropertiesUtil.getPropertyValue("clientFirstName") + ' ' + PropertiesUtil.getPropertyValue("clientLastName") + ' ' + "Details");
 

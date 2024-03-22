@@ -8,16 +8,12 @@ import org.automation.utilities.*;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-
-
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.List;
-
 import static org.automation.utilities.Assertions.*;
 
 
@@ -42,6 +38,7 @@ public class SuperAdminTest extends BaseTest {
     @Test(priority = 0, enabled = true, description = "1.1 Verify that super superadmin is able to login into account using valid 'Username' & 'Password', on 'Sign in to your account' page.")
     public void verify_Superadmin_login() {
         LoginPage login = new LoginPage();
+
         //Login by using superAdmin credentials
         String superAdminUserName = PropertiesUtil.getPropertyValue("super_userName");
         String superAdminPassword = PropertiesUtil.getPropertyValue("super_password");
@@ -175,7 +172,7 @@ public class SuperAdminTest extends BaseTest {
         DiagnosticianPage diagnostician = new DiagnosticianPage();
         diagnosticianFirstName = "AU_Haze" + RandomStrings.requiredCharacters(3);
         diagnosticianLastName = "AU_Arn" + RandomStrings.requiredCharacters(3);
-        diagnosticianEmailAddress = "Peta" + "@yopmail.com";
+        diagnosticianEmailAddress = "AU_Peta" + "@yopmail.com";
         diagnosticianUserName = "AU_Leah" + RandomStrings.requiredCharacters(3);
         dia_Cell_Number = RandomStrings.requiredDigits(10);
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
@@ -193,7 +190,7 @@ public class SuperAdminTest extends BaseTest {
         //**************SuperAdmin is creating diagnostician*************
 
 
-        diagnostician.create_Diagnostician(diagnosticianFirstName, diagnosticianLastName, dia_Cell_Number, diagnosticianEmailAddress, "Austin", diagnosticianUserName, "123456", "123456");
+        diagnostician.create_Diagnostician(diagnosticianFirstName, diagnosticianLastName, dia_Cell_Number, diagnosticianEmailAddress, "Woodlands", diagnosticianUserName, "123456", "123456");
         diagnostician.enter_InSearchField(diagnosticianUserName);
         WebdriverWaits.waitUntilVisible(diagnostician.actualText);
         validate_text(diagnostician.actualText, diagnosticianUserName);
@@ -284,8 +281,9 @@ public class SuperAdminTest extends BaseTest {
     @Test(priority = 16, enabled = true, description = "4.14 verify that superAdmin is able to edit or not after clicking Dont save button")
     public void verify_Dia_DontSaveBtn() throws InterruptedException {
         DiagnosticianPage diagnostician = new DiagnosticianPage();
+        diagnostician.enter_InSearchField(PropertiesUtil.getPropertyValue("diagnosticianFirstName"));
         diagnostician.cheking_DisableUser();
-        diagnostician.enter_InSearchField(diagnosticianFirstName);
+        diagnostician.enter_InSearchField(PropertiesUtil.getPropertyValue("diagnosticianFirstName"));
         diagnostician.verify_DontSave("5659865589", diagnosticianEmailAddress, "123456", "123456");
         validate_text(diagnostician.UserNameGetText, diagnosticianUserName);
     }
@@ -332,7 +330,7 @@ public class SuperAdminTest extends BaseTest {
     public void create_Directors() throws InterruptedException, IOException {
         directorFirstName = "AU_Reig" + RandomStrings.requiredCharacters(3);
         directorLastName = "AU_Sage" + RandomStrings.requiredCharacters(3);
-        directorEmailAddress = "Zoey" + "@yopmail.com";
+        directorEmailAddress = "AU_Zoey" + "@yopmail.com";
         directorUserName = "AU_Skye" + RandomStrings.requiredCharacters(3);
         dir_Cell_Number = RandomStrings.requiredDigits(10);
         DirectorPage director = new DirectorPage();
@@ -351,7 +349,7 @@ public class SuperAdminTest extends BaseTest {
         validate_text(director.directorListPage, "Directors List");
 
         //Verify that user is able to create director with valid data after clicking 'Create Director' button, on 'Directors List' page
-        director.create_Director(directorFirstName, directorLastName, dir_Cell_Number, directorEmailAddress, directorUserName, "123456", "123456");
+        director.create_Director(directorFirstName, directorLastName, dir_Cell_Number, directorEmailAddress, "Woodlands",directorUserName, "123456", "123456");
 
         // Verify that superadmin is directed to 'Directors List' page after clicking on 'Create Director' button, on 'Create Director' page.
         WebdriverWaits.waitUntilVisible(director.directorListPage);
@@ -371,7 +369,7 @@ public class SuperAdminTest extends BaseTest {
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
 
         // Verify that validation message appears after clicking on 'Create Director' button, when user enter same username in 'username' field, on 'Create Director' page.
-        director.create_Director(directorFirstName, directorLastName, dir_Cell_Number, directorEmailAddress, directorUserName, "123456", "123456");
+        director.create_Director(directorFirstName, directorLastName, dir_Cell_Number, directorEmailAddress,"Woodlands", directorUserName, "123456", "123456");
         WebdriverWaits.waitUntilVisible(director.validationMsg);
         validate_text(director.validationMsg, "An error occurred while creating the user. Username already exists!");
         panelPage.click_BackButton();
@@ -575,7 +573,7 @@ public class SuperAdminTest extends BaseTest {
     public void view_Payments_Page() {
         PaymentPage payment = new PaymentPage();
         LoginPage login = new LoginPage();
-        login.navigate_Back();
+       // login.navigate_Back();
         String superAdminUserName = PropertiesUtil.getPropertyValue("super_userName");
         String superAdminPassword = PropertiesUtil.getPropertyValue("super_password");
         login.superAdminLogin(superAdminUserName, superAdminPassword);

@@ -1,11 +1,14 @@
 package org.automation.pageObjects;
+
 import org.automation.base.BasePage;
 import org.automation.elements.DropDown;
 import org.automation.logger.Log;
 import org.automation.utilities.WebdriverWaits;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+
 import java.util.*;
+
 import static org.automation.utilities.Assertions.validate_text;
 import static org.automation.utilities.DateGenerator.getMonthAndYear;
 import static org.automation.utilities.WebdriverWaits.moveToElement;
@@ -47,33 +50,29 @@ public class AppointmentsPage extends BasePage {
     public By dateElements = By.xpath("//tr/td[5]");
     public By dateEle = By.xpath("((//tr[not(contains(@style,'display: none;'))])[2]//td)[4]");
     public By chooseTestingLocation = By.id("testingLocation");
-    public By locationLists=By.xpath("//select[@id='testingLocation']/option");
-    public By gradeList=By.xpath("(//select[@id='schoolType'])[1]/option");
-    public By schoolTypeList=By.xpath("(//select[@id='schoolType'])[2]/option");
-    public By titleText=By.xpath("//h3");
+    public By locationLists = By.xpath("//select[@id='testingLocation']/option");
+    public By gradeList = By.xpath("(//select[@id='schoolType'])[1]/option");
+    public By schoolTypeList = By.xpath("(//select[@id='schoolType'])[2]/option");
+    public By titleText = By.xpath("//h3");
     public By clientFirstName = By.xpath("//input[@placeholder='Client First Name']");
     public By clientLastName = By.xpath("//input[@placeholder='Client Last Name']");
     public By clientParentName = By.xpath("//input[@placeholder='Parent Name (Optional)']");
-
-
     public By headerResource = By.xpath("//div[@class='header-resource-name']");
     public By dateOfBirth = By.xpath("//input[@placeholder='Date of Birth']");
-
     public By grade = By.xpath("(//select[@id='schoolType'])[1]");
     public By schoolType = By.xpath("(//select[@id='schoolType'])[2]");
-    public By reasonTypeDropdownList=By.xpath("//select[@id='reasonForCall']/option");
+    public By reasonTypeDropdownList = By.xpath("//select[@id='reasonForCall']/option");
     public By continueToDeposit = By.id("intakeFormSubmit");
     public By testAmount = By.xpath("//input[@placeholder='Test Amount']");
     public By cellNumber = By.xpath("//input[@placeholder='Cell Number']");
-
     public By enterAmountField = By.xpath("//input[@placeholder='Enter Amount']");
     public By collectDeposit = By.xpath("//button[text()='Collect Deposit']");
     public By logOutLink = By.xpath("//a[text()='Log Out']");
     public By reasonForCall = By.id("reasonForCall");
-    public By paymentPopUp=By.xpath("(//div/h4)[1]");
+    public By paymentPopUp = By.xpath("(//div/h4)[1]");
     public By actualText = By.xpath("//h4[text()='Appointment Scheduled!!']");
     public By cancelButton = By.xpath("//button[@class='theme-button danger m-2 ng-star-inserted']");
-    public By backBtn=By.xpath("(//div[@class='action text-center']/a)[1]");
+    public By backBtn = By.xpath("(//div[@class='action text-center']/a)[1]");
     public By radioBox = By.xpath("(//label[@class='custom-control-label'])[1]");
     public By nameOfTestReadyCard = By.xpath("(//div[@class='client-diagno d-flex align-items-center justify-content-between']/p)[1]");
     public By yesButton = By.xpath("//button[@class='theme-button danger mx-2 ng-star-inserted']");
@@ -94,7 +93,7 @@ public class AppointmentsPage extends BasePage {
     public By emailAddress = By.xpath("//input[@placeholder='Email Address']");
     public By saveBtnCalendar = By.xpath("//a[@class='theme-button green float-right mr-2']");
 
-    public By goBackBtn=By.xpath("//a[@class='ml-auto grey theme-button']");
+    public By goBackBtn = By.xpath("//a[@class='ml-auto grey theme-button']");
     //******************Verifying cancelled appointments*****************
 
     public void clickOn_TodayTab() {
@@ -120,17 +119,20 @@ public class AppointmentsPage extends BasePage {
         WebdriverWaits.waitForSpinner();
         click_custom(upcomingTab);
     }
+
     public void enterFirstName(String cilentFirstNameText) {
         WebdriverWaits.waitUntilVisible(clientFirstName);
         sendKeys_withClear(clientFirstName, cilentFirstNameText);
     }
+
     public void enterLastName(String cilentLastNameText) {
         WebdriverWaits.waitUntilVisible(clientLastName);
         sendKeys_withClear(clientLastName, cilentLastNameText);
     }
+
     public void enterParentName(String cilentParentNameText) {
         WebdriverWaits.waitUntilVisible(clientParentName);
-        sendKeys_withClear( clientParentName, cilentParentNameText);
+        sendKeys_withClear(clientParentName, cilentParentNameText);
     }
 
     public void click_CloseButton() {
@@ -143,32 +145,35 @@ public class AppointmentsPage extends BasePage {
         WebdriverWaits.waitUntilVisible(toDateText);
         clickBtn_custom(toDateText);
     }
+
     public void enter_OtherComments(String otherCommentText) {
         scrollIntoView(editTestPlanButton);
         WebdriverWaits.waitUntilVisible(otherComment);
         sendKeys_withClear(otherComment, otherCommentText);
     }
+
     public void click_Filter() {
         WebdriverWaits.waitUntilVisible(directorFilter);
         clickBtn_custom(directorFilter);
     }
-    public void click_goBackBtn(){
+
+    public void click_goBackBtn() {
         WebdriverWaits.waitUntilVisible(goBackBtn);
         WebdriverWaits.waitForSpinner();
         click_custom(goBackBtn);
     }
 
     public void selectGradeType(String gradeType) {
-        dropdownListsValues(grade,"gradeTypeList");
-         selectDropDownByVisibleText_custom(grade, gradeType);
+        dropdownListsValues(grade, "gradeTypeList");
+        selectDropDownByVisibleText_custom(grade, gradeType);
         System.out.println(DropDown.getSelectedOption(grade));
     }
 
     public void selectSchoolType(String schoolTypeOption) {
         // click_custom(SchoolType);
-        dropdownListsValues(schoolType,"schoolTypeList");
+        dropdownListsValues(schoolType, "schoolTypeList");
         selectDropDownByVisibleText_custom(schoolType, schoolTypeOption);
-       System.out.println(DropDown.getSelectedOption(schoolType));
+        System.out.println(DropDown.getSelectedOption(schoolType));
     }
 
     public void enterCellNumber(String cellNumberText) throws InterruptedException {
@@ -199,7 +204,7 @@ public class AppointmentsPage extends BasePage {
 
     public void reasonForCallDropDown(String reasonForCallText) {
         //Verify that appropriate dropdown list appears after clicking 'Reason for call' dropdown list and admin is able to select any one option from it, on 'Edit Client info' pop up, of  '<Client> Details' page.
-        dropdownListsRemoveValues(reasonTypeDropdownList,"schoolTypeList","Reason For Call");
+        dropdownListsRemoveValues(reasonTypeDropdownList, "schoolTypeList", "Reason For Call");
         selectDropDownByVisibleText_custom(reasonForCall, reasonForCallText);
         System.out.println(DropDown.getSelectedOption(reasonForCall));
     }
@@ -217,49 +222,59 @@ public class AppointmentsPage extends BasePage {
     public void clickContinueToDepositButton() {
         click_custom(continueToDeposit);
     }
+
     public void enterInDateField(String dateOfBirthText) {
         click_custom(dateOfBirth);
         WebdriverWaits.waitUntilVisible(dateOfBirth);
         sendKeys_withClear(dateOfBirth, dateOfBirthText);
     }
+
     public void selectTestinglocation(String chooseLocationText) {
         WebdriverWaits.waitUntilVisible(chooseTestingLocation);
         clickBtn_custom(chooseTestingLocation, "ChooseLocation");
         selectDropDownByVisibleText_custom(chooseTestingLocation, chooseLocationText, "ChooseLocation");
 
     }
+
     public void locationName_Lists() {
         dropdownListsRemoveValues(locationLists, "Location List", "Choose Testing Location");
     }
-    public void click_BackBtn(){
+
+    public void click_BackBtn() {
         click_custom(backBtn);
     }
-    public void click_CancelBtn(){
+
+    public void click_CancelBtn() {
         refresh_Page();
         WebdriverWaits.waitUntilVisible(cancelButton);
+        WebdriverWaits.waitForSpinner();
         scrollIntoView(cancelButton);
         click_custom(cancelButton);
     }
 
-    public void enterAmount(String enterAmountText)    {
+    public void enterAmount(String enterAmountText) {
         WebdriverWaits.waitUntilInvisible(enterAmountField);
         WebdriverWaits.waitUntilVisible(enterAmountField);
         click_custom(enterAmountField);
         sendKeys_withClear(enterAmountField, enterAmountText);
     }
+
     public void clickCollectDepositButton() {
         WebdriverWaits.waitUntilVisible(collectDeposit);
         click_custom(collectDeposit);
     }
+
     public void clickViewDetailsButton() {
         WebdriverWaits.waitUntilVisible(viewDetails);
         WebdriverWaits.waitForSpinner();
         click_custom(viewDetails);
     }
+
     public int getColumnCount() {
         List<WebElement> list = getWebElements(headerResource, "Heders");
         return list.size();
     }
+
     public void getTotalColumnCount(int count) throws InterruptedException {
         int colCount = getColumnCount();
         int expLocatorPos = (colCount - 1) * 7 + 1;
@@ -278,6 +293,7 @@ public class AppointmentsPage extends BasePage {
             }
         }
     }
+
     public void click_CancelAppointmentButton() throws InterruptedException {
         click_CancelBtn();
         WebdriverWaits.waitUntilVisible(radioBox);
@@ -286,22 +302,27 @@ public class AppointmentsPage extends BasePage {
         WebdriverWaits.waitForSpinner();
         Thread.sleep(6000);
     }
-    public void click_CancelAppointmentBackBtn(){
+
+    public void click_CancelAppointmentBackBtn() {
         click_CancelBtn();
         click_BackBtn();
     }
+
     public void clickSlotSaveButton() {
         WebdriverWaits.waitUntilVisible(clickSlotSaveBtn);
         click_custom(clickSlotSaveBtn);
     }
+
     public void clickCalSaveButton() {
         click_custom(clickCalSaveBtn);
     }
+
     public void click_AssessmentDate() {
         WebdriverWaits.waitUntilVisible(assessmentDate);
         WebdriverWaits.waitForSpinner();
         click_custom(assessmentDate);
     }
+
     public void selectAppointmentSlot(int count) throws InterruptedException {
         click_AssessmentDate();
         String currentDate = getMonthAndYear();
@@ -320,6 +341,7 @@ public class AppointmentsPage extends BasePage {
 
         clickCalSaveButton();
     }
+
     public void selectAssesmentType(String assestmentTypeTexts) {
         WebdriverWaits.waitUntilVisible(assestmentType);
         WebdriverWaits.waitForSpinner();
@@ -327,7 +349,7 @@ public class AppointmentsPage extends BasePage {
         selectDropDownByVisibleText_custom(assestmentType, assestmentTypeTexts);
     }
 
-    public void fill_clientDetailsSection(String CustomerFirstName, String CustomerLastName, String parentNameField,String dateOfBirthText,String gradeType, String schoolTypeOption, String cellNumber, String EmailAddress, String reasonForCallText, String cityText, String stateText, String zipCodeText, String testAmountText, String enterAmountText) throws InterruptedException {
+    public void fill_clientDetailsSection(String CustomerFirstName, String CustomerLastName, String parentNameField, String dateOfBirthText, String gradeType, String schoolTypeOption, String cellNumber, String EmailAddress, String reasonForCallText, String cityText, String stateText, String zipCodeText, String testAmountText, String enterAmountText) throws InterruptedException {
         enterFirstName(CustomerFirstName);
         enterLastName(CustomerLastName);
         enterInDateField(dateOfBirthText);
@@ -365,16 +387,19 @@ public class AppointmentsPage extends BasePage {
         WebdriverWaits.waitForSpinner();
         Thread.sleep(5000);
     }
+
     public void click_AppointmentTab() {
         WebdriverWaits.waitUntilVisible(appointmentsTab);
         WebdriverWaits.waitForSpinner();
         click_custom(appointmentsTab);
     }
+
     public void click_ViewAllTab() {
         WebdriverWaits.waitUntilVisible(viewAllTab);
         WebdriverWaits.waitForSpinner();
         moveToElement(viewAllTab);
     }
+
     public void click_FilterButton() {
         WebdriverWaits.waitUntilVisible(filterButton);
         WebdriverWaits.waitForSpinner();
@@ -469,7 +494,8 @@ public class AppointmentsPage extends BasePage {
         WebdriverWaits.waitForSpinner();
         click_custom(holdtab);
     }
-    public void navigate_appointmentDashboardPage(){
+
+    public void navigate_appointmentDashboardPage() {
         click_goBackBtn();
-      }
+    }
 }

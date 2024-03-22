@@ -30,7 +30,6 @@ public class DiagnosticianPage extends BasePage {
     public By diagnostician_MobileNumber = By.xpath("//input[@placeholder='Cell Number']");
     public By diagnostician_Email = By.xpath("//input[@placeholder='Email']");
     public By assignLocation = By.xpath("//select[@id='testingLocation']");
-    public By locationName = By.xpath("//option[text()='Austin']");
     public By userName = By.xpath("//input[@placeholder='Username']");
     public By password_Field = By.xpath("//input[@placeholder='Create Password']");
     public By confirm_PasswordField = By.xpath("//input[@placeholder='Confirm Password']");
@@ -53,16 +52,16 @@ public class DiagnosticianPage extends BasePage {
     public By searchFld = By.xpath("//input[@placeholder='Type here to search']");
     public By searchFild = By.xpath("//input[contains(@aria-controls,'DataTables_Table')]");
     public By SearchField = By.xpath("//input[@aria-controls='appointmentTable']");
-    public By viewClientDetailLink = By.xpath("(//td)[6]");
+    public By viewClientDetailLink = By.xpath("(//td)[7]");
     public By clientDetailText = By.xpath("//div[contains(@class,'page-header align-items-lg-center')]");
-    public By clientNameText = By.cssSelector("tr:not([style='display: none;' ]) td:nth-child(1)");
+    public By clientNameText = By.cssSelector("tr:not([style='display: none;' ]) td:nth-child(2)");
     public By clientText = By.xpath("//h3");
     public By fromDate = By.xpath("//input[@placeholder='From Date']");
     public By toDate = By.xpath("//input[@placeholder='To Date']");
 
     //+++++++++++++EDIT Diagnostician+++++++++++++++
 
-    public By editButton = By.xpath("(//a[text()='Edit'])[1]");
+    public By editButton = By.xpath("//a[contains(@class,'ml-auto px-3 py-2 badge')]");
     public By cellNumber = By.xpath("//input[@placeholder='Cell Number']");
     public By emailField = By.xpath("//input[@formcontrolname='email']");
     public By updateButton = By.xpath("//button[@class='theme-button mr-3']");
@@ -231,7 +230,7 @@ public class DiagnosticianPage extends BasePage {
     public void click_EditButton() {
         WebdriverWaits.waitUntilVisible(editButton);
         WebdriverWaits.waitForSpinner();
-        click_custom(editButton);
+        moveToElement(editButton);
     }
 
     public void enter_CellNumber(String cellNumberText) {
@@ -243,8 +242,9 @@ public class DiagnosticianPage extends BasePage {
         click_custom(updateButton);
     }
 
-    public void off_ToggleButton()  {
+    public void off_ToggleButton() throws InterruptedException {
         WebdriverWaits.waitUntilVisible(toggle);
+        Thread.sleep(2000);
         click_custom(toggle);
     }
 
@@ -307,7 +307,6 @@ public class DiagnosticianPage extends BasePage {
 
     public void cheking_DisableUser() throws InterruptedException {
         click_EditButton();
-
         click_DontSave();
     }
 
@@ -529,6 +528,7 @@ public class DiagnosticianPage extends BasePage {
     }
 
     public void click_ClientDetailLink() {
+
         click_ViewDetailLink();
     }
 

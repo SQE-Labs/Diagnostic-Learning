@@ -57,7 +57,8 @@ public class DiagnosticianTest extends BaseTest {
         diagnostician.click_ClientDetailLink();
         WebdriverWaits.waitUntilVisible(diagnostician.clientText);
         WebdriverWaits.waitForSpinner();
-        validate_text(diagnostician.clientText, PropertiesUtil.getPropertyValue("clientFirstName") + ' ' + PropertiesUtil.getPropertyValue("clientLastName") + ' ' + " Details");
+
+        validate_text(diagnostician.clientText, PropertiesUtil.getPropertyValue("clientFirstName") + ' ' + PropertiesUtil.getPropertyValue("clientLastName")+" Details");
     }
 
     @Test(priority = 4, enabled = true, description = "  44/70 Diagnostician is verifying  that relevant records appear after selecting valid range of date, on 'Upcoming Appointments' page.")

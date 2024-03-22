@@ -167,13 +167,13 @@ public class AdminPage extends BasePage {
     //*******************Paying full payment by client****************
     public By appointmentTab = By.xpath("//a[text()=' Appointments ']");
     public By testCompleteTab = By.xpath("//a[text()='Test complete']");
-    public By clientDetailLink = cssSelector("tr:not([style='display: none;' ]) td:nth-child(7)");
+    public By clientDetailLink = cssSelector("tr:not([style='display: none;' ]) td:nth-child(8)");
     public By paymentButton = By.xpath("//button[@class='theme-button green m-2 ng-star-inserted']");
     public By collectPaymentTxt=By.xpath("//div[@class='modal-content light px-5 py-4']/h4[text()='Collect Payment']");
     public By inr = By.xpath("(//td)[10]");
     public By amountField = By.xpath("//input[@id='bookingDeposit']");
     public By collectButton = By.xpath("//button[@class='theme-button mx-2']");
-    public By cancelButton = By.xpath("(//a[text()='Close'])[3]");
+    public By cancelButton = By.xpath("(//h4/following-sibling::a[text()='Close'])[1]");
     public By clientNameDetail = By.xpath("//h3");
     public By cancelAppointmentBtn = By.xpath("//button[text()=' Cancel Appointment ']");
     public By cancelTab = By.xpath("//a[text()='Canceled']");
@@ -198,6 +198,7 @@ public class AdminPage extends BasePage {
     public By success_Msg=By.xpath("//h5[contains(text(),'Uploaded')]");
     public By closeIcon = By.xpath("//button[@aria-label='Close']/span");
     public By clientNameTextTitle = By.cssSelector("tr:not([style='display: none;' ]) td:nth-child(2)");
+    public By documentName=By.xpath("//a[@class='d-flex px-3 py-2 small text-dark text-left text-wrap']");
 
     public By backButton = By.xpath("//a[@class='grey ml-3 theme-button']");
     public By viewDetail=By.cssSelector("tr:not([style='display: none;' ]) td:nth-child(8)");
@@ -1051,7 +1052,7 @@ public class AdminPage extends BasePage {
 
 
     public void click_HoldBackBtn() {
-        waitUntilVisible(backBtn);
+        WebdriverWaits.waitUntilVisible(backBtn);
         WebdriverWaits.waitForSpinner();
         click_custom(backBtn);
     }
