@@ -68,6 +68,7 @@ public class DiagnosticianPage extends BasePage {
     public By passwordTextField = By.xpath("//input[@formcontrolname='password']");
     public By confirmPasswordField = By.xpath("(//input[@type='password'])[2]");
     public By edit_Succ_Msg = By.xpath("//div[@class='alert alert-success ng-star-inserted']");
+    public By clientEmail=By.cssSelector("tr:not([style='display: none;' ]) td:nth-child(4)");
     public By UserNameGetText = By.xpath("(//td)[2]");
     public By enableUser = By.xpath("//label[@class='small ng-star-inserted']");
     public By toggle = By.xpath("//span[@class='slider round']");

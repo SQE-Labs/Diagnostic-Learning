@@ -355,6 +355,7 @@ public class DirectorPage extends BasePage {
         click_confirmPasswordField(confirmPasswordFieldText);
         off_ToggleButton();
         click_UpdateButton();
+        Thread.sleep(4000);
     }
 
     //********Cheking toggole off of directore*************

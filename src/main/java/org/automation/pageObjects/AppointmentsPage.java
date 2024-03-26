@@ -26,6 +26,7 @@ public class AppointmentsPage extends BasePage {
     public By allAppointmentsPage = By.xpath("//h3");
     public By searchedText = By.cssSelector("tr:not([style='display: none;' ]) td:nth-child(2)");
     public By viewDetailsLink = By.xpath("(//tr[not(contains(@style,'display: none;'))])[2]//a");
+    public By view_Details=By.xpath("(//tr[not(contains(@style,'display: none;'))])[3]//a");
     public By clickSlotSaveBtn = By.xpath("//mbsc-button[text()=' Save ']");
     public By holdtab = By.xpath("//a[text()='Hold']");
     public By app_Text = By.xpath("//h3");
@@ -425,10 +426,11 @@ public class AppointmentsPage extends BasePage {
 
 
     public void click_ViewDetails() {
-        WebdriverWaits.waitUntilVisible(viewDetailsLink);
-        click_custom(viewDetailsLink);
+        WebdriverWaits.waitUntilVisible(view_Details);
+        click_custom(view_Details);
         WebdriverWaits.waitForSpinner();
     }
+
 
 
     public void exportCSV_Button() {

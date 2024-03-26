@@ -242,9 +242,10 @@ public class SuperAdminTest extends BaseTest {
         // Verify that  'Edit User' pop up appears after clicking 'Edit' button of any director, on 'Diagnosticians List' page
         //Verify that 'Cell Number' field accepts ten digit number in defined format on 'Edit User' pop up, of 'Diagnosticians List' page
         diagnostician.edit_Diagnostician(diagnosticianEmailAddress1, "12345678", "12345678");
-        WebdriverWaits.waitUntilVisible(diagnostician.edit_Succ_Msg);
         WebdriverWaits.waitForSpinner();
-        validate_text(diagnostician.edit_Succ_Msg, "Diagnostician details updated successfully.");
+        diagnostician.enter_InSearchField(diagnosticianUserName);
+        WebdriverWaits.waitUntilVisible(diagnostician.clientEmail);
+        validate_text(diagnostician.clientEmail, diagnosticianEmailAddress1);
         Log.info("Successfully Edited the created diagnostician");
         PropertiesUtil.setpropertyValue("diagnostician_password", "12345678");
 
@@ -383,6 +384,7 @@ public class SuperAdminTest extends BaseTest {
     public void edit_Director() throws InterruptedException, IOException {
         String directorEmailAddress1 = directorFirstName + "12@yopmail.com";
         DirectorPage director = new DirectorPage();
+        DiagnosticianPage diagnostician=new DiagnosticianPage();
 
         //director changing the password.
         //Verify that search text box appears after clicking 'Filter' button on 'Directors List' page.
@@ -392,7 +394,11 @@ public class SuperAdminTest extends BaseTest {
         //Verify that  'Edit User' pop up appears after clicking 'Edit' button of any director, on 'Directors List' page
         // Verify that 'Cell Number' field accepts ten digit number in defined format on 'Edit User' pop up, of 'Directors List' page
         director.edit_Director(directorEmailAddress1, "12345678", "12345678");
-        validate_text(director.edit_SuccMsg, "Director details updated successfully.");
+        WebdriverWaits.waitForSpinner();
+        director.enterInSearchField(PropertiesUtil.getPropertyValue("director_userName"));
+        WebdriverWaits.waitUntilVisible(diagnostician.clientEmail);
+        WebdriverWaits.waitForSpinner();
+        validate_text(diagnostician.clientEmail, directorEmailAddress1);
         Log.info("Successfully Edited the created director");
 
         // Setting New password in config file.
@@ -517,7 +523,7 @@ public class SuperAdminTest extends BaseTest {
     }
 
     //*************This testcase also has defect*********************
-    @Test(dependsOnMethods = {"verify_Appointments_Page"}, description = " 2.7,  2.91Verify that 'Appointment Details' page opens up on clicking 'View Detail' link")
+    @Test(dependsOnMethods = {"verify_Appointments_Page"}, description = " 2.7, 2.91 Verify that 'Appointment Details' page opens up on clicking 'View Detail' link")
     public void verify_view_Details_Page() {
         AppointmentsPage appointment = new AppointmentsPage();
         SuperAdminPage superAdmin = new SuperAdminPage();
