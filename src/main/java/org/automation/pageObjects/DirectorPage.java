@@ -179,7 +179,7 @@ public class DirectorPage extends BasePage {
         dropdownListsRemoveValues(locationList, "locationLists","Assign Location");
         click_custom(assignLocation);
         selectDropDownByVisibleText_custom(assignLocation,location);
-        System.out.println( DropDown.getSelectedOption(assignLocation));
+        Log.info( DropDown.getSelectedOption(assignLocation));
     }
 
     public void click_directorsUserNameField(String directorsUserNameText) {

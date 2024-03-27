@@ -314,7 +314,7 @@ public class AdminTest extends BaseTest {
 
     //********************** Create Follow Up For Client ***********************//
 
-    @Test(priority = 13, enabled = true, description = "16.1, 16.7, 16.13, 16.14, 16.21  Creat follow up for client by admin")
+    @Test(priority = 13, enabled = true, description = "16.1, 16.7, 16.13, 16.14, 16.21, 16.20 Creat follow up for client by admin")
     public void create_FollowUp() throws InterruptedException {
         AdminPage admin = new AdminPage();
         admin.click_CreateFollowUpBtn();
@@ -426,7 +426,6 @@ public class AdminTest extends BaseTest {
     public float afterAssessmentAmount;
     public float afterAmountDue;
     public float afterRececiedAmount;
-
 
 
     @Test(priority = 22, enabled = true, description = "10.1,Verify payment button on <Client> details page.")
@@ -642,7 +641,7 @@ public class AdminTest extends BaseTest {
         DiagnosticianPage diagnostician = new DiagnosticianPage();
 
         // Edit Diagnostician
-          diagnosticianUpdatedEmail = diagnosticianFirstName + "10@yopmail.com";
+        diagnosticianUpdatedEmail = diagnosticianFirstName + "10@yopmail.com";
         diagnostician.enter_InSearchField(PropertiesUtil.getPropertyValue("diagnosticianFirstName"));
         diagnostician.edit_Diagnostician(diagnosticianUpdatedEmail, "12345678", "12345678");
         WebdriverWaits.waitUntilVisible(diagnostician.edit_Succ_Msg);
@@ -660,7 +659,7 @@ public class AdminTest extends BaseTest {
         WebdriverWaits.waitForSpinner();
         diagnostician.enter_InSearchField(diagnosticianUserName);
         WebdriverWaits.waitUntilVisible(diagnostician.clientEmail);
-        validate_text(diagnostician.clientEmail, diagnosticianUpdatedEmail);
+        validate_text(diagnostician.clientEmail, diagnosticianEmailAddress);
         Log.info("Successfully Edited the created diagnostician");
 
     }
@@ -670,7 +669,7 @@ public class AdminTest extends BaseTest {
     @Test(priority = 37, enabled = true, description = "3.10, 4.6, 4.11, 4.13, 6.6,4.5 Creating Director from admin")
     public void verify_Edit_Director() throws InterruptedException {
         DirectorPage director = new DirectorPage();
-        AdminPage admin=new AdminPage();
+        AdminPage admin = new AdminPage();
         DashBoardPanelPage clickDirectorTab = new DashBoardPanelPage();
 
         clickDirectorTab.click_DirectorTab();
@@ -684,7 +683,7 @@ public class AdminTest extends BaseTest {
         //Verify that 'Cell Number' field accepts ten digit number in defined format on 'Edit User' pop up, of 'Directors List' page
         director.edit_Director(directorEmailAddress, "12345678", "12345678");
         WebdriverWaits.waitForSpinner();
-        admin.enterInSearchField(diagnosticianUserName);
+        admin.enterInSearchField(PropertiesUtil.getPropertyValue("directorFirstName"));
         WebdriverWaits.waitUntilVisible(admin.clientEmail);
         WebdriverWaits.waitForSpinner();
         validate_text(admin.clientEmail, directorEmailAddress);
@@ -979,7 +978,7 @@ public class AdminTest extends BaseTest {
         admin.enterClientNameInSearchFieldCompleted(PropertiesUtil.getPropertyValue("clientFirstName"));
         String expectedResult = getText_custom(admin.clientNameComplete);
         validate_text(admin.clientNameComplete, expectedResult);
-         admin.click_completedClientDetailLink();
+        admin.click_completedClientDetailLink();
         //Verify that admin is directed to '<Client> Details' page after clicking 'View Details' button'
         String ExpectedClientName = getText_custom(admin.clientNameDetail);
         validate_text(admin.clientNameDetail, ExpectedClientName);
