@@ -58,7 +58,7 @@ public class BaseTest {
         switch (browser) {
             case "chrome":
                 ChromeOptions chromeOptions = new ChromeOptions();
-                chromeOptions.setBrowserVersion("122");
+                chromeOptions.setBrowserVersion("123");
                 //WebDriverManager.chromedriver().setup();
                 driver.set(new ChromeDriver(chromeOptions));
                 //WebDriverManager.chromedriver().setup();

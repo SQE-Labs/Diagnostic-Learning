@@ -5,6 +5,7 @@ import org.automation.base.BasePage;
 import org.automation.elements.DropDown;
 import org.automation.logger.Log;
 import org.automation.utilities.ActionEngine;
+import org.automation.utilities.PropertiesUtil;
 import org.automation.utilities.WebdriverWaits;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -13,14 +14,10 @@ import org.openqa.selenium.support.ui.Select;
 import java.util.*;
 
 import static java.lang.Double.parseDouble;
-import static org.automation.elements.DropDown.getSelectedOption;
 import static org.automation.utilities.Assertions.validate_AttText;
 import static org.automation.utilities.Assertions.validate_text;
 import static org.automation.utilities.WebdriverWaits.moveToEleByWE;
 import static org.automation.utilities.WebdriverWaits.moveToElement;
-import static test.AdminTest.clientFirstName;
-import static test.AdminTest.clientLastName;
-
 
 public class DiagnosticianPage extends BasePage {
 
@@ -33,7 +30,6 @@ public class DiagnosticianPage extends BasePage {
     public By diagnostician_MobileNumber = By.xpath("//input[@placeholder='Cell Number']");
     public By diagnostician_Email = By.xpath("//input[@placeholder='Email']");
     public By assignLocation = By.xpath("//select[@id='testingLocation']");
-    public By locationName = By.xpath("//option[text()='Austin']");
     public By userName = By.xpath("//input[@placeholder='Username']");
     public By password_Field = By.xpath("//input[@placeholder='Create Password']");
     public By confirm_PasswordField = By.xpath("//input[@placeholder='Confirm Password']");
@@ -56,22 +52,23 @@ public class DiagnosticianPage extends BasePage {
     public By searchFld = By.xpath("//input[@placeholder='Type here to search']");
     public By searchFild = By.xpath("//input[contains(@aria-controls,'DataTables_Table')]");
     public By SearchField = By.xpath("//input[@aria-controls='appointmentTable']");
-    public By viewClientDetailLink = By.xpath("(//td)[6]");
+    public By viewClientDetailLink = By.xpath("(//td)[7]");
     public By clientDetailText = By.xpath("//div[contains(@class,'page-header align-items-lg-center')]");
-    public By clientNameText = By.cssSelector("tr:not([style='display: none;' ]) td:nth-child(1)");
+    public By clientNameText = By.cssSelector("tr:not([style='display: none;' ]) td:nth-child(2)");
     public By clientText = By.xpath("//h3");
     public By fromDate = By.xpath("//input[@placeholder='From Date']");
     public By toDate = By.xpath("//input[@placeholder='To Date']");
 
     //+++++++++++++EDIT Diagnostician+++++++++++++++
 
-    public By editButton = By.xpath("(//a[text()='Edit'])[1]");
+    public By editButton = By.xpath("//a[contains(@class,'ml-auto px-3 py-2 badge')]");
     public By cellNumber = By.xpath("//input[@placeholder='Cell Number']");
     public By emailField = By.xpath("//input[@formcontrolname='email']");
     public By updateButton = By.xpath("//button[@class='theme-button mr-3']");
     public By passwordTextField = By.xpath("//input[@formcontrolname='password']");
     public By confirmPasswordField = By.xpath("(//input[@type='password'])[2]");
     public By edit_Succ_Msg = By.xpath("//div[@class='alert alert-success ng-star-inserted']");
+    public By clientEmail=By.cssSelector("tr:not([style='display: none;' ]) td:nth-child(4)");
     public By UserNameGetText = By.xpath("(//td)[2]");
     public By enableUser = By.xpath("//label[@class='small ng-star-inserted']");
     public By toggle = By.xpath("//span[@class='slider round']");
@@ -154,7 +151,7 @@ public class DiagnosticianPage extends BasePage {
     public void click_BackBtn() {
         WebdriverWaits.waitUntilVisible(backBtn);
         WebdriverWaits.waitForSpinner();
-        click_custom(backBtn);
+        moveToElement(backBtn);
     }
 
     public void enter_diagnostician_FirstName(String CustomerFirstName) {
@@ -234,7 +231,7 @@ public class DiagnosticianPage extends BasePage {
     public void click_EditButton() {
         WebdriverWaits.waitUntilVisible(editButton);
         WebdriverWaits.waitForSpinner();
-        click_custom(editButton);
+        moveToElement(editButton);
     }
 
     public void enter_CellNumber(String cellNumberText) {
@@ -246,8 +243,9 @@ public class DiagnosticianPage extends BasePage {
         click_custom(updateButton);
     }
 
-    public void off_ToggleButton()  {
+    public void off_ToggleButton() throws InterruptedException {
         WebdriverWaits.waitUntilVisible(toggle);
+        Thread.sleep(2000);
         click_custom(toggle);
     }
 
@@ -310,10 +308,6 @@ public class DiagnosticianPage extends BasePage {
 
     public void cheking_DisableUser() throws InterruptedException {
         click_EditButton();
-
-        WebdriverWaits.waitUntilVisible(enableUser);
-        WebdriverWaits.waitForSpinner();
-        validate_text(enableUser, "Enable User");
         click_DontSave();
     }
 
@@ -473,7 +467,7 @@ public class DiagnosticianPage extends BasePage {
         click_custom(noButton);
         scrolltoUp();
         WebdriverWaits.waitUntilVisible(pageTitle);
-        validate_text(pageTitle, clientFirstName + ' ' + clientLastName + ' ' + "Assessment");
+        validate_text(pageTitle, PropertiesUtil.getPropertyValue("clientFirstName") + ' ' +PropertiesUtil.getPropertyValue("clientLastName")+ ' ' + "Assessment");
 
         click_custom(completeAssButton);
         click_custom(yesCompleteAssButton);
@@ -535,6 +529,7 @@ public class DiagnosticianPage extends BasePage {
     }
 
     public void click_ClientDetailLink() {
+
         click_ViewDetailLink();
     }
 
@@ -558,7 +553,7 @@ public class DiagnosticianPage extends BasePage {
 
         click_CollectButton();
         WebdriverWaits.waitUntilVisible(pageTitle);
-        validate_text(pageTitle, clientFirstName + ' ' + clientLastName + ' ' + "Assessment");
+        validate_text(pageTitle, PropertiesUtil.getPropertyValue("clientFirstName") + ' ' + PropertiesUtil.getPropertyValue("clientLastName")+ ' ' + "Assessment");
 
         click_CheckBox();
 

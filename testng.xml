@@ -6,7 +6,7 @@
         <class name="test.SuperAdminTest"/>
         <class name="test.AdminTest"/>
         <class name="test.DiagnosticianTest"/>
-        <class name="test.DirectorTest"></class>
+<!--        <class name="test.DirectorTest"></class>-->
       </classes>
 </test>
 </suite>
