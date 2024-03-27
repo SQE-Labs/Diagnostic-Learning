@@ -141,7 +141,7 @@ public class AdminPage extends BasePage {
     public By receivedAmount = By.xpath("//label[text()='Received Amount']//following-sibling::p");
     public By holdButton = By.xpath("//button[text()=' Hold Appointment ']");
     public By holdActualText = By.xpath("(//h6[@class='mb-4 text-center'])[2]");
-    public By allAppointmentsPage = By.xpath("//h3[text()='All Appointments']");
+    public By allAppointmentsPage = By.xpath("//h3");
     public By holdAppointmentBtn = By.xpath("//button[text()='Yes, Hold']");
     public By holdtab = By.xpath("//a[text()='Hold']");
     public By holdAppointmentText = By.xpath("//h3[text()='Hold Appointments']");
@@ -248,7 +248,7 @@ public class AdminPage extends BasePage {
         sendKeys_withClear(admin_MobileNumber, diagnostician_MobileNumberText);
     }
 
-    public void clickOn_TodayTab() {
+    public void click_TodayTab() {
         waitUntilVisible(todaysTab);
         WebdriverWaits.waitForSpinner();
         moveToElement(todaysTab);
@@ -296,11 +296,7 @@ public class AdminPage extends BasePage {
         sendKeys_withClear(confirm_PasswordField, confirmPasswordText);
     }
 
-    public void click_TodayTab() {
-        WebdriverWaits.waitUntilVisible(todaysTab);
-        WebdriverWaits.waitForSpinner();
-        moveToElement(todaysTab);
-    }
+
 
     public List<WebElement> get_diagList(By Path) {
         List<WebElement> list = getWebElements(Path);

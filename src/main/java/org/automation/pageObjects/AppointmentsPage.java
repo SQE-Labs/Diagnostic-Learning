@@ -11,8 +11,11 @@ import static org.automation.utilities.DateGenerator.getMonthAndYear;
 import static org.automation.utilities.WebdriverWaits.moveToElement;
 
     public class AppointmentsPage extends BasePage {
-    public By appointmentsTab = By.xpath("//a[@class='collapsed']");
+    public By appointmentsTab = By.xpath("//a[text()=' Appointments ']");
     public By selectWISC = By.xpath("(//div[@class='col-md-3 ng-star-inserted'])[6]");
+
+
+    public By testPlanSelected=By.xpath("//h5[text()='Tests to be performed']/..//p");
 
     public By upcomingAppointmentTXT = By.xpath("//h3[@class='mb-4 mb-md-0']");
     public By todaysAppointmentTXT = By.xpath("//div[@class='align-items-md-center d-flex flex-column flex-md-row page-header']");
@@ -464,8 +467,10 @@ import static org.automation.utilities.WebdriverWaits.moveToElement;
     }
 
 
-    public void click_AppointmentsTab() {
+    public void click_AppointmentsTab()
+    {
         WebdriverWaits.waitUntilVisible(appointmentsTab);
+        WebdriverWaits.waitForSpinner();
         click_custom(appointmentsTab);
     }
 

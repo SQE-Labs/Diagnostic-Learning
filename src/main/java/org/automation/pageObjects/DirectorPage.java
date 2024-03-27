@@ -97,12 +97,12 @@ public class DirectorPage extends BasePage {
     public By cancelAppointmentBtn = By.xpath("//button[text()=' Cancel Appointment ']");
 
     public By selectMonth = By.xpath("(//div[text()=' Dec '])[2]");
-    public By confirmZoomRadioBtn = By.xpath("//label[text()='Online Follow Up (Zoom)']");
+    public By confirmZoomRadioBtn = By.xpath("(//a[text()='Confirm'])[1]");
 
 
     public By nameOfClient = By.xpath("//h3");
     public By followUpSaveBtn = By.xpath("//a[text()='Save']");
-    public By confirmBtn = By.xpath("//a[text()='Confirm']");
+    public By confirmBtn = By.xpath("(//a[text()='Confirm'])[1]");
 
 
 
@@ -127,7 +127,7 @@ public class DirectorPage extends BasePage {
 
     public By yearTitleFromText = By.xpath("(//div[contains(@class,'mbsc-calendar-year-text')])[13]");
     public By spinner = By.cssSelector("div.ngx-spinner-overlay");
-    public By cancelBtn = By.xpath("//button[text()='Cancel']");
+    public By cancelBtn = By.xpath("//button[@data-dismiss=\"modal\"][contains(text(),'Cancel')]");
     public By viewDocBtn = By.xpath("//a[text()='View Documents']");
     public By titleUploadDoc = By.xpath("(//div[contains(@class,'py-4')]/h4)[2]");
     public By fileName = By.xpath("//div[contains(@class,'d-flex')]/p/a");
@@ -175,7 +175,8 @@ public class DirectorPage extends BasePage {
         click_custom(resetBtn);
     }
 
-    public void click_ViewObservationBtn() {
+    public void click_ViewObservationBtn()
+    {
         WebdriverWaits.waitUntilVisible(viewObservationBtn);
         WebdriverWaits.waitForSpinner();
         click_custom(viewObservationBtn);
@@ -187,8 +188,9 @@ public class DirectorPage extends BasePage {
     }
     public void click_CancelBtn()
     {
-        WebdriverWaits.waitUntilVisible(cancelBtn);
         WebdriverWaits.waitForSpinner();
+        WebdriverWaits.waitUntilVisible(cancelBtn);
+        waitForElementInteractable(cancelBtn);
         click_custom(cancelBtn);
 
     }
@@ -215,8 +217,11 @@ public class DirectorPage extends BasePage {
 
     }
 
-    public void click_FollowUpSaveBtn() {
+    public void click_FollowUpSaveBtn() throws InterruptedException {
+        WebdriverWaits.waitForSpinner();
         waitUntilVisible(followUpSaveBtn);
+        waitForElementInteractable(followUpSaveBtn);
+        Thread.sleep(3000);
         click_custom(followUpSaveBtn);
     }
     public void click_ConfirmFollowUpBtn() {

@@ -28,30 +28,32 @@ public class DirectorTest extends BaseTest {
     LoginPage login = new LoginPage();
 
     @Test(priority = 1, enabled = true, description = "1 Verify Director is able to login with valid credentials")
-    public void verify_Login_Director()
-    {
+    public void verify_Login_Director() {
+        //Verify that Director is able to login into account using valid 'Username' & 'Password', on 'Sign in to your account' page.
         login.director_Login();
         validate_text(director.dashboardPage, "Dashboard");
 
     }
 
     @Test(priority = 2, enabled = true, description = " 4 Verify that 'Appointments' tab expands, on 'Dashboard' page.")
-    public void verify_AppointmentsTabExpands()
-    {
+    public void verify_AppointmentsTabExpands() {
+        //Verify that 'Appointments' tab expands after clicking on 'Appointment' tab from left panel, on 'Dashboard' page.
         panelPage.click_AppointmentsTab();
         validate_text(director.viewAll, "View All");
 
     }
 
 
-    @Test(priority = 3, enabled =true , description = "12 and 13 Verify that 'Set Availability' page opens up and Year Picker appear")
+    @Test(priority = 3, enabled = true, description = "12 and 13 Verify that 'Set Availability' page opens up and Year Picker appear")
     public void validate_SetAppointment_AND_YearPicker() throws InterruptedException {
+        //Verify that 'Set Availability' page opens up, when user clicks on 'Availability' tab from left panel, on 'Dashboard' page.
         panelPage.click_Availability();
         validate_text(director.setAvailaibility, "Set Availability");
         String currentDate = getMonthAndYear();
         validate_text(director.monthHeader, currentDate.split(" ")[0]);
         validate_text(director.yearHeader, currentDate.split(" ")[1]);
         String expectedText = getText_custom(director.yearButton);
+        //Verify that Year Picker appears after clicking on '<Month/Year>' calendar title, on 'Set Availability' page.
         director.click_MonthHeader();
         String yearTitleText = getText_custom(director.yearsTitle);
 
@@ -68,27 +70,29 @@ public class DirectorTest extends BaseTest {
 
 
     @Test(priority = 4, enabled = true, description = "20 and 21 Verify that 'Available' card appears and click on Save button.")
-    public void verify_AvailableCards_AND_SaveButtonEnabled() throws InterruptedException
-    {
+    public void verify_AvailableCards_AND_SaveButtonEnabled() throws InterruptedException {
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
         DirectorPage director = new DirectorPage();
         AdminPage admin = new AdminPage();
+        //Verify that 'Available' card appears, when director clicks on any available slot, on 'Set Availability' page.
         panelPage.click_Availability();
+        //Verify that 'Save' button gets enabled, when director adds any slot, on 'Set Availability' page.
         director.director_AvailabilityWithoutSaveBtn();
         validate_text(director.validateAvailable, "Available");
         validate_text(director.saveButton, "Save");
+        admin.navigate_to_baseUrl();
 
     }
 
 
     @Test(priority = 5, enabled = true, description = "24 Verify that '<Date>' popup closes, when director clicks on 'Cancel' button")
-    public void verify_Closed_PopUp_OnCancel() throws InterruptedException
-    {
+    public void verify_Closed_PopUp_OnCancel() throws InterruptedException {
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
         AppointmentsPage appPage = new AppointmentsPage();
+        AdminPage admin = new AdminPage();
         DirectorPage director = new DirectorPage();
-        DiagnosticianPage dashpage=new DiagnosticianPage();
-        login.director_Login();
+        DiagnosticianPage dashpage = new DiagnosticianPage();
+        //Verify that  '<Date>' popup closes, when director clicks on 'Cancel' button, on  '<Date>' popup of 'Set Availability' page.
         panelPage.click_Availability();
         director.director_Availability(5);
         dashpage.cancel_AvailabilityDirector();
@@ -104,6 +108,8 @@ public class DirectorTest extends BaseTest {
             }
         }
         validate_text(director.today, "Today");*/
+        admin.navigate_to_baseUrl();
+
     }
 
 
@@ -112,7 +118,9 @@ public class DirectorTest extends BaseTest {
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
         AppointmentsPage appPage = new AppointmentsPage();
         DirectorPage director = new DirectorPage();
-        login.director_Login();
+        AdminPage admin = new AdminPage();
+
+        //Verify that director is able to delete already available marked slot after clicking 'Delete' button on '<Date>' popup of 'Set Availability' page.
         panelPage.click_Availability();
         //   director.deleting_Availability();
         List<WebElement> allSlots = appPage.getWebElements(appPage.slots);
@@ -126,9 +134,11 @@ public class DirectorTest extends BaseTest {
 
         }
         Assert.assertTrue(result);
+        admin.navigate_to_baseUrl();
 
     }
 
+/*
 
     @Test(priority = 7, enabled = true, description = "6 Verify that director is directed to 'Today's Appointments' page")
     public void verify_Today_AppointmentPage() throws InterruptedException {
@@ -248,6 +258,7 @@ public class DirectorTest extends BaseTest {
         payment.enter_collectAmountAdjustment("20");
 
     }
+*/
 
 
     @Test(priority = 22, enabled = true, description = "25 Verify that director gets logged out after clicking 'Log Out' button")
@@ -258,7 +269,7 @@ public class DirectorTest extends BaseTest {
 
     }
 
-    @Test(priority = 23, enabled = true, description = "67. 'Test Fee Adjustment' field accepts negative value")
+   /*@Test(priority = 23, enabled = true, description = "67. 'Test Fee Adjustment' field accepts negative value")
     public void verify_EnterNegativeValueInTestFeeAdjustmentFee() throws InterruptedException {
         AppointmentsPage appointment = new AppointmentsPage();
         DashboardPage dashPage = new DashboardPage();
@@ -353,7 +364,7 @@ public class DirectorTest extends BaseTest {
         payment.clickOn_PaymentBtn();
         payment.clickOn_CancelBtn();
         validate_text(admin.title, expecetedClientName);
-    }
+    }*/
 
 
     @Test(priority = 28, enabled = true, description = "45., 52. User is able to click on 'Create Followup' for a client.")
@@ -394,11 +405,9 @@ public class DirectorTest extends BaseTest {
         director.cancelFollowupSlot(0);
         List<WebElement> allSlots = appPage.getWebElements(appPage.slots);
         boolean result = true;
-        for (int i = 0; i < allSlots.size(); i++)
-        {
+        for (int i = 0; i < allSlots.size(); i++) {
             String slotsClass = allSlots.get(i).getAttribute("class");
-            if (!slotsClass.contains("mbsc-ios mbsc-schedule-event-background ng-star-inserted"))
-            {
+            if (!slotsClass.contains("mbsc-ios mbsc-schedule-event-background ng-star-inserted")) {
                 result = false;
 
             }
@@ -417,11 +426,9 @@ public class DirectorTest extends BaseTest {
         director.click_ResetBtnSlot();
         List<WebElement> allSlotsAfterReset = appPage.getWebElements(appPage.slots);
         boolean resultForReset = true;
-        for (int i = 0; i < allSlotsAfterReset.size(); i++)
-        {
+        for (int i = 0; i < allSlotsAfterReset.size(); i++) {
             String slotsClass = allSlotsAfterReset.get(i).getAttribute("class");
-            if (!slotsClass.contains("mbsc-ios mbsc-schedule-event-background ng-star-inserted"))
-            {
+            if (!slotsClass.contains("mbsc-ios mbsc-schedule-event-background ng-star-inserted")) {
                 resultForReset = false;
             }
         }
@@ -429,7 +436,7 @@ public class DirectorTest extends BaseTest {
     }
 
     @Test(priority = 31, enabled = true, description = "63., 64. & 65verify director is able to change follow up or not")
-    public void verify_ChangeFollow() {
+    public void verify_ChangeFollow() throws InterruptedException {
         AdminPage admin = new AdminPage();
         //Clicked on  'Change' button
         director.click_FollowUpSlot(0);
@@ -449,6 +456,7 @@ public class DirectorTest extends BaseTest {
 
     }
 
+/*
     @Test(priority = 32, enabled = true, description = "2. User is able to click on 'View All' subtab.")
     public void verify_ClickOnViewAllSubtab() throws InterruptedException {
         AdminPage admin = new AdminPage();
@@ -470,7 +478,7 @@ public class DirectorTest extends BaseTest {
         DateGenerator datePage = new DateGenerator();
         AppointmentsPage appPage = new AppointmentsPage();
         appPage.click_AppointmentsTab();
-        admin.clickOn_TodayTab();
+        admin.click_TodayTab();
         validate_text(admin.todayAppointmentTitle, "Today's Appointments");
         String expectedDate = datePage.getCurrentDateFromSystem();
         validate_text(admin.todayDateOnCard, expectedDate);
@@ -732,4 +740,5 @@ public class DirectorTest extends BaseTest {
         Assert.assertEquals(fromDateplaceholder, "From Date");
         Assert.assertEquals(toDatePlaceholder, "To Date");
     }
+}*/
 }

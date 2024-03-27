@@ -88,7 +88,7 @@ public class DashBoardPanelPage extends BasePage {
     }
 
     public void click_ExportCSVButton() {
-        WebdriverWaits.waitUntilInvisible(exportCSVButton);
+        WebdriverWaits.waitUntilVisible(exportCSVButton);
         WebdriverWaits.waitForSpinner();
         click_custom(exportCSVButton);
     }

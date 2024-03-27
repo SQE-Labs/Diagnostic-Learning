@@ -82,10 +82,10 @@ public class ActionEngine extends BaseTest {
             element.clear();
             element.getWebElement().sendKeys(valueToBeSent);
             //log success message in extent report
-          //  extentTest.log(PASS, "Entered value  in field " + var + "as: " + valueToBeSent);
+          extentTest.log(PASS, "Entered value  in field " + var + "as: " + valueToBeSent);
         } catch (Exception e) {
             //  log failure in extent
-            //extentTest.log(FAIL, "Sendkeys in field: " + var + " is failed due to exception:     " + e);
+            extentTest.log(FAIL, "Sendkeys in field: " + var + " is failed due to exception:     " + e);
             throw new RuntimeException(e);
 
         }

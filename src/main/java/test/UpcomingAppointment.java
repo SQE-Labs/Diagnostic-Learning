@@ -30,6 +30,8 @@ class UpcomingAppointment extends BaseTest {
     String fullName;
     List<WebElement> diagList;
 
+    ActionEngine actionEngine=new ActionEngine();
+
     @Test(priority = 0, enabled = true, description = "Verify that director is able to execute all before all methods")
     public  void verify_Create_Diagnostician_By_SuperAdmin() throws InterruptedException {
         //Login by using superAdmin credentials
@@ -115,6 +117,7 @@ class UpcomingAppointment extends BaseTest {
     public void verify_Today_AppointmentPage() throws InterruptedException
     {
         AppointmentsPage appointment = new AppointmentsPage();
+        AdminPage admin=new AdminPage();
         LoginPage login = new LoginPage();
         Thread.sleep(5000);
         login.directorLogin(directorUserName, "123456");
@@ -122,7 +125,8 @@ class UpcomingAppointment extends BaseTest {
         appointment.click_AppointmentsTab();
         appointment.click_Today_AppointmentCard();
         validate_text(appointment.todaysAppointmentTXT, "Today's Appointments");
-        getDriver().navigate().to("https://topuptalent.com/Diagnosticlearning/");
+       // getDriver().navigate().to("https://topuptalent.com/Diagnosticlearning/");
+        admin.navigate_to_baseUrl();
     }
 
     @Test(priority = 2, enabled = true, description = "2. User is able to click on 'View All' subtab.")
@@ -140,7 +144,8 @@ class UpcomingAppointment extends BaseTest {
         String expectedRecord = getText_custom(director.getNameOfClient);
         dashPage.enter_DataSearhTextBox(expectedRecord);
         validate_text(director.clientName, expectedRecord);
-        getDriver().navigate().to("https://topuptalent.com/Diagnosticlearning/");
+        admin.navigate_to_baseUrl();
+
     }
 
     @Test(priority = 3, enabled = true, description = "8.& 13. Verify that director is able to click on filter button")
@@ -173,7 +178,9 @@ class UpcomingAppointment extends BaseTest {
         director.searchTextField(data);
         admin.click_ViewDetailsBtn();
         validate_text(director.fullNameOfClient, data);
-        getDriver().navigate().to("https://topuptalent.com/Diagnosticlearning/");
+       //getDriver().navigate().to("https://topuptalent.com/Diagnosticlearning/");
+        admin.navigate_to_baseUrl();
+
 
     }
 
@@ -191,6 +198,8 @@ class UpcomingAppointment extends BaseTest {
         String downloadFile = panelPage.getDownloadFileName();
         Assert.assertTrue(panelPage.isFileDownloaded(downloadFile));
         getDriver().navigate().to("https://topuptalent.com/Diagnosticlearning/");
+      //  actionEngine.navigate_to_baseUrl("https://topuptalent.com/Diagnosticlearning/");
+
 
     }
 
@@ -201,7 +210,7 @@ class UpcomingAppointment extends BaseTest {
         DashBoardPanelPage panelPage = new DashBoardPanelPage();
         DirectorPage director=new DirectorPage();
         AdminPage testPlan = new AdminPage();
-        panelPage.click_AppointmentsTab();
+        appointment.click_AppointmentsTab();
         appointment.click_UpcomingTab();
         director.searchTextField(fullName);
         appointment.click_ViewDetailLink();
@@ -219,13 +228,16 @@ class UpcomingAppointment extends BaseTest {
         //Verify that director is able to add comments in 'Other Comments' field, on 'Test Plan' popup of '<Client> Details' page.
         appointment.enter_OtherComments("My Appointment");
         appointment.click_SaveButton();
-        validate_text(appointment.selectWISC, "WAIS");
+        validate_text(appointment.testPlanSelected, "WAIS");
         Thread.sleep(2000);
     }
 
     @Test(priority = 7, enabled = true, description = "45., 59. User is able to click on 'Create Followup' for a client.")
     public void verify_ClickOnCreateFollowupBtn() throws InterruptedException {
         DirectorPage director = new DirectorPage();
+        AdminPage admin = new AdminPage();
+
+        AppointmentsPage appPage = new AppointmentsPage();
         //Verify that follow up calendar appears after clicking 'Create Follow Up' button on '<Client> Details' page.
         String expectedName = getText_custom(director.nameOfClient);
         director.click_CreateFollowUpBtn();
@@ -233,9 +245,60 @@ class UpcomingAppointment extends BaseTest {
         director.click_CloseBtn();
         String actualName = getText_custom(director.nameOfClient);
         validate_AttText(actualName, expectedName);
+
+        director.click_CreateFollowUpBtn();
+        director.cancelFollowupSlot(0);
+        List<WebElement> allSlots = appPage.getWebElements(appPage.slots);
+        boolean result = true;
+        for (int i = 0; i < allSlots.size(); i++)
+        {
+            String slotsClass = allSlots.get(i).getAttribute("class");
+            if (!slotsClass.contains("mbsc-ios mbsc-schedule-event-background ng-star-inserted"))
+            {
+                result = false;
+
+            }
+        }
+
+        Assert.assertFalse(result);
+
+        //Clicked on 'Reset' button
+        director.click_FollowUpSlot(0);
+        director.click_FollowUpSlotSaveBtn();
+        director.click_ResetBtnSlot();
+        List<WebElement> allSlotsAfterReset = appPage.getWebElements(appPage.slots);
+       boolean resultForReset = true;
+       for (int i = 0; i < allSlotsAfterReset.size(); i++)
+        {
+            String slotsClass = allSlotsAfterReset.get(i).getAttribute("class");
+            if (!slotsClass.contains("mbsc-ios mbsc-schedule-event-background ng-star-inserted"))
+            {
+                resultForReset = false;
+            }
+        }
+        Assert.assertFalse(resultForReset);
+        //Clicked on  'Change' button
+        director.click_FollowUpSlot(0);
+        director.click_FollowUpSlotSaveBtn();
+        director.click_FollowUpSaveBtn();
+        director.click_ChangeBtn();
+        String currentDate = getMonthAndYear();
+        validate_text(director.monthHeader, currentDate.split(" ")[0]);
+
+        //End to End Flow
+        director.click_FollowUpSaveBtn();
+        Thread.sleep(2000);
+        director.click_ConfirmFollowUpBtn();
+        WebdriverWaits.waitUntilVisible(admin.validateScheduledFollowUp);
+        WebdriverWaits.waitForSpinner();
+        validate_text(admin.validateScheduledFollowUp, "Follow Up Scheduled!!");
+        admin.click_BackBtn();
+        admin.navigate_to_baseUrl();
+
+
     }
 
-    @Test(priority = 8, enabled = true, description = "58, 52 verify director is able to change follow up or not")
+   /* @Test(priority = 8, enabled = true, description = "58, 52 verify director is able to change follow up or not")
     public void verify_CancelFollowUp() throws InterruptedException {
         AdminPage admin = new AdminPage();
         AppointmentsPage appointment = new AppointmentsPage();
@@ -244,10 +307,10 @@ class UpcomingAppointment extends BaseTest {
         DirectorPage director = new DirectorPage();
         //Clicked on 'Cancel' button.
 
-       /* appointment.click_UpcomingTab();
+       *//* appointment.click_UpcomingTab();
         validate_text(admin.titleOfUpcomingPage, "Upcoming Appointments");
         dashPage.enter_DataSearhTextBox("Upcoming");
-        director.click_ViewDetailsBtn();*/
+        director.click_ViewDetailsBtn();*//*
 
         director.click_CreateFollowUpBtn();
         director.cancelFollowupSlot(0);
@@ -303,16 +366,15 @@ class UpcomingAppointment extends BaseTest {
         validate_text(director.monthHeader, currentDate.split(" ")[0]);
 
         //End to End Flow
-
         director.click_FollowUpSaveBtn();
         director.click_ConfirmFollowUpBtn();
         WebdriverWaits.waitUntilVisible(admin.validateScheduledFollowUp);
         WebdriverWaits.waitForSpinner();
         validate_text(admin.validateScheduledFollowUp, "Follow Up Scheduled!!");
         admin.click_BackBtn();
-        getDriver().navigate().to("https://topuptalent.com/Diagnosticlearning/");
+        admin.navigate_to_baseUrl();
 
-    }
+    }*/
 
     @Test(priority = 11, enabled = true, description = "3. User is able to click on Today's subtab.")
     public void verify_ClickOnTodaySubtab() throws InterruptedException {
@@ -320,11 +382,13 @@ class UpcomingAppointment extends BaseTest {
         DateGenerator datePage = new DateGenerator();
         AppointmentsPage appPage = new AppointmentsPage();
         appPage.click_AppointmentsTab();
-        admin.clickOn_TodayTab();
+        admin.click_TodayTab();
         validate_text(admin.todayAppointmentTitle, "Today's Appointments");
         String expectedDate = datePage.getCurrentDateFromSystem();
         validate_text(admin.todayDateOnCard, expectedDate);
-        getDriver().navigate().to("https://topuptalent.com/Diagnosticlearning/");
+      // getDriver().navigate().to("https://topuptalent.com/Diagnosticlearning/");
+        admin.navigate_to_baseUrl();
+
     }
 
     @Test(priority = 12, enabled = true, description = "4. User is able to click on 'Test Ready' subtab.")
@@ -347,10 +411,13 @@ class UpcomingAppointment extends BaseTest {
             expectedTitleText = firstWord + " " + secondWord;
         }
         validate_AttText(actualText, expectedTitleText);
-        getDriver().navigate().to("https://topuptalent.com/Diagnosticlearning/");
+      // getDriver().navigate().to("https://topuptalent.com/Diagnosticlearning/");
+        admin.navigate_to_baseUrl();
+
+
     }
 
-    @Test(priority = 13, enabled = true, description = "5. 9., 10., 11., 14. User is able to click on 'Upload Document' button.")
+    @Test(priority = 13, enabled = true, description = "5., 9., 10., 11., 14. User is able to click on 'Upload Document' button.")
     public void verify_ClickOnUploadDocBtn() throws InterruptedException, AWTException {
         AppointmentsPage appointment = new AppointmentsPage();
         AdminPage admin = new AdminPage();
@@ -359,9 +426,10 @@ class UpcomingAppointment extends BaseTest {
         ActionEngine action = new ActionEngine();
         appointment.click_AppointmentsTab();
         appointment.click_UpcomingTab();
-        dashPage.enter_DataSearhTextBox("Test Ready");
+        dashPage.enter_DataSearhTextBox(fullName);
         director.click_ViewDetailsBtn();
         admin.click_UploadButton();
+        Thread.sleep(5000);
         director.click_CancelBtn();
         boolean result = action.isElementDisplay_custom(director.viewDocBtn, "ViewDoc");
         Assert.assertFalse(result);
@@ -373,13 +441,19 @@ class UpcomingAppointment extends BaseTest {
         String[] words = input.split("\\s+");
         System.out.println(words);
         String trimmedString = "";
-        if (words.length > 2) {
+        if (words.length > 2)
+        {
             trimmedString = String.join(" ", Arrays.copyOf(words, words.length - 2));
-        } else {
+        }
+        else
+
+        {
             System.out.println("The input string does not have enough words to trim.");
         }
         validate_AttText(trimmedString, "file-sample_1MB (1).doc");
-        getDriver().navigate().to("https://topuptalent.com/Diagnosticlearning/");
+        //getDriver().navigate().to("https://topuptalent.com/Diagnosticlearning/");
+        admin.navigate_to_baseUrl();
+
     }
 
     @Test(priority = 14, enabled = true, description = "6., 20. & 35. User is able to click on 'Test complete' subtab.")
@@ -387,7 +461,7 @@ class UpcomingAppointment extends BaseTest {
         AdminPage admin = new AdminPage();
         AppointmentsPage appointment = new AppointmentsPage();
         DashBoardPanelPage dashboard = new DashBoardPanelPage();
-        dashboard.click_AppointmentsTab();
+        appointment.click_AppointmentsTab();
         appointment.click_TestCompleteTab();
         WebdriverWaits.waitUntilVisible(admin.getTitleOfTestComplete);
         validate_text(admin.getTitleOfTestComplete, "Test Complete Appointments");
@@ -405,16 +479,17 @@ class UpcomingAppointment extends BaseTest {
         dashboard.click_ExportCSVButton();
         String downloadFile = dashboard.getDownloadFileName();
         Assert.assertTrue(dashboard.isFileDownloaded(downloadFile));
-        getDriver().navigate().to("https://topuptalent.com/Diagnosticlearning/");
+        //getDriver().navigate().to("https://topuptalent.com/Diagnosticlearning/");
+        admin.navigate_to_baseUrl();
+
     }
 
-    @Test(priority = 15, enabled = true, description = " 15., 16.,17.,36. User is able to click on 'View Observation' button.")
-    public void verify_ClickOnViewObservationBtn() throws InterruptedException, AWTException {
+    @Test(priority = 15, enabled = true, description = "15., 16.,17.,36. User is able to click on 'View Observation' button.")
+    public void verify_ClickOnViewObservationBtn() throws InterruptedException, AWTException
+    {
         AppointmentsPage appointment = new AppointmentsPage();
         AdminPage admin = new AdminPage();
-        DashboardPage dashPage = new DashboardPage();
         DirectorPage director = new DirectorPage();
-        ActionEngine action = new ActionEngine();
         appointment.click_AppointmentsTab();
         appointment.click_TestCompleteTab();
         director.click_ViewDetailBtn();
