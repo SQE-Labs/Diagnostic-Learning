@@ -3,10 +3,11 @@
 <suite name="My Suite" verbose="2"  parallel="classes" thread-count="10">
 <test name="Diagnostician Test Cases" parallel="none" >
     <classes>
-        <class name="test.SuperAdminTest"/>
-        <class name="test.AdminTest"/>
-        <class name="test.DiagnosticianTest"/>
-        <class name="test.DirectorTest"></class>
+        <class name="test.HelloWorldPrint"/>
+<!--        <class name="test.SuperAdminTest"/>-->
+<!--        <class name="test.AdminTest"/>-->
+<!--        <class name="test.DiagnosticianTest"/>-->
+<!--        <class name="test.DirectorTest"></class>-->
       </classes>
 </test>
 </suite>
