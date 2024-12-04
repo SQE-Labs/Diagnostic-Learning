@@ -25,47 +25,58 @@ public class LoginPage extends BasePage {
         sendKeys_withClear(PasswordField, passNameText);
     }
 
-    public void clickLoginBtn() {
-        clickBtn_custom(login);
-    }
-
-
-    public void superAdminLogin() {
+    public void superAdminLogin(String superAdminUserName,String superAdminPassword) {
         WebdriverWaits.waitUntilVisible(userNameField);
-        sendKeys_withClear(userNameField, PropertiesUtil.getPropertyValue("super_userName"));
-        sendKeys_withClear(PasswordField, PropertiesUtil.getPropertyValue("super_password"));
+        sendKeys_withClear(userNameField, superAdminUserName);
+        sendKeys_withClear(PasswordField,  superAdminPassword);
         clickBtn_custom(login);
         WebdriverWaits.waitForSpinner();
 
     }
 
-    public void director_Login() {
-        sendKeys_withClear(userNameField, PropertiesUtil.getPropertyValue("director_userName"));
-        sendKeys_withClear(PasswordField, PropertiesUtil.getPropertyValue("director_password"));
+    public void director_Login(String directorUserName, String directorPassword) {
+        sendKeys_withClear(userNameField, directorUserName );
+        sendKeys_withClear(PasswordField, directorPassword );
         clickBtn_custom(login);
         WebdriverWaits.waitForSpinner();
 
     }
 
-    public void diagnostician_Login(String userNameText, String PasswordFieldText) {
-        enterUsername(userNameText);
-        enterPassword(PasswordFieldText);
-        clickLoginBtn();
-        WebdriverWaits.waitForSpinner();
-
-    }
-
-    public void adminLogin(String username, String password) {
-        enterUsername(username);
-        enterPassword(password);
-        clickLoginBtn();
+    public void diagnostician_Login() {
+        WebdriverWaits.waitUntilVisible(userNameField);
+        sendKeys_withClear(userNameField, PropertiesUtil.getPropertyValue("diagnostician_userName"));
+        sendKeys_withClear(PasswordField, PropertiesUtil.getPropertyValue("diagnostician_password"));
+        clickBtn_custom(login);
         WebdriverWaits.waitForSpinner();
     }
 
-    public void directorLogin(String userNameFieldText, String PasswordFieldText) {
-        enterUsername(userNameFieldText);
-        enterPassword(PasswordFieldText);
-        click_custom(login);
+    public void diagnostician_LoginWithOldPassword(String diagnosticianUserName,String diagnosticianPassword) {
+        WebdriverWaits.waitUntilVisible(userNameField);
+        sendKeys_withClear(userNameField, diagnosticianUserName );
+        sendKeys_withClear(PasswordField, diagnosticianPassword );
+        clickBtn_custom(login);
+        WebdriverWaits.waitForSpinner();
+    }
+
+    public void admin_Login() {
+        sendKeys_withClear(userNameField, PropertiesUtil.getPropertyValue("admin_userName"));
+        sendKeys_withClear(PasswordField, PropertiesUtil.getPropertyValue("admin_password"));
+        clickBtn_custom(login);
+        WebdriverWaits.waitForSpinner();
+
+    }
+    public void adminLoginWith_OldPassword() {
+        sendKeys_withClear(userNameField, PropertiesUtil.getPropertyValue("admin_userName"));
+        sendKeys_withClear(PasswordField, PropertiesUtil.getPropertyValue("admin_oldpassword"));
+        clickBtn_custom(login);
+        WebdriverWaits.waitForSpinner();
+    }
+
+    public void director_LoginWithOldPassword(String userName , String pass) {
+        sendKeys_withClear(userNameField,userName);
+        sendKeys_withClear(PasswordField,pass);
+        clickBtn_custom(login);
+        WebdriverWaits.waitForSpinner();
 
 
     }

@@ -1,6 +1,7 @@
 package org.automation.pageObjects;
 
 import org.automation.base.BasePage;
+import org.automation.elements.DropDown;
 import org.automation.logger.Log;
 import org.automation.utilities.Assertions;
 import org.automation.utilities.WebdriverWaits;
@@ -30,7 +31,8 @@ public class DirectorPage extends BasePage {
     public By directorsMobileNumber = By.xpath("//input[@placeholder='Cell Number']");
     public By directorsEmail = By.xpath("//input[@placeholder='Email']");
     public By assignLocation = By.xpath("//select[@id='testingLocation']");
-    public By directorsLocationName = By.xpath("//option[text()='Austin']");
+    public By locationList=By.xpath("//select/option");
+
     public By directorsUserName = By.xpath("//input[@placeholder='Username']");
     public By password_Field = By.xpath("//input[@placeholder='Create Password']");
     public By confirm_PasswordField = By.xpath("//input[@class='ng-untouched ng-pristine ng-valid border border-danger']");
@@ -173,11 +175,11 @@ public class DirectorPage extends BasePage {
         sendKeys_withClear(directorsEmail, directorsEmailText);
     }
 
-    public void click_directorsassignLocationField() {
-        WebdriverWaits.waitUntilVisible(assignLocation);
+    public void click_directorsassignLocationField(String location) {
+        dropdownListsRemoveValues(locationList, "locationLists","Assign Location");
         click_custom(assignLocation);
-        WebdriverWaits.waitUntilVisible(directorsLocationName);
-        click_custom(directorsLocationName);
+        selectDropDownByVisibleText_custom(assignLocation,location);
+        Log.info( DropDown.getSelectedOption(assignLocation));
     }
 
     public void click_directorsUserNameField(String directorsUserNameText) {
@@ -302,14 +304,14 @@ public class DirectorPage extends BasePage {
 
 
     //*********Create director**************
-    public void create_Director(String directorsFirstNameText, String directorsLastNameText, String directorsMobileNumberText, String directorsEmailText, String directorsUserNameText, String password_FieldText, String confirmPasswordFieldText) throws InterruptedException {
+    public void create_Director(String directorsFirstNameText, String directorsLastNameText, String directorsMobileNumberText, String directorsEmailText, String location,String directorsUserNameText, String password_FieldText, String confirmPasswordFieldText) throws InterruptedException {
         click_createDirectorButton();
         click_directorsFirstNameField(directorsFirstNameText);
         click_directorsLastNameField(directorsLastNameText);
         click_directorsMobileNumberField(directorsMobileNumberText);
         click_directorsdirectorsEmailField(directorsEmailText);
         //Verify that dropdown options appear after clicking 'Assign Location' dropdown list & selected options appear in 'Assign Location' field on 'Create Director' page
-        click_directorsassignLocationField();
+        click_directorsassignLocationField(location);
         click_directorsUserNameField(directorsUserNameText);
         click_passwordField(password_FieldText);
         enter_ConfirmPassword(confirmPasswordFieldText);
@@ -353,6 +355,7 @@ public class DirectorPage extends BasePage {
         click_confirmPasswordField(confirmPasswordFieldText);
         off_ToggleButton();
         click_UpdateButton();
+        Thread.sleep(4000);
     }
 
     //********Cheking toggole off of directore*************
@@ -361,7 +364,7 @@ public class DirectorPage extends BasePage {
         click_EditButton();
         WebdriverWaits.waitUntilVisible(enableUser);
         validate_text(enableUser, "Enable User");
-       // off_ToggleButton();
+        off_ToggleButton();
         click_DontSave();
     }
 
@@ -380,23 +383,6 @@ public class DirectorPage extends BasePage {
         click_confirmPasswordField(confirmPasswordFieldText);
         click_DontSave();
         Thread.sleep(6000);
-    }
-
-    //***********Relogin using new password*************
-
-    public void Relogin_With_newPassword(String userNameFieldText, String PasswordFieldText) throws InterruptedException {
-        click_LogOutLink();
-        click_Login_UsernameField(userNameFieldText);
-        click_Login_PasswordField(PasswordFieldText);
-        click_Login_Button();
-    }
-
-    //************director login with old Password***********
-    public void directorRelogin_With_OldPassword(String userNameFieldText, String PasswordFieldText) throws InterruptedException {
-        click_LogOutLink();
-        click_Login_UsernameField(userNameFieldText);
-        click_Login_PasswordField(PasswordFieldText);
-        click_Login_Button();
     }
 
     public void director_Availability(int count) throws InterruptedException {
