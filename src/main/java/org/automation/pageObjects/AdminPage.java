@@ -417,6 +417,7 @@ public class AdminPage extends BasePage {
         dropdownListsRemoveValues(dia_List, "Re_Assign Diagnostician lists", "Choose Diagnostician");
         //Verify that admin is able to select any option from 'Choose Diagnostician' dropdown list and selected option appears in 'Choose Diagnostician' field, on '<Client> Re-assign Appointment' page
         System.out.println(DropDown.getSelectedOption(locList));
+        Log.info("shshsj");
     }
 
 
